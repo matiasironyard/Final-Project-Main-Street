@@ -10,6 +10,7 @@ var settings = {
   "method": "GET",
   "headers": {
     "authorization": "Bearer i565rg5Yi8NoRyCmfTHX5ngjnlRSCmkQkG0CHSibDWzBY2OJQd3LNU0WfEsf9XibRZAiCBriAohxLkjbsZ4IfqMi-al9M4xp9DYM9vGZM6MlyNW45Z8earlIU94pWHYx",
+    "cache-control": "no-cache",
   }
 }
 
