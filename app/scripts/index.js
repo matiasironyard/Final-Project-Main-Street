@@ -10,6 +10,9 @@ $(function(){
 });
 
 
-$.ajax('https://yelp-proxy-server.herokuapp.com/test').then(function(data){
+$.ajax('https://yelp-proxy-server.herokuapp.com/api?phone=+1-864-351-0521').then(function(data){
   console.log('this proxy server is working', data);
+  var business = data.businesses.map(function(data){
+    console.log(data.name);
+  });
 });
