@@ -7,20 +7,22 @@ console.log('hi');
 /* COMPONENT IMPORTS BELOW */
 var setupParse= require('./parseUtilities').setupParse;
 var AuthenticationContainer = require('./components/authentication.jsx').AuthenticationContainer;
+var RegistrationContainer = require('./components/registration.jsx').RegistrationContainer;
 /* COMPONENT IMPORTS ABOVE */
 
 
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'index',
-    '/restaurants/': 'all-restaurants',
-    '/restaurants/:id/': 'restaurant',
-    '/bars/': 'all-bars',
-    '/bars/:id': 'bar',
-    '/entertainment/': 'all-entertainment-venues',
-    '/entertainment/:id': 'entertainment',
-    '/dashboard/': 'dashboard',
-    '/login/': 'login',
+    'restaurants/': 'all-restaurants',
+    'restaurants/:id/': 'restaurant',
+    'bars/': 'all-bars',
+    'bars/:id': 'bar',
+    'entertainment/': 'all-entertainment-venues',
+    'entertainment/:id': 'entertainment',
+    'dashboard/id': 'dashboard',
+    'registration/': 'registration',
+    'login/': 'login',
   },
 
   initialize: function(){
@@ -33,6 +35,14 @@ var AppRouter = Backbone.Router.extend({
       document.getElementById('app')
     );
   },
+
+  registration: function(){
+    ReactDOM.render(
+      React.createElement(RegistrationContainer,  {router: this}),
+      document.getElementById('app')
+    );
+  },
+
 
 });
 
