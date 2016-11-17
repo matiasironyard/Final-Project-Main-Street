@@ -12,6 +12,7 @@ var RegistrationForm = React.createClass ({
       name: '',
     }
   },
+
   componentWillReceiveProps: function(newProps){
     this.setState(newProps.business.toJSON());
   },
@@ -71,12 +72,12 @@ var RegistrationForm = React.createClass ({
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
-              <input onChange={this.handleInputChange} name="name"  value={this.state.name || name} type="text" className="form-control" id="business-name" placeholder="name"/>
+              <input onChange={this.handleInputChange} name="name"  ref = "myTextInput" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
             </div>
             <div className="form-group categories">
               <label htmlFor="categores">Categories</label>
               <input onChange={this.handleInputChange} name="subCategory1" value={this.state.subCategory1 || subCategory1} type="text" className="form-control" id="business-cat" placeholder="Main Category"/>
-              <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory2 ||subCategory2} type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
+              <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory2 || subCategory2} type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
             </div>
             <div className="form-group">
               <label htmlFor="name">Menu</label>
