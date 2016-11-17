@@ -10,10 +10,15 @@ $(function(){
 });
 
 
-// $.ajax('https://yelp-proxy-server.herokuapp.com/api?phone=+1-864-351-0521').then(function(data){
-//   console.log('this proxy server is working', data);
-//   var business = data.businesses.map(function(data){
-//     console.log(data.name);
-//     console.log(data.url);
-//   });
-// });
+$.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
+  console.warn(response.phone);
+  var JSONdata= JSON.stringify(response);
+  localStorage.setItem('username', response.username);
+  localStorage.setItem('token', response.sessionToken);
+  localStorage.setItem('objectID', response.objectId);
+  localStorage.setItem('phone',response.phone);
+  localStorage.setItem('user', JSONdata);
+  if(response.sessionToken){
+    self.props.router.navigate('registration/', {trigger: true});
+  };
+});

@@ -38,12 +38,12 @@ var SignUpComponent = React.createClass({
 
   handleSignUp: function(e){
     e.preventDefault();
-    console.log(signupData);
     var signupData = {
       email: this.state.email,
       phone: this.state.phone,
       password: this.state.password
     };
+    console.log(signupData);
     this.props.handleSignUp(signupData);
     this.setState({email: '', phone: '', password: ''});
   },
@@ -143,6 +143,7 @@ var AuthenticationContainer = React.createClass({
   };
     $.post('https://matias-recipe.herokuapp.com/users', data).then(function(response){
       // console.log('what are you looking at? :)');
+      console.warn(response);
     });
   },
 
@@ -155,7 +156,7 @@ handleLogMeIn: function(logMeIn){
 
 // User.login(username, password);
   $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
-    console.log(response);
+    console.warn(response.phone);
     var JSONdata= JSON.stringify(response);
     localStorage.setItem('username', response.username);
     localStorage.setItem('token', response.sessionToken);
@@ -167,6 +168,8 @@ handleLogMeIn: function(logMeIn){
     };
   });
 },
+
+
 
   render: function(){
     return (

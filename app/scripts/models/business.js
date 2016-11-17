@@ -81,8 +81,7 @@ var Business = ParseModel.extend ({
     city: '',
     state: '',
     zip: '',
-    url: '',
-    imageurl: '',
+    imageUrl: '',
     rating: '',
     isclosed: '',
     specials: new SpecialCollection(),
@@ -91,6 +90,7 @@ var Business = ParseModel.extend ({
 
   save: function(key, val, options){
     this.set('specials', this.get('specials').toJSON());
+    return ParseModel.prototype.save.apply(this, arguments);
   },
   parse: function(data){
     data.specials = new SpecialCollection(data.specials);
