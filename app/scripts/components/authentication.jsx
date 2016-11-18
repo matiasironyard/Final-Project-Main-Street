@@ -156,7 +156,12 @@ handleLogMeIn: function(logMeIn){
 
 // User.login(username, password);
   $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
+    console.log('response', response)
     console.warn(response.phone);
+    localStorage.setItem('user', response);
+
+
+
     var JSONdata= JSON.stringify(response);
     localStorage.setItem('username', response.username);
     localStorage.setItem('token', response.sessionToken);

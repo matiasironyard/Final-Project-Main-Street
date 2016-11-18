@@ -64,26 +64,33 @@ var SpecialCollection = ParseCollection.extend ({
 });
 
 /**
-*Business Model and Collections
+*Yelp Ajax Call through proxy
 */
 var YelpBusiness = Backbone.Model.extend({
   urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+1-864-351-0521',
   parse: function(data){
+    // console.log(data.businesses[0]);
     return data.businesses[0]
   },
 });
+
+/**
+*Business Model and Collections
+*/
+
 var Business = ParseModel.extend ({
   defaults: {
+    id: '',
     name: '',
-    category: '',
+    categories: [],
     phone: '',
     address: '',
     city: '',
     state: '',
     zip: '',
-    imageUrl: '',
-    rating: '',
-    isclosed: '',
+    image_url: '',
+    rating_img_url: '',
+    is_closed: '',
     specials: new SpecialCollection(),
   },
   urlRoot: 'https://matias-recipe.herokuapp.com/classes/Business',
