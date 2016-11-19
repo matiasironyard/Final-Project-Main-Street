@@ -8,9 +8,6 @@ var User= require('../parseUtilities').User;
 
 var yelpBusiness = new YelpBusiness();
 
-
-
-
 var RegistrationForm = React.createClass ({
   getInitialState: function(){
     return this.props.business.toJSON();
@@ -64,53 +61,68 @@ var RegistrationForm = React.createClass ({
     //   // console.log(home.img);
     // }
     return (
-      <div className="registration-form col-md-5 col-md-offset-3">
-        <div className="form-header">
-          <img src=''/>
-          <h2>''</h2>
+      <div className="registration-form col-md-6 col-md-offset-3">
+        <div className="form-header col-md-12">
+          <img src={this.state.image_url}/>
+          <h2>{this.state.name}</h2>
+          <h4>{this.state.mainCategory}</h4>
+          <h5>{this.state.phone}</h5>
         </div>
-        <h4>Registration Form</h4>
-        <p>Verify Your Information</p>
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
-            </div>
-            <div className="form-group categories">
-              <label htmlFor="categores">Categories</label>
-              <input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text" className="form-control" id="business-cat" placeholder="Main Category"/>
-              <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="name">Menu</label>
-              <input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="text" className="form-control" id="business-phone" placeholder="Menu Address"/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="name">Phone</label>
-              <input onChange={this.handleInputChange} name="phone" value={this.state.phone} type="text" className="form-control" id="business-phone" placeholder="Phone"/>
-            </div>
-            <div className="address-form">
+        <div className="form-container">
+          <h4>Registration Form</h4>
+          <p>Verify Your Information</p>
+            <form onSubmit={this.handleSubmit}>
               <div className="form-group">
-                <label htmlFor="name">Address</label>
-                <input onChange={this.handleInputChange} name="address" value={this.state.address} type="text" className="form-control" id="business-address" placeholder="Street Address"/>
+                <label htmlFor="name">Name</label>
+                <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
+              </div>
+              <div className="form-group categories">
+                <label htmlFor="categores">Categories</label>
+                <input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text" className="form-control" id="business-cat" placeholder="Main Category"/>
+                <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
               </div>
               <div className="form-group">
-                <label htmlFor="name"></label>
-                <input onChange={this.handleInputChange} name="city" value={this.state.city} type="text" className="form-control inline" id="business-city" placeholder="City"/>
+                <label htmlFor="name">Menu</label>
+                <input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="text" className="form-control" id="business-phone" placeholder="Menu Address"/>
               </div>
               <div className="form-group">
-                <label htmlFor="name"></label>
-                <input onChange={this.handleInputChange} name="state" value={this.state.state} type="text" className="form-control inline" id="business-state" placeholder="State"/>
+                <label htmlFor="name">Phone</label>
+                <input onChange={this.handleInputChange} name="phone" value={this.state.phone} type="text" className="form-control" id="business-phone" placeholder="Phone"/>
               </div>
-              <div className="form-group">
-                <label htmlFor="name"></label>
-                <input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text" className="form-control inline" id="business-zip" placeholder="Zip Code"/>
+              <div className="address-form">
+                <div className="form-group">
+                  <label htmlFor="name">Address</label>
+                  <input onChange={this.handleInputChange} name="address" value={this.state.address} type="text" className="form-control" id="business-address" placeholder="Street Address"/>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="name"></label>
+                  <input onChange={this.handleInputChange} name="city" value={this.state.city} type="text" className="form-control inline" id="business-city" placeholder="City"/>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="name"></label>
+                  <input onChange={this.handleInputChange} name="state" value={this.state.state} type="text" className="form-control inline" id="business-state" placeholder="State"/>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="name"></label>
+                  <input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text" className="form-control inline" id="business-zip" placeholder="Zip Code"/>
+                </div>
               </div>
-            </div>
-            <div className='button-pane'>
-              <button type="submit" className="btn btn-default">Save Profile</button>
-            </div>
-          </form>
+              <div className="additional-registration-info">
+                <h4>Additional Registration Information From Yelp</h4>
+                <p>We will use the following to build your profile</p>
+                <ul>
+                  <li>Rating: {this.state.rating_img_url}</li>
+                  <li>Review Avatar: {this.state.snippet_image_url}</li>
+                  <li>Review Snippet: {this.state.snippet_text}</li>
+                  <li>Coordinates (to generate map): latitude-{this.state.lat}, longitude-{this.state.long}</li>
+                  <li>Close?: {this.state.is_closed}</li>
+                </ul>
+              </div>
+              <div className='button-pane'>
+                <button type="submit" className="btn btn-default">Save Profile</button>
+              </div>
+            </form>
+          </div>
       </div>
     )
   }
@@ -130,6 +142,7 @@ var RegistrationContainer = React.createClass ({
     businessCollection.parseWhere('user', '_User', User.current().get('objectId')).fetch().then(function(){
       if(businessCollection.length == 1){
         self.setState({business: businessCollection.first()});
+        // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response){
           var data = response.businesses[0];
@@ -148,7 +161,7 @@ var RegistrationContainer = React.createClass ({
               image_url: data.image_url,
               phone: data.display_phone.slice(3),
               is_closed: data.is_closed,
-              ratingImgUrl: data.rating_img_url,
+              rating_img_url: data.rating_img_url,
               address: data.location.address,
               city: data.location.city,
               state: data.location.state_code,
@@ -161,8 +174,6 @@ var RegistrationContainer = React.createClass ({
               snippet_text: data.snippet_text,
               snippet_image_url: data.snippet_image_url,
               url: data.url,
-
-
             }
           ),
 
@@ -201,9 +212,11 @@ var RegistrationContainer = React.createClass ({
   },
 
   saveBusiness: function(businessData){
+
     var business = this.state.business;
     console.log('SAVE', businessData);
     business.set(businessData);
+    // business.set('owner', {})
     business.save();
   },
 

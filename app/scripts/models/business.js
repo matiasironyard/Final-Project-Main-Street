@@ -67,7 +67,7 @@ var SpecialCollection = ParseCollection.extend ({
 *Yelp Ajax Call through proxy
 */
 var YelpBusiness = Backbone.Model.extend({
-  urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+1-864-351-0521',
+  urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+1-864-583-2532',
   parse: function(data){
     // console.log(data.businesses[0]);
     return data.businesses[0]
@@ -80,17 +80,17 @@ var YelpBusiness = Backbone.Model.extend({
 
 var Business = ParseModel.extend ({
   defaults: {
-    id: '',
-    name: '',
-    categories: [],
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
-    image_url: '',
-    rating_img_url: '',
-    is_closed: '',
+    // id: '',
+    // name: '',
+    // categories: [],
+    // phone: '',
+    // address: '',
+    // city: '',
+    // state: '',
+    // zip: '',
+    // image_url: '',
+    // rating_img_url: '',
+    // is_closed: '',
     specials: new SpecialCollection(),
   },
   urlRoot: 'https://matias-recipe.herokuapp.com/classes/Business',

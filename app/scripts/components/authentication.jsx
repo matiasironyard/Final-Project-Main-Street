@@ -150,6 +150,7 @@ var AuthenticationContainer = React.createClass({
 handleLogMeIn: function(logMeIn){
   var self = this;
   var username= logMeIn.email;
+  console.warn(username);
   var password= logMeIn.password;
   var callbackObj =
   this.setState({username: logMeIn.username});
@@ -157,10 +158,7 @@ handleLogMeIn: function(logMeIn){
 // User.login(username, password);
   $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
     console.log('response', response)
-    console.warn(response.phone);
-    localStorage.setItem('user', response);
-
-
+    localStorage.setItem('local storage user', response);
 
     var JSONdata= JSON.stringify(response);
     localStorage.setItem('username', response.username);
