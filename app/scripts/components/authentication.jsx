@@ -155,7 +155,6 @@ handleLogMeIn: function(logMeIn){
   var callbackObj =
   this.setState({username: logMeIn.username});
 
-// User.login(username, password);
   $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
     console.log('response', response)
     localStorage.setItem('local storage user', response);

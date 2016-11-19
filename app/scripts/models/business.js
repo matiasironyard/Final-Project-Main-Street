@@ -66,8 +66,10 @@ var SpecialCollection = ParseCollection.extend ({
 /**
 *Yelp Ajax Call through proxy
 */
+var phone = localStorage.getItem('phone');
+console.log('phone', phone);
 var YelpBusiness = Backbone.Model.extend({
-  urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+1-864-583-2532',
+  urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+' + phone,
   parse: function(data){
     // console.log(data.businesses[0]);
     return data.businesses[0]

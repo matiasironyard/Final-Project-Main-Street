@@ -5,6 +5,9 @@ var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var YelpBusiness = require('../models/business.js').YelpBusiness;
 var User= require('../parseUtilities').User;
+var File = require('../models/uploads.js').File;
+var FileModel = require('../models/uploads.js').FileModel;
+var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 
 var yelpBusiness = new YelpBusiness();
 
@@ -25,6 +28,14 @@ var RegistrationForm = React.createClass ({
     this.setState(newState);
     console.log(target.value);
   },
+
+  // handlePicture: function(e){
+  //   e.preventDefault();
+  //   var attachedPicture = e.target.files[0];
+  //   console.log(attachedPicture);
+  //   this.props.uploadPicture(this.state);
+  //   this.setState({profilePic: attachedPicture});
+  // },
 
   handleSubmit: function(e){
     e.preventDefault();
@@ -71,7 +82,11 @@ var RegistrationForm = React.createClass ({
         <div className="form-container">
           <h4>Registration Form</h4>
           <p>Verify Your Information</p>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
+              <div className="form-profile-pic">
+                <input type="text" id="name"/><br/>
+                <input onChange={this.handlePicture} type="file" id="profile-pic"/>
+              </div>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
@@ -111,11 +126,11 @@ var RegistrationForm = React.createClass ({
                 <h4>Additional Registration Information From Yelp</h4>
                 <p>We will use the following to build your profile</p>
                 <ul>
-                  <li>Rating: {this.state.rating_img_url}</li>
-                  <li>Review Avatar: {this.state.snippet_image_url}</li>
-                  <li>Review Snippet: {this.state.snippet_text}</li>
-                  <li>Coordinates (to generate map): latitude-{this.state.lat}, longitude-{this.state.long}</li>
-                  <li>Close?: {this.state.is_closed}</li>
+                  <li>Rating</li>
+                  <li>Review Avatar</li>
+                  <li>Review Snippet</li>
+                  <li>Coordinates (to generate map)</li>
+                  <li>Open or Close Data</li>
                 </ul>
               </div>
               <div className='button-pane'>
@@ -149,11 +164,6 @@ var RegistrationContainer = React.createClass ({
           var business = new models.Business();
           console.log('yelp raw data', data);
           console.log('yelp fetch data', data.snippet_text);
-          // var business = self.state.business;
-          // var location = business.get('location');
-          // var categories = business.get('categories');
-          // var category1 = categories[0];
-          // var category2 = categories[1];
           business.set(
             {
               name: data.name,
@@ -214,16 +224,28 @@ var RegistrationContainer = React.createClass ({
   saveBusiness: function(businessData){
 
     var business = this.state.business;
+    var objectId =localStorage.getItem('objectID');
+    console.log(objectId);
     console.log('SAVE', businessData);
     business.set(businessData);
-    // business.set('owner', {})
+    business.set('owner', {__type: "Pointer", className: "_User", objectId: objectId});
     business.save();
   },
+
+  // uploadPicture: function(){
+  //   var file = new File(name, data);
+  //   file.set('name', picture.name);
+  //   file.set('data', picture);
+  //   file.save().done(function(){
+  //     console.log('upload', file);
+  //   });
+  // },
 
 render: function (){
   return (
     <div>
-      <RegistrationForm BusinessData={this.state.business} business={this.state.business} saveBusiness={this.saveBusiness}/>
+      <RegistrationForm business={this.state.business} saveBusiness={this.saveBusiness} uploadPicture={this.uploadPicture}/>
+      <DashboardContainer business={this.state.business} saveBusiness={this.saveBusiness}/>
     </div>
   )
 }

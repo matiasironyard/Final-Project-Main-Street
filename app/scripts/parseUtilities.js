@@ -45,7 +45,7 @@ var User = Backbone.Model.extend({
   }
 });
 var user = User.current();
-// console.log('user', user.toJSON());
+console.log('user', user.toJSON());
 
 module.exports = {
   setupParse: setupParse,
