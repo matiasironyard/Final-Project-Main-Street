@@ -8,6 +8,7 @@ var User= require('../parseUtilities').User;
 var File = require('../models/uploads.js').File;
 var FileModel = require('../models/uploads.js').FileModel;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
+var Dashboard= require('./dashboard.jsx').Dashboard;
 
 var yelpBusiness = new YelpBusiness();
 
@@ -143,7 +144,6 @@ var RegistrationForm = React.createClass ({
   }
 });
 
-
 var RegistrationContainer = React.createClass ({
   getInitialState: function(){
     return {
@@ -162,8 +162,6 @@ var RegistrationContainer = React.createClass ({
         yelpBusiness.fetch().then(function(response){
           var data = response.businesses[0];
           var business = new models.Business();
-          console.log('yelp raw data', data);
-          console.log('yelp fetch data', data.snippet_text);
           business.set(
             {
               name: data.name,
@@ -186,25 +184,11 @@ var RegistrationContainer = React.createClass ({
               url: data.url,
             }
           ),
-
           self.setState({business: business});
         });
       }
     });
   },
-
-
-    //##############################################
-  //   componentWillMount: function(){
-  //     var self = this;
-  //     self.getBusiness();
-  //     var yelpBusiness = new YelpBusiness();
-  //     console.log(yelpBusiness)
-  //     yelpBusiness.fetch().then(function(){
-  //       self.setState({yelpBusiness: yelpBusiness});
-  //   });
-  // },
-    //##############################################
 
   componentWillReceiveProps: function(){
     this.getBusiness();
@@ -222,7 +206,6 @@ var RegistrationContainer = React.createClass ({
   },
 
   saveBusiness: function(businessData){
-
     var business = this.state.business;
     var objectId =localStorage.getItem('objectID');
     console.log(objectId);
@@ -242,10 +225,11 @@ var RegistrationContainer = React.createClass ({
   // },
 
 render: function (){
+  console.log('container state',this.state);
   return (
     <div>
       <RegistrationForm business={this.state.business} saveBusiness={this.saveBusiness} uploadPicture={this.uploadPicture}/>
-      <DashboardContainer business={this.state.business} saveBusiness={this.saveBusiness}/>
+
     </div>
   )
 }

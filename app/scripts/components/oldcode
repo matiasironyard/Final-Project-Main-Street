@@ -1,0 +1,13 @@
+
+    //##############################################
+    //used in the registration container to fetch from Yelp.
+  //   componentWillMount: function(){
+  //     var self = this;
+  //     self.getBusiness();
+  //     var yelpBusiness = new YelpBusiness();
+  //     console.log(yelpBusiness)
+  //     yelpBusiness.fetch().then(function(){
+  //       self.setState({yelpBusiness: yelpBusiness});
+  //   });
+  // },
+    //##############################################
