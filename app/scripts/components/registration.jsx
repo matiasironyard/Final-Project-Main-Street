@@ -160,8 +160,8 @@ var RegistrationContainer = React.createClass ({
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response){
-          var data = response.businesses[0];
           var business = new models.Business();
+          var data = response.businesses[0];
           business.set(
             {
               name: data.name,
@@ -170,7 +170,7 @@ var RegistrationContainer = React.createClass ({
               phone: data.display_phone.slice(3),
               is_closed: data.is_closed,
               rating_img_url: data.rating_img_url,
-              address: data.location.address,
+              address: data.location.address[0],
               city: data.location.city,
               state: data.location.state_code,
               zip: data.location.postal_code,

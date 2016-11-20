@@ -21,18 +21,78 @@ var Dashboard = React.createClass({
 
   render: function(){
     var business = this.props.business;
+    console.log('bizz data', business);
     return(
       <div className="dashboard-container col-md-4 col-md-offset-1">
         <h1>Business Dashboard</h1>
+        <img src={business.get('image_url')}/>
           <ul>
             <li>{business.get('name')}</li>
+            <li>{business.get('phone')}</li>
+            <li>{business.get('address')}, {business.get('city')}, {business.get('state')}, {business.get('zip')}</li><br/>
           </ul>
+          <div className="dashboard-review">
+            <h4>Recent Review</h4>
+            <ul>
+              <li><img src={business.get('rating_img_url')}/></li>
+              <li><img src={business.get('snippet_image_url')}/><p>{business.get('snippet_text')}</p></li>
+            </ul>
+          </div>
       </div>
     )
   }
 });
 
-var Specials = React.createClass({
+var SpecialsFormList = React.createClass({
+  getInitialState: function(){
+    return this.props.special.toJSON();
+  },
+
+  componentWillReceiveProps: function(newProps){
+    this.setState(newProps.special.toJSON());
+  },
+
+
+
+  handleInputChange: function(e){
+    var target = e.target;
+    // console.log('target', target);
+    var newState = {};
+    newState[target.name] = target.value;
+    this.setState(newState);
+    this.props.special.set(target.name, target.value);
+  },
+
+
+  render: function(){
+    return(
+      <div className="spcials col-md-12">
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
+          <input  onChange={this.handleInputChange} name="name"  value={this.state.name} type="text" className="form-control" id="name" placeholder="special of the day"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <input  onChange={this.handleInputChange} name="description"  value={this.state.description} type="text" className="form-control" id="description" placeholder="special of the day"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="price">Price</label>
+          <input  onChange={this.handleInputChange} name="price"  value={this.state.price} type="text" className="form-control" id="price" placeholder="special of the day"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="test">Effective Date</label>
+          <input  onChange={this.handleInputChange} name="effective-date"  value={this.state.effectivedate} type="date" className="form-control" id="date" placeholder="special of the day"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="test">Expires On</label>
+          <input  onChange={this.handleInputChange} name="expiry-date"  value={this.state.expirydate} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
+        </div>
+      </div>
+    );
+  }
+});
+
+var SpecialsForm = React.createClass({
   getInitialState: function(){
     return this.props.business.toJSON();
   },
@@ -43,47 +103,43 @@ var Specials = React.createClass({
 
   handleInputChange: function(e){
     var target = e.target;
-    // console.log('target', target);
     var newState = {};
-    newState[target.name] = target.value;
+    newState[target.name]  = target.value;
     this.setState(newState);
-    this.props.business.set(target.name, target.value);
   },
+
   handleSubmit: function(e){
   e.preventDefault();
   this.props.saveSpecial(this.state);
 },
 
-  render: function(){
-    return(
-      <div className="spcials col-md-7">
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="test">Special</label>
-            <input  onChange={this.handleInputChange} name="special"  value={this.state.test} type="text" className="form-control" id="test" placeholder="special of the day"/>
-          </div>
-          <button type="submit" className="btn btn-default">Submit</button>
-        </form>
-      </div>
-    )
-  }
-
-});
-
-var SpecialsForm = React.createClass({
-  getInitialState: function(){
-  return this.props.business.toJSON();
-},
-
-componentWillReceiveProps: function(newProps){
-this.setState(newProps.business.toJSON());
-},
  render: function(){
-   var businessSpecials = this.props.business;
+   var self = this;
+   var business= self.props.business;
+   var specialsFormset = business.get('specials').map(function(special){
+    //  console.log('get specials', business.get('specials'));
+     return (
+       <div key={special.cid}>
+         <SpecialsFormList special={special}/>
+         <span type="button" onClick = {self.props.removeSpecial} className = "glyphicon glyphicon-minus"></span>
+       </div>
+     )
+   });
+   return (
+     <div className="col-md-7">
+       <form onSubmit={this.handleSubmit}>
+         <h3>Specials</h3>
+         <div className="form-inLine">
+           {specialsFormset}
+             <div>
+               <span type="button" onClick = {this.props.addSpecial} className = "glyphicon glyphicon-plus"></span>
+             </div>
+         </div>
+        <button type="submit" className="btn btn-success">Save Specials</button>
+       </form>
+     </div>
+   );
  }
-
-
-
 });
 
 
@@ -91,26 +147,27 @@ this.setState(newProps.business.toJSON());
 var DashboardContainer = React.createClass({
   getInitialState: function(){
     return {
-      business: new models.Business()
-    }
+      business: new models.Business(),
+    };
   },
+
   componentWillMount: function(){
     var self = this;
     var businessCollection = new BusinessCollection();
     businessCollection.parseWhere('user', '_User', User.current().get('objectId')).fetch().then(function(){
       if(businessCollection.length == 1){
         self.setState({business: businessCollection.first()});
-        // console.log(businessCollection.parseWhere());
       }
     });
+        console.log(businessCollection);
   },
 
   componentWillReceiveProps: function(){
     this.getBusiness();
   },
   getBusiness: function(){
-    var business = this.state.business,
-    businessId = this.props.businessId;
+    var business = this.state.business;
+    var businessId = this.props.businessId;
     if(!businessId){
       return;
     }
@@ -120,20 +177,37 @@ var DashboardContainer = React.createClass({
     });
   },
 
+  addSpecial: function(){
+    var business = this.state.business;
+    var specials = business.get('specials');
+    console.log('spcialas add @ form', specials);
+    specials.add([{}]);
+    this.setState({business: business})
+    console.log(this.state);
+  },
+
+  removeSpecial: function(){
+    var business = this.state.business;
+    var specials = business.get('specials');
+    console.log('specials remove @ form', specials);
+    specials.pop([{}]);
+    this.setState({business: business})
+  },
+
   saveSpecial: function(specialData){
     var business = this.state.business;
-    // console.log('recipe @ save form', recipe);
+    console.log('special @ save form', business);
     business.set(specialData);
     business.save();
   },
 
   render: function(){
-    console.log('dashboard state', this.state);
+    console.log('dashboard state',this.state.business.get('specials'));
     return(
-      <div>
+      <div className="col-md-10">
         <h1>Dashboard</h1>
-        <Dashboard business={this.state.business} />
-        <Specials business={this.state.business} saveSpecial={this.saveSpecial}/>
+        <Dashboard  business={this.state.business} />
+        <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')} removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
       </div>
     )
   }

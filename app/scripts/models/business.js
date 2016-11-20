@@ -49,12 +49,12 @@ var ParseCollection = Backbone.Collection.extend({
 
 var Special = ParseModel.extend ({
   defaults: {
-    date: '',
-    expiration: '',
-    name: '',
-    description: '',
-    price: '',
-    picture: '',
+    // date: '',
+    // expiration: '',
+    // name: '',
+    // description: '',
+    // price: '',
+    // picture: '',
   },
 });
 
