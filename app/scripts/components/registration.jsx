@@ -5,8 +5,7 @@ var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var YelpBusiness = require('../models/business.js').YelpBusiness;
 var User= require('../parseUtilities').User;
-var File = require('../models/uploads.js').File;
-var FileModel = require('../models/uploads.js').FileModel;
+var FileModel = require('../models/uploads.js').File;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard= require('./dashboard.jsx').Dashboard;
 
@@ -30,13 +29,13 @@ var RegistrationForm = React.createClass ({
     console.log(target.value);
   },
 
-  // handlePicture: function(e){
-  //   e.preventDefault();
-  //   var attachedPicture = e.target.files[0];
-  //   console.log(attachedPicture);
-  //   this.props.uploadPicture(this.state);
-  //   this.setState({profilePic: attachedPicture});
-  // },
+  handlePicture: function(e){
+    e.preventDefault();
+    var attachedPicture = e.target.files[0];
+    this.props.uploadPicture(attachedPicture);
+    this.setState({profilePic: attachedPicture});
+    console.log(attachedPicture);
+  },
 
   handleSubmit: function(e){
     e.preventDefault();
@@ -215,14 +214,18 @@ var RegistrationContainer = React.createClass ({
     business.save();
   },
 
-  // uploadPicture: function(){
-  //   var file = new File(name, data);
-  //   file.set('name', picture.name);
-  //   file.set('data', picture);
-  //   file.save().done(function(){
-  //     console.log('upload', file);
-  //   });
-  // },
+  uploadPicture: function(picture){
+    var file = new FileModel();
+    var business = this.state.business;
+    file.set('name', picture.name);
+    file.set('data', picture);
+
+    file.save().done(function(response){
+      business.set('uploaded_img', response.url)
+      console.log('upload', file);
+      console.log('response', response.url);
+    });
+  },
 
 render: function (){
   console.log('container state',this.state);

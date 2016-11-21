@@ -38,6 +38,20 @@ var Dashboard = React.createClass({
               <li><img src={business.get('snippet_image_url')}/><p>{business.get('snippet_text')}</p></li>
             </ul>
           </div>
+          <div className="map">
+            <img src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
+&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
+&markers=color:red%7Clabel:C%7C40.718217,-73.998284
+&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU"/>
+          </div>
+          <div className="uploaded-images">
+            <h4>Uploaded Files</h4>
+            <h6>Uploaded Images</h6>
+            <img src={business.get('uploaded_img')}/>
+            <h6>Uploaded Menues</h6>
+            <p>menu link</p>
+          </div>
+
       </div>
     )
   }
@@ -87,6 +101,9 @@ var SpecialsFormList = React.createClass({
           <label htmlFor="test">Expires On</label>
           <input  onChange={this.handleInputChange} name="expiry-date"  value={this.state.expirydate} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
         </div>
+        <div>
+          <span type="button" onClick = {this.props.removeSpecial} className = "glyphicon glyphicon-minus"></span>
+        </div>
       </div>
     );
   }
@@ -121,7 +138,7 @@ var SpecialsForm = React.createClass({
      return (
        <div key={special.cid}>
          <SpecialsFormList special={special}/>
-         <span type="button" onClick = {self.props.removeSpecial} className = "glyphicon glyphicon-minus"></span>
+
        </div>
      )
    });
@@ -133,6 +150,7 @@ var SpecialsForm = React.createClass({
            {specialsFormset}
              <div>
                <span type="button" onClick = {this.props.addSpecial} className = "glyphicon glyphicon-plus"></span>
+               <span type="button" onClick = {this.props.removeSpecial} className = "glyphicon glyphicon-minus"></span>
              </div>
          </div>
         <button type="submit" className="btn btn-success">Save Specials</button>
