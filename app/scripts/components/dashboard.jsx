@@ -47,7 +47,7 @@ var Dashboard = React.createClass({
           <div className="uploaded-images">
             <h4>Uploaded Files</h4>
             <h6>Uploaded Images</h6>
-            <img src={business.get('uploaded_img')}/>
+            <img width="200px" src={business.get('image_upload')}/>
             <h6>Uploaded Menues</h6>
             <p>menu link</p>
           </div>
@@ -172,12 +172,9 @@ var DashboardContainer = React.createClass({
   componentWillMount: function(){
     var self = this;
     var businessCollection = new BusinessCollection();
-    businessCollection.parseWhere('user', '_User', User.current().get('objectId')).fetch().then(function(){
-      if(businessCollection.length == 1){
-        self.setState({business: businessCollection.first()});
-      }
+    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(){
+        self.setState({'business': businessCollection.first()});
     });
-        console.log(businessCollection);
   },
 
   componentWillReceiveProps: function(){

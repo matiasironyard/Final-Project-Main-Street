@@ -8,6 +8,7 @@ var User= require('../parseUtilities').User;
 var FileModel = require('../models/uploads.js').File;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard= require('./dashboard.jsx').Dashboard;
+var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
 
 var yelpBusiness = new YelpBusiness();
 
@@ -26,7 +27,7 @@ var RegistrationForm = React.createClass ({
     var newState = {};
     newState[target.name]  = target.value;
     this.setState(newState);
-    console.log(target.value);
+    // console.log(target.value);
   },
 
   handlePicture: function(e){
@@ -34,13 +35,21 @@ var RegistrationForm = React.createClass ({
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
     this.setState({profilePic: attachedPicture});
-    console.log(attachedPicture);
+    // console.log(attachedPicture);
+  },
+
+  handleMenu: function(e){
+    e.preventDefault();
+    var attachedMenu = e.target.files[0];
+    this.props.uploadMenu(attachedMenu);
+    this.setState({menu: attachedMenu});
+    console.log(attachedMenu);
   },
 
   handleSubmit: function(e){
     e.preventDefault();
     this.props.saveBusiness(this.state);
-    console.log('SUBMIT', this.state);
+    // console.log('SUBMIT', this.state);
   },
   render: function(){
     // var self = this;
@@ -84,8 +93,12 @@ var RegistrationForm = React.createClass ({
           <p>Verify Your Information</p>
             <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
               <div className="form-profile-pic">
-                <input type="text" id="name"/><br/>
+                <input type="text" id="uploaded_picture"/><br/>
                 <input onChange={this.handlePicture} type="file" id="profile-pic"/>
+              </div>
+              <div className="form-profile-pic">
+                <input type="text" id="uploaded_menu"/><br/>
+                <input onChange={this.handleMenu} type="file" id="menu"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
@@ -153,12 +166,18 @@ var RegistrationContainer = React.createClass ({
   componentWillMount: function(){
     var self = this;
     var businessCollection = new BusinessCollection();
-    businessCollection.parseWhere('user', '_User', User.current().get('objectId')).fetch().then(function(){
-      if(businessCollection.length == 1){
-        self.setState({business: businessCollection.first()});
+    // businessCollection.objectId = User.current().get('objectId');
+    // console.warn(User.current().get('objectId'));
+    // console.log('parse fetch', businessCollection.parseWhere('user', '_User', User.current().get('objectId')).fetch());]
+
+    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(){
+      // console.log('parseWhere data', businessCollection.parseWhere('user', '_User', User.current().get('objectId')));
+      if(businessCollection.length >= 1){
+        self.setState({'business': businessCollection.first()});
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response){
+          console.log(response);
           var business = new models.Business();
           var data = response.businesses[0];
           business.set(
@@ -206,33 +225,40 @@ var RegistrationContainer = React.createClass ({
 
   saveBusiness: function(businessData){
     var business = this.state.business;
-    var objectId =localStorage.getItem('objectID');
-    console.log(objectId);
-    console.log('SAVE', businessData);
+    var currentUser = User.current().get('objectId');
+    // console.log('save biz/current user object ID', currentUser);
+    // console.log('SAVE', businessData);
     business.set(businessData);
-    business.set('owner', {__type: "Pointer", className: "_User", objectId: objectId});
+    business.set('owner', {__type: "Pointer", className: "_User", objectId: currentUser});
     business.save();
   },
 
   uploadPicture: function(picture){
     var file = new FileModel();
     var business = this.state.business;
+    // console.log(file);
     file.set('name', picture.name);
     file.set('data', picture);
-
     file.save().done(function(response){
-      business.set('uploaded_img', response.url)
-      console.log('upload', file);
-      console.log('response', response.url);
+      business.set('image_upload', response.url);
+    });
+  },
+
+  uploadMenu: function(menu){
+    var file = new FileModel();
+    var business = this.state.business;
+    file.set('name', menu.name);
+    file.set('data', menu);
+    file.save().done(function(response){
+      business.set('menu_upload', response.url);
     });
   },
 
 render: function (){
-  console.log('container state',this.state);
+  // console.log('container state',this.state);
   return (
     <div>
-      <RegistrationForm business={this.state.business} saveBusiness={this.saveBusiness} uploadPicture={this.uploadPicture}/>
-
+      <RegistrationForm business={this.state.business} saveBusiness={this.saveBusiness} uploadPicture={this.uploadPicture} uploadMenu={this.uploadMenu}/>
     </div>
   )
 }

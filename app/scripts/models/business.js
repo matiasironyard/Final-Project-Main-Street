@@ -29,16 +29,17 @@ var ParseCollection = Backbone.Collection.extend({
   },
   url: function(){
     var url = this.baseUrl;
+    console.log('url/parse-where', url);
 
     if(this.whereClause.field){
           var field = this.whereClause.field;
           delete this.whereClause.field;
           url += '?where={"' + field + '":' + JSON.stringify(this.whereClause) + '}';
         }
-
     return url;
   },
   parse: function(data){
+    console.log('parse data/parse-where', data);
     return data.results;
   }
 });
@@ -109,8 +110,13 @@ var Business = ParseModel.extend ({
 
 var BusinessCollection = ParseCollection.extend ({
   model: Business,
-  url: 'https://matias-recipe.herokuapp.com/classes/Business'
-})
+  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Business'
+  // url: function (){
+  //   console.log('object id for where', this.objectId);
+  //   var querystring = '?where={"owner": {"__type": "Pointer", "className": "_User", "objectId": "'+ this.objectId +' " }}';
+  //   return 'https://matias-recipe.herokuapp.com/classes/Business' + querystring;
+  // }
+});
 
 
 module.exports = {
