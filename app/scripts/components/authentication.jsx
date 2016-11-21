@@ -5,7 +5,7 @@ var $ = require('jquery');
 var setupParse= require('../parseUtilities').setupParse;
 require('../router').router;
 
-console.log('hi');
+// console.log('hi');
 
 var SignUpComponent = React.createClass({
 
@@ -19,7 +19,7 @@ var SignUpComponent = React.createClass({
   handleEmail: function(e){
     // e.preventDefault();
     var email = e.target.value;
-    console.log(email);
+    // console.log(email);
     this.setState({email: email});
   },
 
@@ -32,7 +32,7 @@ var SignUpComponent = React.createClass({
   handlePhone: function(e){
     // e.preventDefault();
     var phone = e.target.value;
-      console.log(phone);
+      // console.log(phone);
     this.setState({phone: phone})
   },
 
@@ -43,7 +43,7 @@ var SignUpComponent = React.createClass({
       phone: this.state.phone,
       password: this.state.password
     };
-    console.log(signupData);
+    // console.log(signupData);
     this.props.handleSignUp(signupData);
     this.setState({email: '', phone: '', password: ''});
   },

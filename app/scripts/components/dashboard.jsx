@@ -5,8 +5,8 @@ var Dashboard = require('../components/registration.jsx').Dashboard;
 var models = require('../models/business');
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
-
-
+var SpecialCollection = require('../models/business.js').SpecialCollection;
+var Special = require('../models/business.js').Special;
 
 
 
@@ -21,9 +21,13 @@ var Dashboard = React.createClass({
 
   render: function(){
     var business = this.props.business;
-    console.log('bizz data', business);
+    // console.log('bizz data', business);
+    var geolocation = business.get('lat') + ',' + business.get('long');
+    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=17&size=300x300 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+    // console.log(googleMap);
+    // console.log(geolocation);
     return(
-      <div className="dashboard-container col-md-4 col-md-offset-1">
+      <div className="dashboard-container col-md-5 col-md-offset-1">
         <h1>Business Dashboard</h1>
         <img src={business.get('image_url')}/>
           <ul>
@@ -39,10 +43,7 @@ var Dashboard = React.createClass({
             </ul>
           </div>
           <div className="map">
-            <img src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
-&markers=color:red%7Clabel:C%7C40.718217,-73.998284
-&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU"/>
+            <img src={googleMap}/>
           </div>
           <div className="uploaded-images">
             <h4>Uploaded Files</h4>
@@ -59,14 +60,16 @@ var Dashboard = React.createClass({
 
 var SpecialsFormList = React.createClass({
   getInitialState: function(){
-    return this.props.special.toJSON();
+
+    return {
+      special: this.props.special
+    };
   },
 
   componentWillReceiveProps: function(newProps){
-    this.setState(newProps.special.toJSON());
+    this.setState(newProps.special);
+    // this.setState(id, this.props.speical.cid)
   },
-
-
 
   handleInputChange: function(e){
     var target = e.target;
@@ -77,32 +80,41 @@ var SpecialsFormList = React.createClass({
     this.props.special.set(target.name, target.value);
   },
 
+  removeSpecial: function(e){
+    var special = this.state.special;
+    console.log(this.state);
+    // var myObj = this.props.special.toJSON();
+    this.props.removeSpecial(special)
+  },
+
 
   render: function(){
+    var special = this.state.special;
+    console.log(special)
     return(
       <div className="spcials col-md-12">
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <input  onChange={this.handleInputChange} name="name"  value={this.state.name} type="text" className="form-control" id="name" placeholder="special of the day"/>
+          <input  onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text" className="form-control" id="name" placeholder="special of the day"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <input  onChange={this.handleInputChange} name="description"  value={this.state.description} type="text" className="form-control" id="description" placeholder="special of the day"/>
+          <input  onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text" className="form-control" id="description" placeholder="special of the day"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
-          <input  onChange={this.handleInputChange} name="price"  value={this.state.price} type="text" className="form-control" id="price" placeholder="special of the day"/>
+          <input  onChange={this.handleInputChange} name="price"  value={special.get('price')} type="text" className="form-control" id="price" placeholder="special of the day"/>
         </div>
         <div className="form-group">
           <label htmlFor="test">Effective Date</label>
-          <input  onChange={this.handleInputChange} name="effective-date"  value={this.state.effectivedate} type="date" className="form-control" id="date" placeholder="special of the day"/>
+          <input  onChange={this.handleInputChange} name="effective-date"  value={special.get('effectivedate')} type="date" className="form-control" id="date" placeholder="special of the day"/>
         </div>
         <div className="form-group">
           <label htmlFor="test">Expires On</label>
-          <input  onChange={this.handleInputChange} name="expiry-date"  value={this.state.expirydate} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
+          <input  onChange={this.handleInputChange} name="expiry-date"  value={special.get('expirydate')} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
         </div>
         <div>
-          <span type="button" onClick = {this.props.removeSpecial} className = "glyphicon glyphicon-minus"></span>
+          <span type="button" onClick = {this.removeSpecial} className = "glyphicon glyphicon-minus"></span>
         </div>
       </div>
     );
@@ -127,7 +139,12 @@ var SpecialsForm = React.createClass({
 
   handleSubmit: function(e){
   e.preventDefault();
+  console.log('business', this.state);
   this.props.saveSpecial(this.state);
+},
+
+removeSpecial: function(special){
+    this.props.removeSpecial(special);
 },
 
  render: function(){
@@ -137,13 +154,12 @@ var SpecialsForm = React.createClass({
     //  console.log('get specials', business.get('specials'));
      return (
        <div key={special.cid}>
-         <SpecialsFormList special={special}/>
-
+         <SpecialsFormList special={special} removeSpecial={self.removeSpecial}/>
        </div>
      )
    });
    return (
-     <div className="col-md-7">
+     <div className="col-md-6">
        <form onSubmit={this.handleSubmit}>
          <h3>Specials</h3>
          <div className="form-inLine">
@@ -194,25 +210,52 @@ var DashboardContainer = React.createClass({
 
   addSpecial: function(){
     var business = this.state.business;
+    // var specials = new SpecialCollection();
     var specials = business.get('specials');
     console.log('spcialas add @ form', specials);
+   var special = new Special();
+
     specials.add([{}]);
     this.setState({business: business})
-    console.log(this.state);
+    console.log('add state', this.state);
   },
 
-  removeSpecial: function(){
+  removeSpecial: function(special){
     var business = this.state.business;
-    var specials = business.get('specials');
-    console.log('specials remove @ form', specials);
-    specials.pop([{}]);
-    this.setState({business: business})
+    var specialsCollection = business.get('specials');
+    specialsCollection.remove(special.cid);
+    this.setState({business: business});
+
+    // console.log(specialsCollection);
+    // var name = special.name;
+    // var remainingSpecials = this.state.business.attributes.specials.filter(function(special){
+    //   return special.attributes.name != name
+    // });
+    // // this.setState({business: remainingSpecials});
+    // this.state.business.attributes.specials = remainingSpecials;
+    // this.forceUpdate();
+    // //
+    // //
+    // console.log('delete state', this.state);
+
+    // console.log('name', name);
+    // console.log('myBusiness', this.state.business.attributes.specials.models);
+
+    // myObj
+
+
+    // var specials = business.get('specials');
+    // console.log('specials remove @ form', specials);
+    // specials.pop([{}]);
+    // this.setState({business: business})
   },
 
   saveSpecial: function(specialData){
     var business = this.state.business;
     console.log('special @ save form', business);
+    console.log('special', specialData);
     business.set(specialData);
+    console.log('business', business);
     business.save();
   },
 

@@ -9,7 +9,6 @@ var FileModel = require('../models/uploads.js').File;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard= require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
-
 var yelpBusiness = new YelpBusiness();
 
 var RegistrationForm = React.createClass ({
@@ -166,20 +165,16 @@ var RegistrationContainer = React.createClass ({
   componentWillMount: function(){
     var self = this;
     var businessCollection = new BusinessCollection();
-    // businessCollection.objectId = User.current().get('objectId');
-    // console.warn(User.current().get('objectId'));
-    // console.log('parse fetch', businessCollection.parseWhere('user', '_User', User.current().get('objectId')).fetch());]
-
-    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(){
-      // console.log('parseWhere data', businessCollection.parseWhere('user', '_User', User.current().get('objectId')));
+    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
       if(businessCollection.length >= 1){
         self.setState({'business': businessCollection.first()});
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response){
-          console.log(response);
+          // console.log(response);
           var business = new models.Business();
           var data = response.businesses[0];
+          // console.log(data.categories[0][1]);
           business.set(
             {
               name: data.name,
@@ -192,8 +187,8 @@ var RegistrationContainer = React.createClass ({
               city: data.location.city,
               state: data.location.state_code,
               zip: data.location.postal_code,
-              mainCategory: data.categories[0],
-              subCategory: data.categories[1],
+              mainCategory: data.categories[0][0],
+              subCategory: data.categories[1][0],
               menuUrl: 'https://www.yelp.com/menu/'+data.id,
               lat: data.location.coordinate.latitude,
               long: data.location.coordinate.longitude,
@@ -225,6 +220,7 @@ var RegistrationContainer = React.createClass ({
 
   saveBusiness: function(businessData){
     var business = this.state.business;
+    // console.log(business.get('lat'));
     var currentUser = User.current().get('objectId');
     // console.log('save biz/current user object ID', currentUser);
     // console.log('SAVE', businessData);

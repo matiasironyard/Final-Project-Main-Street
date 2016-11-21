@@ -49,19 +49,20 @@ var ParseCollection = Backbone.Collection.extend({
 */
 
 var Special = ParseModel.extend ({
+  idAttribute: 'cid',
   defaults: {
-    // date: '',
-    // expiration: '',
-    // name: '',
-    // description: '',
-    // price: '',
-    // picture: '',
+    date: '',
+    expiration: '',
+    name: '',
+    description: '',
+    price: '',
+    picture: '',
   },
 });
 
 var SpecialCollection = ParseCollection.extend ({
   model: Special,
-  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Specials'
+  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Special'
 });
 
 /**
@@ -83,17 +84,17 @@ var YelpBusiness = Backbone.Model.extend({
 
 var Business = ParseModel.extend ({
   defaults: {
-    // id: '',
-    // name: '',
-    // categories: [],
-    // phone: '',
-    // address: '',
-    // city: '',
-    // state: '',
-    // zip: '',
-    // image_url: '',
-    // rating_img_url: '',
-    // is_closed: '',
+    id: '',
+    name: '',
+    categories: [],
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    image_url: '',
+    rating_img_url: '',
+    is_closed: '',
     specials: new SpecialCollection(),
   },
   urlRoot: 'https://matias-recipe.herokuapp.com/classes/Business',
@@ -118,6 +119,13 @@ var BusinessCollection = ParseCollection.extend ({
   // }
 });
 
+var GoogleMaps = ParseModel.extend ({
+  defaults: {
+    url: '',
+  },
+  urlRoot: 'https://maps.googleapis.com/maps/api/staticmap',
+});
+
 
 module.exports = {
   Special: Special,
@@ -125,4 +133,5 @@ module.exports = {
   Business: Business,
   BusinessCollection: BusinessCollection,
   YelpBusiness: YelpBusiness,
+  GoogleMaps: GoogleMaps,
 };
