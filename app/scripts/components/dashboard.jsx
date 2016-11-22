@@ -7,7 +7,7 @@ var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
 var SpecialCollection = require('../models/business.js').SpecialCollection;
 var Special = require('../models/business.js').Special;
-
+var React = require('react');
 
 
 var Dashboard = React.createClass({
@@ -23,7 +23,7 @@ var Dashboard = React.createClass({
     var business = this.props.business;
     // console.log('bizz data', business);
     var geolocation = business.get('lat') + ',' + business.get('long');
-    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=17&size=300x300 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     // console.log(googleMap);
     // console.log(geolocation);
     return(
@@ -166,7 +166,6 @@ removeSpecial: function(special){
            {specialsFormset}
              <div>
                <span type="button" onClick = {this.props.addSpecial} className = "glyphicon glyphicon-plus"></span>
-               <span type="button" onClick = {this.props.removeSpecial} className = "glyphicon glyphicon-minus"></span>
              </div>
          </div>
         <button type="submit" className="btn btn-success">Save Specials</button>
@@ -175,8 +174,6 @@ removeSpecial: function(special){
    );
  }
 });
-
-
 
 var DashboardContainer = React.createClass({
   getInitialState: function(){
@@ -225,29 +222,6 @@ var DashboardContainer = React.createClass({
     var specialsCollection = business.get('specials');
     specialsCollection.remove(special.cid);
     this.setState({business: business});
-
-    // console.log(specialsCollection);
-    // var name = special.name;
-    // var remainingSpecials = this.state.business.attributes.specials.filter(function(special){
-    //   return special.attributes.name != name
-    // });
-    // // this.setState({business: remainingSpecials});
-    // this.state.business.attributes.specials = remainingSpecials;
-    // this.forceUpdate();
-    // //
-    // //
-    // console.log('delete state', this.state);
-
-    // console.log('name', name);
-    // console.log('myBusiness', this.state.business.attributes.specials.models);
-
-    // myObj
-
-
-    // var specials = business.get('specials');
-    // console.log('specials remove @ form', specials);
-    // specials.pop([{}]);
-    // this.setState({business: business})
   },
 
   saveSpecial: function(specialData){

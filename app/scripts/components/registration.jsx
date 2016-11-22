@@ -10,6 +10,8 @@ var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard= require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
 var yelpBusiness = new YelpBusiness();
+require('../router').router;
+
 
 var RegistrationForm = React.createClass ({
   getInitialState: function(){
@@ -51,34 +53,6 @@ var RegistrationForm = React.createClass ({
     // console.log('SUBMIT', this.state);
   },
   render: function(){
-    // var self = this;
-    // var yelpData = self.props.BusinessData;
-    // if(yelpData != undefined){
-    //   console.log(yelpData);
-    //   var name = yelpData.get('name');
-    //   var categories = yelpData.get('categories');
-    //   // console.log(categories);
-    //   var category1 = categories[0];
-    //   var category2 = categories[1];
-    //   var subCategory1 = category1[0];
-    //   var subCategory2 = category2[1];
-    //   var phone = yelpData.get('display_phone').slice(3);
-    //   var isClosed = yelpData.get('is_closed');
-    //   var imgUrl = yelpData.get('image_url');
-    //   var location = yelpData.get('location');
-    //   var address= location.display_address[0];
-    //   var city = location.city;
-    //   var state = location.state_code;
-    //   var zip = location.postal_code;
-    //   var rating = yelpData.get('rating_img_url')
-    //   console.warn(city);
-    //   var menuUrl = 'https://www.yelp.com/menu/'+yelpData.get('id');
-    //   // var home = this.state.formData;
-    //   // home['address']=streetAddress + city;
-    //   // home['img']= imgUrl;
-    //   // console.log(home);
-    //   // console.log(home.img);
-    // }
     return (
       <div className="registration-form col-md-6 col-md-offset-3">
         <div className="form-header col-md-12">
@@ -109,12 +83,16 @@ var RegistrationForm = React.createClass ({
                 <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
               </div>
               <div className="form-group">
+                <label htmlFor="name">Description</label>
+                <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="form-control" id="business-name" placeholder="Enter a short business description"/>
+              </div>
+              <div className="form-group">
                 <label htmlFor="name">Menu</label>
-                <input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="text" className="form-control" id="business-phone" placeholder="Menu Address"/>
+                <input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="url" className="form-control" id="business-phone" placeholder="Menu Address"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Phone</label>
-                <input onChange={this.handleInputChange} name="phone" value={this.state.phone} type="text" className="form-control" id="business-phone" placeholder="Phone"/>
+                <input onChange={this.handleInputChange} name="phone" pattern='\d{3}[\-]\d{3}[\-]\d{4}' value={this.state.phone} type="text" className="form-control" id="business-phone" placeholder="864-111-2233"/>
               </div>
               <div className="address-form">
                 <div className="form-group">
@@ -171,7 +149,9 @@ var RegistrationContainer = React.createClass ({
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response){
-          // console.log(response);
+          console.log('categories', response.businesses[0].categories[0]);
+          var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0][0] : "no main category from Yelp";
+          var subcategory = response.businesses[0].categories[1] ? response.businesses[0].categories[1][0] : "no subcategory from Yelp";
           var business = new models.Business();
           var data = response.businesses[0];
           // console.log(data.categories[0][1]);
@@ -187,8 +167,8 @@ var RegistrationContainer = React.createClass ({
               city: data.location.city,
               state: data.location.state_code,
               zip: data.location.postal_code,
-              mainCategory: data.categories[0][0],
-              subCategory: data.categories[1][0],
+              mainCategory: mainCategory,
+              subCategory: subcategory,
               menuUrl: 'https://www.yelp.com/menu/'+data.id,
               lat: data.location.coordinate.latitude,
               long: data.location.coordinate.longitude,
@@ -219,14 +199,21 @@ var RegistrationContainer = React.createClass ({
   },
 
   saveBusiness: function(businessData){
+    var self = this;
     var business = this.state.business;
     // console.log(business.get('lat'));
     var currentUser = User.current().get('objectId');
     // console.log('save biz/current user object ID', currentUser);
     // console.log('SAVE', businessData);
     business.set(businessData);
+    business.set('image_upload', localStorage.getItem('image_upload'));
+    console.log('imgupload', localStorage.getItem('image_upload'));
+    business.set('menu_upload', localStorage.getItem('menu_upload'));
     business.set('owner', {__type: "Pointer", className: "_User", objectId: currentUser});
-    business.save();
+    business.save().then(function(){
+        self.props.router.navigate('dashboard/', {trigger: true})
+    });
+    console.log('save', this.state);
   },
 
   uploadPicture: function(picture){
@@ -236,7 +223,8 @@ var RegistrationContainer = React.createClass ({
     file.set('name', picture.name);
     file.set('data', picture);
     file.save().done(function(response){
-      business.set('image_upload', response.url);
+      localStorage.setItem('image_upload', response.url);
+      // business.set('image_upload', response.url);
     });
   },
 
@@ -246,7 +234,8 @@ var RegistrationContainer = React.createClass ({
     file.set('name', menu.name);
     file.set('data', menu);
     file.save().done(function(response){
-      business.set('menu_upload', response.url);
+      localStorage.setItem('menu_upload', response.url);
+      // business.set('menu_upload', response.url);
     });
   },
 

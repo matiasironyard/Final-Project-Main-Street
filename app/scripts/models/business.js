@@ -1,4 +1,6 @@
 var Backbone = require('backbone');
+var Business = require('../components/authentication.jsx').AuthenticationContainer;
+var User = require('../parseUtilities.js').User;
 
 //setup Parse models
 /**
@@ -12,7 +14,7 @@ var ParseModel = Backbone.Model.extend({
     delete this.attributes.updatedAt;
     //return the model back to its original state since we have overloaded per above.
     return Backbone.Model.prototype.save.apply(this, arguments);
-  }
+  },
 });
 
 var ParseCollection = Backbone.Collection.extend({
@@ -39,7 +41,7 @@ var ParseCollection = Backbone.Collection.extend({
     return url;
   },
   parse: function(data){
-    console.log('parse data/parse-where', data);
+    // console.log('parse data/parse-where', data.results[0].phone);
     return data.results;
   }
 });
@@ -68,12 +70,11 @@ var SpecialCollection = ParseCollection.extend ({
 /**
 *Yelp Ajax Call through proxy
 */
-var phone = localStorage.getItem('phone');
-console.log('phone', phone);
+var phone = User.current().get('phone');
+console.log('model get phone from current user', phone);
 var YelpBusiness = Backbone.Model.extend({
   urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+' + phone,
   parse: function(data){
-    // console.log(data.businesses[0]);
     return data.businesses[0]
   },
 });
@@ -86,7 +87,7 @@ var Business = ParseModel.extend ({
   defaults: {
     id: '',
     name: '',
-    categories: [],
+    subCategory: 'no subcategory',
     phone: '',
     address: '',
     city: '',
