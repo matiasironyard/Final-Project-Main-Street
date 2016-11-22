@@ -121,6 +121,30 @@ var BusinessCollection = ParseCollection.extend ({
   // }
 });
 
+/**
+*Favorites Model and Collections
+*/
+
+var Favorite = ParseModel.extend ({
+  defaults: {
+    restaurant: '',
+  },
+  urlRoot: 'https://matias-recipe.herokuapp.com/classes/Favorites',
+
+});
+
+var FavoritesCollection = ParseCollection.extend ({
+  model: Business,
+  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Favorite'
+  // url: function (){
+  //   console.log('object id for where', this.objectId);
+  //   var querystring = '?where={"owner": {"__type": "Pointer", "className": "_User", "objectId": "'+ this.objectId +' " }}';
+  //   return 'https://matias-recipe.herokuapp.com/classes/Business' + querystring;
+  // }
+});
+
+
+
 var GoogleMaps = ParseModel.extend ({
   defaults: {
     url: '',
