@@ -54,7 +54,8 @@ var Special = ParseModel.extend ({
   idAttribute: 'cid',
   defaults: {
     date: '',
-    expiration: '',
+    effectivedate: '',
+    expirydate: '',
     name: '',
     description: '',
     price: '',

@@ -32,13 +32,16 @@ var Dashboard = React.createClass({
         <img src={business.get('image_url')}/>
           <ul>
             <li>{business.get('name')}</li>
+            <li><img src={business.get('rating_img_url')}/></li>
+            <li>{business.get('mainCategory')}</li>
+            <li>{business.get('subCategory')}</li>
+            <li>{business.get('is_closed')}</li>
             <li>{business.get('phone')}</li>
             <li>{business.get('address')}, {business.get('city')}, {business.get('state')}, {business.get('zip')}</li><br/>
           </ul>
           <div className="dashboard-review">
             <h4>Recent Review</h4>
             <ul>
-              <li><img src={business.get('rating_img_url')}/></li>
               <li><img src={business.get('snippet_image_url')}/><p>{business.get('snippet_text')}</p></li>
             </ul>
           </div>
@@ -90,7 +93,7 @@ var SpecialsFormList = React.createClass({
 
   render: function(){
     var special = this.state.special;
-    console.log(special)
+    console.log(special.get('effectivedate'))
     return(
       <div className="spcials col-md-12">
         <div className="form-group">
@@ -107,11 +110,12 @@ var SpecialsFormList = React.createClass({
         </div>
         <div className="form-group">
           <label htmlFor="test">Effective Date</label>
-          <input  onChange={this.handleInputChange} name="effective-date"  value={special.get('effectivedate')} type="date" className="form-control" id="date" placeholder="special of the day"/>
+          <input  onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date" className="form-control" id="date" placeholder="special of the day"/>
+          <p>Currently set to: {special.get('effectivedate')}</p>
         </div>
         <div className="form-group">
           <label htmlFor="test">Expires On</label>
-          <input  onChange={this.handleInputChange} name="expiry-date"  value={special.get('expirydate')} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
+          <input  onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
         </div>
         <div>
           <span type="button" onClick = {this.removeSpecial} className = "glyphicon glyphicon-minus"></span>

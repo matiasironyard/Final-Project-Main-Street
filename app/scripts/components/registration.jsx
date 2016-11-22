@@ -152,6 +152,8 @@ var RegistrationContainer = React.createClass ({
           console.log('categories', response.businesses[0].categories[0]);
           var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0][0] : "no main category from Yelp";
           var subcategory = response.businesses[0].categories[1] ? response.businesses[0].categories[1][0] : "no subcategory from Yelp";
+          var open= response.businesses[0].is_closed ? response.businesses[0].is_closed = false: "currently open";
+          console.log('open:', open);
           var business = new models.Business();
           var data = response.businesses[0];
           // console.log(data.categories[0][1]);
@@ -161,7 +163,7 @@ var RegistrationContainer = React.createClass ({
               id: data.id,
               image_url: data.image_url,
               phone: data.display_phone.slice(3),
-              is_closed: data.is_closed,
+              is_closed: open,
               rating_img_url: data.rating_img_url,
               address: data.location.address[0],
               city: data.location.city,
@@ -230,7 +232,7 @@ var RegistrationContainer = React.createClass ({
 
   uploadMenu: function(menu){
     var file = new FileModel();
-    var business = this.state.business;
+    // var business = this.state.business;
     file.set('name', menu.name);
     file.set('data', menu);
     file.save().done(function(response){

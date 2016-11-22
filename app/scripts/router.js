@@ -9,13 +9,14 @@ var setupParse= require('./parseUtilities').setupParse;
 var AuthenticationContainer = require('./components/authentication.jsx').AuthenticationContainer;
 var RegistrationContainer = require('./components/registration.jsx').RegistrationContainer;
 var DashboardContainer = require('./components/dashboard.jsx').DashboardContainer;
+var ViewAllContainer = require('./components/viewall.jsx').ViewAllContainer;
 /* COMPONENT IMPORTS ABOVE */
 
 
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'index',
-    'restaurants/': 'all-restaurants',
+    'restaurants/': 'allrestaurants',
     'restaurants/:id/': 'restaurant',
     'bars/': 'all-bars',
     'bars/:id': 'bar',
@@ -40,6 +41,13 @@ var AppRouter = Backbone.Router.extend({
   registration: function(){
     ReactDOM.render(
       React.createElement(RegistrationContainer,  {router: this}),
+      document.getElementById('app')
+    );
+  },
+
+  allrestaurants: function(){
+    ReactDOM.render(
+      React.createElement(ViewAllContainer, {router: this}),
       document.getElementById('app')
     );
   },
