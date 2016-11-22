@@ -166,7 +166,7 @@ handleLogMeIn: function(logMeIn){
     localStorage.setItem('phone',response.phone);
     localStorage.setItem('user', JSONdata);
     if(response.sessionToken){
-      self.props.router.navigate('dashboard/', {trigger: true});
+      self.props.router.navigate('registration/', {trigger: true});
     };
   });
 },

@@ -7,7 +7,8 @@ var SearchListing = React.createClass({
     return this.props.restaurants;
   },
 
-  handleSearch: function(){
+  handleSearch: function(e){
+    e.preventDefault();
     var self = this;
     var category = self.props.restaurants.get('mainCategory');
     console.log('Search Listing very child>>', category);
@@ -17,7 +18,7 @@ var SearchListing = React.createClass({
   render: function(){
     var categories = this.props.restaurants;
     return(
-      <a onClick={this.handleSearch} >{categories.get('mainCategory')}</a>
+      <p onClick={this.handleSearch} > {categories.get('mainCategory')}</p>
     )
   }
 });
@@ -27,16 +28,16 @@ var Search = React.createClass({
     return this.props.restaurants;
   },
 
-  // handleSearch: function(category){
-  //   this.props.filterCategories(category);
-  // },
+  handleSearch: function(category){
+    this.props.filterCategories(category);
+  },
 
   render: function(){
     var self = this;
     var categoriesList = self.props.restaurants.map(function(categories){
       return (
         <li key={categories.cid}>
-          <SearchListing restaurants={categories}/>
+          <SearchListing restaurants={categories} filterCategories={self.handleSearch}/>
         </li>
       );
     });
@@ -54,10 +55,10 @@ var ItemListing = React.createClass({
     // console.log('3-ItemListing', this.props.restaurants.attributes.specials.length);
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     return(
-      <div className ="col-md-4 restaurant-card" style={{"backgroundImage" : "url({restaurants.get(img_url)})"}}>
+      <div className ="col-md-3 restaurant-card" style={{"backgroundImage" : "url({restaurants.get(img_url)})"}}>
         <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item">
           <div className= "specials-counter">
-            {specialsCounter}
+            <div className="counter-number">{specialsCounter}</div>
           </div>
           <div className="restaurant-card-header">
             <img src={restaurants.get('image_url')}/>
@@ -98,28 +99,45 @@ var Listing = React.createClass({
 var ViewAllContainer= React.createClass({
   getInitialState: function(){
     return {
-      BusinessCollection: new models.BusinessCollection()
+      businessCollection: new models.BusinessCollection(),
+      businessCategoryCollection: new models.BusinessCollection()
     };
   },
 
   componentWillMount: function(){
-    var BusinessCollection = this.state.BusinessCollection;
-    BusinessCollection.fetch().then(() => {
-      this.setState({BusinessCollection: BusinessCollection});
+    var businessCollection = this.state.businessCollection;
+    businessCollection.fetch().then(() => {
+      var categories = this.state.businessCategoryCollection;
+      var uniqueCategories = businessCollection.pluck('mainCategory');
+      var uniqueCollection = uniqueCategories.map(function(category){
+        return businessCollection.findWhere({mainCategory: category});
+      });
+      categories.reset(uniqueCollection);
+      this.setState({
+        businessCollection: businessCollection,
+        businessCategoryCollection: categories
+      });
     });
   },
 
   filterCategories: function(category){
-    var restaurants = this.state.BusinessCollection;
-    this.setState({BusinessCollection: restaurants})
+    console.log('category', category);
+    var restaurants = this.state.businessCollection;
+    // var business = this.state.Business;
+
+    restaurants.fetch({
+      'data': {'where':  {"mainCategory": category}}
+    }).then(() => {
+      this.setState({businessCollection: restaurants});
+    });
   },
 
   render: function(){
     // console.log('1-Business Collection', this.state);
     return (
       <div>
-      <Search restaurants={this.state.BusinessCollection} filterCategories={this.filterCategories}/>
-      <Listing restaurants={this.state.BusinessCollection}/>
+      <Search restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
+      <Listing restaurants={this.state.businessCollection} />
       </div>
     )
   }

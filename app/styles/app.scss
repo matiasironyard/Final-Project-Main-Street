@@ -44,12 +44,25 @@ img {
     }
   }
 }
+.restaurant-card{
+  // border: 2px solid grey;
+  border-radius: 2px;
+  box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.75);
+  height: 200px;
+  margin: 10px;
+  padding: 10px;
 
+}
 .specials-counter{
-  height: 20px;
-  width: 20px;
+
+  height: 30px;
+  width: 30px;
+  float: right;
   text-align: center;
   color: white;
-  background-color: blue;
+  background-color: rgba(37, 36, 29, 0.45);
   border-radius: 100%;
+  .counter-number{
+    margin-top: 5px;
+  }
 }
