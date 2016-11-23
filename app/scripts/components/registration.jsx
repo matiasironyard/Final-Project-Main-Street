@@ -209,7 +209,6 @@ var RegistrationContainer = React.createClass ({
     // console.log('SAVE', businessData);
     business.set(businessData);
     business.set('image_upload', localStorage.getItem('image_upload'));
-    console.log('imgupload', localStorage.getItem('image_upload'));
     business.set('menu_upload', localStorage.getItem('menu_upload'));
     business.set('owner', {__type: "Pointer", className: "_User", objectId: currentUser});
     business.save().then(function(){
@@ -219,14 +218,14 @@ var RegistrationContainer = React.createClass ({
   },
 
   uploadPicture: function(picture){
+    var self = this;
     var file = new FileModel();
     var business = this.state.business;
-    // console.log(file);
     file.set('name', picture.name);
     file.set('data', picture);
     file.save().done(function(response){
       localStorage.setItem('image_upload', response.url);
-      // business.set('image_upload', response.url);
+      self.setState({business: business});
     });
   },
 

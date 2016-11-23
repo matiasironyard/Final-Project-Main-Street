@@ -37,7 +37,7 @@ var User = Backbone.Model.extend({
   },
   current: function(){
     var userData = localStorage.getItem('user');
-    console.log('userData', userData)
+    // console.log('userData', userData)
     if (!userData || !JSON.parse(userData).sessionToken){
       return undefined;
     }
@@ -45,7 +45,7 @@ var User = Backbone.Model.extend({
   }
 });
 var user = User.current();
-console.log('user', user.toJSON());
+// console.log('user', user.toJSON());
 
 module.exports = {
   setupParse: setupParse,

@@ -2,6 +2,9 @@ var React = require('react');
 var Backbone = require('backbone');
 var models = require('../models/business');
 
+
+
+
 var SearchListing = React.createClass({
   getInitialState: function(){
     return this.props.restaurants;
@@ -42,9 +45,11 @@ var Search = React.createClass({
       );
     });
     return(
-      <ul className="col-md-12">
-        {categoriesList}
-      </ul>
+      <div className="categories-sidebar">
+        <ul className="col-sm-2">
+          {categoriesList}
+        </ul>
+      </div>
     )
   }
 });
@@ -54,8 +59,10 @@ var ItemListing = React.createClass({
     var restaurants = this.props.restaurants;
     // console.log('3-ItemListing', this.props.restaurants.attributes.specials.length);
     var specialsCounter = this.props.restaurants.attributes.specials.length;
+    var backgroundImage = restaurants.get('img_url');
+    // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
     return(
-      <div className ="col-md-3 restaurant-card" style={{"backgroundImage" : "url({restaurants.get(img_url)})"}}>
+      <div className ="col-sm-3 restaurant-card">
         <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item">
           <div className= "specials-counter">
             <div className="counter-number">{specialsCounter}</div>
@@ -88,7 +95,7 @@ var Listing = React.createClass({
       );
     });
     return(
-      <div className="col-md-10 col-md-offset-1">
+      <div className="col-sm-10">
         {restaurantList}
       </div>
     )
@@ -105,6 +112,7 @@ var ViewAllContainer= React.createClass({
   },
 
   componentWillMount: function(){
+
     var businessCollection = this.state.businessCollection;
     businessCollection.fetch().then(() => {
       var categories = this.state.businessCategoryCollection;
@@ -136,7 +144,7 @@ var ViewAllContainer= React.createClass({
     // console.log('1-Business Collection', this.state);
     return (
       <div>
-      <Search restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
+      <Search  restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
       <Listing restaurants={this.state.businessCollection} />
       </div>
     )

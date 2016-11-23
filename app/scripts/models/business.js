@@ -31,7 +31,7 @@ var ParseCollection = Backbone.Collection.extend({
   },
   url: function(){
     var url = this.baseUrl;
-    console.log('url/parse-where', url);
+    // console.log('url/parse-where', url);
 
     if(this.whereClause.field){
           var field = this.whereClause.field;
@@ -72,7 +72,7 @@ var SpecialCollection = ParseCollection.extend ({
 *Yelp Ajax Call through proxy
 */
 var phone = User.current().get('phone');
-console.log('model get phone from current user', phone);
+// console.log('model get phone from current user', phone);
 var YelpBusiness = Backbone.Model.extend({
   urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+' + phone,
   parse: function(data){
@@ -120,30 +120,6 @@ var BusinessCollection = ParseCollection.extend ({
   //   return 'https://matias-recipe.herokuapp.com/classes/Business' + querystring;
   // }
 });
-
-/**
-*Favorites Model and Collections
-*/
-
-var Favorite = ParseModel.extend ({
-  defaults: {
-    restaurant: '',
-  },
-  urlRoot: 'https://matias-recipe.herokuapp.com/classes/Favorites',
-
-});
-
-var FavoritesCollection = ParseCollection.extend ({
-  model: Business,
-  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Favorite'
-  // url: function (){
-  //   console.log('object id for where', this.objectId);
-  //   var querystring = '?where={"owner": {"__type": "Pointer", "className": "_User", "objectId": "'+ this.objectId +' " }}';
-  //   return 'https://matias-recipe.herokuapp.com/classes/Business' + querystring;
-  // }
-});
-
-
 
 var GoogleMaps = ParseModel.extend ({
   defaults: {

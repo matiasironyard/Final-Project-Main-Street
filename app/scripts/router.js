@@ -10,6 +10,7 @@ var AuthenticationContainer = require('./components/authentication.jsx').Authent
 var RegistrationContainer = require('./components/registration.jsx').RegistrationContainer;
 var DashboardContainer = require('./components/dashboard.jsx').DashboardContainer;
 var ViewAllContainer = require('./components/viewall.jsx').ViewAllContainer;
+var SingleViewContainer = require('./components/singleview.jsx').SingleViewContainer;
 /* COMPONENT IMPORTS ABOVE */
 
 
@@ -18,10 +19,6 @@ var AppRouter = Backbone.Router.extend({
     '': 'index',
     'restaurants/': 'allrestaurants',
     'restaurants/:id/': 'restaurant',
-    'bars/': 'all-bars',
-    'bars/:id': 'bar',
-    'entertainment/': 'all-entertainment-venues',
-    'entertainment/:id': 'entertainment',
     'dashboard/': 'dashboard',
     'registration/': 'registration',
     'login/': 'login',
@@ -38,16 +35,9 @@ var AppRouter = Backbone.Router.extend({
     );
   },
 
-  registration: function(){
+  registration: function(businessId){
     ReactDOM.render(
-      React.createElement(RegistrationContainer,  {router: this}),
-      document.getElementById('app')
-    );
-  },
-
-  allrestaurants: function(){
-    ReactDOM.render(
-      React.createElement(ViewAllContainer, {router: this}),
+      React.createElement(RegistrationContainer,  {businessId: businessId}, {router: this}),
       document.getElementById('app')
     );
   },
@@ -59,6 +49,21 @@ var AppRouter = Backbone.Router.extend({
     );
   },
 
+
+  allrestaurants: function(){
+    ReactDOM.render(
+      React.createElement(ViewAllContainer, {router: this}),
+      document.getElementById('app')
+    );
+  },
+
+  restaurant: function(businessId){
+    console.log('restaurant view');
+    ReactDOM.render(
+      React.createElement(SingleViewContainer, {businessId: businessId}, {router: this}),
+      document.getElementById('app')
+    );
+  },
 
 });
 

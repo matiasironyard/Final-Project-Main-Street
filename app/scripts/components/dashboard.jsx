@@ -8,6 +8,9 @@ var User= require('../parseUtilities').User;
 var SpecialCollection = require('../models/business.js').SpecialCollection;
 var Special = require('../models/business.js').Special;
 var React = require('react');
+var moment = require('moment');
+var Modal = require('react-modal');
+
 
 
 var Dashboard = React.createClass({
@@ -21,14 +24,10 @@ var Dashboard = React.createClass({
 
   render: function(){
     var business = this.props.business;
-    // console.log('bizz data', business);
     var geolocation = business.get('lat') + ',' + business.get('long');
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
-    // console.log(googleMap);
-    // console.log(geolocation);
     return(
-      <div className="dashboard-container col-md-5 col-md-offset-1">
-        <h1>Business Dashboard</h1>
+      <div className="dashboard-container col-md-4">
         <img src={business.get('image_url')}/>
           <ul>
             <li>{business.get('name')}</li>
@@ -53,11 +52,12 @@ var Dashboard = React.createClass({
             <h6>Uploaded Images</h6>
             <img width="200px" src={business.get('image_upload')}/>
             <h6>Uploaded Menues</h6>
-            <p>menu link</p>
-          </div>
+            <a href={business.get('menu_upload')}>menu link</a>
 
+          </div>
       </div>
     )
+
   }
 });
 
@@ -85,7 +85,7 @@ var SpecialsFormList = React.createClass({
 
   removeSpecial: function(e){
     var special = this.state.special;
-    console.log(this.state);
+    // console.log(this.state);
     // var myObj = this.props.special.toJSON();
     this.props.removeSpecial(special)
   },
@@ -93,7 +93,14 @@ var SpecialsFormList = React.createClass({
 
   render: function(){
     var special = this.state.special;
-    console.log(special.get('effectivedate'))
+    // console.log(special.get('expirydate'))
+    var expiryDate = special.get('expirydate');
+     var now = moment();
+     var formatedDate = now.format("YYYY-MM-DD");
+     if(formatedDate == expiryDate){
+       this.removeSpecial(special);
+       console.warn(this.removeSpecial());
+     };
     return(
       <div className="spcials col-md-12">
         <div className="form-group">
@@ -111,10 +118,10 @@ var SpecialsFormList = React.createClass({
         <div className="form-group">
           <label htmlFor="test">Effective Date</label>
           <input  onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date" className="form-control" id="date" placeholder="special of the day"/>
-          <p>Currently set to: {special.get('effectivedate')}</p>
         </div>
         <div className="form-group">
           <label htmlFor="test">Expires On</label>
+          <p>(Automatically deletes)</p>
           <input  onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
         </div>
         <div>
@@ -143,7 +150,7 @@ var SpecialsForm = React.createClass({
 
   handleSubmit: function(e){
   e.preventDefault();
-  console.log('business', this.state);
+  // console.log('business', this.state);
   this.props.saveSpecial(this.state);
 },
 
@@ -163,13 +170,13 @@ removeSpecial: function(special){
      )
    });
    return (
-     <div className="col-md-6">
+     <div className="col-md-7">
        <form onSubmit={this.handleSubmit}>
          <h3>Specials</h3>
          <div className="form-inLine">
            {specialsFormset}
              <div>
-               <span type="button" onClick = {this.props.addSpecial} className = "glyphicon glyphicon-plus"></span>
+               <button type="button" onClick = {this.props.addSpecial} className="btn btn-success">Add Another</button>
              </div>
          </div>
         <button type="submit" className="btn btn-success">Save Specials</button>
@@ -211,37 +218,35 @@ var DashboardContainer = React.createClass({
 
   addSpecial: function(){
     var business = this.state.business;
-    // var specials = new SpecialCollection();
     var specials = business.get('specials');
-    console.log('spcialas add @ form', specials);
-   var special = new Special();
-
+    var special = new Special();
     specials.add([{}]);
     this.setState({business: business})
-    console.log('add state', this.state);
   },
 
   removeSpecial: function(special){
     var business = this.state.business;
     var specialsCollection = business.get('specials');
     specialsCollection.remove(special.cid);
+    business.save();
     this.setState({business: business});
   },
 
   saveSpecial: function(specialData){
     var business = this.state.business;
-    console.log('special @ save form', business);
-    console.log('special', specialData);
+    // console.log('special @ save form', business);
+    // console.log('special', specialData);
     business.set(specialData);
-    console.log('business', business);
+    // console.log('business', business);
     business.save();
   },
 
   render: function(){
-    console.log('dashboard state',this.state.business.get('specials'));
+    // console.log('dashboard state',this.state.business.get('specials'));
+    var businessName = this.state.business.get('name');
     return(
-      <div className="col-md-10">
-        <h1>Dashboard</h1>
+      <div className="col-md-12">
+        <h1 className="well"> {businessName} Dashboard</h1>
         <Dashboard  business={this.state.business} />
         <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')} removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
       </div>
