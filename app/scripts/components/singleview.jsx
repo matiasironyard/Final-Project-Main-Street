@@ -3,6 +3,39 @@ var Backbone = require('backbone');
 var models = require('../models/business');
 
 
+
+var SpecialsList = React.createClass({
+  render: function(){
+    var specialsListItems = this.props.specials.map(function(special){
+      return (
+        <li key={special.cid} className="detailview-specials-rows">
+          <div className="specials-header">
+            <span className="specials-name">{special.get('name')}</span>
+            <span className="specials-pric">{special.get('price')}</span>
+          </div>
+          <div className="specials-description">{special.get('description')}</div>
+          <div className="specials-dates">
+            <span className="specials-start-date">From:  {special.get('effectivedate')}</span>
+            <span className="specials-end-date">Until:  {special.get('expirydate')}</span>
+          </div>
+        </li>
+      )
+    });
+    console.log('specialslistitems', specialsListItems);
+    return (
+      <div className="col-md-8 detailview-specials-table">
+        <h3 className="well">Specials</h3>
+        <ul>
+            {specialsListItems}
+          </ul>
+      </div>
+    )
+  }
+});
+
+
+
+
 var DetailView = React.createClass({
   getInitialState: function(){
     return {
@@ -15,7 +48,7 @@ var DetailView = React.createClass({
     var restaurant = self.props.restaurant;
     var specials = restaurant.get('specials');
     console.log(specials);
-    var test = this.props.
+    // var test = this.props.
 
     return(
       <div className="row-fluid detailview-pane">
@@ -55,13 +88,6 @@ var DetailView = React.createClass({
             <p>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</p>
           </div>
         </div>
-        <div className="col-md-7 col-md-offset-1 detailview-specials">
-          <ul className="detailview-specials-ul">
-            <li className="detailview-specials-li">
-              Specials go here
-            </li>
-          </ul>
-        </div>
       </div>
     )
   }
@@ -96,7 +122,8 @@ var SingleViewContainer = React.createClass({
     console.log('specials',specials);
     return (
       <div>
-        <DetailView restaurant={this.state.restaurant}/>
+        <DetailView restaurant={this.state.restaurant} specials={specials}/>
+        <SpecialsList specials={specials}/>
       </div>
     )
   },
