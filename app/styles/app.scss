@@ -67,3 +67,74 @@ img {
     margin-top: 5px;
   }
 }
+
+.detailview-pane{
+  // margin-top: 20px;
+  .detailview-header{
+    // display: inline-block;
+    // background-image: url('http://il2.picdn.net/shutterstock/videos/17861914/thumb/1.jpg');
+    // background-position: center;
+    // background-size: cover;
+    // padding-top: 10px;
+    padding-bottom: 20px;
+    box-shadow: -1px 4px 5px 0px rgba(0,0,0,0.75);
+
+    .detailview-header-img{
+      padding-top: 20px;
+    }
+    .detailview-header-text{
+      padding-top: 20px;
+      h1{
+        font-family: 'Raleway', sans-serif;
+        // color: #fff;
+      }
+      h4{
+        font-family: 'Josefin Sans', sans-serif;
+        font-style: italic;
+      }
+      h5{
+        font-family: 'Josefin Sans', sans-serif;
+        font-style: italic;
+      }
+      .detailview-header-review-img{
+  //header image from restaurant parse
+      }
+    }
+  }
+  .detailview-pane{
+    .detailview-description{
+      border-bottom: 1px solid grey;
+      p{
+        font-family: 'Open Sans', sans-serif;
+        padding: 10px;
+      }
+    }
+    .detailview-menu{
+      padding: 10px;
+      border-bottom: 1px solid grey;
+    }
+    .detailview-location-pane{
+      img{
+        height: 300px;
+        width: 300px;
+        padding: 5px;
+      }
+      .detailview-phone{
+        font-family: 'Open Sans', sans-serif;
+        font-weight: bold;
+      }
+      p{
+        font-family: 'Open Sans', sans-serif;
+
+      }
+    }
+  }
+  .detailview-specials{
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-left: 2px solid grey;
+
+
+  }
+}
