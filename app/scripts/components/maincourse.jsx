@@ -7,7 +7,10 @@ var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
 var AppetizerCollection = require('../models/business.js').AppetizerCollection;
 var Appetizer = require('../models/business.js').Appetizer;
-var moment = require('moment');
+var Form = require('muicss/lib/react/form');
+var Input = require('muicss/lib/react/input');
+var Button = require('muicss/lib/react/button');
+
 
 
 var MainCourseFormList = React.createClass({
@@ -41,25 +44,21 @@ var MainCourseFormList = React.createClass({
     var maincourse = this.state.maincourse;
     // console.log(special.get('expirydate'))
     return(
-      <div className="appetizers">
+      <div className="maincourse">
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <input  onChange={this.handleInputChange} name="name"  value={maincourse.get('name')} type="text" className="form-control" id="name" placeholder="dish name"/>
+          <Input  onChange={this.handleInputChange} name="name"  value={maincourse.get('name')} type="text"  id="name" placeholder="dish name"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={maincourse.get('description')} type="text" className="form-control" id="description" placeholder="dish description"/>
+          <Input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={maincourse.get('description')} type="text"  id="description" placeholder="dish description"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
-          <input  onChange={this.handleInputChange} name="price"  value={maincourse.get('price')} type="text" className="form-control" id="price" placeholder="dish price"/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="category">Category</label>
-          <input  onChange={this.handleInputChange} name="category"  value={maincourse.get('category')} type="category" className="form-control" id="category" placeholder="appetizer, main course, dessert"/>
+          <Input  onChange={this.handleInputChange} name="price"  value={maincourse.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
         <div>
-          <span type="button" onClick = {this.removeMainCourse} className = "glyphicon glyphicon-minus"></span>
+          <Button variant="raised" onClick = {this.removeMainCourse} type="button" className="btn btn-danger pull-right">Delete</Button>
         </div>
       </div>
     );
@@ -105,16 +104,15 @@ removeMainCourse: function(maincourse){
    });
    return (
      <div className="col-md-4">
-       <form onSubmit={this.handleSubmit}>
+       <Form onSubmit={this.handleSubmit}>
          <h3>Main Course</h3>
          <div className="form-inLine">
            {mainCourseFormset}
-             <div>
-               <button type="button" onClick = {this.props.addMainCourse} className="btn btn-success">Add Another</button>
-             </div>
+          <Button variant="raised" type="button" onClick = {this.props.addMainCourse} className="btn btn-primary">Add Another</Button>
          </div>
-        <button type="submit" className="btn btn-success">Save Main Course</button>
-       </form>
+         <br></br>
+        <Button variant="raised" type="submit" className="btn btn-success">Save Main Course</Button>
+       </Form>
      </div>
    );
  }

@@ -16,7 +16,10 @@ var DessertCollection = require('../models/business.js').DessertCollection;
 var moment = require('moment');
 var AppetizerForm = require('../components/appetizer.jsx').AppetizerForm;
 var MainCourseForm = require('../components/maincourse.jsx').MainCourseForm;
-var Dessert = require('../components/dessert.jsx').Dessert;
+var DessertForm = require('../components/dessert.jsx').DessertForm;
+var Form = require('muicss/lib/react/form');
+var Input = require('muicss/lib/react/input');
+var Button = require('muicss/lib/react/button');
 
 
 var Dashboard = React.createClass({
@@ -33,8 +36,9 @@ var Dashboard = React.createClass({
     var geolocation = business.get('lat') + ',' + business.get('long');
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
-      <div className="dashboard-container col-md-3">
-        <img src={business.get('image_url')}/>
+      <div className="dashboard-container col-md-12">
+        <div className="dashboard-header col-md-3">
+          <img className="img-thumbnail" src={business.get('image_url')}/>
           <ul>
             <li>{business.get('name')}</li>
             <li><img src={business.get('rating_img_url')}/></li>
@@ -42,28 +46,25 @@ var Dashboard = React.createClass({
             <li>{business.get('subCategory')}</li>
             <li>{business.get('is_closed')}</li>
             <li>{business.get('phone')}</li>
-            <li>{business.get('address')}, {business.get('city')}, {business.get('state')}, {business.get('zip')}</li><br/>
           </ul>
-          <div className="dashboard-review">
-            <h4>Recent Review</h4>
-            <ul>
-              <li><img src={business.get('snippet_image_url')}/><p>{business.get('snippet_text')}</p></li>
-            </ul>
-          </div>
-          <div className="map">
-            <img src={googleMap}/>
-          </div>
-          <div className="uploaded-images">
-            <h4>Uploaded Files</h4>
-            <h6>Uploaded Images</h6>
-            <img width="200px" src={business.get('image_upload')}/>
-            <h6>Uploaded Menues</h6>
-            <a href={business.get('menu_upload')}>menu link</a>
-
-          </div>
+        </div>
+        <div className="col-md-3 map">
+          <h3>Location</h3>
+          <img className="img-thumbnail"src={googleMap}/>
+          <p>{business.get('address')}</p>
+          <p>{business.get('city')}, {business.get('state')}, {business.get('zip')}</p>
+        </div>
+        <div className="col-md-3 dashboard-review">
+          <h3>Recent Review</h3>
+            <img className="img-thumbnail" src={business.get('snippet_image_url')}/>
+            <p>{business.get('snippet_text')}</p>
+        </div>
+        <div className="col-md-3 uploaded-images">
+          <h3>Uploaded Image</h3>
+          <img className="img-thumbnail" width="200px" src={business.get('image_upload')}/>
+        </div>
       </div>
     )
-
   }
 });
 
@@ -105,31 +106,31 @@ var SpecialsFormList = React.createClass({
      };
 
     return(
-      <div className="spcials">
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input  onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text" className="form-control" id="name" placeholder="special of the day"/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text" className="form-control" id="description" placeholder="special of the day"/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="price">Price</label>
-          <input  onChange={this.handleInputChange} name="price"  value={special.get('price')} type="text" className="form-control" id="price" placeholder="special of the day"/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="test">Effective Date</label>
-          <input  onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date" className="form-control" id="date" placeholder="special of the day"/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="test">Expires On</label>
-          <p>(Automatically deletes)</p>
-          <input  onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date" className="form-control" id="expiry-date" placeholder="special of the day"/>
-        </div>
-        <div>
-          <span type="button" onClick = {this.removeSpecial} className = "glyphicon glyphicon-minus"></span>
-        </div>
+      <div className="col-md-12">
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <Input  onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text"  id="name" placeholder="special of the day"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <Input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text"  id="description" placeholder="special of the day"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="price">Price</label>
+            <Input  onChange={this.handleInputChange} name="price"  value={special.get('price')} type="text"  id="price" placeholder="special of the day"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="test">Effective Date</label>
+            <Input  onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date"  id="date" placeholder="special of the day"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="test">Expires On</label>
+            <p>(Automatically deletes)</p>
+            <Input  onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
+          </div>
+          <div>
+            <Button variant="raised"  onClick = {this.removeSpecial} type="button" className="btn btn-danger pull-right">Delete</Button>
+          </div>
       </div>
     );
   }
@@ -171,17 +172,18 @@ removeSpecial: function(special){
      )
    });
    return (
-     <div className="col-md-4">
+     <div className="col-md-12">
+       <Form>
        <form onSubmit={this.handleSubmit}>
          <h3>Specials</h3>
-         <div className="form-inLine">
+         <div className="col-md-12 form-inLine">
            {specialsFormset}
-             <div>
-               <button type="button" onClick = {this.props.addSpecial} className="btn btn-success">Add Another</button>
-             </div>
+           <Button variant="raised"  type="button" onClick = {this.props.addSpecial} className="btn btn-success">Add Another</Button>
          </div>
-        <button type="submit" className="btn btn-success">Save Specials</button>
+         <br></br>
+        <Button variant="raised"  type="submit" className="btn btn-success">Save Specials</Button>
        </form>
+       </Form>
      </div>
    );
  }
@@ -305,6 +307,18 @@ var DashboardContainer = React.createClass({
     business.saveDessert();
   },
 
+  handleToggleSpecials: function(e){
+  e.preventDefault();
+  var showSpecials = !this.state.showSpecials;
+  this.setState({showSpecials: showSpecials});
+  },
+
+  handleToggleMenu: function(e){
+  e.preventDefault();
+  var showMenu = !this.state.showMenu;
+  this.setState({showMenu: showMenu});
+  },
+
   render: function(){
     var businessName = this.state.business.get('name');
     console.log(businessName);
@@ -312,15 +326,28 @@ var DashboardContainer = React.createClass({
     console.log(appetizer);
     var maincourse = this.state.business.get('maincourse');
     var dessert = this.state.business.get('dessert');
+    var openSpecialMessage = this.state.showSpecials  ? !this.state.showSpecials : "Open Editor";
+    var closeSpecialMessage = !this.state.showSpecials  ? this.state.showSpecials : "Close Editor";
+    var openMenuMessage = this.state.showMenu  ? !this.state.showMenu : "Open Editor";
+    var closeMenuMessage = !this.state.showMenu  ? this.state.showMenu : "Close Editor";
 
     return(
-      <div className="col-md-12-fluid">
+      <div className="col-md-12">
         <h1 className="well"> {businessName} Dashboard</h1>
-        <Dashboard business={this.state.business} />
-        <div className="menu-creator">
-          <AppetizerForm   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
-          <MainCourseForm   business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
-          <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')} removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
+        <Dashboard  business={this.state.business} />
+        <div className="specials-pane">
+          <h2>Specials Dashboard</h2>
+          <Button variant="raised"  type="button" className="btn btn-default btn-lg btn-block" onClick={this.handleToggleSpecials}>{openSpecialMessage} {closeSpecialMessage}</Button>
+            {this.state.showSpecials ?<SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')}  removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>: null}
+        </div>
+        <div className="menu-pane">
+          <h2>Menu Dashboard</h2>
+          <Button variant="raised"  onClick={this.handleToggleMenu} type="button" className="btn btn-default btn-lg btn-block">{openMenuMessage} {closeMenuMessage}</Button>
+          {this.state.showMenu ? <div className="menu-creator">
+            <AppetizerForm   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
+            <MainCourseForm   business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
+            <DessertForm  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
+          </div>: null}
         </div>
       </div>
     )
@@ -330,4 +357,3 @@ var DashboardContainer = React.createClass({
 module.exports = {
   DashboardContainer: DashboardContainer,
 }
-        // <Dessert  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>

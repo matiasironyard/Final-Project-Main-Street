@@ -9,6 +9,10 @@ var FileModel = require('../models/uploads.js').File;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard= require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
+var Form = require('muicss/lib/react/form');
+var Input = require('muicss/lib/react/input');
+var Button = require('muicss/lib/react/button');
+var Textarea = require('muicss/lib/react/textarea');
 var yelpBusiness = new YelpBusiness();
 require('../router').router;
 
@@ -64,52 +68,52 @@ var RegistrationForm = React.createClass ({
         <div className="form-container">
           <h4>Registration Form</h4>
           <p>Verify Your Information</p>
-            <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
+            <Form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
               <div className="form-profile-pic">
-                <input type="text" id="uploaded_picture"/><br/>
-                <input onChange={this.handlePicture} type="file" id="profile-pic"/>
+                <Input type="text" id="uploaded_picture"/><br/>
+                <Input onChange={this.handlePicture} type="file" id="profile-pic"/>
               </div>
               <div className="form-profile-pic">
-                <input type="text" id="uploaded_menu"/><br/>
-                <input onChange={this.handleMenu} type="file" id="menu"/>
+                <Input type="text" id="uploaded_menu"/><br/>
+                <Input onChange={this.handleMenu} type="file" id="menu"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
-                <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
+                <Input onChange={this.handleInputChange} name="name" value={this.state.name} type="text"  id="business-name" placeholder="name"/>
               </div>
               <div className="form-group categories">
                 <label htmlFor="categores">Categories</label>
-                <input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text" className="form-control" id="business-cat" placeholder="Main Category"/>
-                <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
+                <Input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text"  id="business-cat" placeholder="Main Category"/>
+                <Input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text"  id="business-cat" placeholder="Sub Category"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Description</label>
-                <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="form-control" id="business-name" placeholder="Enter a short business description"/>
+               <Textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text"  id="business-name" placeholder="Enter a short business description"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Menu</label>
-                <input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="url" className="form-control" id="business-phone" placeholder="Menu Address"/>
+                <Input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="url"  id="business-phone" placeholder="Menu Address"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Phone</label>
-                <input onChange={this.handleInputChange} name="phone" pattern='\d{3}[\-]\d{3}[\-]\d{4}' value={this.state.phone} type="text" className="form-control" id="business-phone" placeholder="864-111-2233"/>
+                <Input onChange={this.handleInputChange} name="phone" pattern='\d{3}[\-]\d{3}[\-]\d{4}' value={this.state.phone} type="text"  id="business-phone" placeholder="864-111-2233"/>
               </div>
               <div className="address-form">
                 <div className="form-group">
                   <label htmlFor="name">Address</label>
-                  <input onChange={this.handleInputChange} name="address" value={this.state.address} type="text" className="form-control" id="business-address" placeholder="Street Address"/>
+                  <Input onChange={this.handleInputChange} name="address" value={this.state.address} type="text"  id="business-address" placeholder="Street Address"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="name"></label>
-                  <input onChange={this.handleInputChange} name="city" value={this.state.city} type="text" className="form-control inline" id="business-city" placeholder="City"/>
+                  <Input onChange={this.handleInputChange} name="city" value={this.state.city} type="text"  id="business-city" placeholder="City"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="name"></label>
-                  <input onChange={this.handleInputChange} name="state" value={this.state.state} type="text" className="form-control inline" id="business-state" placeholder="State"/>
+                  <Input onChange={this.handleInputChange} name="state" value={this.state.state} type="text"  id="business-state" placeholder="State"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="name"></label>
-                  <input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text" className="form-control inline" id="business-zip" placeholder="Zip Code"/>
+                  <Input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text"  id="business-zip" placeholder="Zip Code"/>
                 </div>
               </div>
               <div className="additional-registration-info">
@@ -124,9 +128,9 @@ var RegistrationForm = React.createClass ({
                 </ul>
               </div>
               <div className='button-pane'>
-                <button type="submit" className="btn btn-default">Save Profile</button>
+                <Button variant="raised"  type="submit" className="btn btn-default">Save Profile</Button>
               </div>
-            </form>
+            </Form>
           </div>
       </div>
     )
