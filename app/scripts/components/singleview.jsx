@@ -23,10 +23,38 @@ var SpecialsList = React.createClass({
     });
     console.log('specialslistitems', specialsListItems);
     return (
-      <div className="col-md-8 detailview-specials-table">
+      <div className="col-md-4 detailview-specials-table">
         <h3 className="well">Specials</h3>
         <ul>
             {specialsListItems}
+          </ul>
+      </div>
+    )
+  }
+});
+
+var MenuList = React.createClass({
+  render: function(){
+    var test = this.props.menu.map(function(category){
+      console.log(category.get('category'));
+    });
+    var menuListItems = this.props.menu.map(function(menu){
+      return (
+        <li key={menu.cid} className="detailview-menu-rows">
+          <div className="menu-header">
+            <span className="menu-name">{menu.get('name')}</span>
+            <span className="menu-price">{menu.get('price')}</span>
+          </div>
+          <div className="menu-description">{menu.get('description')}</div>
+        </li>
+      )
+    });
+
+    return (
+      <div className="col-md-4 detailview-menu-list">
+        <h3 className="well">Menu</h3>
+        <ul>
+            {menuListItems}
           </ul>
       </div>
     )
@@ -120,10 +148,12 @@ var SingleViewContainer = React.createClass({
     console.log('1b test', test);
     var specials = this.state.restaurant.get('specials');
     console.log('specials',specials);
+    var menu = this.state.restaurant.get('menu');
     return (
       <div>
         <DetailView restaurant={this.state.restaurant} specials={specials}/>
         <SpecialsList specials={specials}/>
+        <MenuList menu={menu}/>
       </div>
     )
   },

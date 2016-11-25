@@ -7,10 +7,10 @@ var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
 var SpecialCollection = require('../models/business.js').SpecialCollection;
 var Special = require('../models/business.js').Special;
-var React = require('react');
+var Menu = require('../models/business.js').Menu;
+var MenuCollection = require('../models/business.js').MenuCollection;
 var moment = require('moment');
-var Modal = require('react-modal');
-
+var MenuForm = require('../components/menu.jsx').MenuForm;
 
 
 var Dashboard = React.createClass({
@@ -27,7 +27,7 @@ var Dashboard = React.createClass({
     var geolocation = business.get('lat') + ',' + business.get('long');
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
-      <div className="dashboard-container col-md-4">
+      <div className="dashboard-container col-md-3">
         <img src={business.get('image_url')}/>
           <ul>
             <li>{business.get('name')}</li>
@@ -63,9 +63,8 @@ var Dashboard = React.createClass({
 
 var SpecialsFormList = React.createClass({
   getInitialState: function(){
-
     return {
-      special: this.props.special
+      special: this.props.special,
     };
   },
 
@@ -76,20 +75,17 @@ var SpecialsFormList = React.createClass({
 
   handleInputChange: function(e){
     var target = e.target;
-    // console.log('target', target);
     var newState = {};
     newState[target.name] = target.value;
     this.setState(newState);
     this.props.special.set(target.name, target.value);
+    console.log(target);
   },
 
   removeSpecial: function(e){
     var special = this.state.special;
-    // console.log(this.state);
-    // var myObj = this.props.special.toJSON();
     this.props.removeSpecial(special)
   },
-
 
   render: function(){
     var special = this.state.special;
@@ -101,15 +97,16 @@ var SpecialsFormList = React.createClass({
        this.removeSpecial(special);
        console.warn(this.removeSpecial());
      };
+
     return(
-      <div className="spcials col-md-12">
+      <div className="spcials">
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input  onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text" className="form-control" id="name" placeholder="special of the day"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <input  onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text" className="form-control" id="description" placeholder="special of the day"/>
+          <input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text" className="form-control" id="description" placeholder="special of the day"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
@@ -153,11 +150,9 @@ var SpecialsForm = React.createClass({
   // console.log('business', this.state);
   this.props.saveSpecial(this.state);
 },
-
 removeSpecial: function(special){
     this.props.removeSpecial(special);
 },
-
  render: function(){
    var self = this;
    var business= self.props.business;
@@ -170,7 +165,7 @@ removeSpecial: function(special){
      )
    });
    return (
-     <div className="col-md-7">
+     <div className="col-md-4">
        <form onSubmit={this.handleSubmit}>
          <h3>Specials</h3>
          <div className="form-inLine">
@@ -224,10 +219,30 @@ var DashboardContainer = React.createClass({
     this.setState({business: business})
   },
 
+  addMenu: function(){
+    var business = this.state.business;
+    var menus = business.get('menu');
+    var menu = new Menu();
+    console.log(menu);
+    console.warn(this.state);
+
+    menus.add([{}]);
+    this.setState({business: business})
+
+  },
+
   removeSpecial: function(special){
     var business = this.state.business;
     var specialsCollection = business.get('specials');
     specialsCollection.remove(special.cid);
+    business.save();
+    this.setState({business: business});
+  },
+
+  removeMenu: function(menu){
+    var business = this.state.business;
+    var menuCollection = business.get('menu');
+    menuCollection.remove(menu.cid);
     business.save();
     this.setState({business: business});
   },
@@ -238,17 +253,32 @@ var DashboardContainer = React.createClass({
     // console.log('special', specialData);
     business.set(specialData);
     // console.log('business', business);
-    business.save();
+    business.saveSpecial();
+  },
+
+  saveMenu: function(menuData){
+    var business = this.state.business;
+    // console.log('special @ save form', business);
+    // console.log('special', specialData);
+    business.set(menuData);
+    // console.log('business', business);
+    business.saveMenu();
   },
 
   render: function(){
     // console.log('dashboard state',this.state.business.get('specials'));
     var businessName = this.state.business.get('name');
+    console.log(businessName);
+    var menu = this.state.business.get('menu');
+    console.log(menu);
+
     return(
       <div className="col-md-12">
         <h1 className="well"> {businessName} Dashboard</h1>
-        <Dashboard  business={this.state.business} />
+        <Dashboard business={this.state.business} />
         <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')} removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
+        <MenuForm   business={this.state.business} saveMenu={this.saveMenu} menu={this.state.business.get('menu')} removeMenu={this.removeMenu} addMenu={this.addMenu}/>
+
       </div>
     )
   }

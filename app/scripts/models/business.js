@@ -15,6 +15,12 @@ var ParseModel = Backbone.Model.extend({
     //return the model back to its original state since we have overloaded per above.
     return Backbone.Model.prototype.save.apply(this, arguments);
   },
+  saveMenu: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
+    delete this.attributes.createdAt;
+    delete this.attributes.updatedAt;
+    //return the model back to its original state since we have overloaded per above.
+    return Backbone.Model.prototype.save.apply(this, arguments);
+  },
 });
 
 var ParseCollection = Backbone.Collection.extend({
@@ -43,12 +49,31 @@ var ParseCollection = Backbone.Collection.extend({
   parse: function(data){
     // console.log('parse data/parse-where', data.results[0].phone);
     return data.results;
-  }
+  },
+  parse2: function(data){
+    // console.log('parse data/parse-where', data.results[0].phone);
+    return data.results;
+  },
+
 });
 
 /**
 *Specials Model and Collections
 */
+var Menu = ParseModel.extend ({
+idAttribute: 'cid',
+  defaults: {
+    name: '',
+    description: '',
+    category: '',
+    price: '',
+  },
+});
+
+var MenuCollection = ParseCollection.extend ({
+  model: Menu,
+  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Menu'
+});
 
 var Special = ParseModel.extend ({
   idAttribute: 'cid',
@@ -98,15 +123,27 @@ var Business = ParseModel.extend ({
     rating_img_url: '',
     is_closed: '',
     specials: new SpecialCollection(),
+    menu: new MenuCollection(),
   },
   urlRoot: 'https://matias-recipe.herokuapp.com/classes/Business',
 
-  save: function(key, val, options){
+  saveSpecial: function(key, val, options){
     this.set('specials', this.get('specials').toJSON());
+    return ParseModel.prototype.save.apply(this, arguments);
+    console.log(this.state);
+  },
+  saveMenu: function(key, val, options){
+    this.set('menu', this.get('menu').toJSON());
     return ParseModel.prototype.save.apply(this, arguments);
   },
   parse: function(data){
     data.specials = new SpecialCollection(data.specials);
+    data.menu = new MenuCollection(data.menu);
+    return data;
+  },
+  parse2: function(data){
+    // data.specials = new SpecialCollection(data.specials);
+    data.menu = new MenuCollection(data.menu);
     return data;
   }
 });
@@ -132,6 +169,8 @@ var GoogleMaps = ParseModel.extend ({
 module.exports = {
   Special: Special,
   SpecialCollection: SpecialCollection,
+  Menu: Menu,
+  MenuCollection: MenuCollection,
   Business: Business,
   BusinessCollection: BusinessCollection,
   YelpBusiness: YelpBusiness,
