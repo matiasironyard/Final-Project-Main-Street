@@ -5,22 +5,21 @@ var Dashboard = require('../components/registration.jsx').Dashboard;
 var models = require('../models/business');
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
-var MenuCollection = require('../models/business.js').MenuCollection;
-var Menu = require('../models/business.js').Menu;
+var AppetizerCollection = require('../models/business.js').AppetizerCollection;
+var Appetizer = require('../models/business.js').Appetizer;
 var moment = require('moment');
 
 
-
-var MenuFormList = React.createClass({
+var MainCourseFormList = React.createClass({
   getInitialState: function(){
 
     return {
-      menu: this.props.menu,
+      maincourse: this.props.maincourse,
     };
   },
 
   componentWillReceiveProps: function(newProps){
-    this.setState(newProps.menu);
+    this.setState(newProps.maincourse);
     // this.setState(id, this.props.speical.cid)
   },
 
@@ -29,46 +28,45 @@ var MenuFormList = React.createClass({
     var newState = {};
     newState[target.name] = target.value;
     this.setState(newState);
-    this.props.menu.set(target.name, target.value);
+    this.props.maincourse.set(target.name, target.value);
     console.log(target);
   },
 
-  removeMenu: function(e){
-    var menu = this.state.menu;
-    this.props.removeMenu(menu)
+  removeMainCourse: function(e){
+    var maincourse = this.state.maincourse;
+    this.props.removeMainCourse(maincourse)
   },
 
   render: function(){
-    var menu = this.state.menu;
+    var maincourse = this.state.maincourse;
     // console.log(special.get('expirydate'))
     return(
-
-      <div className="spcials">
+      <div className="appetizers">
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <input  onChange={this.handleInputChange} name="name"  value={menu.get('name')} type="text" className="form-control" id="name" placeholder="dish name"/>
+          <input  onChange={this.handleInputChange} name="name"  value={maincourse.get('name')} type="text" className="form-control" id="name" placeholder="dish name"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={menu.get('description')} type="text" className="form-control" id="description" placeholder="dish description"/>
+          <input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={maincourse.get('description')} type="text" className="form-control" id="description" placeholder="dish description"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
-          <input  onChange={this.handleInputChange} name="price"  value={menu.get('price')} type="text" className="form-control" id="price" placeholder="dish price"/>
+          <input  onChange={this.handleInputChange} name="price"  value={maincourse.get('price')} type="text" className="form-control" id="price" placeholder="dish price"/>
         </div>
         <div className="form-group">
           <label htmlFor="category">Category</label>
-          <input  onChange={this.handleInputChange} name="category"  value={menu.get('category')} type="category" className="form-control" id="category" placeholder="appetizer, main course, dessert"/>
+          <input  onChange={this.handleInputChange} name="category"  value={maincourse.get('category')} type="category" className="form-control" id="category" placeholder="appetizer, main course, dessert"/>
         </div>
         <div>
-          <span type="button" onClick = {this.removeMenu} className = "glyphicon glyphicon-minus"></span>
+          <span type="button" onClick = {this.removeMainCourse} className = "glyphicon glyphicon-minus"></span>
         </div>
       </div>
     );
   }
 });
 
-var MenuForm = React.createClass({
+var MainCourseForm = React.createClass({
   getInitialState: function(){
     return this.props.business.toJSON();
   },
@@ -87,35 +85,35 @@ var MenuForm = React.createClass({
   handleSubmit: function(e){
   e.preventDefault();
   // console.log('business', this.state);
-  this.props.saveMenu(this.state);
+  this.props.saveMainCourse(this.state);
 },
 
-removeMenu: function(menu){
-    this.props.removeMenu(menu);
+removeMainCourse: function(maincourse){
+    this.props.removeMainCourse(maincourse);
 },
 
  render: function(){
    var self = this;
    var business= self.props.business;
-   var menuFormset = business.get('menu').map(function(menuItem){
+   var mainCourseFormset = business.get('maincourse').map(function(maincourseItem){
     //  console.log('get specials', business.get('specials'));
      return (
-       <div key={menuItem.cid}>
-         <MenuFormList menu={menuItem} removeMenu={self.removeMenu}/>
+       <div key={maincourseItem.cid}>
+         <MainCourseFormList maincourse={maincourseItem} removeMainCourse={self.removeMainCourse}/>
        </div>
      )
    });
    return (
      <div className="col-md-4">
        <form onSubmit={this.handleSubmit}>
-         <h3>Menu</h3>
+         <h3>Main Course</h3>
          <div className="form-inLine">
-           {menuFormset}
+           {mainCourseFormset}
              <div>
-               <button type="button" onClick = {this.props.addMenu} className="btn btn-success">Add Another</button>
+               <button type="button" onClick = {this.props.addMainCourse} className="btn btn-success">Add Another</button>
              </div>
          </div>
-        <button type="submit" className="btn btn-success">Save Menu</button>
+        <button type="submit" className="btn btn-success">Save Main Course</button>
        </form>
      </div>
    );
@@ -123,5 +121,5 @@ removeMenu: function(menu){
 });
 
 module.exports = {
-  MenuForm: MenuForm
+  MainCourseForm: MainCourseForm
 }

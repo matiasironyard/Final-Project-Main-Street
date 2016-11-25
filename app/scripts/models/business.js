@@ -15,12 +15,19 @@ var ParseModel = Backbone.Model.extend({
     //return the model back to its original state since we have overloaded per above.
     return Backbone.Model.prototype.save.apply(this, arguments);
   },
-  saveMenu: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
+  saveMainCourse: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
     delete this.attributes.createdAt;
     delete this.attributes.updatedAt;
     //return the model back to its original state since we have overloaded per above.
     return Backbone.Model.prototype.save.apply(this, arguments);
   },
+  saveDessert: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
+    delete this.attributes.createdAt;
+    delete this.attributes.updatedAt;
+    //return the model back to its original state since we have overloaded per above.
+    return Backbone.Model.prototype.save.apply(this, arguments);
+  },
+
 });
 
 var ParseCollection = Backbone.Collection.extend({
@@ -50,29 +57,51 @@ var ParseCollection = Backbone.Collection.extend({
     // console.log('parse data/parse-where', data.results[0].phone);
     return data.results;
   },
-  parse2: function(data){
-    // console.log('parse data/parse-where', data.results[0].phone);
-    return data.results;
-  },
-
 });
 
 /**
 *Specials Model and Collections
 */
-var Menu = ParseModel.extend ({
+var Appetizer = ParseModel.extend ({
 idAttribute: 'cid',
   defaults: {
     name: '',
     description: '',
-    category: '',
     price: '',
   },
 });
 
-var MenuCollection = ParseCollection.extend ({
-  model: Menu,
-  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Menu'
+var AppetizerCollection = ParseCollection.extend ({
+  model: Appetizer,
+  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Appetizer'
+});
+
+var MainCourse = ParseModel.extend ({
+idAttribute: 'cid',
+  defaults: {
+    name: '',
+    description: '',
+    price: '',
+  },
+});
+
+var MainCourseCollection = ParseCollection.extend ({
+  model: MainCourse,
+  baseUrl: 'https://matias-recipe.herokuapp.com/classes/MainCourse'
+});
+
+var Dessert= ParseModel.extend ({
+idAttribute: 'cid',
+  defaults: {
+    name: '',
+    description: '',
+    price: '',
+  },
+});
+
+var DessertCollection = ParseCollection.extend ({
+  model: Dessert,
+  baseUrl: 'https://matias-recipe.herokuapp.com/classes/Appetizer'
 });
 
 var Special = ParseModel.extend ({
@@ -123,7 +152,9 @@ var Business = ParseModel.extend ({
     rating_img_url: '',
     is_closed: '',
     specials: new SpecialCollection(),
-    menu: new MenuCollection(),
+    appetizer: new AppetizerCollection(),
+    maincourse: new MainCourseCollection(),
+    dessert: new DessertCollection(),
   },
   urlRoot: 'https://matias-recipe.herokuapp.com/classes/Business',
 
@@ -132,20 +163,26 @@ var Business = ParseModel.extend ({
     return ParseModel.prototype.save.apply(this, arguments);
     console.log(this.state);
   },
-  saveMenu: function(key, val, options){
-    this.set('menu', this.get('menu').toJSON());
+  saveAppetizer: function(key, val, options){
+    this.set('appetizer', this.get('appetizer').toJSON());
+    return ParseModel.prototype.save.apply(this, arguments);
+  },
+  saveMainCourse: function(key, val, options){
+    this.set('maincourse', this.get('maincourse').toJSON());
+    return ParseModel.prototype.save.apply(this, arguments);
+  },
+  saveDessert: function(key, val, options){
+    this.set('dessert', this.get('dessert').toJSON());
     return ParseModel.prototype.save.apply(this, arguments);
   },
   parse: function(data){
     data.specials = new SpecialCollection(data.specials);
-    data.menu = new MenuCollection(data.menu);
+    data.appetizer = new AppetizerCollection(data.appetizer);
+    data.maincourse = new MainCourseCollection(data.maincourse);
+    data.dessert = new DessertCollection(data.dessert);
     return data;
   },
-  parse2: function(data){
-    // data.specials = new SpecialCollection(data.specials);
-    data.menu = new MenuCollection(data.menu);
-    return data;
-  }
+
 });
 
 var BusinessCollection = ParseCollection.extend ({
@@ -169,8 +206,12 @@ var GoogleMaps = ParseModel.extend ({
 module.exports = {
   Special: Special,
   SpecialCollection: SpecialCollection,
-  Menu: Menu,
-  MenuCollection: MenuCollection,
+  Appetizer: Appetizer,
+  AppetizerCollection: AppetizerCollection,
+  MainCourse: MainCourse,
+  MainCourseCollection: MainCourseCollection,
+  Dessert: Dessert,
+  DessertCollection: DessertCollection,
   Business: Business,
   BusinessCollection: BusinessCollection,
   YelpBusiness: YelpBusiness,

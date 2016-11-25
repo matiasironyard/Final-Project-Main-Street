@@ -37,6 +37,15 @@ var MenuList = React.createClass({
   render: function(){
     var test = this.props.menu.map(function(category){
       console.log(category.get('category'));
+      return (
+      <li key={category.cid}>
+        <div className="menu-header">
+          <span className="menu-name">{category.get('name')}</span>
+          <span className="menu-price">{category.get('price')}</span>
+        </div>
+        <div className="menu-description">{category.get('description')}</div>
+      </li>
+    )
     });
     var menuListItems = this.props.menu.map(function(menu){
       return (
@@ -54,6 +63,7 @@ var MenuList = React.createClass({
       <div className="col-md-4 detailview-menu-list">
         <h3 className="well">Menu</h3>
         <ul>
+          {test}
             {menuListItems}
           </ul>
       </div>

@@ -7,10 +7,16 @@ var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
 var SpecialCollection = require('../models/business.js').SpecialCollection;
 var Special = require('../models/business.js').Special;
-var Menu = require('../models/business.js').Menu;
-var MenuCollection = require('../models/business.js').MenuCollection;
+var Appetizer = require('../models/business.js').Appetizer;
+var AppetizerCollection = require('../models/business.js').AppetizerCollection;
+var MainCourse = require('../models/business.js').MainCourse;
+var MainCourseCollection = require('../models/business.js').MainCourseCollection;
+var Dessert = require('../models/business.js').Dessert;
+var DessertCollection = require('../models/business.js').DessertCollection;
 var moment = require('moment');
-var MenuForm = require('../components/menu.jsx').MenuForm;
+var AppetizerForm = require('../components/appetizer.jsx').AppetizerForm;
+var MainCourseForm = require('../components/maincourse.jsx').MainCourseForm;
+var Dessert = require('../components/dessert.jsx').Dessert;
 
 
 var Dashboard = React.createClass({
@@ -218,67 +224,104 @@ var DashboardContainer = React.createClass({
     specials.add([{}]);
     this.setState({business: business})
   },
-
-  addMenu: function(){
-    var business = this.state.business;
-    var menus = business.get('menu');
-    var menu = new Menu();
-    console.log(menu);
-    console.warn(this.state);
-
-    menus.add([{}]);
-    this.setState({business: business})
-
-  },
-
   removeSpecial: function(special){
     var business = this.state.business;
     var specialsCollection = business.get('specials');
     specialsCollection.remove(special.cid);
-    business.save();
-    this.setState({business: business});
-  },
-
-  removeMenu: function(menu){
-    var business = this.state.business;
-    var menuCollection = business.get('menu');
-    menuCollection.remove(menu.cid);
-    business.save();
+    // business.save();
     this.setState({business: business});
   },
 
   saveSpecial: function(specialData){
     var business = this.state.business;
-    // console.log('special @ save form', business);
-    // console.log('special', specialData);
     business.set(specialData);
-    // console.log('business', business);
     business.saveSpecial();
   },
 
-  saveMenu: function(menuData){
+  addAppetizer: function(){
     var business = this.state.business;
-    // console.log('special @ save form', business);
-    // console.log('special', specialData);
-    business.set(menuData);
-    // console.log('business', business);
-    business.saveMenu();
+    var appetizers = business.get('appetizer');
+    var appetizer = new Appetizer();
+    appetizers.add([{}]);
+    this.setState({business: business})
+    console.log(this.state);
+  },
+
+  removeAppetizer: function(appetizer){
+    var business = this.state.business;
+    var appetizerCollection = business.get('appetizer');
+    appetizerCollection.remove(appetizer.cid);
+    // business.save();
+    this.setState({business: business});
+  },
+
+  saveAppetizer: function(appetizerData){
+    var business = this.state.business;
+    business.set(appetizerData);
+    business.saveAppetizer();
+  },
+
+  addMainCourse: function(){
+    var business = this.state.business;
+    var mainCourses= business.get('maincourse');
+    var mainCourse = new MainCourse();
+    mainCourses.add([{}]);
+    this.setState({business: business})
+  },
+
+  removeMainCourse: function(maincourse){
+    var business = this.state.business;
+    var mainCourseCollection = business.get('maincourse');
+    mainCourseCollection.remove(maincourse.cid);
+    // business.save();
+    this.setState({business: business});
+  },
+
+  saveMainCourse: function(mainCourseData){
+    var business = this.state.business;
+    business.set(mainCourseData);
+    business.saveMainCourse();
+  },
+
+  addDessert: function(){
+    var business = this.state.business;
+    var desserts = business.get('dessert');
+    var dessert = new Dessert();
+    desserts.add([{}]);
+    this.setState({business: business})
+  },
+
+  removeDessert: function(dessert){
+    var business = this.state.business;
+    var dessertCollection = business.get('dessert');
+    dessertCollection.remove(dessert.cid);
+    // business.save();
+    this.setState({business: business});
+  },
+
+  saveDessert: function(dessertData){
+    var business = this.state.business;
+    business.set(dessertData);
+    business.saveDessert();
   },
 
   render: function(){
-    // console.log('dashboard state',this.state.business.get('specials'));
     var businessName = this.state.business.get('name');
     console.log(businessName);
-    var menu = this.state.business.get('menu');
-    console.log(menu);
+    var appetizer = this.state.business.get('appetizer');
+    console.log(appetizer);
+    var maincourse = this.state.business.get('maincourse');
+    var dessert = this.state.business.get('dessert');
 
     return(
-      <div className="col-md-12">
+      <div className="col-md-12-fluid">
         <h1 className="well"> {businessName} Dashboard</h1>
         <Dashboard business={this.state.business} />
-        <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')} removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
-        <MenuForm   business={this.state.business} saveMenu={this.saveMenu} menu={this.state.business.get('menu')} removeMenu={this.removeMenu} addMenu={this.addMenu}/>
-
+        <div className="menu-creator">
+          <AppetizerForm   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
+          <MainCourseForm   business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
+          <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')} removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
+        </div>
       </div>
     )
   }
@@ -287,3 +330,4 @@ var DashboardContainer = React.createClass({
 module.exports = {
   DashboardContainer: DashboardContainer,
 }
+        // <Dessert  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
