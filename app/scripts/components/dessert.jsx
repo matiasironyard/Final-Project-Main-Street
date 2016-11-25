@@ -57,7 +57,7 @@ var DessertFormList = React.createClass({
           <Input  onChange={this.handleInputChange} name="price"  value={dessert.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
         <div>
-          <Button variant="raised" onClick = {this.removeSpecial} type="button" className="btn btn-danger pull-right">Delete</Button>
+          <Button variant="raised" onClick = {this.removeDessert} type="button" className="btn btn-danger pull-right">Delete</Button>
         </div>
       </div>
     );
@@ -102,7 +102,7 @@ removeDessert: function(dessert){
      )
    });
    return (
-     <div className="col-md-4">
+     <div className="dashboard-dessert col-md-4">
        <Form onSubmit={this.handleSubmit}>
          <h3>Desserts</h3>
          <div className="form-inLine">

@@ -23,8 +23,8 @@ var SpecialsList = React.createClass({
     });
     console.log('specialslistitems', specialsListItems);
     return (
-      <div className="col-md-4 detailview-specials-table">
-        <h3 className="well">Specials</h3>
+      <div className="col-md-8 detailview-specials-table">
+        <h2 className="well">Specials</h2>
         <ul>
             {specialsListItems}
           </ul>
@@ -35,44 +35,58 @@ var SpecialsList = React.createClass({
 
 var MenuList = React.createClass({
   render: function(){
-    var test = this.props.menu.map(function(category){
-      console.log(category.get('category'));
+
+    var appetizersListItems = this.props.appetizers.map(function(appetizer){
       return (
-      <li key={category.cid}>
-        <div className="menu-header">
-          <span className="menu-name">{category.get('name')}</span>
-          <span className="menu-price">{category.get('price')}</span>
-        </div>
-        <div className="menu-description">{category.get('description')}</div>
-      </li>
-    )
-    });
-    var menuListItems = this.props.menu.map(function(menu){
-      return (
-        <li key={menu.cid} className="detailview-menu-rows">
-          <div className="menu-header">
-            <span className="menu-name">{menu.get('name')}</span>
-            <span className="menu-price">{menu.get('price')}</span>
+        <li key={appetizer.cid} className="detailview-menu-rows">
+          <div className="appetizer-header">
+            <span className="appetizer-name">{appetizer.get('name')}</span>
+            <span className="appetizer-price">{appetizer.get('price')}</span>
           </div>
-          <div className="menu-description">{menu.get('description')}</div>
+          <div className="appetizer-description">{appetizer.get('description')}</div>
+        </li>
+      )
+    });
+
+    var maincourseListItems = this.props.maincourses.map(function(maincourse){
+      return (
+        <li key={maincourse.cid} className="detailview-menu-rows">
+          <div className="maincurse-header">
+            <span className="maincourse-name">{maincourse.get('name')}</span>
+            <span className="maincourse-price">{maincourse.get('price')}</span>
+          </div>
+          <div className="maincourse-description">{maincourse.get('description')}</div>
+        </li>
+      )
+    });
+
+    var dessertsListItems = this.props.desserts.map(function(dessert){
+      return (
+        <li key={dessert.cid} className="detailview-menu-rows">
+          <div className="dessert-header">
+            <span className="dessert-name">{dessert.get('name')}</span>
+            <span className="dessert-price">{dessert.get('price')}</span>
+          </div>
+          <div className="dessert-description">{dessert.get('description')}</div>
         </li>
       )
     });
 
     return (
-      <div className="col-md-4 detailview-menu-list">
-        <h3 className="well">Menu</h3>
-        <ul>
-          {test}
-            {menuListItems}
+      <div className="col-md-8 detailview-menu-list">
+        <h2 className="well">Menu</h2>
+          <ul>
+            <h3>Appetizers</h3>
+              {appetizersListItems}
+              <h3>Main Course</h3>
+              {maincourseListItems}
+              <h3>Desserts</h3>
+              {dessertsListItems}
           </ul>
       </div>
     )
   }
 });
-
-
-
 
 var DetailView = React.createClass({
   getInitialState: function(){
@@ -85,7 +99,9 @@ var DetailView = React.createClass({
     var self = this;
     var restaurant = self.props.restaurant;
     var specials = restaurant.get('specials');
-    console.log(specials);
+    var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
+    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+    console.log(googleMap);
     // var test = this.props.
 
     return(
@@ -116,11 +132,8 @@ var DetailView = React.createClass({
             <img src={restaurant.get('snippet_image_url')}/>
             <p>{restaurant.get('snippet_text')}</p>
           </div>
-          <div className="detailview-menu">
-            <a href={restaurant.get('menu_upload')}>menu</a>
-          </div>
           <div className="detailview-location-pane">
-            <img src={restaurant.get('menu_upload')}/>
+            <img src={googleMap}/>
             <h5>Address</h5>
             <p>{restaurant.get('address')}</p>
             <p>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</p>
@@ -153,17 +166,18 @@ var SingleViewContainer = React.createClass({
     });
   },
   render: function(){
-    console.log('1-parent container state in render', this.state.restaurant);
     var test = this.state.restaurant.get('name');
-    console.log('1b test', test);
     var specials = this.state.restaurant.get('specials');
-    console.log('specials',specials);
-    var menu = this.state.restaurant.get('menu');
+    var appetizers = this.state.restaurant.get('appetizer');
+    var maincourses = this.state.restaurant.get('maincourse');
+    var desserts = this.state.restaurant.get('dessert');
     return (
       <div>
         <DetailView restaurant={this.state.restaurant} specials={specials}/>
         <SpecialsList specials={specials}/>
-        <MenuList menu={menu}/>
+        <div className="menu-pane">
+          <MenuList appetizers={appetizers} maincourses={maincourses} desserts={desserts}/>
+        </div>
       </div>
     )
   },

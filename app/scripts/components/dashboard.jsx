@@ -121,12 +121,13 @@ var SpecialsFormList = React.createClass({
           </div>
           <div className="form-group">
             <label htmlFor="test">Effective Date</label>
-            <Input  onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date"  id="date" placeholder="special of the day"/>
+            <p></p>
+            <input  onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date"  id="date" placeholder="special of the day"/>
           </div>
           <div className="form-group">
             <label htmlFor="test">Expires On</label>
             <p>(Automatically deletes)</p>
-            <Input  onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
+            <input  onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
           </div>
           <div>
             <Button variant="raised"  onClick = {this.removeSpecial} type="button" className="btn btn-danger pull-right">Delete</Button>
@@ -173,16 +174,13 @@ removeSpecial: function(special){
    });
    return (
      <div className="col-md-12">
-       <Form>
-       <form onSubmit={this.handleSubmit}>
+       <Form onSubmit={this.handleSubmit}>
          <h3>Specials</h3>
          <div className="col-md-12 form-inLine">
            {specialsFormset}
-           <Button variant="raised"  type="button" onClick = {this.props.addSpecial} className="btn btn-success">Add Another</Button>
          </div>
-         <br></br>
-        <Button variant="raised"  type="submit" className="btn btn-success">Save Specials</Button>
-       </form>
+         <Button variant="raised"  type="button" onClick = {self.props.addSpecial} className="btn btn-success">Add Another</Button>
+         <Button variant="raised"  color = "primary" type="submit" className="btn btn-success">Save Specials</Button>
        </Form>
      </div>
    );

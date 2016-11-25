@@ -58,8 +58,8 @@ var AppetizerFormList = React.createClass({
           <label htmlFor="price">Price</label>
           <Input  onChange={this.handleInputChange} name="price"  value={appetizer.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
+        <Button variant="raised" onClick = {this.removeAppetizer} type="button" className="btn btn-danger pull-right">Delete</Button>
         <div>
-          <Button variant="raised" onClick = {this.removeSpecial} type="button" className="btn btn-danger pull-right">Delete</Button>
         </div>
       </div>
     );

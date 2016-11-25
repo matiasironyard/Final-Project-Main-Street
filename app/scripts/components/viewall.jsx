@@ -1,9 +1,9 @@
 var React = require('react');
 var Backbone = require('backbone');
 var models = require('../models/business');
-
-
-
+var Panel = require('muicss/lib/react/panel');
+var Dropdown = require('muicss/lib/react/dropdown');
+var DropdownItem = require('muicss/lib/react/dropdown-item');
 
 var SearchListing = React.createClass({
   getInitialState: function(){
@@ -39,16 +39,20 @@ var Search = React.createClass({
     var self = this;
     var categoriesList = self.props.restaurants.map(function(categories){
       return (
-        <li key={categories.cid}>
-          <SearchListing restaurants={categories} filterCategories={self.handleSearch}/>
-        </li>
+
+
+          <DropdownItem key={categories.cid}>
+            <SearchListing restaurants={categories} filterCategories={self.handleSearch}/>
+          </DropdownItem>
+
+
       );
     });
     return(
-      <div className="categories-sidebar">
-        <ul className="col-sm-2">
+      <div className="col-sm-4 col-sm-offset-3 categories-dropdown">
+        <Dropdown className="search-dropdown" variant="raised"   label="I'm in the mood for...">
           {categoriesList}
-        </ul>
+        </Dropdown>
       </div>
     )
   }
@@ -76,7 +80,7 @@ var ItemListing = React.createClass({
             <p>{restaurants.get('is_closed')}</p>
             <p>{restaurants.get('description')}</p>
           </div>
-      </a>
+        </a>
       </div>
     )
   }
@@ -89,15 +93,16 @@ var Listing = React.createClass({
     var restaurantList = self.props.restaurants.map(function(restaurant){
       // console.log('2-map', restaurantList);
       return (
-        <div key={restaurant.cid}>
-          <ItemListing restaurants={restaurant}/>
-        </div>
+          <div key={restaurant.cid}>
+            <ItemListing restaurants={restaurant}/>
+          </div>
       );
     });
     return(
-      <div className="col-sm-10">
+      <div className="col-sm-8 col-sm-offset-2">
         {restaurantList}
       </div>
+
     )
   }
 });

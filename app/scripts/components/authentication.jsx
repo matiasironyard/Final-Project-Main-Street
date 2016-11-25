@@ -157,8 +157,9 @@ handleLogMeIn: function(logMeIn){
 
   $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
     // console.log('response', response)
+    var objectId = response.objectId;
+    console.log(objectId);
     localStorage.setItem('local storage user', response);
-
     var JSONdata= JSON.stringify(response);
     localStorage.setItem('username', response.username);
     localStorage.setItem('token', response.sessionToken);
@@ -166,7 +167,7 @@ handleLogMeIn: function(logMeIn){
     localStorage.setItem('phone',response.phone);
     localStorage.setItem('user', JSONdata);
     if(response.sessionToken){
-      self.props.router.navigate('registration/', {trigger: true});
+      self.props.router.navigate('/registration/', {trigger: true})
     };
   });
 },

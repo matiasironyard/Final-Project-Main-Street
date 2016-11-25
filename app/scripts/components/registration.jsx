@@ -13,6 +13,7 @@ var Form = require('muicss/lib/react/form');
 var Input = require('muicss/lib/react/input');
 var Button = require('muicss/lib/react/button');
 var Textarea = require('muicss/lib/react/textarea');
+var Panel = require('muicss/lib/react/panel');
 var yelpBusiness = new YelpBusiness();
 require('../router').router;
 
@@ -56,26 +57,39 @@ var RegistrationForm = React.createClass ({
     this.props.saveBusiness(this.state);
     // console.log('SUBMIT', this.state);
   },
+  activateModal: function(e) {
+    e.preventDefault();
+    var modalEl = document.createElement('div');
+    modalEl.style.width = '400px';
+    modalEl.style.height = '300px';
+    modalEl.style.margin = '100px auto';
+    modalEl.style.backgroundColor = '#fff';
+    mui.overlay('on', modalEl);
+    console.log(this.state);
+  },
+
   render: function(){
     return (
       <div className="registration-form col-md-6 col-md-offset-3">
-        <div className="form-header col-md-12">
-          <img src={this.state.image_url}/>
-          <h2>{this.state.name}</h2>
-          <h4>{this.state.mainCategory}</h4>
-          <h5>{this.state.phone}</h5>
-        </div>
+        <Panel>
+          <div className="form-header col-md-12">
+            <img src={this.state.image_url}/>
+            <h2>{this.state.name}</h2>
+            <h4>{this.state.mainCategory}</h4>
+            <h5>{this.state.phone}</h5>
+          </div>
+      </Panel>
         <div className="form-container">
           <h4>Registration Form</h4>
           <p>Verify Your Information</p>
             <Form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
               <div className="form-profile-pic">
-                <Input type="text" id="uploaded_picture"/><br/>
-                <Input onChange={this.handlePicture} type="file" id="profile-pic"/>
+                <Input label="Upload business picture. Enter picture name below (no symbols or dashes)" type="text" id="uploaded_picture" /><br/>
+                <input onChange={this.handlePicture} type="file" id="profile-pic"/>
               </div>
               <div className="form-profile-pic">
-                <Input type="text" id="uploaded_menu"/><br/>
-                <Input onChange={this.handleMenu} type="file" id="menu"/>
+                <Input label="Upload business menu. Enter a name for your menu. You can also create an awesome looking menu in your dashboard." type="text" id="uploaded_menu"/><br/>
+                <input onChange={this.handleMenu} type="file" id="menu"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
@@ -216,7 +230,7 @@ var RegistrationContainer = React.createClass ({
     business.set('menu_upload', localStorage.getItem('menu_upload'));
     business.set('owner', {__type: "Pointer", className: "_User", objectId: currentUser});
     business.save().then(function(){
-        self.props.router.navigate('dashboard/', {trigger: true})
+        self.props.router.navigate('/dashboard/', {trigger: true})
     });
     console.log('save', this.state);
   },

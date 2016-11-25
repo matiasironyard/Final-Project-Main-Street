@@ -35,9 +35,9 @@ var AppRouter = Backbone.Router.extend({
     );
   },
 
-  registration: function(businessId){
+  registration: function(){
     ReactDOM.render(
-      React.createElement(RegistrationContainer,  {businessId: businessId}, {router: this}),
+      React.createElement(RegistrationContainer, {router: this}),
       document.getElementById('app')
     );
   },
