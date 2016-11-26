@@ -208,6 +208,7 @@ var SingleViewContainer = React.createClass({
     var appetizers = this.state.restaurant.get('appetizer');
     var maincourses = this.state.restaurant.get('maincourse');
     var desserts = this.state.restaurant.get('dessert');
+
     return (
       <div>
         <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} specials={specials}/>

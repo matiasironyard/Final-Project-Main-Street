@@ -1,9 +1,15 @@
 var React = require('react');
 var Backbone = require('backbone');
 var models = require('../models/business');
+var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Panel = require('muicss/lib/react/panel');
 var Dropdown = require('muicss/lib/react/dropdown');
 var DropdownItem = require('muicss/lib/react/dropdown-item');
+var moment = require('moment');
+
+// Make bootstrap dropdown work
+var $ = window.jQuery = require('jquery');
+require('bootstrap-sass');
 
 
 var SearchListing = React.createClass({
@@ -62,6 +68,7 @@ var ItemListing = React.createClass({
     var restaurants = this.props.restaurants;
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
+
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
     return(
       <div className ="col-sm-3 restaurant-card">

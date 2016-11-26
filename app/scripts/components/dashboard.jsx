@@ -322,7 +322,7 @@ var DashboardContainer = React.createClass({
     console.log(appetizer);
     var maincourse = this.state.business.get('maincourse');
     var dessert = this.state.business.get('dessert');
-    var openSpecialMessage = this.state.showSpecials  ? !this.state.showSpecials : "Open Editor";
+    var openSpecialMessage = this.state.showSpecials  ?  !this.state.showSpecials : "Open Editor";
     var closeSpecialMessage = !this.state.showSpecials  ? this.state.showSpecials : "Close Editor";
     var openMenuMessage = this.state.showMenu  ? !this.state.showMenu : "Open Editor";
     var closeMenuMessage = !this.state.showMenu  ? this.state.showMenu : "Close Editor";
