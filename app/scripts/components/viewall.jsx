@@ -5,6 +5,7 @@ var Panel = require('muicss/lib/react/panel');
 var Dropdown = require('muicss/lib/react/dropdown');
 var DropdownItem = require('muicss/lib/react/dropdown-item');
 
+
 var SearchListing = React.createClass({
   getInitialState: function(){
     return this.props.restaurants;
@@ -39,13 +40,9 @@ var Search = React.createClass({
     var self = this;
     var categoriesList = self.props.restaurants.map(function(categories){
       return (
-
-
           <DropdownItem key={categories.cid}>
             <SearchListing restaurants={categories} filterCategories={self.handleSearch}/>
           </DropdownItem>
-
-
       );
     });
     return(
@@ -59,9 +56,10 @@ var Search = React.createClass({
 });
 
 var ItemListing = React.createClass({
+
+
   render: function(){
     var restaurants = this.props.restaurants;
-    // console.log('3-ItemListing', this.props.restaurants.attributes.specials.length);
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
@@ -144,6 +142,8 @@ var ViewAllContainer= React.createClass({
       this.setState({businessCollection: restaurants});
     });
   },
+
+
 
   render: function(){
     // console.log('1-Business Collection', this.state);

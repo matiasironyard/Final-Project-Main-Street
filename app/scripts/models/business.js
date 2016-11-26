@@ -125,10 +125,12 @@ var SpecialCollection = ParseCollection.extend ({
 /**
 *Yelp Ajax Call through proxy
 */
-var phone = User.current().get('phone');
+// var phone = User.current().get('phone');
+var localStoragePhone = localStorage.getItem('phone');
+console.log(localStoragePhone);
 // console.log('model get phone from current user', phone);
 var YelpBusiness = Backbone.Model.extend({
-  urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+' + phone,
+  urlRoot: 'https://yelp-proxy-server.herokuapp.com/api?phone=+1'  + '-' + localStoragePhone,
   parse: function(data){
     return data.businesses[0]
   },
@@ -182,7 +184,6 @@ var Business = ParseModel.extend ({
     data.dessert = new DessertCollection(data.dessert);
     return data;
   },
-
 });
 
 var BusinessCollection = ParseCollection.extend ({

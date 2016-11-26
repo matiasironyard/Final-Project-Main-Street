@@ -9,11 +9,6 @@ var FileModel = require('../models/uploads.js').File;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard= require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
-var Form = require('muicss/lib/react/form');
-var Input = require('muicss/lib/react/input');
-var Button = require('muicss/lib/react/button');
-var Textarea = require('muicss/lib/react/textarea');
-var Panel = require('muicss/lib/react/panel');
 var yelpBusiness = new YelpBusiness();
 require('../router').router;
 
@@ -57,77 +52,64 @@ var RegistrationForm = React.createClass ({
     this.props.saveBusiness(this.state);
     // console.log('SUBMIT', this.state);
   },
-  activateModal: function(e) {
-    e.preventDefault();
-    var modalEl = document.createElement('div');
-    modalEl.style.width = '400px';
-    modalEl.style.height = '300px';
-    modalEl.style.margin = '100px auto';
-    modalEl.style.backgroundColor = '#fff';
-    mui.overlay('on', modalEl);
-    console.log(this.state);
-  },
-
   render: function(){
     return (
       <div className="registration-form col-md-6 col-md-offset-3">
-        <Panel>
-          <div className="form-header col-md-12">
-            <img src={this.state.image_url}/>
-            <h2>{this.state.name}</h2>
-            <h4>{this.state.mainCategory}</h4>
-            <h5>{this.state.phone}</h5>
-          </div>
-      </Panel>
+        <div className="form-header col-md-12">
+          <img src={this.state.image_url}/>
+          <h2>{this.state.name}</h2>
+          <h4>{this.state.mainCategory}</h4>
+          <h5>{this.state.phone}</h5>
+        </div>
         <div className="form-container">
           <h4>Registration Form</h4>
           <p>Verify Your Information</p>
-            <Form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
+            <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
               <div className="form-profile-pic">
-                <Input label="Upload business picture. Enter picture name below (no symbols or dashes)" type="text" id="uploaded_picture" /><br/>
+                <input type="text" id="uploaded_picture"/><br/>
                 <input onChange={this.handlePicture} type="file" id="profile-pic"/>
               </div>
               <div className="form-profile-pic">
-                <Input label="Upload business menu. Enter a name for your menu. You can also create an awesome looking menu in your dashboard." type="text" id="uploaded_menu"/><br/>
+                <input type="text" id="uploaded_menu"/><br/>
                 <input onChange={this.handleMenu} type="file" id="menu"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
-                <Input onChange={this.handleInputChange} name="name" value={this.state.name} type="text"  id="business-name" placeholder="name"/>
+                <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
               </div>
               <div className="form-group categories">
                 <label htmlFor="categores">Categories</label>
-                <Input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text"  id="business-cat" placeholder="Main Category"/>
-                <Input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text"  id="business-cat" placeholder="Sub Category"/>
+                <input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text" className="form-control" id="business-cat" placeholder="Main Category"/>
+                <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Description</label>
-               <Textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text"  id="business-name" placeholder="Enter a short business description"/>
+                <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="form-control" id="business-name" placeholder="Enter a short business description"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Menu</label>
-                <Input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="url"  id="business-phone" placeholder="Menu Address"/>
+                <input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="url" className="form-control" id="business-phone" placeholder="Menu Address"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Phone</label>
-                <Input onChange={this.handleInputChange} name="phone" pattern='\d{3}[\-]\d{3}[\-]\d{4}' value={this.state.phone} type="text"  id="business-phone" placeholder="864-111-2233"/>
+                <input onChange={this.handleInputChange} name="phone" pattern='\d{3}[\-]\d{3}[\-]\d{4}' value={this.state.phone} type="text" className="form-control" id="business-phone" placeholder="864-111-2233"/>
               </div>
               <div className="address-form">
                 <div className="form-group">
                   <label htmlFor="name">Address</label>
-                  <Input onChange={this.handleInputChange} name="address" value={this.state.address} type="text"  id="business-address" placeholder="Street Address"/>
+                  <input onChange={this.handleInputChange} name="address" value={this.state.address} type="text" className="form-control" id="business-address" placeholder="Street Address"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="name"></label>
-                  <Input onChange={this.handleInputChange} name="city" value={this.state.city} type="text"  id="business-city" placeholder="City"/>
+                  <input onChange={this.handleInputChange} name="city" value={this.state.city} type="text" className="form-control inline" id="business-city" placeholder="City"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="name"></label>
-                  <Input onChange={this.handleInputChange} name="state" value={this.state.state} type="text"  id="business-state" placeholder="State"/>
+                  <input onChange={this.handleInputChange} name="state" value={this.state.state} type="text" className="form-control inline" id="business-state" placeholder="State"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="name"></label>
-                  <Input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text"  id="business-zip" placeholder="Zip Code"/>
+                  <input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text" className="form-control inline" id="business-zip" placeholder="Zip Code"/>
                 </div>
               </div>
               <div className="additional-registration-info">
@@ -142,9 +124,9 @@ var RegistrationForm = React.createClass ({
                 </ul>
               </div>
               <div className='button-pane'>
-                <Button variant="raised"  type="submit" className="btn btn-default">Save Profile</Button>
+                <button type="submit" className="btn btn-default">Save Profile</button>
               </div>
-            </Form>
+            </form>
           </div>
       </div>
     )
@@ -230,7 +212,7 @@ var RegistrationContainer = React.createClass ({
     business.set('menu_upload', localStorage.getItem('menu_upload'));
     business.set('owner', {__type: "Pointer", className: "_User", objectId: currentUser});
     business.save().then(function(){
-        self.props.router.navigate('/dashboard/', {trigger: true})
+        self.props.router.navigate('dashboard/', {trigger: true})
     });
     console.log('save', this.state);
   },

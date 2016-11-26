@@ -17,9 +17,7 @@ var moment = require('moment');
 var AppetizerForm = require('../components/appetizer.jsx').AppetizerForm;
 var MainCourseForm = require('../components/maincourse.jsx').MainCourseForm;
 var DessertForm = require('../components/dessert.jsx').DessertForm;
-var Form = require('muicss/lib/react/form');
-var Input = require('muicss/lib/react/input');
-var Button = require('muicss/lib/react/button');
+
 
 
 var Dashboard = React.createClass({
@@ -109,28 +107,28 @@ var SpecialsFormList = React.createClass({
       <div className="col-md-12">
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <Input  onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text"  id="name" placeholder="special of the day"/>
+            <input className="form-control" onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text"  id="name" placeholder="special of the day"/>
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <Input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text"  id="description" placeholder="special of the day"/>
+            <input className="form-control" id="myContentEditable" onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text"  id="description" placeholder="special of the day"/>
           </div>
           <div className="form-group">
             <label htmlFor="price">Price</label>
-            <Input  onChange={this.handleInputChange} name="price"  value={special.get('price')} type="text"  id="price" placeholder="special of the day"/>
+            <input className="form-control" onChange={this.handleInputChange} name="price"  value={special.get('price')} type="text"  id="price" placeholder="special of the day"/>
           </div>
           <div className="form-group">
             <label htmlFor="test">Effective Date</label>
             <p></p>
-            <input  onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date"  id="date" placeholder="special of the day"/>
+            <input className="form-control" onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date"  id="date" placeholder="special of the day"/>
           </div>
           <div className="form-group">
             <label htmlFor="test">Expires On</label>
             <p>(Automatically deletes)</p>
-            <input  onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
+            <input className="form-control" onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
           </div>
           <div>
-            <Button variant="raised"  onClick = {this.removeSpecial} type="button" className="btn btn-danger pull-right">Delete</Button>
+            <button   onClick = {this.removeSpecial} type="button" className="btn btn-danger pull-right">Delete</button>
           </div>
       </div>
     );
@@ -173,15 +171,15 @@ removeSpecial: function(special){
      )
    });
    return (
-     <div className="col-md-12">
-       <Form onSubmit={this.handleSubmit}>
+     <div className="col-md-12 dashboard-specials">
+       <form onSubmit={this.handleSubmit}>
          <h3>Specials</h3>
          <div className="col-md-12 form-inLine">
            {specialsFormset}
          </div>
-         <Button variant="raised"  type="button" onClick = {self.props.addSpecial} className="btn btn-success">Add Another</Button>
-         <Button variant="raised"  color = "primary" type="submit" className="btn btn-success">Save Specials</Button>
-       </Form>
+         <button   type="button" onClick = {self.props.addSpecial} className="btn btn-success">Add Another</button>
+         <button   color = "primary" type="submit" className="btn btn-success">Save Specials</button>
+       </form>
      </div>
    );
  }
@@ -330,17 +328,17 @@ var DashboardContainer = React.createClass({
     var closeMenuMessage = !this.state.showMenu  ? this.state.showMenu : "Close Editor";
 
     return(
-      <div className="col-md-12">
+      <div className="col-md-12 dashboard-windows">
         <h1 className="well"> {businessName} Dashboard</h1>
         <Dashboard  business={this.state.business} />
         <div className="specials-pane">
           <h2>Specials Dashboard</h2>
-          <Button variant="raised"  type="button" className="btn btn-default btn-lg btn-block" onClick={this.handleToggleSpecials}>{openSpecialMessage} {closeSpecialMessage}</Button>
+          <button   type="button" className="btn btn-default btn-lg btn-block" onClick={this.handleToggleSpecials}>{openSpecialMessage} {closeSpecialMessage}</button>
             {this.state.showSpecials ?<SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')}  removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>: null}
         </div>
         <div className="menu-pane">
           <h2>Menu Dashboard</h2>
-          <Button variant="raised"  onClick={this.handleToggleMenu} type="button" className="btn btn-default btn-lg btn-block">{openMenuMessage} {closeMenuMessage}</Button>
+          <button   onClick={this.handleToggleMenu} type="button" className="btn btn-default btn-lg btn-block">{openMenuMessage} {closeMenuMessage}</button>
           {this.state.showMenu ? <div className="menu-creator">
             <AppetizerForm   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
             <MainCourseForm   business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>

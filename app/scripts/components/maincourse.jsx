@@ -7,9 +7,7 @@ var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
 var AppetizerCollection = require('../models/business.js').AppetizerCollection;
 var Appetizer = require('../models/business.js').Appetizer;
-var Form = require('muicss/lib/react/form');
-var Input = require('muicss/lib/react/input');
-var Button = require('muicss/lib/react/button');
+
 
 
 
@@ -47,18 +45,18 @@ var MainCourseFormList = React.createClass({
       <div className="maincourse">
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <Input  onChange={this.handleInputChange} name="name"  value={maincourse.get('name')} type="text"  id="name" placeholder="dish name"/>
+          <input className="form-control"  onChange={this.handleInputChange} name="name"  value={maincourse.get('name')} type="text"  id="name" placeholder="dish name"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <Input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={maincourse.get('description')} type="text"  id="description" placeholder="dish description"/>
+          <input className="form-control"  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={maincourse.get('description')} type="text"  id="description" placeholder="dish description"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
-          <Input  onChange={this.handleInputChange} name="price"  value={maincourse.get('price')} type="text"  id="price" placeholder="dish price"/>
+          <input className="form-control"  onChange={this.handleInputChange} name="price"  value={maincourse.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
         <div>
-          <Button variant="raised" onClick = {this.removeMainCourse} type="button" className="btn btn-danger pull-right">Delete</Button>
+          <button  onClick = {this.removeMainCourse} type="button" className="btn btn-danger pull-right">Delete</button>
         </div>
       </div>
     );
@@ -104,15 +102,15 @@ removeMainCourse: function(maincourse){
    });
    return (
      <div className="col-md-4">
-       <Form onSubmit={this.handleSubmit}>
+       <form onSubmit={this.handleSubmit}>
          <h3>Main Course</h3>
          <div className="form-inLine">
            {mainCourseFormset}
-          <Button variant="raised" type="button" onClick = {this.props.addMainCourse} className="btn btn-primary">Add Another</Button>
+          <button  type="button" onClick = {this.props.addMainCourse} className="btn btn-primary">Add Another</button>
          </div>
          <br></br>
-        <Button variant="raised" type="submit" className="btn btn-success">Save Main Course</Button>
-       </Form>
+        <button  type="submit" className="btn btn-success">Save Main Course</button>
+       </form>
      </div>
    );
  }

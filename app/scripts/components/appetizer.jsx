@@ -8,9 +8,7 @@ var User= require('../parseUtilities').User;
 var AppetizerCollection = require('../models/business.js').AppetizerCollection;
 var Appetizer = require('../models/business.js').Appetizer;
 var moment = require('moment');
-var Form = require('muicss/lib/react/form');
-var Input = require('muicss/lib/react/input');
-var Button = require('muicss/lib/react/button');
+
 
 
 
@@ -48,17 +46,17 @@ var AppetizerFormList = React.createClass({
       <div className="appetizers">
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <Input  onChange={this.handleInputChange} name="name"  value={appetizer.get('name')} type="text"  id="name" placeholder="dish name"/>
+          <input className="form-control" className="form-control"  onChange={this.handleInputChange} name="name"  value={appetizer.get('name')} type="text"  id="name" placeholder="dish name"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <Input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={appetizer.get('description')} type="text"  id="description" placeholder="dish description"/>
+          <input className="form-control" className="form-control"  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={appetizer.get('description')} type="text"  id="description" placeholder="dish description"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
-          <Input  onChange={this.handleInputChange} name="price"  value={appetizer.get('price')} type="text"  id="price" placeholder="dish price"/>
+          <input className="form-control" className="form-control"  onChange={this.handleInputChange} name="price"  value={appetizer.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
-        <Button variant="raised" onClick = {this.removeAppetizer} type="button" className="btn btn-danger pull-right">Delete</Button>
+        <button  onClick = {this.removeAppetizer} type="button" className="btn btn-danger pull-right">Delete</button>
         <div>
         </div>
       </div>
@@ -105,15 +103,15 @@ removeAppetizer: function(appetizer){
    });
    return (
      <div className="col-md-4">
-       <Form onSubmit={this.handleSubmit}>
+       <form onSubmit={this.handleSubmit}>
          <h3>Appetizers</h3>
          <div className="form-inLine">
            {appetizerFormset}
-           <Button variant="raised" type="button" onClick = {this.props.addAppetizer} className="btn btn-primary">Add Another</Button>
+           <button  type="button" onClick = {this.props.addAppetizer} className="btn btn-primary">Add Another</button>
          </div>
          <br></br>
-         <Button variant="raised" type="submit" className="btn btn-success">Save Appetizers</Button>
-       </Form>
+         <button  type="submit" className="btn btn-success">Save Appetizers</button>
+       </form>
      </div>
    );
  }

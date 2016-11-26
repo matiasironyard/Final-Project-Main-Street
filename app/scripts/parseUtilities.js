@@ -30,6 +30,7 @@ var User = Backbone.Model.extend({
   login: function(username, password, callback){
     $.post('/login/', {username: username, password: password}), then(function(response){
       var user = new User (response);
+      console.log('user', user);
       user.auth();
       localStorage.setItem('user', JSON.stringify(user.toJSON()));
       callbackObj.success(user, response);

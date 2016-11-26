@@ -5,11 +5,6 @@ var Dashboard = require('../components/registration.jsx').Dashboard;
 var models = require('../models/business');
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
-var Form = require('muicss/lib/react/form');
-var Input = require('muicss/lib/react/input');
-var Button = require('muicss/lib/react/button');
-
-
 
 
 var DessertFormList = React.createClass({
@@ -46,18 +41,18 @@ var DessertFormList = React.createClass({
       <div className="desserts">
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <Input  onChange={this.handleInputChange} name="name"  value={dessert.get('name')} type="text"  id="name" placeholder="dish name"/>
+          <input className="form-control"  onChange={this.handleInputChange} name="name"  value={dessert.get('name')} type="text"  id="name" placeholder="dish name"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <Input  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={dessert.get('description')} type="text"  id="description" placeholder="dish description"/>
+          <input className="form-control"  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={dessert.get('description')} type="text"  id="description" placeholder="dish description"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
-          <Input  onChange={this.handleInputChange} name="price"  value={dessert.get('price')} type="text"  id="price" placeholder="dish price"/>
+          <input className="form-control"  onChange={this.handleInputChange} name="price"  value={dessert.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
         <div>
-          <Button variant="raised" onClick = {this.removeDessert} type="button" className="btn btn-danger pull-right">Delete</Button>
+          <button  onClick = {this.removeDessert} type="button" className="btn btn-danger pull-right">Delete</button>
         </div>
       </div>
     );
@@ -103,15 +98,15 @@ removeDessert: function(dessert){
    });
    return (
      <div className="dashboard-dessert col-md-4">
-       <Form onSubmit={this.handleSubmit}>
+       <form onSubmit={this.handleSubmit}>
          <h3>Desserts</h3>
          <div className="form-inLine">
            {dessertFormset}
-          <Button variant="raised" type="button" onClick = {this.props.addDessert} className="btn btn-primary">Add Another</Button>
+          <button  type="button" onClick = {this.props.addDessert} className="btn btn-primary">Add Another</button>
          </div>
          <br></br>
-        <Button variant="raised" type="submit" className="btn btn-success">Save Dessert</Button>
-       </Form>
+        <button  type="submit" className="btn btn-success">Save Dessert</button>
+       </form>
      </div>
    );
  }
