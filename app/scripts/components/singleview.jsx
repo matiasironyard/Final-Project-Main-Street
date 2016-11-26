@@ -1,7 +1,19 @@
 var React = require('react');
 var Backbone = require('backbone');
-var models = require('../models/business');
+var $ = require('jquery');
 
+var models = require('../models/business');
+var User= require('../parseUtilities').User;
+
+
+var GoogleMap = require('react-google-maps');
+var Marker = require('react-google-maps');
+var SearchBox =  require('react-google-maps');
+
+var MapComponent = require('react-cartographer/lib/components/Map');
+
+
+console.log(GoogleMap);
 
 
 var SpecialsList = React.createClass({
@@ -95,13 +107,25 @@ var DetailView = React.createClass({
     }
   },
 
+  handleFavorite: function(e){
+    e.preventDefault();
+    var self = this;
+    var favorite = self.props.restaurant.get('objectId');
+    console.log('My Favorite>>', favorite);
+    self.props.setFavorite(favorite);
+    self.setState({restaurants: favorite})
+  },
+
+
   render: function(){
     var self = this;
     var restaurant = self.props.restaurant;
     var specials = restaurant.get('specials');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
-    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+    console.log(geolocation);
+    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     console.log(googleMap);
+    var directions = 'https://www.google.com/maps/dir//'+geolocation;
     // var test = this.props.
 
     return(
@@ -120,8 +144,9 @@ var DetailView = React.createClass({
             <h5 className="detailview-header-cat">
               {restaurant.get('subCategory')}
             </h5>
-            <p className="detailview-phone">{restaurant.get('phone')}</p>
-            <img className="detailview-header-review-img">{restaurant.get('rating_img_url')}</img>
+            <h5 className="detailview-phone">{restaurant.get('phone')}</h5>
+            <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
+            <button onClick={this.handleFavorite} value="favorite" type="button" className="btn btn-outline-success"></button>
           </div>
         </div>
         <div className="col-md-4 detailview-pane">
@@ -133,7 +158,8 @@ var DetailView = React.createClass({
             <p>{restaurant.get('snippet_text')}</p>
           </div>
           <div className="detailview-location-pane">
-            <img src={googleMap}/>
+            <a href={directions}><img src={googleMap}/></a>
+            <p>Click on map for directions</p>
             <h5>Address</h5>
             <p>{restaurant.get('address')}</p>
             <p>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</p>
@@ -143,6 +169,7 @@ var DetailView = React.createClass({
     )
   }
 });
+
 
 var SingleViewContainer = React.createClass({
   getInitialState: function(){
@@ -162,9 +189,19 @@ var SingleViewContainer = React.createClass({
     restaurant.set('objectId', restaurantId);
     restaurant.fetch().then(()=>{
       this.setState({restaurant: restaurant});
-
     });
   },
+
+  setFavorite: function(favorite){
+    var self = this;
+    var restaurant = this.state.restaurant;
+    // console.log(business.get('lat'));
+    var currentUser = User.current().get('objectId');
+    restaurant.set('favorite', {"__op": "AddRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
+    restaurant.save();
+    console.log(this.state);
+  },
+
   render: function(){
     var test = this.state.restaurant.get('name');
     var specials = this.state.restaurant.get('specials');
@@ -173,7 +210,7 @@ var SingleViewContainer = React.createClass({
     var desserts = this.state.restaurant.get('dessert');
     return (
       <div>
-        <DetailView restaurant={this.state.restaurant} specials={specials}/>
+        <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} specials={specials}/>
         <SpecialsList specials={specials}/>
         <div className="menu-pane">
           <MenuList appetizers={appetizers} maincourses={maincourses} desserts={desserts}/>
