@@ -5765,4 +5765,80 @@ button.close {
 
 img {
   max-width: 100%; }
+
+.appetizers {
+  margin-top: 50px; }
+
+.dashboard-dessert {
+  margin-bottom: 30px; }
+
+.registration-form {
+  padding-top: 30px; }
+  .registration-form .form-header {
+    display: inline-block;
+    margin-bottom: 20px; }
+    .registration-form .form-header img {
+      border-radius: 30px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 10px; }
+  .registration-form .form-container {
+    margin-top: 80px; }
+  .registration-form .categories input {
+    margin-bottom: 15px; }
+
+.restaurant-card {
+  height: auto;
+  margin: 10px;
+  padding: 10px; }
+
+.specials-counter {
+  height: 30px;
+  width: 30px;
+  float: right;
+  text-align: center;
+  color: white;
+  background-color: rgba(37, 36, 29, 0.45);
+  border-radius: 100%; }
+  .specials-counter .counter-number {
+    margin-top: 5px; }
+
+.detailview-pane .detailview-header {
+  padding-bottom: 20px;
+  box-shadow: -1px 4px 5px 0px rgba(0, 0, 0, 0.75); }
+  .detailview-pane .detailview-header .detailview-header-img {
+    padding-top: 20px; }
+  .detailview-pane .detailview-header .detailview-header-text {
+    padding-top: 20px; }
+    .detailview-pane .detailview-header .detailview-header-text h1 {
+      font-family: 'Raleway', sans-serif; }
+    .detailview-pane .detailview-header .detailview-header-text h4 {
+      font-family: 'Josefin Sans', sans-serif;
+      font-style: italic; }
+    .detailview-pane .detailview-header .detailview-header-text h5 {
+      font-family: 'Josefin Sans', sans-serif;
+      font-style: italic; }
+.detailview-pane .detailview-pane .detailview-description {
+  border-bottom: 1px solid grey; }
+  .detailview-pane .detailview-pane .detailview-description p {
+    font-family: 'Open Sans', sans-serif;
+    padding: 10px; }
+.detailview-pane .detailview-pane .detailview-menu {
+  padding: 10px;
+  border-bottom: 1px solid grey; }
+.detailview-pane .detailview-pane .detailview-location-pane img {
+  height: 300px;
+  width: 300px;
+  padding: 5px; }
+.detailview-pane .detailview-pane .detailview-location-pane .detailview-phone {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold; }
+.detailview-pane .detailview-pane .detailview-location-pane p {
+  font-family: 'Open Sans', sans-serif; }
+.detailview-pane .detailview-specials {
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-left: 2px solid grey; }
+
 /*# sourceMappingURL=app.css.map */
