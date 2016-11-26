@@ -196,15 +196,15 @@ var BusinessCollection = ParseCollection.extend ({
   // }
 });
 
-var Favorite = ParseModel.extend({
-  defaults: {
-    favorite: '',
-  },
-});
-
-var FavoriteCollection = ParseCollection.extend({
-  model: Favorite,
-});
+// var Favorite = ParseModel.extend({
+//   defaults: {
+//     favorite: '',
+//   },
+// });
+//
+// var FavoriteCollection = ParseCollection.extend({
+//   model: Favorite,
+// });
 
 var GoogleMaps = ParseModel.extend ({
   defaults: {
@@ -227,6 +227,6 @@ module.exports = {
   BusinessCollection: BusinessCollection,
   YelpBusiness: YelpBusiness,
   GoogleMaps: GoogleMaps,
-  Favorite: Favorite,
-  FavoriteCollection: FavoriteCollection,
+  // Favorite: Favorite,
+  // FavoriteCollection: FavoriteCollection,
 };

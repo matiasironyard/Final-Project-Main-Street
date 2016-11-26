@@ -4,7 +4,7 @@ var models = require('../models/business.js');
 var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
-var FavoriteCollection = require('../models/business.js').FavoriteCollection;
+// var FavoriteCollection = require('../models/business.js').FavoriteCollection;
 
 
 console.log('hello favorites');
@@ -14,7 +14,7 @@ console.log('hello favorites');
 var FavoritesContainer = React.createClass({
   getInitialState: function(){
     return {
-      favoriteCollection: new models.FavoriteCollection(),
+      businessCollection: new models.BusinessCollection(),
     };
   },
 
