@@ -27,14 +27,14 @@ var FavoriteListing = React.createClass({
     var favorites = this.props.favorites;
     console.log('test', favorites);
     return (
-      <div className ="col-md-2 restaurant-card">
-        <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item">
-          <div className="restaurant-card-header">
-            <img src={favorites.get('image_url')}/>
-            <h6>{favorites.get('name')}</h6>
-            <h6>{favorites.get('mainCategory')}</h6>
+      <div className ="restaurant-cards mdl-card mdl-shadow--2dp col-md-2">
+        <div className="restaurant-card-header">
+          <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item"><img className="restaurant-card-img" src={favorites.get('image_url')}/></a>
+          <p className="restaurant-card-name">{favorites.get('name')}</p>
+          <div className="mdl-card__actions mdl-card--border">
+            <p className="restaurant-card-category">{favorites.get('mainCategory')}</p>
           </div>
-        </a>
+        </div>
       </div>
     )
   }
@@ -52,8 +52,15 @@ var Favorites = React.createClass({
 
   render: function(){
     var self = this;
-    console.log('Favorties render', self.props.restaurants);
-    var favoritesList = self.props.restaurants.map(function(favorites){
+    console.log('Favorties render', self.props.restaurants.length);
+    var restaurants = self.props.restaurants;
+
+      if(restaurants.length=0){
+      console.log('none akdfjlkadsjlafkjsd;klfjs;');
+        
+    };
+
+    var favoritesList = restaurants.map(function(favorites){
       console.log('2-map', favoritesList);
       return (
           <div key={favorites.cid}>
@@ -62,7 +69,8 @@ var Favorites = React.createClass({
       );
     });
     return (
-      <div>
+      <div className="favorites-pane col-md-12">
+        <h3 className="favorites-header">My Favorite Restaurants</h3>
         {favoritesList}
       </div>
     )
@@ -97,9 +105,8 @@ componentWillMount: function(){
   render: function(){
     console.log('favorites', this.state.businessCollection);
     return (
-      <div className="row">
-        <div className="col-md-12">
-
+      <div className="favorites-row row">
+        <div className="favorites-col col-md-12">
           <Favorites restaurants={this.state.businessCollection}/>
         </div>
       </div>

@@ -16,8 +16,101 @@ img {
   max-width: 100%;
 }
 
+
+.favorites-row{
+
+  .favorites-col{
+
+
+    .favorites-pane{
+
+      .favorites-header{
+        color: #212121;
+        margin-top: 10px;
+        font-size: calc(1em + 1vw);
+        text-transform: uppercase;
+      }
+
+      .restaurant-cards{
+        width: 150px;
+        height: 150px;
+        width: 150px;
+        margin: 5px;
+        padding: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        .restaurant-card-img{
+          border-radius: 5px;
+        }
+        .restaurant-card-name{
+          color: #212121;
+          margin-top: 10px;
+          font-size: calc(.6em + .6vw);
+          width: 280px;
+          text-transform: uppercase;
+        }
+        .restaurant-card-category{
+          color: #616161;
+          font-size: calc(.5em + .5vw);
+        }
+      }
+    }
+  }
+}
+
+
 .viewall-container{
-  background-color: lightgrey;
+  // background-color: lightgrey;
+  .viewall-cards-container{
+    // display: inline-block;
+    .viewall-card-container-header{
+      color: #424242;
+      font-size: calc(1.5em + 1.5vw);
+      text-transform: uppercase;
+    }
+
+    .viewall-restaurant-card{
+      margin: 5px;
+      padding: 5px;
+      padding-top: 15px;
+      padding-left: 10px;
+      width: 300px;
+      height: 300px;
+
+      .viewall-header{
+
+        .viewall-image{
+          border-radius: 3px;
+        }
+
+        .viewall-counter{
+          padding-top: 2px;
+        }
+
+        .viewall-name{
+          color: #212121;
+          margin-top: 10px;
+          font-size: calc(.7em + .7vw);
+          width: 280px;
+          text-transform: uppercase;
+        }
+
+        .viewall-category{
+          color: #616161;
+          font-size: calc(.7em + .7vw);
+        }
+
+        .viewall-restaurant-info{
+
+        }
+      }
+    }
+    .viewall-restaurant-card:hover{
+      transform: scale(1.02);
+      z-index: 1;
+    }
+  }
 }
 
 
