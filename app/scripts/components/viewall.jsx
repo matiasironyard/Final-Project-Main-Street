@@ -54,6 +54,7 @@ var Search = React.createClass({
     });
     return(
       <div className="col-md-12 categories-dropdown">
+        <h1>Search Bar Here</h1>
         <span>I'm in the mood for</span>
         <div className="dropdown">
           <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -75,7 +76,7 @@ var ItemListing = React.createClass({
     var backgroundImage = restaurants.get('img_url');
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
     return(
-      <div className ="col-md-5-fluid restaurant-card">
+      <div className ="col-md-3 restaurant-card">
         <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item">
           <div className= "specials-counter">
             <div className="counter-number">{specialsCounter}</div>
@@ -109,7 +110,7 @@ var Listing = React.createClass({
       );
     });
     return(
-      <div className="col-md-9">
+      <div className="col-md-11 col-md-offset-1">
         <h2>All Restaurants</h2>
         {restaurantList}
       </div>
@@ -166,13 +167,15 @@ var ViewAllContainer= React.createClass({
   render: function(){
     console.log('1-Business Collection', this.state);
     return (
-      <div className="container">
-      <div className="row">
-        <Search  className="col-md-12" restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
+      <div className="viewall-container container">
+      <div className="viewall-row row">
+        <Search  className="viewall-search-row col-md-12" restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
       </div>
-      <div className="row">
-        <Favorites className="col-md-3"/>
-        <Listing className="col-md-8"restaurants={this.state.businessCollection} />
+      <div className="viewall-favorites-row row">
+        <Favorites className="viewall-favorites col-md-12"/>
+      </div>
+      <div className="viewall-lisitng-row row">
+        <Listing className="viewall-listing col-md-12"restaurants={this.state.businessCollection} />
       </div>
     </div>
     )

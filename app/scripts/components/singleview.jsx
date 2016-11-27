@@ -4,6 +4,10 @@ var $ = require('jquery');
 var models = require('../models/business');
 var User= require('../parseUtilities').User;
 var router = require('../router').router;
+var GoogleMaps = require('../models/business.js').GoogleMaps;
+var googleMaps = new GoogleMaps();
+
+
 
 var SpecialsList = React.createClass({
   render: function(){
@@ -116,6 +120,9 @@ var DetailView = React.createClass({
 
   render: function(){
     var self = this;
+    googleMaps.fetch().then(function(response){
+      console.log(response);
+    });
     var restaurant = self.props.restaurant;
     var specials = restaurant.get('specials');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');

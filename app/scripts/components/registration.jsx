@@ -13,6 +13,7 @@ var yelpBusiness = new YelpBusiness();
 require('../router').router;
 
 
+
 var RegistrationForm = React.createClass ({
   getInitialState: function(){
     return this.props.business.toJSON();

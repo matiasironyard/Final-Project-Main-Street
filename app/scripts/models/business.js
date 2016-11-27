@@ -122,18 +122,6 @@ var SpecialCollection = ParseCollection.extend ({
   baseUrl: 'https://matias-recipe.herokuapp.com/classes/Special'
 });
 
-/**
-*Yelp Ajax Call through proxy
-*/
-var YelpBusiness = Backbone.Model.extend({
-  urlRoot: function(){
-    var phone = User.current().get('phone');
-    return 'https://yelp-proxy-server.herokuapp.com/api?phone=+1'  + '-' + phone;
-  },
-  parse: function(data){
-    return data.businesses[0]
-  },
-});
 
 /**
 *Business Model and Collections
@@ -206,11 +194,27 @@ var BusinessCollection = ParseCollection.extend ({
 //   model: Favorite,
 // });
 
-var GoogleMaps = ParseModel.extend ({
-  defaults: {
-    url: '',
+/**
+*Yelp Ajax Call through proxy
+*/
+var YelpBusiness = Backbone.Model.extend({
+  urlRoot: function(){
+    var phone = User.current().get('phone');
+    return 'https://yelp-proxy-server.herokuapp.com/api?phone=+1'  + '-' + phone;
   },
-  urlRoot: 'https://maps.googleapis.com/maps/api/staticmap',
+  parse: function(data){
+    return data.businesses[0]
+  },
+});
+
+var GoogleMaps = Backbone.Model.extend ({
+  urlRoot: function(){
+    console.log('testing google model');
+    return 'https://maps.googleapis.com/maps/api/staticmap?center=34.84355,-82.40467&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C34.84355,-82.40467&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+  },
+  parse: function(data){
+    return data.businesses[0]
+  },
 });
 
 

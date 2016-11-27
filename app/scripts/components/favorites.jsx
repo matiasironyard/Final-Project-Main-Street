@@ -27,7 +27,7 @@ var FavoriteListing = React.createClass({
     var favorites = this.props.favorites;
     console.log('test', favorites);
     return (
-      <div className ="col-sm-12-fluid restaurant-card">
+      <div className ="col-md-2 restaurant-card">
         <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item">
           <div className="restaurant-card-header">
             <img src={favorites.get('image_url')}/>
