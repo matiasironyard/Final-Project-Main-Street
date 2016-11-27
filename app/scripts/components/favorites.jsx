@@ -4,20 +4,23 @@ var models = require('../models/business.js');
 var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
+var Modal = require('react-modal');
+console.log(Modal);
+
 // var FavoriteCollection = require('../models/business.js').FavoriteCollection
 
 
 var FavoriteListing = React.createClass({
   getInitialState: function(){
     return {
-      favorites: this.props.favorites,
-    }
+        favorites: this.props.favorites,
+        // modalIsOpen: false,
+    };
   },
 
   componentWillReceiveProps: function(newProps){
     this.setState(newProps.favorites);
   },
-
 
 
   render: function(){
@@ -81,7 +84,7 @@ componentWillMount: function(){
     if(businessCollection.length >= 1){
       console.log('length', businessCollection.length);
 
-    
+
     } else {
       console.log('we got none');
     };
