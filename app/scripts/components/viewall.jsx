@@ -63,19 +63,16 @@ var Search = React.createClass({
 });
 
 var ItemListing = React.createClass({
-
-
   render: function(){
     var restaurants = this.props.restaurants;
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
-
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
     return(
-      <div className ="col-sm-4 restaurant-card">
+      <div className ="col-md-5-fluid restaurant-card">
         <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item">
           <div className= "specials-counter">
-            <div className="counter-number">{specialsCounter}</div>
+            <div className="counter-number" style={styles.red}>{specialsCounter}</div>
           </div>
           <div className="restaurant-card-header">
             <img src={restaurants.get('image_url')}/>
@@ -106,7 +103,8 @@ var Listing = React.createClass({
       );
     });
     return(
-      <div className="col-sm-8">
+      <div className="col-md-9">
+        <h2>All Restaurants</h2>
         {restaurantList}
       </div>
     )
@@ -125,6 +123,9 @@ var ViewAllContainer= React.createClass({
   componentWillMount: function(){
 
     var businessCollection = this.state.businessCollection;
+  {/* Sort collection by name */}
+    businessCollection.comparator = 'name';
+    {/* Fetch collection, then create a second colleciton in order to sort categories */}
     businessCollection.fetch().then(() => {
       var categories = this.state.businessCategoryCollection;
       var uniqueCategories = businessCollection.pluck('mainCategory');
@@ -140,10 +141,7 @@ var ViewAllContainer= React.createClass({
   },
 
   filterCategories: function(category){
-    console.log('category', category);
     var restaurants = this.state.businessCollection;
-    // var business = this.state.Business;
-
     restaurants.fetch({
       'data': {'where':  {"mainCategory": category}}
     }).then(() => {
@@ -151,22 +149,21 @@ var ViewAllContainer= React.createClass({
     });
   },
 
-
-
   render: function(){
     console.log('1-Business Collection', this.state);
     return (
       <div className="container">
       <div className="row">
         <Search  className="col-md-12" restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
+      </div>
+      <div className="row">
         <Favorites className="col-md-3"/>
         <Listing className="col-md-8"restaurants={this.state.businessCollection} />
       </div>
-      </div>
+    </div>
     )
   }
 });
-
 
 module.exports = {
   ViewAllContainer: ViewAllContainer

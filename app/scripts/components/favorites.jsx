@@ -17,7 +17,7 @@ var FavoriteListing = React.createClass({
           <div className="restaurant-card-header">
             <img src={favorites.get('image_url')}/>
             <h6>{favorites.get('name')}</h6>
-            <p>{favorites.get('mainCategory')}</p>
+            <h6>{favorites.get('mainCategory')}</h6>
           </div>
         </a>
       </div>
@@ -48,6 +48,7 @@ var Favorites = React.createClass({
     });
     return (
       <div className="col-md-12">
+        <h3>Favorites</h3>
         {favoritesList}
       </div>
     )
