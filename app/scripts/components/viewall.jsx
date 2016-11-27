@@ -47,16 +47,22 @@ var Search = React.createClass({
     var self = this;
     var categoriesList = self.props.restaurants.map(function(categories){
       return (
-          <DropdownItem key={categories.cid}>
-            <SearchListing restaurants={categories} filterCategories={self.handleSearch}/>
-          </DropdownItem>
+          <li key={categories.cid}>
+            <a><SearchListing restaurants={categories} filterCategories={self.handleSearch}/></a>
+          </li>
       );
     });
     return(
-      <div className="col-sm-12 categories-dropdown">
-        <Dropdown className="search-dropdown" variant="raised"   label="I'm in the mood for...">
-          {categoriesList}
-        </Dropdown>
+      <div className="col-md-12 categories-dropdown">
+        <span>I'm in the mood for</span>
+        <div className="dropdown">
+          <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span className="caret"></span>
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+            {categoriesList}
+          </ul>
+        </div>
       </div>
     )
   }
@@ -72,7 +78,7 @@ var ItemListing = React.createClass({
       <div className ="col-md-5-fluid restaurant-card">
         <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item">
           <div className= "specials-counter">
-            <div className="counter-number" style={styles.red}>{specialsCounter}</div>
+            <div className="counter-number">{specialsCounter}</div>
           </div>
           <div className="restaurant-card-header">
             <img src={restaurants.get('image_url')}/>
@@ -147,6 +153,14 @@ var ViewAllContainer= React.createClass({
     }).then(() => {
       this.setState({businessCollection: restaurants});
     });
+  },
+
+  removeFavorite: function(restaurant){
+    var favorite = this.state.businessCollection;
+    var currentUser = User.current().get('objectId');
+    favorite.set('favorite', {"__op": "RemoveRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
+    favorite.save();
+    console.log(this.state);
   },
 
   render: function(){

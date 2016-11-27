@@ -113,7 +113,15 @@ var DetailView = React.createClass({
     var favorite = self.props.restaurant.get('objectId');
     console.log('My Favorite>>', favorite);
     self.props.setFavorite(favorite);
-    self.setState({restaurants: favorite})
+    self.setState({favorite: favorite})
+  },
+
+  handleRemoveFavorite: function(e){
+    e.preventDefault();
+    var self = this;
+    var favorite = self.props.restaurant.get('objectId');
+    self.props.removeFavorite(favorite);
+    self.setState({favorite: favorite})
   },
 
 
@@ -146,7 +154,8 @@ var DetailView = React.createClass({
             </h5>
             <h5 className="detailview-phone">{restaurant.get('phone')}</h5>
             <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
-            <button onClick={this.handleFavorite} value="favorite" type="button" className="btn btn-outline-success"></button>
+            <button onClick={this.handleFavorite} value="favorite" type="button" className="btn btn-outline-success">Favorite</button>
+            <input onClick={this.handleRemoveFavorite} className="btn btn-default" type="submit" value="Remove Favorite"></input>
           </div>
         </div>
         <div className="col-md-4 detailview-pane">
@@ -193,11 +202,19 @@ var SingleViewContainer = React.createClass({
   },
 
   setFavorite: function(favorite){
-    var self = this;
+    // var self = this;
     var restaurant = this.state.restaurant;
     // console.log(business.get('lat'));
     var currentUser = User.current().get('objectId');
     restaurant.set('favorite', {"__op": "AddRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
+    restaurant.save();
+    console.log(this.state);
+  },
+
+  removeFavorite: function(restaurant){
+    var restaurant = this.state.restaurant;
+    var currentUser = User.current().get('objectId');
+    restaurant.set('favorite', {"__op": "RemoveRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
     restaurant.save();
     console.log(this.state);
   },
@@ -211,7 +228,7 @@ var SingleViewContainer = React.createClass({
 
     return (
       <div>
-        <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} specials={specials}/>
+        <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
         <SpecialsList specials={specials}/>
         <div className="menu-pane">
           <MenuList appetizers={appetizers} maincourses={maincourses} desserts={desserts}/>

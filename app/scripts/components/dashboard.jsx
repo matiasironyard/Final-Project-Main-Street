@@ -90,6 +90,7 @@ var SpecialsFormList = React.createClass({
   removeSpecial: function(e){
     var special = this.state.special;
     this.props.removeSpecial(special)
+    console.log(this.state);
   },
 
   render: function(){
