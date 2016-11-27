@@ -12,17 +12,12 @@ var FavoriteListing = React.createClass({
     var favorites = this.props.favorites;
     console.log('test', favorites);
     return (
-      <div className ="col-sm-3 restaurant-card">
+      <div className ="col-sm-12-fluid restaurant-card">
         <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item">
-        
           <div className="restaurant-card-header">
             <img src={favorites.get('image_url')}/>
-            <h5>{favorites.get('name')}</h5>
+            <h6>{favorites.get('name')}</h6>
             <p>{favorites.get('mainCategory')}</p>
-          </div>
-          <div className="restaurant-info">
-            <p>{favorites.get('is_closed')}</p>
-            <p>{favorites.get('description')}</p>
           </div>
         </a>
       </div>
@@ -52,8 +47,7 @@ var Favorites = React.createClass({
       );
     });
     return (
-      <div>
-        <h1>what is happening</h1>
+      <div className="col-md-12">
         {favoritesList}
       </div>
     )
@@ -80,7 +74,9 @@ componentWillMount: function(){
   render: function(){
     console.log('favorites', this.state.businessCollection);
     return (
-      <Favorites restaurants={this.state.businessCollection}/>
+      <div className="col-md-3">
+        <Favorites restaurants={this.state.businessCollection}/>
+      </div>
     )
   }
 });

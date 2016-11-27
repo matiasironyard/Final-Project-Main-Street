@@ -2,6 +2,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var models = require('../models/business');
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
+var Favorites= require('./favorites.jsx').FavoritesContainer;
 var Panel = require('muicss/lib/react/panel');
 var Dropdown = require('muicss/lib/react/dropdown');
 var DropdownItem = require('muicss/lib/react/dropdown-item');
@@ -52,7 +53,7 @@ var Search = React.createClass({
       );
     });
     return(
-      <div className="col-sm-4 col-sm-offset-3 categories-dropdown">
+      <div className="col-sm-12 categories-dropdown">
         <Dropdown className="search-dropdown" variant="raised"   label="I'm in the mood for...">
           {categoriesList}
         </Dropdown>
@@ -71,7 +72,7 @@ var ItemListing = React.createClass({
 
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
     return(
-      <div className ="col-sm-3 restaurant-card">
+      <div className ="col-sm-4 restaurant-card">
         <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item">
           <div className= "specials-counter">
             <div className="counter-number">{specialsCounter}</div>
@@ -105,7 +106,7 @@ var Listing = React.createClass({
       );
     });
     return(
-      <div className="col-sm-8 col-sm-offset-2">
+      <div className="col-sm-8">
         {restaurantList}
       </div>
     )
@@ -155,9 +156,12 @@ var ViewAllContainer= React.createClass({
   render: function(){
     console.log('1-Business Collection', this.state);
     return (
-      <div>
-      <Search  restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
-      <Listing restaurants={this.state.businessCollection} />
+      <div className="container">
+      <div className="row">
+        <Search  className="col-md-12" restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
+        <Favorites className="col-md-3"/>
+        <Listing className="col-md-8"restaurants={this.state.businessCollection} />
+      </div>
       </div>
     )
   }
