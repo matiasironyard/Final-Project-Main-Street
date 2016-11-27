@@ -4,12 +4,61 @@ var models = require('../models/business.js');
 var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
-// var FavoriteCollection = require('../models/business.js').FavoriteCollection;
+// var FavoriteCollection = require('../models/business.js').FavoriteCollection
 
 
-console.log('hello favorites');
+var FavoriteListing = React.createClass({
+  render: function(){
+    var favorites = this.props.favorites;
+    console.log('test', favorites);
+    return (
+      <div className ="col-sm-3 restaurant-card">
+        <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item">
+        
+          <div className="restaurant-card-header">
+            <img src={favorites.get('image_url')}/>
+            <h5>{favorites.get('name')}</h5>
+            <p>{favorites.get('mainCategory')}</p>
+          </div>
+          <div className="restaurant-info">
+            <p>{favorites.get('is_closed')}</p>
+            <p>{favorites.get('description')}</p>
+          </div>
+        </a>
+      </div>
+    )
+  }
+});
 
 
+
+
+
+
+var Favorites = React.createClass({
+  // componentWillMount: function(){
+  //   var favorites = this.props.restaurants;
+  // },
+
+  render: function(){
+    var self = this;
+    console.log('Favorties render', self.props.restaurants);
+    var favoritesList = self.props.restaurants.map(function(favorites){
+      console.log('2-map', favoritesList);
+      return (
+          <div key={favorites.cid}>
+            <FavoriteListing favorites={favorites}/>
+          </div>
+      );
+    });
+    return (
+      <div>
+        <h1>what is happening</h1>
+        {favoritesList}
+      </div>
+    )
+  }
+});
 
 var FavoritesContainer = React.createClass({
   getInitialState: function(){
@@ -21,21 +70,19 @@ var FavoritesContainer = React.createClass({
 componentWillMount: function(){
   var self = this;
   var businessCollection = new BusinessCollection();
-  businessCollection.parseWhere('favorite', '_User', User.current().get('objectId')).fetch().then(function(response){
-    return businessCollection;
-  });
-  this.setState({
-    businessCollection: businessCollection,
+  businessCollection.parseWhere('favorite', '_User', User.current().get('objectId')).fetch().then(function(){
+    self.setState({
+      businessCollection: businessCollection
+    });
   });
 },
 
   render: function(){
     console.log('favorites', this.state.businessCollection);
     return (
-      <h1>Favorites</h1>
+      <Favorites restaurants={this.state.businessCollection}/>
     )
   }
-
 });
 
 

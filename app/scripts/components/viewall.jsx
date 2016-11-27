@@ -95,8 +95,9 @@ var Listing = React.createClass({
   render: function(){
     var self = this;
     // console.log('2-listing', self.props.restaurants);
+    console.log('Lisntin Render', self.props.restaurants);
     var restaurantList = self.props.restaurants.map(function(restaurant){
-      // console.log('2-map', restaurantList);
+      console.log('2-map', restaurantList);
       return (
           <div key={restaurant.cid}>
             <ItemListing restaurants={restaurant}/>
@@ -107,7 +108,6 @@ var Listing = React.createClass({
       <div className="col-sm-8 col-sm-offset-2">
         {restaurantList}
       </div>
-
     )
   }
 });
@@ -153,7 +153,7 @@ var ViewAllContainer= React.createClass({
 
 
   render: function(){
-    // console.log('1-Business Collection', this.state);
+    console.log('1-Business Collection', this.state);
     return (
       <div>
       <Search  restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
