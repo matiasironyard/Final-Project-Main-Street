@@ -837,7 +837,7 @@ var FavoriteListing = React.createClass({displayName: "FavoriteListing",
     var favorites = this.props.favorites;
     console.log('test', favorites);
     return (
-      React.createElement("div", {className: "col-sm-12-fluid restaurant-card"}, 
+      React.createElement("div", {className: "col-md-2 restaurant-card"}, 
         React.createElement("a", {href: '#restaurants/' + favorites.get('objectId') + '/', className: "individual-item"}, 
           React.createElement("div", {className: "restaurant-card-header"}, 
             React.createElement("img", {src: favorites.get('image_url')}), 
@@ -1603,6 +1603,7 @@ var Search = React.createClass({displayName: "Search",
     });
     return(
       React.createElement("div", {className: "col-md-12 categories-dropdown"}, 
+        React.createElement("h1", null, "Search Bar Here"), 
         React.createElement("span", null, "I'm in the mood for"), 
         React.createElement("div", {className: "dropdown"}, 
           React.createElement("button", {className: "btn btn-default dropdown-toggle", type: "button", id: "dropdownMenu1", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true"}, 
