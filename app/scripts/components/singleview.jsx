@@ -1,20 +1,9 @@
 var React = require('react');
 var Backbone = require('backbone');
 var $ = require('jquery');
-
 var models = require('../models/business');
 var User= require('../parseUtilities').User;
-
-
-var GoogleMap = require('react-google-maps');
-var Marker = require('react-google-maps');
-var SearchBox =  require('react-google-maps');
-
-var MapComponent = require('react-cartographer/lib/components/Map');
-
-
-console.log(GoogleMap);
-
+var router = require('../router').router;
 
 var SpecialsList = React.createClass({
   render: function(){
@@ -154,8 +143,10 @@ var DetailView = React.createClass({
             </h5>
             <h5 className="detailview-phone">{restaurant.get('phone')}</h5>
             <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
-            <button onClick={this.handleFavorite} value="favorite" type="button" className="btn btn-outline-success">Favorite</button>
-            <input onClick={this.handleRemoveFavorite} className="btn btn-default" type="submit" value="Remove Favorite"></input>
+            <div className="detailview-favorite-btns">
+              <input onClick={this.handleFavorite} value="Add Favorite" type="button" className="btn btn-default"/>
+              <input onClick={this.handleRemoveFavorite} className="btn btn-default" type="submit" value="Remove Favorite"/>
+            </div>
           </div>
         </div>
         <div className="col-md-4 detailview-pane">
@@ -212,10 +203,13 @@ var SingleViewContainer = React.createClass({
   },
 
   removeFavorite: function(restaurant){
+    var self = this;
     var restaurant = this.state.restaurant;
     var currentUser = User.current().get('objectId');
     restaurant.set('favorite', {"__op": "RemoveRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
-    restaurant.save();
+    restaurant.save().then(function(){
+      self.props.router.navigate('restaurants/', {trigger: true})
+    });
     console.log(this.state);
   },
 

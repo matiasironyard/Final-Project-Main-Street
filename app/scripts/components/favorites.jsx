@@ -18,23 +18,7 @@ var FavoriteListing = React.createClass({
     this.setState(newProps.favorites);
   },
 
-  // handleRemoveFavorite: function(e){
-  //   e.preventDefault();
-  //   var self = this;
-  //   var favorite = self.props.favorites.get('objectId');
-  //   console.log('My Favorite Remove>>', favorite);
-  //   self.props.removeFavorite(favorite);
-  //   console.log(self.props.removeFavorite(favorite));
-  //   self.setState({favorites: favorite});
-  // },
 
-  handleRemoveFavorite: function(e){
-    e.preventDefault();
-    var self = this;
-    var favorite = self.props.favorites.get('objectId');
-    self.props.removeFavorite(favorite);
-    self.setState({favorite: favorite})
-  },
 
   render: function(){
     var favorites = this.props.favorites;
@@ -48,7 +32,6 @@ var FavoriteListing = React.createClass({
             <h6>{favorites.get('mainCategory')}</h6>
           </div>
         </a>
-        <input onClick={this.handleRemoveFavorite} className="btn btn-default" type="submit" value="Remove Favorite"></input>
       </div>
     )
   }
@@ -76,8 +59,7 @@ var Favorites = React.createClass({
       );
     });
     return (
-      <div className="col-md-12">
-        <h3>My Favorites</h3>
+      <div>
         {favoritesList}
       </div>
     )
@@ -94,24 +76,29 @@ var FavoritesContainer = React.createClass({
 componentWillMount: function(){
   var self = this;
   var businessCollection = new BusinessCollection();
-  businessCollection.parseWhere('favorite', '_User', User.current().get('objectId')).fetch().then(function(){
+  businessCollection.parseWhere('favorite', '_User', User.current().get('objectId')).fetch().then(function(response){
+    console.warn(response);
+    if(businessCollection.length >= 1){
+      console.log('length', businessCollection.length);
+
+    
+    } else {
+      console.log('we got none');
+    };
     self.setState({
       businessCollection: businessCollection
     });
   });
 },
-removeFavorite: function(restaurant){
-  var favorite = this.state.businessCollection;
-  var currentUser = User.current().get('objectId');
-  favorite.set('favorite', {"__op": "RemoveRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
-  favorite.save();
-  console.log(this.state);
-},
+
   render: function(){
     console.log('favorites', this.state.businessCollection);
     return (
-      <div className="col-md-3">
-        <Favorites restaurants={this.state.businessCollection} removeFavorite={this.removeFavorite}/>
+      <div className="row">
+        <div className="col-md-12">
+
+          <Favorites restaurants={this.state.businessCollection}/>
+        </div>
       </div>
     )
   }
