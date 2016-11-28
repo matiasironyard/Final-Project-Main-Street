@@ -53,11 +53,12 @@ var Search = React.createClass({
       );
     });
     return(
-      <div className="col-md-12 categories-dropdown">
-        <span>I'm in the mood for</span>
-        <div className="dropdown">
+      <div className="categories-bar col-md-12">
+        {/*<h2 className="viewall-card-container-header">All Restaurants</h2>*/}
+        <div className="categories-dropdown dropdown">
           <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          <span className="caret"></span>
+            <span className="categories-heading">I'm in the mood for</span>
+            <span className="caret"></span>
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
             {categoriesList}
@@ -75,14 +76,11 @@ var ItemListing = React.createClass({
     var backgroundImage = restaurants.get('img_url');
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
     return(
-      <div className ="viewall-restaurant-card  mdl-card mdl-shadow--2dp col-md-3 ">
-          <div className= "specials-counter">
-
-          </div>
+      <div className ="viewall-restaurant-card  mdl-card mdl-shadow--2dp col-md-3">
           <div className="viewall-header restaurant-card-header">
             <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><img className="viewall-image" src={restaurants.get('image_url')}/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
-            <p  className="viewall-name mdl-card__title mdl-card--expand">{restaurants.get('name')}</p>
+            <div  className="viewall-name ">{restaurants.get('name')}</div>
             <p className="viewall-category mdl-card__title-text">{restaurants.get('mainCategory')}</p>
           </div>
           <div className="viewall-restaurant-info mdl-card__actions mdl-card--border">
@@ -109,7 +107,6 @@ var Listing = React.createClass({
     });
     return(
       <div className="viewall-cards-container col-md-12 ">
-        <h2 className="viewall-card-container-header">All Restaurants</h2>
         {restaurantList}
       </div>
     )
@@ -167,13 +164,11 @@ var ViewAllContainer= React.createClass({
     return (
       <div className="viewall-container container">
       <div className="viewall-row row">
-        <Search  className="viewall-search-row col-md-12" restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
-      </div>
-      <div className="viewall-favorites-row row">
-        <Favorites className="viewall-favorites col-md-12"/>
-      </div>
-      <div className="viewall-lisitng-row row">
-        <Listing className="viewall-listing col-md-12"restaurants={this.state.businessCollection} />
+        <Favorites/>
+        <div className=''>
+          <Search   restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
+          <Listing restaurants={this.state.businessCollection} />
+        </div>
       </div>
     </div>
     )

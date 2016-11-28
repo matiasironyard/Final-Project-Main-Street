@@ -28,6 +28,7 @@ var FavoriteListing = React.createClass({
     console.log('test', favorites);
     return (
       <div className ="restaurant-cards mdl-card mdl-shadow--2dp col-md-2">
+        <div className="material-icons mdl-badge mdl-badge--overlap" data-badge="♥"/>
         <div className="restaurant-card-header">
           <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item"><img className="restaurant-card-img" src={favorites.get('image_url')}/></a>
           <p className="restaurant-card-name">{favorites.get('name')}</p>
@@ -55,10 +56,10 @@ var Favorites = React.createClass({
     console.log('Favorties render', self.props.restaurants.length);
     var restaurants = self.props.restaurants;
 
-      if(restaurants.length=0){
-      console.log('none akdfjlkadsjlafkjsd;klfjs;');
-        
-    };
+    //   if(restaurants.length=0){
+    //   console.log('none akdfjlkadsjlafkjsd;klfjs;');
+    //
+    // };
 
     var favoritesList = restaurants.map(function(favorites){
       console.log('2-map', favoritesList);
@@ -70,7 +71,6 @@ var Favorites = React.createClass({
     });
     return (
       <div className="favorites-pane col-md-12">
-        <h3 className="favorites-header">My Favorite Restaurants</h3>
         {favoritesList}
       </div>
     )
@@ -87,11 +87,11 @@ var FavoritesContainer = React.createClass({
 componentWillMount: function(){
   var self = this;
   var businessCollection = new BusinessCollection();
+  businessCollection.comparator = 'name';
   businessCollection.parseWhere('favorite', '_User', User.current().get('objectId')).fetch().then(function(response){
     console.warn(response);
     if(businessCollection.length >= 1){
       console.log('length', businessCollection.length);
-
 
     } else {
       console.log('we got none');
@@ -105,8 +105,8 @@ componentWillMount: function(){
   render: function(){
     console.log('favorites', this.state.businessCollection);
     return (
-      <div className="favorites-row row">
-        <div className="favorites-col col-md-12">
+      <div className="favorites-row">
+        <div className="favorites-col col-md-11">
           <Favorites restaurants={this.state.businessCollection}/>
         </div>
       </div>
