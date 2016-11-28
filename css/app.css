@@ -5766,75 +5766,121 @@ button.close {
 img {
   max-width: 100%; }
 
-.dashboard-dessert {
-  margin-bottom: 30px; }
+.viewall-lisitng-row {
+  background-color: blue;
+  height: 6vw;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px; }
 
-.registration-form {
-  padding-top: 30px; }
-  .registration-form .form-header {
-    display: inline-block;
-    margin-bottom: 20px; }
-    .registration-form .form-header img {
-      border-radius: 30px;
+.categories-bar .categories-dropdown .btn {
+  width: 89%;
+  color: #616161;
+  background-color: #fff;
+  border: 1px solid #E0E0E0;
+  border-radius: 0;
+  padding: 2px;
+  margin-top: 25px; }
+  .categories-bar .categories-dropdown .btn .categories-heading {
+    font-size: 3vh;
+    color: #616161; }
+  .categories-bar .categories-dropdown .btn .caret {
+    margin-left: 15px; }
+.categories-bar .btn:hover {
+  color: #424242;
+  border: 1px solid #424242; }
+
+.favorites-row {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+  .favorites-row .favorites-col {
+    padding-left: 0; }
+    .favorites-row .favorites-col .favorites-pane .favorites-header {
+      color: #212121;
+      margin-top: 10px;
+      font-size: calc(1em + 1vw);
+      text-transform: uppercase; }
+    .favorites-row .favorites-col .favorites-pane .restaurant-cards {
+      width: 150px;
+      height: 150px;
+      width: 150px;
+      margin: 5px;
+      padding: 5px; }
+      .favorites-row .favorites-col .favorites-pane .restaurant-cards .material-icons {
+        margin-top: 10px; }
+      .favorites-row .favorites-col .favorites-pane .restaurant-cards .restaurant-card-img {
+        border-radius: 5px; }
+      .favorites-row .favorites-col .favorites-pane .restaurant-cards .restaurant-card-name {
+        color: #212121;
+        margin-top: 10px;
+        font-size: calc(.5em + .5vw);
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase; }
+      .favorites-row .favorites-col .favorites-pane .restaurant-cards .restaurant-card-category {
+        color: #616161;
+        font-size: calc(.4em + .4vw);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase; }
+
+.viewall-container .viewall-cards-container {
+  margin-top: 30px; }
+  .viewall-container .viewall-cards-container .viewall-card-container-header {
+    color: #424242;
+    font-size: calc(1.5em + 1.5vw);
+    text-transform: uppercase; }
+  .viewall-container .viewall-cards-container .viewall-restaurant-card {
+    margin: 5px;
+    padding: 5px;
+    padding-top: 15px;
+    padding-left: 10px; }
+    .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-image {
+      border-radius: 5px;
+      width: 8vw; }
+    .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-counter {
+      padding-top: 2px; }
+    .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-name {
+      color: #212121;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      font-size: calc(.7em + .7vw);
+      width: 280px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: uppercase; }
+    .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-category {
+      color: #616161;
+      font-size: calc(.7em + .7vw); }
+  .viewall-container .viewall-cards-container .viewall-restaurant-card:hover {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+    z-index: 1; }
+
+.detail-view-container .detail-view-row {
+  margin-top: 20px; }
+  .detail-view-container .detail-view-row .detailview-pane .detailview-header {
+    border: 1px solid #BDBDBD;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-img {
+      background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
-      padding: 10px; }
-  .registration-form .form-container {
-    margin-top: 80px; }
-  .registration-form .categories input {
-    margin-bottom: 15px; }
+      background-origin: padding-box; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-img .favorite-btn {
+        margin: 10px; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-text {
+      padding: 20px; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-info {
+      border-top: 1px solid #BDBDBD;
+      padding: 15px;
+      margin-top: 10px; }
 
-.restaurant-card {
-  height: auto;
-  margin: 10px;
-  padding: 10px; }
+.nav-message {
+  color: #BDBDBD; }
 
-.specials-counter {
-  height: 30px;
-  width: 30px;
-  float: right;
-  text-align: center;
-  color: white;
-  background-color: rgba(37, 36, 29, 0.45);
-  border-radius: 100%; }
-  .specials-counter .counter-number {
-    margin-top: 5px; }
-
-.detailview-pane .detailview-header {
-  padding-bottom: 20px;
-  box-shadow: -1px 4px 5px 0px rgba(0, 0, 0, 0.75); }
-  .detailview-pane .detailview-header .detailview-header-img {
-    padding-top: 20px; }
-  .detailview-pane .detailview-header .detailview-header-text {
-    padding-top: 20px; }
-    .detailview-pane .detailview-header .detailview-header-text h1 {
-      font-family: 'Raleway', sans-serif; }
-    .detailview-pane .detailview-header .detailview-header-text h4 {
-      font-family: 'Josefin Sans', sans-serif;
-      font-style: italic; }
-    .detailview-pane .detailview-header .detailview-header-text h5 {
-      font-family: 'Josefin Sans', sans-serif;
-      font-style: italic; }
-.detailview-pane .detailview-pane .detailview-description {
-  border-bottom: 1px solid grey; }
-  .detailview-pane .detailview-pane .detailview-description p {
-    font-family: 'Open Sans', sans-serif;
-    padding: 10px; }
-.detailview-pane .detailview-pane .detailview-menu {
-  padding: 10px;
-  border-bottom: 1px solid grey; }
-.detailview-pane .detailview-pane .detailview-location-pane img {
-  height: 300px;
-  width: 300px;
-  padding: 5px; }
-.detailview-pane .detailview-pane .detailview-location-pane .detailview-phone {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: bold; }
-.detailview-pane .detailview-pane .detailview-location-pane p {
-  font-family: 'Open Sans', sans-serif; }
-.detailview-pane .detailview-specials {
-  margin-top: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-left: 2px solid grey; }
 /*# sourceMappingURL=app.css.map */
