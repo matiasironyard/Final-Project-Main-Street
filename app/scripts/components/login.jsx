@@ -3,6 +3,10 @@ var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var setupParse= require('../parseUtilities').setupParse;
+var BusinessCollection = require('../models/business.js').BusinessCollection;
+var User= require('../parseUtilities').User;
+
+
 var Modal = require('react-modal');
 require('../router').router;
 
@@ -69,6 +73,8 @@ var LogInContainer = React.createClass({
 
 handleLogMeIn: function(logMeIn){
   var self = this;
+  var businessCollection = new BusinessCollection();
+
   var username= logMeIn.email;
   // console.warn(username);
   var password= logMeIn.password;
@@ -88,11 +94,18 @@ handleLogMeIn: function(logMeIn){
     localStorage.setItem('user', JSONdata);
     if (JSON.parse(localStorage.getItem('user')).phone <=0){
        self.props.router.navigate('/restaurants/', {trigger: true})
-    } else {
+     } else if (!businessCollection.parseWhere('owner', '_User', User.current().get('objectId')) && (JSON.parse(localStorage.getItem('user')).phone) ){
+         self.props.router.navigate('/registration/', {trigger: true})
+    } else if (businessCollection.parseWhere('owner', '_User', User.current().get('objectId'))){
       self.props.router.navigate('/dashboard/', {trigger: true})
     }
   });
 },
+
+// } else if (JSON.parse(localStorage.getItem('user')).phone) {
+//   self.props.router.navigate('/registration/', {trigger: true})
+// }
+
 
 
 

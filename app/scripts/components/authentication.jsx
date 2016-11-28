@@ -50,6 +50,12 @@ var SignUpComponent = React.createClass({
     this.setState({email: '', phone: '', password: ''});
   },
 
+  handleLogMeIn: function(e){
+    e.preventDefault();
+    this.props.handleLogIn(e);
+    console.log(this.state);
+  },
+
   openModal: function() {
     this.setState({modalIsOpen: true});
   },
@@ -60,12 +66,16 @@ var SignUpComponent = React.createClass({
 
   render: function(){
     return (
-          <div className="singup col-md-5 col-md-offset-4">
-            <h3>Sing up</h3>
+          <div className="singup col-md-3 col-md-offset-4">
+            <h3>Sign up</h3>
             <form onSubmit = {this.handleSignUp} id="signup">
               <div className="form-group">
                 <label htmlFor="email">Email address</label>
                 <input onChange={this.handleEmail} value={this.state.email} className="form-control" name="email" id="email" type="email" placeholder="email" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input onChange={this.handlePassword} value={this.state.password} className="form-control" name="password" id="password" type="password" placeholder="Password Please" />
               </div>
               <p>Are you a business owner?</p>
               <button type="button" className="btn btn-primary" onClick={this.openModal}>Yes!</button>
@@ -77,13 +87,11 @@ var SignUpComponent = React.createClass({
                     <button type="button" className="btn btn-warning"onClick={this.closeModal}>Done</button>
                 </div>
               </Modal>
-
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input onChange={this.handlePassword} value={this.state.password} className="form-control" name="password" id="password" type="password" placeholder="Password Please" />
+              <div className="singup btns">
+                <input onClick={this.handleSignUp} className="btn btn-primary" type="submit" value="Sign Me Up!" />
+                <input onClick={this.handleLogMeIn} className="btn btn-primary pull-right" type="submit" value="I have an account" />
               </div>
 
-              <input onSubmit={this.handleSignUp} className="btn btn-primary" type="submit" value="Sign Me Up!" />
             </form>
           </div>
   );
@@ -111,10 +119,15 @@ var AuthenticationContainer = React.createClass({
     });
   },
 
+  handleLogIn: function(elseif){
+    var self = this;
+    self.props.router.navigate('/login/', {trigger: true});
+  },
+
   render: function(){
     return (
       <div>
-        <SignUpComponent handleSignUp={this.handleSignUp} />
+        <SignUpComponent handleSignUp={this.handleSignUp}  handleLogIn={this.handleLogIn}/>
       </div>
     );
   }

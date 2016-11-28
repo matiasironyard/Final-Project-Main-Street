@@ -217,7 +217,8 @@ var SingleViewContainer = React.createClass({
     var currentUser = User.current().get('objectId');
     restaurant.set('favorite', {"__op": "AddRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
     restaurant.save();
-  // console.log(this.state);
+    this.setState({restaurant: restaurant})
+    console.log(this.state);
   },
 
   removeFavorite: function(restaurant){

@@ -3,10 +3,11 @@ var React = require('react');
 
 var Template = React.createClass({
   logout: function(){
-    $.post('https://matias-recipe.herokuapp.com/logout/').then(function(){
-      localStorage.clear();
+    window.localStorage.clear().then(function(){
+        $.post('https://matias-recipe.herokuapp.com/logout/')
     });
   },
+  
   render: function(){
     return (
       <div className="container">
