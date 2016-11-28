@@ -3,6 +3,7 @@ var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var setupParse= require('../parseUtilities').setupParse;
+var Modal = require('react-modal');
 require('../router').router;
 
 // console.log('hi');
@@ -13,6 +14,7 @@ var SignUpComponent = React.createClass({
     return {
       username: '',
       password: '',
+      modalIsOpen: false,
     };
   },
 
@@ -48,21 +50,33 @@ var SignUpComponent = React.createClass({
     this.setState({email: '', phone: '', password: ''});
   },
 
+  openModal: function() {
+    this.setState({modalIsOpen: true});
+  },
+
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
+  },
+
   render: function(){
     return (
-          <div className="col-md-offset-1 col-md-5">
-            <h2>Need an Account? Sign Up!</h2>
+          <div className="singup col-md-5 col-md-offset-4">
+            <h3>Sing up</h3>
             <form onSubmit = {this.handleSignUp} id="signup">
-
               <div className="form-group">
                 <label htmlFor="email">Email address</label>
                 <input onChange={this.handleEmail} value={this.state.email} className="form-control" name="email" id="email" type="email" placeholder="email" />
               </div>
-
-              <div className="form-group">
-                <label htmlFor="phone">Phone</label>
-                <input onChange={this.handlePhone} value={this.state.phone} className="form-control" name="phone" id="phone" type="text" placeholder="Phone Please" />
-              </div>
+              <p>Are you a business owner?</p>
+              <button type="button" className="btn btn-primary" onClick={this.openModal}>Yes!</button>
+              <Modal isOpen={this.state.modalIsOpen}>
+                <div className="col-md-4 form-group">
+                  <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from yelp. Make sure to use the number that appears in yelp</p>
+                  <label htmlFor="phone">Phone</label>
+                  <input onChange={this.handlePhone} value={this.state.phone} className="form-control" name="phone" id="phone" type="text" placeholder="Phone Please" />
+                    <button type="button" className="btn btn-warning"onClick={this.closeModal}>Done</button>
+                </div>
+              </Modal>
 
               <div className="form-group">
                 <label htmlFor="password">Password</label>
@@ -70,57 +84,6 @@ var SignUpComponent = React.createClass({
               </div>
 
               <input onSubmit={this.handleSignUp} className="btn btn-primary" type="submit" value="Sign Me Up!" />
-            </form>
-          </div>
-  );
-  }
-});
-
-var LoginComponent = React.createClass({
-  getInitialState: function(){
-    return{
-      username: '',
-      password: '',
-    };
-  },
-
-  handleEmail: function(e){
-    var email = e.target.value;
-    this.setState({email: email});
-  },
-
-  handlePassword: function(e){
-    var password = e.target.value;
-    this.setState({password: password});
-  },
-
-  handleLogMeIn: function(e){
-    e.preventDefault();
-    var logMeIn = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    this.props.handleLogMeIn(logMeIn);
-    this.setState({email: '', password: ''});
-  },
-
-  render: function(){
-    return (
-          <div className="col-md-offset-1 col-md-4">
-            <h2>Please Login</h2>
-            <form onSubmit={this.handleLogMeIn} id="login">
-              <span className="error"></span>
-              <div className="form-group">
-                <label htmlFor="email-login">Email address</label>
-                <input onChange={this.handleEmail} value={this.state.email} className="form-control" name="email" id="email-login" type="email" placeholder="email" />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password-login">Password</label>
-                <input onChange={this.handlePassword} value={this.state.password}className="form-control" name="password" id="password-login" type="password" placeholder="Password Please" />
-              </div>
-
-              <input onSubmit={this.handleLogIn} className="btn btn-primary" type="submit" value="Beam Me Up!" />
             </form>
           </div>
   );
@@ -136,49 +99,22 @@ var AuthenticationContainer = React.createClass({
   },
 
   handleSignUp: function(signupData){
-  var data={
-    'username': signupData.email,
-    'password': signupData.password,
-    'phone': signupData.phone
-  };
+    var self = this;
+    var data={
+      'username': signupData.email,
+      'password': signupData.password,
+      'phone': signupData.phone
+    };
     $.post('https://matias-recipe.herokuapp.com/users', data).then(function(response){
-      // console.log('what are you looking at? :)');
-      // console.warn(response);
+        self.props.router.navigate('/login/', {trigger: true})
+      console.warn(response);
     });
   },
-
-handleLogMeIn: function(logMeIn){
-  var self = this;
-  var username= logMeIn.email;
-  // console.warn(username);
-  var password= logMeIn.password;
-  var callbackObj =
-  this.setState({username: logMeIn.username});
-
-  $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
-    // console.log('response', response)
-    var objectId = response.objectId;
-    console.log(objectId);
-    localStorage.setItem('local storage user', response);
-    var JSONdata= JSON.stringify(response);
-    localStorage.setItem('username', response.username);
-    localStorage.setItem('token', response.sessionToken);
-    localStorage.setItem('objectID', response.objectId);
-    localStorage.setItem('phone',response.phone);
-    localStorage.setItem('user', JSONdata);
-    if(response.sessionToken){
-      self.props.router.navigate('/registration/', {trigger: true})
-    };
-  });
-},
-
-
 
   render: function(){
     return (
       <div>
         <SignUpComponent handleSignUp={this.handleSignUp} />
-        <LoginComponent handleLogMeIn={this.handleLogMeIn} router={this.props.router}/>
       </div>
     );
   }

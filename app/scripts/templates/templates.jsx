@@ -3,7 +3,7 @@ var React = require('react');
 
 var Template = React.createClass({
   logout: function(){
-    $.post('https://https://matias-recipe.herokuapp.com/logout/').then(function(){
+    $.post('https://matias-recipe.herokuapp.com/logout/').then(function(){
       localStorage.clear();
     });
   },
