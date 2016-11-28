@@ -2,6 +2,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var $ = require('jquery');
 var models = require('../models/business');
+var Template = require('../templates/templates.jsx');
 var User= require('../parseUtilities').User;
 var router = require('../router').router;
 var GoogleMaps = require('../models/business.js').GoogleMaps;
@@ -228,13 +229,15 @@ var SingleViewContainer = React.createClass({
     var desserts = this.state.restaurant.get('dessert');
 
     return (
-      <div>
-        <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
-        <SpecialsList specials={specials}/>
-        <div className="menu-pane">
-          <MenuList appetizers={appetizers} maincourses={maincourses} desserts={desserts}/>
+      <Template>
+        <div>
+          <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
+          <SpecialsList specials={specials}/>
+          <div className="menu-pane">
+            <MenuList appetizers={appetizers} maincourses={maincourses} desserts={desserts}/>
+          </div>
         </div>
-      </div>
+      </Template>
     )
   },
 });

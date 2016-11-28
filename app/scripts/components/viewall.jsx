@@ -3,6 +3,8 @@ var Backbone = require('backbone');
 var models = require('../models/business');
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Favorites= require('./favorites.jsx').FavoritesContainer;
+var Template = require('../templates/templates.jsx');
+
 var Panel = require('muicss/lib/react/panel');
 var Dropdown = require('muicss/lib/react/dropdown');
 var DropdownItem = require('muicss/lib/react/dropdown-item');
@@ -162,6 +164,7 @@ var ViewAllContainer= React.createClass({
   render: function(){
     console.log('1-Business Collection', this.state);
     return (
+      <Template>
       <div className="viewall-container container">
       <div className="viewall-row row">
         <Favorites/>
@@ -171,6 +174,7 @@ var ViewAllContainer= React.createClass({
         </div>
       </div>
     </div>
+    </Template>
     )
   }
 });

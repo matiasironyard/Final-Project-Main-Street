@@ -33,19 +33,24 @@ img {
       width: 89%;
       color: #616161;
       background-color: #fff;
-      border: 1px solid #9E9E9E;
+      border: 1px solid #E0E0E0;
       border-radius: 0;
       padding: 2px;
       margin-top: 25px;
 
       .categories-heading{
         font-size: 3vh;
-        font-style: italic;
+        color: #616161;
+        // font-style: italic;
       }
       .caret{
         margin-left: 15px;
       }
     }
+  }
+  .btn:hover{
+    color: #424242;
+    border: 1px solid #424242;
   }
 }
 
