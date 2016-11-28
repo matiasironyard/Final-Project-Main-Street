@@ -57,6 +57,7 @@ img {
 //FAVORTIES
 .favorites-row{
   margin-top: 20px;
+  margin-bottom: 20px;
 
   .favorites-col{
     padding-left: 0;
@@ -166,17 +167,40 @@ img {
 //DETAIL VIEW
 .detail-view-container{
   .detail-view-row{
+    margin-top: 20px;
     .detailview-pane{
       .detailview-header{
+        border: 1px solid #BDBDBD;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
         .detailview-header-img{
+          background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
           background-origin: padding-box;
+          .favorite-btn{
+            margin: 10px;
+          }
         }
+        .detailview-header-text{
+        padding: 20px;
+      }
+      .detailview-header-info{
+        border-top: 1px solid #BDBDBD;
+        padding: 15px;
+        margin-top: 10px;
+      }
       }
     }
   }
 }
+
+
+//Template
+.nav-message{
+  color: #BDBDBD;
+}
+
 
 
 

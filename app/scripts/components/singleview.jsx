@@ -4,9 +4,11 @@ var $ = require('jquery');
 var models = require('../models/business');
 var Template = require('../templates/templates.jsx');
 var User= require('../parseUtilities').User;
+var Favorites= require('./favorites.jsx').FavoritesContainer;
+
 var router = require('../router').router;
-var GoogleMaps = require('../models/business.js').GoogleMaps;
-var googleMaps = new GoogleMaps();
+// var GoogleMaps = require('../models/business.js').GoogleMaps;
+// var googleMaps = new GoogleMaps();
 
 
 
@@ -121,9 +123,9 @@ var DetailView = React.createClass({
 
   render: function(){
     var self = this;
-    googleMaps.fetch().then(function(response){
-      console.log(response);
-    });
+    // googleMaps.fetch().then(function(response){
+    //   console.log(response);
+    // });
     var restaurant = self.props.restaurant;
     var specials = restaurant.get('specials');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
@@ -133,31 +135,34 @@ var DetailView = React.createClass({
     var directions = 'https://www.google.com/maps/dir//'+geolocation;
     var imgUrl = restaurant.get('image_upload');
     var divStyle= {
-      height: '30vw',
+      height: '40vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
-    console.warn(imgUrl);
-    console.warn(divStyle);
+    var phone = '"tel:(' + restaurant.get('phone') +')';
+    console.warn(phone);
 
     return(
       <div className="detailview-pane">
         <div className="detailview-header col-md-12">
-          <div className="detailview-header-img col-md-12"style={divStyle}/>
-          <div className="detailview-header-text">
-            <h1 className="detailview-header-name">
-              {restaurant.get('name')}
-            </h1>
-            <h4 className="detailview-header-cat">
-              {restaurant.get('mainCategory')}
-            </h4>
-            <h5 className="detailview-header-cat">
-              {restaurant.get('subCategory')}
-            </h5>
-            <h5 className="detailview-phone">{restaurant.get('phone')}</h5>
-            <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
-            <div className="detailview-favorite-btns">
-              <input onClick={this.handleFavorite} value="Add Favorite" type="button" className="btn btn-default"/>
-              <input onClick={this.handleRemoveFavorite} className="btn btn-default" type="submit" value="Remove Favorite"/>
+          <div className="row">
+            <div className="detailview-header-img "style={divStyle}>
+              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
+                <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
+            </div>
+            <div className="detailview-header-text ">
+              <h1 className="detailview-header-name">
+                {restaurant.get('name')}
+              </h1>
+              <div className="detailview-header-cat">
+                {restaurant.get('mainCategory')}
+              </div>
+              <div className="detailview-header-cat">
+                {restaurant.get('subCategory')}
+              </div>
+            </div>
+            <div className="detailview-header-info">
+              <div className="detailview-phone"><a href={phone}>{restaurant.get('phone')}</a></div>
+              <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
             </div>
           </div>
         </div>
@@ -236,7 +241,8 @@ var SingleViewContainer = React.createClass({
     return (
       <Template>
         <div className="detail-view-container container">
-            <div className="detail-view-row row">
+          <Favorites />
+          <div className="detail-view-row row">
             <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
             <SpecialsList specials={specials}/>
             <MenuList appetizers={appetizers} maincourses={maincourses} desserts={desserts}/>

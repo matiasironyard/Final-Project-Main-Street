@@ -207,15 +207,15 @@ var YelpBusiness = Backbone.Model.extend({
   },
 });
 
-var GoogleMaps = Backbone.Model.extend ({
-  urlRoot: function(){
-    console.log('testing google model');
-    return 'https://maps.googleapis.com/maps/api/staticmap?center=34.84355,-82.40467&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C34.84355,-82.40467&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
-  },
-  parse: function(data){
-    return data.businesses[0]
-  },
-});
+// var GoogleMaps = Backbone.Model.extend ({
+//   urlRoot: function(){
+//     console.log('testing google model');
+//     return 'https://maps.googleapis.com/maps/api/staticmap?center=34.84355,-82.40467&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C34.84355,-82.40467&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+//   },
+//   parse: function(data){
+//     return data.businesses[0]
+//   },
+// });
 
 
 module.exports = {
@@ -230,7 +230,7 @@ module.exports = {
   Business: Business,
   BusinessCollection: BusinessCollection,
   YelpBusiness: YelpBusiness,
-  GoogleMaps: GoogleMaps,
+  // GoogleMaps: GoogleMaps,
   // Favorite: Favorite,
   // FavoriteCollection: FavoriteCollection,
 };
