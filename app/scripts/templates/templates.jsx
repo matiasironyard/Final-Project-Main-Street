@@ -3,7 +3,7 @@ var React = require('react');
 function Template(props){
     return (
       <div>
-        <div className="container-fluid">
+        <div className="container">
           <div className="menu row">
             <div className="col-md-11-fluid nav-bar-col">
               <a href="#"><div className="facebook"></div></a>

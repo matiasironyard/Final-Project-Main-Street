@@ -163,6 +163,22 @@ img {
   }
 }
 
+//DETAIL VIEW
+.detail-view-container{
+  .detail-view-row{
+    .detailview-pane{
+      .detailview-header{
+        .detailview-header-img{
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-origin: padding-box;
+        }
+      }
+    }
+  }
+}
+
+
 
 
 

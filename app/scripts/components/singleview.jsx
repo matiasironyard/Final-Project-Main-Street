@@ -131,15 +131,19 @@ var DetailView = React.createClass({
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     console.log(googleMap);
     var directions = 'https://www.google.com/maps/dir//'+geolocation;
-    // var test = this.props.
+    var imgUrl = restaurant.get('image_upload');
+    var divStyle= {
+      height: '30vw',
+      backgroundImage: 'url(' + imgUrl + ')'
+    };
+    console.warn(imgUrl);
+    console.warn(divStyle);
 
     return(
-      <div className="row-fluid detailview-pane">
-        <div className="col-md-12 detailview-header">
-          <div className="col-md-4 detailview-header-img">
-            <img src={restaurant.get('image_upload')}></img>
-          </div>
-          <div className="col-md-8 detailview-header-text">
+      <div className="detailview-pane">
+        <div className="detailview-header col-md-12">
+          <div className="detailview-header-img col-md-12"style={divStyle}/>
+          <div className="detailview-header-text">
             <h1 className="detailview-header-name">
               {restaurant.get('name')}
             </h1>
@@ -157,6 +161,7 @@ var DetailView = React.createClass({
             </div>
           </div>
         </div>
+
         <div className="col-md-4 detailview-pane">
           <div className="detailview-description">
             <p>{restaurant.get('description')}</p>
@@ -230,10 +235,10 @@ var SingleViewContainer = React.createClass({
 
     return (
       <Template>
-        <div>
-          <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
-          <SpecialsList specials={specials}/>
-          <div className="menu-pane">
+        <div className="detail-view-container container">
+            <div className="detail-view-row row">
+            <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
+            <SpecialsList specials={specials}/>
             <MenuList appetizers={appetizers} maincourses={maincourses} desserts={desserts}/>
           </div>
         </div>
