@@ -15,9 +15,9 @@ var Template = React.createClass({
             <h2 className="restaurant-name">Greenville Foodies</h2>
             <a href="#"><div className="facebook"></div></a>
               <ul className="nav nav-tabs">
-                <li role="presentation" className="active"><a  href="#restaurants/">Home</a></li>
-                <li className="pull-right" role="presentation"><a onClick={this.logout} href="">Log Out</a></li>
-                <li className="pull-right" role="presentation"> <a href="">Log In</a></li>
+                <li role="presentation" className="active"><a  href="#restaurants/"><i className="material-icons">home</i></a></li>
+                <li className="pull-right" role="presentation"><a onClick={this.logout} href=""><i className="material-icons">exit_to_app</i></a></li>
+                <li className="pull-right" role="presentation"> <a href=""><i className="material-icons">perm_identity</i></a></li>
               </ul>
               <div className="nav-message pull-right">
                 <span>Logged in as </span><span className="nav-name">{localStorage.getItem('username')}</span>
@@ -33,7 +33,14 @@ var Template = React.createClass({
           </div>
         </div>
         <div className="col-md-12-fluid footer-col">
-          <span className="footer-title">Greenville Foodies</span> <p>Copyright © Greenville Foodies 2016</p>
+          <div className="col-md-10">
+            <span className="footer-title">Greenville Foodies</span> <p>Copyright © Greenville Foodies 2016</p>
+          </div>
+          <div className="col-md-2">
+            <a  href="#dashboard/"><button className="favorite-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"><i className="material-icons">web</i></button></a>
+            <span className="pull-right">Dashboard </span>
+          </div>
+
         </div>
       </div>
     )

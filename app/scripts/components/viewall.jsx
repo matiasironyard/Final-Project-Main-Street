@@ -1,7 +1,7 @@
 var React = require('react');
 var Backbone = require('backbone');
 var models = require('../models/business');
-var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
+var Dashboard = require('./dashboard.jsx').Dashboard;
 var Favorites= require('./favorites.jsx').FavoritesContainer;
 var Template = require('../templates/templates.jsx');
 
@@ -24,7 +24,7 @@ var SearchListing = React.createClass({
     e.preventDefault();
     var self = this;
     var category = self.props.restaurants.get('mainCategory');
-    console.log('Search Listing very child>>', category);
+  // console.log('Search Listing very child>>', category);
     self.props.filterCategories(category);
     self.setState({restaurants: category})
   },
@@ -77,6 +77,21 @@ var ItemListing = React.createClass({
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
+
+    //Not so dry code trying to trigger removeSpecial function from dashboard
+    // var specials = restaurants.get('specials');
+    // var expiryDate = specials.map(function(date){
+    //   return date.get('expirydate');
+    // });
+    // console.log('expires on', expiryDate, 'restaurant', restaurants.get('name'));
+    // var now = moment();
+    // var formatedDate = now.format("YYYY-MM-DD");
+    // console.log('delete special trigger >>', formatedDate == expiryDate);
+    // if(formatedDate == expiryDate){
+    //   Dashboard.removeSpecial(special);
+    //   console.warn("Special Deleted >>");
+    //   console.log(Dashboard.removeSpecial(special));
+    // };
     return(
       <div className ="viewall-restaurant-card  mdl-card mdl-shadow--2dp col-md-3">
           <div className="viewall-header restaurant-card-header">
@@ -98,9 +113,9 @@ var Listing = React.createClass({
   render: function(){
     var self = this;
     // console.log('2-listing', self.props.restaurants);
-    console.log('Lisntin Render', self.props.restaurants);
+  // console.log('Lisntin Render', self.props.restaurants);
     var restaurantList = self.props.restaurants.map(function(restaurant){
-      console.log('2-map', restaurantList);
+    // console.log('2-map', restaurantList);
       return (
           <div key={restaurant.cid}>
             <ItemListing restaurants={restaurant}/>
@@ -120,7 +135,8 @@ var ViewAllContainer= React.createClass({
   getInitialState: function(){
     return {
       businessCollection: new models.BusinessCollection(),
-      businessCategoryCollection: new models.BusinessCollection()
+      businessCategoryCollection: new models.BusinessCollection(),
+      specialsCollection: new models.SpecialCollection()
     };
   },
 
@@ -142,6 +158,21 @@ var ViewAllContainer= React.createClass({
         businessCategoryCollection: categories
       });
     });
+
+    //For Dan to check
+    // var specialsCollection = this.state.businessCollection;
+    // var self = this;
+    //
+    // specialsCollection.fetch().then(()=>{
+    //   var expiredSearch = specialsCollection.map(function(restaurants){
+    //     var restaurants = restaurants.get('specials');
+    //     var map = restaurants.map(function(specials){
+    //       console.log('restaurant with specials', specials);
+    //       return businessCollection.findWhere({expirydate: restaurants});
+    //     });
+    //     console.log('mapped over', map);
+    //   });
+    // });
   },
 
   filterCategories: function(category){
@@ -153,16 +184,26 @@ var ViewAllContainer= React.createClass({
     });
   },
 
+  removeExpired: function(data){
+    var specials = this.state.specialsCollection;
+    restaurants.fetch({
+      'data': {'where': {"expirydata": data}}
+    }).then(() =>{
+      this.setState({specialsCollection: specials})
+    });
+    console.log('removeExpired', this.state);
+  },
+
   removeFavorite: function(restaurant){
     var favorite = this.state.businessCollection;
     var currentUser = User.current().get('objectId');
     favorite.set('favorite', {"__op": "RemoveRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
     favorite.save();
-    console.log(this.state);
+  // console.log(this.state);
   },
 
   render: function(){
-    console.log('1-Business Collection', this.state);
+  // console.log('1-Business Collection', this.state);
     return (
       <Template>
       <div className="viewall-container container">

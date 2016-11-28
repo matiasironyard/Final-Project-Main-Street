@@ -230,7 +230,7 @@ var DashboardContainer = React.createClass({
     var business = this.state.business;
     var specialsCollection = business.get('specials');
     specialsCollection.remove(special.cid);
-    // business.save();
+    business.save();
     this.setState({business: business});
   },
 

@@ -29,7 +29,7 @@ var SpecialsList = React.createClass({
         </li>
       )
     });
-    console.log('specialslistitems', specialsListItems);
+  // console.log('specialslistitems', specialsListItems);
     return (
       <div className="col-md-8 detailview-specials-table">
         <h2 className="well">Specials</h2>
@@ -107,7 +107,7 @@ var DetailView = React.createClass({
     e.preventDefault();
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
-    console.log('My Favorite>>', favorite);
+  // console.log('My Favorite>>', favorite);
     self.props.setFavorite(favorite);
     self.setState({favorite: favorite})
   },
@@ -124,21 +124,21 @@ var DetailView = React.createClass({
   render: function(){
     var self = this;
     // googleMaps.fetch().then(function(response){
-    //   console.log(response);
+    // // console.log(response);
     // });
     var restaurant = self.props.restaurant;
     var specials = restaurant.get('specials');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
-    console.log(geolocation);
+  // console.log(geolocation);
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
-    console.log(googleMap);
+  // console.log(googleMap);
     var directions = 'https://www.google.com/maps/dir//'+geolocation;
     var imgUrl = restaurant.get('image_upload');
     var divStyle= {
       height: '40vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
-    var phone = '"tel:(' + restaurant.get('phone') +')';
+    var phone = '"tel:(' + restaurant.get('phone') +')"';
     console.warn(phone);
 
     return(
@@ -197,10 +197,10 @@ var SingleViewContainer = React.createClass({
   },
   componentWillMount: function(){
     var restaurant = this.state.restaurant;
-    console.log('this state business', this.state.restaurant);
-    console.log('willmount', restaurant);
+  // console.log('this state business', this.state.restaurant);
+  // console.log('willmount', restaurant);
     var restaurantId = this.props.businessId;
-    console.log('restaurant id', restaurantId)
+  // console.log('restaurant id', restaurantId)
     if(!restaurantId){
       return;
     }
@@ -217,7 +217,7 @@ var SingleViewContainer = React.createClass({
     var currentUser = User.current().get('objectId');
     restaurant.set('favorite', {"__op": "AddRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
     restaurant.save();
-    console.log(this.state);
+  // console.log(this.state);
   },
 
   removeFavorite: function(restaurant){
@@ -228,7 +228,7 @@ var SingleViewContainer = React.createClass({
     restaurant.save().then(function(){
       self.props.router.navigate('restaurants/', {trigger: true})
     });
-    console.log(this.state);
+  // console.log(this.state);
   },
 
   render: function(){

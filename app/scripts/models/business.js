@@ -150,7 +150,7 @@ var Business = ParseModel.extend ({
   saveSpecial: function(key, val, options){
     this.set('specials', this.get('specials').toJSON());
     return ParseModel.prototype.save.apply(this, arguments);
-    console.log(this.state);
+  // console.log(this.state);
   },
   saveAppetizer: function(key, val, options){
     this.set('appetizer', this.get('appetizer').toJSON());
