@@ -81,6 +81,7 @@ handleLogMeIn: function(logMeIn){
   var callbackObj =
   this.setState({username: logMeIn.username});
 
+
   $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
     // console.log('response', response)
     var objectId = response.objectId;
@@ -92,21 +93,20 @@ handleLogMeIn: function(logMeIn){
     localStorage.setItem('objectID', response.objectId);
     localStorage.setItem('phone',response.phone);
     localStorage.setItem('user', JSONdata);
-    if (JSON.parse(localStorage.getItem('user')).phone <=0){
-       self.props.router.navigate('/restaurants/', {trigger: true})
-     } else if (!businessCollection.parseWhere('owner', '_User', User.current().get('objectId'))){
-         self.props.router.navigate('/registration/', {trigger: true})
-    } else if (businessCollection.parseWhere('owner', '_User', User.current().get('objectId'))){
-      self.props.router.navigate('/dashboard/', {trigger: true})
-    }
+
+    var test = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
+      console.log(response);
+      if(businessCollection.length >= 1){
+        console.log('test',test);
+        self.props.router.navigate('/dashboard/', {trigger: true})
+      } else if (JSON.parse(localStorage.getItem('user')).phone <=0){
+        self.props.router.navigate('/restaurants/', {trigger: true})
+      } else {
+        self.props.router.navigate('/registration/', {trigger: true})
+      }
+      });
   });
 },
-
-// } else if (JSON.parse(localStorage.getItem('user')).phone) {
-//   self.props.router.navigate('/registration/', {trigger: true})
-// }
-
-
 
 
   render: function(){
