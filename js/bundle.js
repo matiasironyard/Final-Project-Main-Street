@@ -177,6 +177,12 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
     this.setState({email: '', phone: '', password: ''});
   },
 
+  handleLogMeIn: function(e){
+    e.preventDefault();
+    this.props.handleLogIn(e);
+    console.log(this.state);
+  },
+
   openModal: function() {
     this.setState({modalIsOpen: true});
   },
@@ -187,12 +193,16 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
 
   render: function(){
     return (
-          React.createElement("div", {className: "singup col-md-5 col-md-offset-4"}, 
-            React.createElement("h3", null, "Sing up"), 
+          React.createElement("div", {className: "singup col-md-3 col-md-offset-4"}, 
+            React.createElement("h3", null, "Sign up"), 
             React.createElement("form", {onSubmit: this.handleSignUp, id: "signup"}, 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", {htmlFor: "email"}, "Email address"), 
                 React.createElement("input", {onChange: this.handleEmail, value: this.state.email, className: "form-control", name: "email", id: "email", type: "email", placeholder: "email"})
+              ), 
+              React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", {htmlFor: "password"}, "Password"), 
+                React.createElement("input", {onChange: this.handlePassword, value: this.state.password, className: "form-control", name: "password", id: "password", type: "password", placeholder: "Password Please"})
               ), 
               React.createElement("p", null, "Are you a business owner?"), 
               React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.openModal}, "Yes!"), 
@@ -204,13 +214,11 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
                     React.createElement("button", {type: "button", className: "btn btn-warning", onClick: this.closeModal}, "Done")
                 )
               ), 
+              React.createElement("div", {className: "singup btns"}, 
+                React.createElement("input", {onClick: this.handleSignUp, className: "btn btn-primary", type: "submit", value: "Sign Me Up!"}), 
+                React.createElement("input", {onClick: this.handleLogMeIn, className: "btn btn-primary pull-right", type: "submit", value: "I have an account"})
+              )
 
-              React.createElement("div", {className: "form-group"}, 
-                React.createElement("label", {htmlFor: "password"}, "Password"), 
-                React.createElement("input", {onChange: this.handlePassword, value: this.state.password, className: "form-control", name: "password", id: "password", type: "password", placeholder: "Password Please"})
-              ), 
-
-              React.createElement("input", {onSubmit: this.handleSignUp, className: "btn btn-primary", type: "submit", value: "Sign Me Up!"})
             )
           )
   );
@@ -238,10 +246,15 @@ var AuthenticationContainer = React.createClass({displayName: "AuthenticationCon
     });
   },
 
+  handleLogIn: function(elseif){
+    var self = this;
+    self.props.router.navigate('/login/', {trigger: true});
+  },
+
   render: function(){
     return (
       React.createElement("div", null, 
-        React.createElement(SignUpComponent, {handleSignUp: this.handleSignUp})
+        React.createElement(SignUpComponent, {handleSignUp: this.handleSignUp, handleLogIn: this.handleLogIn})
       )
     );
   }
@@ -883,6 +896,10 @@ var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var setupParse= require('../parseUtilities').setupParse;
+var BusinessCollection = require('../models/business.js').BusinessCollection;
+var User= require('../parseUtilities').User;
+
+
 var Modal = require('react-modal');
 require('../router').router;
 
@@ -949,31 +966,38 @@ var LogInContainer = React.createClass({displayName: "LogInContainer",
 
 handleLogMeIn: function(logMeIn){
   var self = this;
+  var businessCollection = new BusinessCollection();
+
   var username= logMeIn.email;
   // console.warn(username);
   var password= logMeIn.password;
   var callbackObj =
   this.setState({username: logMeIn.username});
 
+
   $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
     // console.log('response', response)
     var objectId = response.objectId;
     console.log(objectId);
     var JSONdata= JSON.stringify(response);
-    localStorage.setItem('local storage user', response);
+    // localStorage.setItem('local storage user', response);
     localStorage.setItem('username', response.username);
-    localStorage.setItem('token', response.sessionToken);
-    localStorage.setItem('objectID', response.objectId);
+    // localStorage.setItem('token', response.sessionToken);
+    // localStorage.setItem('objectID', response.objectId);
     localStorage.setItem('phone',response.phone);
     localStorage.setItem('user', JSONdata);
-    if (JSON.parse(localStorage.getItem('user')).phone <=0){
-       self.props.router.navigate('/restaurants/', {trigger: true})
-    } else {
-      self.props.router.navigate('/dashboard/', {trigger: true})
-    }
+
+    var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
+      if(businessCollection.length >= 1){
+        self.props.router.navigate('/dashboard/', {trigger: true})
+      } else if (JSON.parse(localStorage.getItem('user')).phone <=0){
+        self.props.router.navigate('/restaurants/', {trigger: true})
+      } else {
+        self.props.router.navigate('/registration/', {trigger: true})
+      }
+      });
   });
 },
-
 
 
   render: function(){
@@ -989,7 +1013,7 @@ module.exports = {
   LogInContainer: LogInContainer,
 }
 
-},{"../parseUtilities":14,"../router":15,"backbone":17,"jquery":48,"react":207,"react-dom":70,"react-modal":77}],7:[function(require,module,exports){
+},{"../models/business.js":12,"../parseUtilities":14,"../router":15,"backbone":17,"jquery":48,"react":207,"react-dom":70,"react-modal":77}],7:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
@@ -1593,7 +1617,8 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
     var currentUser = User.current().get('objectId');
     restaurant.set('favorite', {"__op": "AddRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
     restaurant.save();
-  // console.log(this.state);
+    this.setState({restaurant: restaurant})
+    console.log(this.state);
   },
 
   removeFavorite: function(restaurant){
@@ -1796,7 +1821,7 @@ var ViewAllContainer= React.createClass({displayName: "ViewAllContainer",
       });
     });
 
-    //For Dan to check
+    // For Dan to check
     // var specialsCollection = this.state.businessCollection;
     // var self = this;
     //
@@ -1821,15 +1846,15 @@ var ViewAllContainer= React.createClass({displayName: "ViewAllContainer",
     });
   },
 
-  removeExpired: function(data){
-    var specials = this.state.specialsCollection;
-    restaurants.fetch({
-      'data': {'where': {"expirydata": data}}
-    }).then(() =>{
-      this.setState({specialsCollection: specials})
-    });
-    console.log('removeExpired', this.state);
-  },
+  // removeExpired: function(data){
+  //   var specials = this.state.specialsCollection;
+  //   restaurants.fetch({
+  //     'data': {'where': {"expirydata": data}}
+  //   }).then(() =>{
+  //     this.setState({specialsCollection: specials})
+  //   });
+  //   console.log('removeExpired', this.state);
+  // },
 
   removeFavorite: function(restaurant){
     var favorite = this.state.businessCollection;
@@ -1841,6 +1866,16 @@ var ViewAllContainer= React.createClass({displayName: "ViewAllContainer",
 
   render: function(){
   // console.log('1-Business Collection', this.state);
+  // var businessCollection = this.state.businessCollection;
+  // var expiryDateSearch = businessCollection.models.map(function(restaurants){
+  //   return restaurants.get('specials')
+  // });
+  // var dates = expiryDateSearch.map(function(expired){
+  //   return expired.toJSON()
+  // });
+  // console.log(dates.map(function(dates){
+  //   console.log(dates.effectivedate);
+  // }));
     return (
       React.createElement(Template, null, 
       React.createElement("div", {className: "viewall-container container"}, 
@@ -2267,7 +2302,7 @@ var AppRouter = Backbone.Router.extend({
 
   businessSessionCheck: function(){
     if (!JSON.parse(localStorage.getItem('user')).phone){
-      alert('this page is reserved for business owners')
+      // alert('this page is reserved for business owners')
      this.navigate('/restaurants/', {trigger: true});
    }
   },
@@ -2343,10 +2378,11 @@ var React = require('react');
 
 var Template = React.createClass({displayName: "Template",
   logout: function(){
-    $.post('https://matias-recipe.herokuapp.com/logout/').then(function(){
-      localStorage.clear();
+    localStorage.clear().then(function(){
+        $.post('https://matias-recipe.herokuapp.com/logout/')
     });
   },
+
   render: function(){
     return (
       React.createElement("div", {className: "container"}, 
@@ -2357,7 +2393,7 @@ var Template = React.createClass({displayName: "Template",
               React.createElement("ul", {className: "nav nav-tabs"}, 
                 React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {href: "#restaurants/"}, React.createElement("i", {className: "material-icons"}, "home"))), 
                 React.createElement("li", {className: "pull-right", role: "presentation"}, React.createElement("a", {onClick: this.logout, href: ""}, React.createElement("i", {className: "material-icons"}, "exit_to_app"))), 
-                React.createElement("li", {className: "pull-right", role: "presentation"}, " ", React.createElement("a", {href: ""}, React.createElement("i", {className: "material-icons"}, "perm_identity")))
+                React.createElement("li", {className: "pull-right", role: "presentation"}, " ", React.createElement("a", {href: "#login/"}, React.createElement("i", {className: "material-icons"}, "perm_identity")))
               ), 
               React.createElement("div", {className: "nav-message pull-right"}, 
                 React.createElement("span", null, "Logged in as "), React.createElement("span", {className: "nav-name"}, localStorage.getItem('username'))
