@@ -15,6 +15,9 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 img {
   max-width: 100%;
 }
+// #app{
+// background-color: #E1F5FE;
+// }
 
 //VIEWALL SEARCH
 .viewall-lisitng-row{
@@ -213,6 +216,41 @@ img {
 
 //DETAIL VIEW specials
 
+
+//DETAIL VIEW MENU
+.detailview-menu-list{
+  // background-color: yellow;
+  h2{
+    text-transform: uppercase;
+  }
+  h3{
+    text-transform: uppercase;
+  }
+  margin-bottom: 30px;
+  padding: 20px;
+  .mdl-layout-title{
+    padding: 20px;
+    border-bottom: 1px solid #E0E0E0;
+  }
+  .menu{
+    .table-dish{
+      width: 20%;
+    }
+    .table-description{
+      width: 60%;
+    }
+    .table-price{
+      width: 20%;
+    }
+    .detailview-menu-rows{
+      // background-color: green;
+      color: #616161;
+      line-height: 35px;
+    }
+  }
+}
+
+
 //SIGNUP CONTAINER
 .signup-container{
   background-image: url('https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w');
@@ -292,8 +330,9 @@ img {
 
 }
 
-.footer-col{
+.footer-row{
   border-top: 2px solid #BDBDBD;
+  // background-color: #FFA000;
 }
 
 

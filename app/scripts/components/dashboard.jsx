@@ -341,7 +341,8 @@ var DashboardContainer = React.createClass({
 
     return(
       <Template>
-        <div className="col-md-12 dashboard-windows">
+        <div className="row">
+        <div className= "dashboard-windows">
           <h1 className="well"> {businessName} Dashboard</h1>
           <Dashboard  business={this.state.business} />
           <button type="button" className="btn btn-primary" onClick={this.openModal}>Add Specials &amp; Menu</button>
@@ -360,6 +361,7 @@ var DashboardContainer = React.createClass({
               </div>
             </div>
             </Modal>
+        </div>
         </div>
     </Template>
     )

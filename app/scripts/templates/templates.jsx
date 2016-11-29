@@ -14,7 +14,7 @@ var Template = React.createClass({
 
   render: function(){
     return (
-      <div className="container">
+      <div>
         <div className="menu row">
           <div className="col-md-11-fluid nav-bar-col">
             <h2 className="restaurant-name">Greenville Foodies</h2>
@@ -35,16 +35,12 @@ var Template = React.createClass({
                 <span>Logged in as </span><span className="nav-name">{localStorage.getItem('username')}</span>
               </div>
           </div>
-          {/*<div className="col-md-12 header-col">
-            <div className="header-title">
-              <h2 className="restaurant-name">Greenville Foodies</h2>
-            </div>
-          </div>*/}
+        </div>
           <div className="components">
             {this.props.children}
           </div>
-        </div>
-        <div className="col-md-12-fluid footer-col">
+
+        <div className="footer-row row">
           <div className="col-md-10">
             <span className="footer-title">Greenville Foodies</span> <p>Copyright © Greenville Foodies 2016</p>
           </div>
@@ -52,7 +48,6 @@ var Template = React.createClass({
             <a  href="#dashboard/"><button className="favorite-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"><i className="material-icons">web</i></button></a>
             <span className="pull-right">Dashboard </span>
           </div>
-
         </div>
       </div>
     )

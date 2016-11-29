@@ -32,7 +32,7 @@ var SpecialsList = React.createClass({
   // console.log('specialslistitems', specialsListItems);
     return (
       <div className="col-md-8 detailview-specials-table">
-        <h2 className="well">Specials</h2>
+        <h2 className="mdl-layout-title">Specials</h2>
         <ul>
             {specialsListItems}
           </ul>
@@ -46,51 +46,85 @@ var MenuList = React.createClass({
 
     var appetizersListItems = this.props.appetizers.map(function(appetizer){
       return (
-        <li key={appetizer.cid} className="detailview-menu-rows">
-          <div className="appetizer-header">
-            <span className="appetizer-name">{appetizer.get('name')}</span>
-            <span className="appetizer-price">{appetizer.get('price')}</span>
-          </div>
-          <div className="appetizer-description">{appetizer.get('description')}</div>
-        </li>
+
+        <tr key={appetizer.cid} className="detailview-menu-rows">
+          <td className="appetizer-name ">{appetizer.get('name')}</td>
+          <td className="appetizer-description">{appetizer.get('description')}</td>
+          <td className="appetizer-price ">{appetizer.get('price')}</td>
+        </tr>
       )
     });
 
     var maincourseListItems = this.props.maincourses.map(function(maincourse){
       return (
-        <li key={maincourse.cid} className="detailview-menu-rows">
-          <div className="maincurse-header">
-            <span className="maincourse-name">{maincourse.get('name')}</span>
-            <span className="maincourse-price">{maincourse.get('price')}</span>
-          </div>
-          <div className="maincourse-description">{maincourse.get('description')}</div>
-        </li>
+        <tr key={maincourse.cid} className="detailview-menu-rows">
+          <td className="maincourse-name">{maincourse.get('name')}</td>
+          <td className="maincourse-description">{maincourse.get('description')}</td>
+          <td className="maincourse-price">{maincourse.get('price')}</td>
+        </tr>
       )
     });
 
     var dessertsListItems = this.props.desserts.map(function(dessert){
       return (
-        <li key={dessert.cid} className="detailview-menu-rows">
-          <div className="dessert-header">
-            <span className="dessert-name">{dessert.get('name')}</span>
-            <span className="dessert-price">{dessert.get('price')}</span>
-          </div>
-          <div className="dessert-description">{dessert.get('description')}</div>
-        </li>
+        <tr key={dessert.cid} className="detailview-menu-rows">
+          <td className="">{dessert.get('name')}</td>
+          <td className="dessert-description">{dessert.get('description')}</td>
+          <td className="dessert-price">{dessert.get('price')}</td>
+        </tr>
       )
     });
 
     return (
-      <div className="col-md-8 detailview-menu-list">
-        <h2 className="well">Menu</h2>
-          <ul>
-            <h3>Appetizers</h3>
-              {appetizersListItems}
-              <h3>Main Course</h3>
-              {maincourseListItems}
-              <h3>Desserts</h3>
-              {dessertsListItems}
-          </ul>
+      <div className="col-md-8 detailview-menu-list mdl-shadow--2dp">
+        <div className="row">
+          <h2 className="mdl-layout-title">Menu</h2>
+              <h3 className="mdl-layout-title">Appetizers</h3>
+              <table className="menu col-md-11 col-md-offset-1">
+                <thead>
+                  <tr>
+                    <th className="table-dish">Dish</th>
+                    <th className="table-description">Description</th>
+                    <th className="table-price">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {appetizersListItems}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="row">
+              <h3 className="mdl-layout-title">Main Course</h3>
+                <table className="menu col-md-11 col-md-offset-1">
+                  <thead>
+                    <tr>
+                      <th className="table-dish">Dish</th>
+                      <th className="table-description">Description</th>
+                      <th className="table-price">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {maincourseListItems}
+                  </tbody>
+                </table>
+              </div>
+
+            <div className="row">
+              <h3 className="mdl-layout-title">Desserts</h3>
+                <table className="menu col-md-11 col-md-offset-1">
+                  <thead>
+                    <tr>
+                      <th className="table-dish">Dish</th>
+                      <th className="table-description">Description</th>
+                      <th className="table-price">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dessertsListItems}
+                  </tbody>
+                </table>
+              </div>
       </div>
     )
   }
@@ -146,13 +180,14 @@ var DetailView = React.createClass({
         <div className="detailview-header col-md-12">
           <div className="row">
             <div className="detailview-header-img" style={divStyle}>
-              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
-                <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
+              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored " onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
+                <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored " onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
             </div>
             <div className="detailview-header-text ">
               <h1 className="detailview-header-name">
                 {restaurant.get('name')}
               </h1>
+              <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
               <div className="detailview-header-cat">
                 {restaurant.get('mainCategory')}
               </div>
@@ -161,8 +196,12 @@ var DetailView = React.createClass({
               </div>
             </div>
             <div className="detailview-header-info">
-              <div className="detailview-phone"><a href={phone}>{restaurant.get('phone')}</a></div>
-              <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
+              <div className="detailview-phone"><i className="material-icons">phone</i><a href={phone}>{restaurant.get('phone')}</a></div>
+            </div>
+            <div className="detailview-header-address mdl-card__supporting-text">
+              <i className="material-icons">location_on</i>
+              <span>{restaurant.get('address')}</span>
+              <span>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</span>
             </div>
           </div>
         </div>
@@ -183,9 +222,6 @@ var DetailView = React.createClass({
           <div className="detailview-location-pane">
             <a href={directions}><img src={googleMap}/></a>
             <p>Click on map for directions</p>
-            <h5>Address</h5>
-            <p>{restaurant.get('address')}</p>
-            <p>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</p>
           </div>
         </div>
       </div>
@@ -246,7 +282,7 @@ var SingleViewContainer = React.createClass({
 
     return (
       <Template>
-        <div className="detail-view-container container">
+        <div className="detail-view-container">
           <div className="detail-view-row row">
             <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
             <SpecialsList specials={specials}/>
