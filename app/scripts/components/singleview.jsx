@@ -145,7 +145,7 @@ var DetailView = React.createClass({
       <div className="detailview-pane">
         <div className="detailview-header col-md-12">
           <div className="row">
-            <div className="detailview-header-img "style={divStyle}>
+            <div className="detailview-header-img" style={divStyle}>
               <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
                 <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
             </div>
@@ -167,13 +167,18 @@ var DetailView = React.createClass({
           </div>
         </div>
 
-        <div className="col-md-4 detailview-pane">
+        <div className="col-md-4 detailview-aside mdl-shadow--2d">
           <div className="detailview-description">
-            <p>{restaurant.get('description')}</p>
+            <div className="mdl-card__title">
+              <h2 className="mdl-card__title-text">About</h2>
+            </div>
+            <div className="mdl-card__supporting-text">
+              <p>{restaurant.get('description')}</p>
+            </div>
           </div>
-          <div className="detailview-description">
-            <img src={restaurant.get('snippet_image_url')}/>
-            <p>{restaurant.get('snippet_text')}</p>
+          <div className="detailview-aside-review mdl-card__actions mdl-card--border">
+            <img className="img-circle" src={restaurant.get('snippet_image_url')}/>
+            <div className="mdl-card__supporting-text">{restaurant.get('snippet_text')}</div>
           </div>
           <div className="detailview-location-pane">
             <a href={directions}><img src={googleMap}/></a>
