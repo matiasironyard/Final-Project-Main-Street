@@ -195,7 +195,26 @@ img {
   }
 }
 
+//SIGNUP CONTAINER
+.signup-container{
+  background-image: url('https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w');
+  background-size: cover;
+  .signup-col{
+    background-color: #fff;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    .signup-header{
+      text-transform: uppercase;
+      font-size: calc(1.5em + 1.5vw);
+      color: #E65100;
+    }
+    .signup-subheader{
+      font-size: calc(.8em + .8vw);
+      color: #424242;
+    }
+  }
 
+}
 //Template
 .nav-message{
   color: #BDBDBD;

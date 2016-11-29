@@ -15,6 +15,7 @@ var SignUpComponent = React.createClass({
       username: '',
       password: '',
       modalIsOpen: false,
+      clickNext: 'Yes',
     };
   },
 
@@ -47,6 +48,7 @@ var SignUpComponent = React.createClass({
     };
     // console.log(signupData);
     this.props.handleSignUp(signupData);
+
     this.setState({email: '', phone: '', password: ''});
   },
 
@@ -58,41 +60,51 @@ var SignUpComponent = React.createClass({
 
   openModal: function() {
     this.setState({modalIsOpen: true});
+    this.setState({clickNext: <i className="material-icons">check_circle</i>});
   },
 
   closeModal: function() {
     this.setState({modalIsOpen: false});
+    this.setState({yes:<i className="material-icons">thumb_up</i>})
   },
 
   render: function(){
     return (
-          <div className="singup col-md-3 col-md-offset-4">
-            <h3>Sign up</h3>
-            <form onSubmit = {this.handleSignUp} id="signup">
-              <div className="form-group">
-                <label htmlFor="email">Email address</label>
-                <input onChange={this.handleEmail} value={this.state.email} className="form-control" name="email" id="email" type="email" placeholder="email" />
+          <div className="signup-container container-fluid">
+            <div className="signup-col  mdl-shadow--2dp col-md-3 col-md-offset-4">
+              <h2 className="signup-header">In The Mood</h2>
+              <h4 className="signup-subheader">@ Downtown Greenville</h4>
+              <div className="mdl-card__actions mdl-card--border">
+                <h4>Sign up</h4>
               </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input onChange={this.handlePassword} value={this.state.password} className="form-control" name="password" id="password" type="password" placeholder="Password Please" />
-              </div>
-              <p>Are you a business owner?</p>
-              <button type="button" className="btn btn-primary" onClick={this.openModal}>Yes!</button>
-              <Modal isOpen={this.state.modalIsOpen}>
-                <div className="col-md-4 form-group">
-                  <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from yelp. Make sure to use the number that appears in yelp</p>
-                  <label htmlFor="phone">Phone</label>
-                  <input onChange={this.handlePhone} value={this.state.phone} className="form-control" name="phone" id="phone" type="text" placeholder="Phone Please" />
-                    <button type="button" className="btn btn-warning"onClick={this.closeModal}>Done</button>
+              <form onSubmit = {this.handleSignUp} id="signup">
+                <div className="form-group">
+                  <label htmlFor="email">Email address</label>
+                  <input onChange={this.handleEmail} value={this.state.email} className="form-control" name="email" id="email" type="email" placeholder="email" />
                 </div>
-              </Modal>
-              <div className="singup btns">
-                <input onClick={this.handleSignUp} className="btn btn-primary" type="submit" value="Sign Me Up!" />
-                <input onClick={this.handleLogMeIn} className="btn btn-primary pull-right" type="submit" value="I have an account" />
-              </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input onChange={this.handlePassword} value={this.state.password} className="form-control" name="password" id="password" type="password" placeholder="Password Please" />
+                </div>
+                <div className="mdl-card__actions mdl-card--border">
+                  <h6 className="mdl-card__title-tex">Are you a business owner</h6>
+                  <button type="button" className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onClick={this.openModal}>{this.state.clickNext}</button>
+                </div>
+                <Modal  isOpen={this.state.modalIsOpen}>
+                  <div className="col-md-4 form-group">
+                    <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.</p>
+                    <label htmlFor="phone">Phone</label>
+                    <input onChange={this.handlePhone} value={this.state.phone} className="form-control" name="phone" id="phone" type="text" placeholder="Phone Please" />
+                      <button type="button" className="btn btn-warning"onClick={this.closeModal}><i className="material-icons">thumb_up</i></button>
+                  </div>
+                </Modal>
+                <div className="singup btns mdl-card__actions mdl-card--border">
+                  <button onClick={this.handleSignUp} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Sign Me Up</button>
+                  <button onClick={this.handleLogMeIn} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">I have an account</button>
+                </div>
 
-            </form>
+              </form>
+            </div>
           </div>
   );
   }
@@ -127,7 +139,7 @@ var AuthenticationContainer = React.createClass({
   render: function(){
     return (
       <div>
-        <SignUpComponent handleSignUp={this.handleSignUp}  handleLogIn={this.handleLogIn}/>
+        <SignUpComponent  handleSignUp={this.handleSignUp}  handleLogIn={this.handleLogIn}/>
       </div>
     );
   }

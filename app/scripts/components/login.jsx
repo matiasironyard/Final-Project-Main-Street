@@ -87,17 +87,15 @@ handleLogMeIn: function(logMeIn){
     var objectId = response.objectId;
     console.log(objectId);
     var JSONdata= JSON.stringify(response);
-    localStorage.setItem('local storage user', response);
+    // localStorage.setItem('local storage user', response);
     localStorage.setItem('username', response.username);
-    localStorage.setItem('token', response.sessionToken);
-    localStorage.setItem('objectID', response.objectId);
+    // localStorage.setItem('token', response.sessionToken);
+    // localStorage.setItem('objectID', response.objectId);
     localStorage.setItem('phone',response.phone);
     localStorage.setItem('user', JSONdata);
 
-    var test = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
-      console.log(response);
+    var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
       if(businessCollection.length >= 1){
-        console.log('test',test);
         self.props.router.navigate('/dashboard/', {trigger: true})
       } else if (JSON.parse(localStorage.getItem('user')).phone <=0){
         self.props.router.navigate('/restaurants/', {trigger: true})

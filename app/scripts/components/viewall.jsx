@@ -204,6 +204,16 @@ var ViewAllContainer= React.createClass({
 
   render: function(){
   // console.log('1-Business Collection', this.state);
+  // var businessCollection = this.state.businessCollection;
+  // var expiryDateSearch = businessCollection.models.map(function(restaurants){
+  //   return restaurants.get('specials')
+  // });
+  // var dates = expiryDateSearch.map(function(expired){
+  //   return expired.toJSON()
+  // });
+  // console.log(dates.map(function(dates){
+  //   console.log(dates.effectivedate);
+  // }));
     return (
       <Template>
       <div className="viewall-container container">
