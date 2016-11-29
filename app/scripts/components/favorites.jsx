@@ -14,6 +14,9 @@ var GoogleMapLoader = google.GoogleMapLoader;
 var GoogleMap = google.GoogleMap;
 var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
+var Template = require('../templates/templates.jsx');
+
+
 // THANKS GRAYSON! :
 // https://github.com/graysonhicks/parkary/blob/master/app/scripts/components/mapview/dynamicmap.jsx
 
@@ -21,7 +24,6 @@ var InfoWindow = google.InfoWindow;
 console.log(Modal);
 
 // var FavoriteCollection = require('../models/business.js').FavoriteCollection
-
 var FavoritesMap = React.createClass({
   getInitialState: function(){
 
@@ -92,15 +94,6 @@ var FavoritesMap = React.createClass({
               center={center}
               defaultCenter={center}
             >
-            <Marker onClick={this.onMarkerClick} name={'McAbee'} position={{lat:34.84802340, lng:-82.39543630}} />
-            <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}>
-              <div>
-                <h5>Publix McAbee Station</h5>
-                <h6>400 E McBee Ave Ste 100, Greenville, SC 29601</h6>
-              </div>
-            </InfoWindow>
           {labelInfo}
       </GoogleMap>
           }
@@ -123,13 +116,14 @@ var MapContainer = React.createClass({
   render: function(){
 
     return (
-      <div>
-        <h1 className="locationTitle">Locations</h1>
+      <div className="favorites-map col-md-12">
           <FavoritesMap restaurants={this.props.restaurants} />
     </div>
     )
   }
 });
+
+
 
 
 var FavoriteListing = React.createClass({
@@ -222,12 +216,14 @@ componentWillMount: function(){
   render: function(){
   // console.log('favorites', this.state.businessCollection);
     return (
-      <div className="favorites-row">
-        <div className="favorites-col col-md-11">
-          <Favorites restaurants={this.state.businessCollection}/>
+      <Template>
+        <div className="favorites-row">
+          <div className="favorites-col col-md-12">
+            <Favorites restaurants={this.state.businessCollection}/>
+            <MapContainer restaurants={this.state.businessCollection}/>
+          </div>
         </div>
-        <MapContainer restaurants={this.state.businessCollection}/>
-      </div>
+      </Template>
     )
   }
 });

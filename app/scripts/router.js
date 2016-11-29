@@ -13,6 +13,7 @@ var DashboardContainer = require('./components/dashboard.jsx').DashboardContaine
 var ViewAllContainer = require('./components/viewall.jsx').ViewAllContainer;
 var SingleViewContainer = require('./components/singleview.jsx').SingleViewContainer;
 var FavoritesContainer = require('./components/favorites.jsx').FavoritesContainer;
+
 /* COMPONENT IMPORTS ABOVE */
 
 
@@ -22,6 +23,7 @@ var AppRouter = Backbone.Router.extend({
     'restaurants/': 'allrestaurants',
     'restaurants/:id/': 'restaurant',
     'favorites/': 'favorites',
+    'locations/': 'locations',
     'dashboard/': 'dashboard',
     'registration/': 'registration',
     'login/': 'login',
@@ -90,13 +92,21 @@ var AppRouter = Backbone.Router.extend({
     );
   },
 
-  favorites: function(){
+  favorites: function(businessId){
     console.log('favorites view');
     ReactDOM.render(
-      React.createElement(FavoritesContainer, {router: this}),
+      React.createElement(FavoritesContainer, {businessId: businessId, router: this}),
       document.getElementById('app')
     );
   },
+
+  // locations: function(){
+  //   console.log('favorites view');
+  //   ReactDOM.render(
+  //     React.createElement(MapContainer, {router: this}),
+  //     document.getElementById('app')
+  //   );
+  // },
 });
 
 var router = new AppRouter();

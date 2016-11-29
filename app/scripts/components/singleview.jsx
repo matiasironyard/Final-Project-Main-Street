@@ -242,7 +242,6 @@ var SingleViewContainer = React.createClass({
     return (
       <Template>
         <div className="detail-view-container container">
-          <Favorites />
           <div className="detail-view-row row">
             <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
             <SpecialsList specials={specials}/>
