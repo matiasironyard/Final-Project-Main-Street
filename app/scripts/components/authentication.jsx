@@ -71,31 +71,34 @@ var SignUpComponent = React.createClass({
   render: function(){
     return (
           <div className="signup-container container-fluid">
-            <div className="signup-col  mdl-shadow--2dp col-md-3 col-md-offset-4">
+            <div className="signup-col  mdl-shadow--2dp col-md-3 col-md-offset-5">
               <h2 className="signup-header">In The Mood</h2>
               <h4 className="signup-subheader">@ Downtown Greenville</h4>
               <div className="mdl-card__actions mdl-card--border">
                 <h4>Sign up</h4>
               </div>
               <form onSubmit = {this.handleSignUp} id="signup">
-                <div className="form-group">
-                  <label htmlFor="email">Email address</label>
-                  <input onChange={this.handleEmail} value={this.state.email} className="form-control" name="email" id="email" type="email" placeholder="email" />
+                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label className="mdl-textfield__label" htmlFor="email"/>
+                  <input onChange={this.handleEmail} value={this.state.email} className="mdl-textfield__input" name="email" id="email" type="email" placeholder="email" />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input onChange={this.handlePassword} value={this.state.password} className="form-control" name="password" id="password" type="password" placeholder="Password Please" />
+                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label className="mdl-textfield__label" htmlFor="password"/>
+                  <input onChange={this.handlePassword} value={this.state.password} className="mdl-textfield__input" name="password" id="password" type="password" placeholder="Password Please" />
                 </div>
-                <div className="mdl-card__actions mdl-card--border">
-                  <h6 className="mdl-card__title-tex">Are you a business owner</h6>
+                <div className="what">
+                  <h6 className="mdl-card__title-tex">Are you a business owner?</h6>
                   <button type="button" className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onClick={this.openModal}>{this.state.clickNext}</button>
                 </div>
-                <Modal  isOpen={this.state.modalIsOpen}>
-                  <div className="col-md-4 form-group">
-                    <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.</p>
-                    <label htmlFor="phone">Phone</label>
-                    <input onChange={this.handlePhone} value={this.state.phone} className="form-control" name="phone" id="phone" type="text" placeholder="Phone Please" />
-                      <button type="button" className="btn btn-warning"onClick={this.closeModal}><i className="material-icons">thumb_up</i></button>
+                <Modal  className="signup-modal" isOpen={this.state.modalIsOpen}>
+                  <div className="signup-modal col-md-4 col-md-offset-4 form-group">
+                    <h3>We make easy</h3>
+                    <p>5 minutes. Yes, that's all it will take to create your business profile. We want to help you get up and going fast, so that you get back to business!</p>
+                    <div className="mdl-card__actions mdl-card--border">
+                      <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.</p>
+                    </div>
+                    <input onChange={this.handlePhone} value={this.state.phone} className= "mdl-textfield__input" name="phone" id="phone" type="text" placeholder="Your business phone number please..." />
+                      <button type="button" className="btn btn-warning pull-right"onClick={this.closeModal}><i className="material-icons">thumb_up</i></button>
                   </div>
                 </Modal>
                 <div className="singup btns mdl-card__actions mdl-card--border">
@@ -131,7 +134,7 @@ var AuthenticationContainer = React.createClass({
     });
   },
 
-  handleLogIn: function(elseif){
+  handleLogIn: function(){
     var self = this;
     self.props.router.navigate('/login/', {trigger: true});
   },

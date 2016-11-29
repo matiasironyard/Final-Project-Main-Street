@@ -5,6 +5,7 @@ var $ = require('jquery');
 var setupParse= require('../parseUtilities').setupParse;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
+var LogInTemplate = require('../templates/login-template.jsx');
 
 
 var Modal = require('react-modal');
@@ -42,21 +43,21 @@ var LoginComponent = React.createClass({
 
   render: function(){
     return (
-          <div className="col-md-offset-1 col-md-4">
+          <div className="login mdl-card mdl-shadow--2dp col-md-4 col-md-offset-4">
             <h2>Please Login</h2>
             <form onSubmit={this.handleLogMeIn} id="login">
               <span className="error"></span>
-              <div className="form-group">
-                <label htmlFor="email-login">Email address</label>
-                <input onChange={this.handleEmail} value={this.state.email} className="form-control" name="email" id="email-login" type="email" placeholder="email" />
+              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-labe">
+                <input onChange={this.handleEmail} value={this.state.email} className="mdl-textfield__input" name="email" id="email-login" type="email" placeholder="email" />
+                <label  className="mdl-textfield__label" htmlFor="email-login"/>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="password-login">Password</label>
-                <input onChange={this.handlePassword} value={this.state.password}className="form-control" name="password" id="password-login" type="password" placeholder="Password Please" />
+              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-labe">
+                <input onChange={this.handlePassword} value={this.state.password}className="mdl-textfield__input" name="password" id="password-login" type="password" placeholder="Password Please" />
+                <label className="mdl-textfield__label" htmlFor="password-login"/>
               </div>
 
-              <input onSubmit={this.handleLogIn} className="btn btn-primary" type="submit" value="Beam Me Up!" />
+              <button onSubmit={this.handleLogIn} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right" type="submit" value="Beam Me Up!">Sign In!</button>
             </form>
           </div>
   );
@@ -97,7 +98,7 @@ handleLogMeIn: function(logMeIn){
     var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
       if(businessCollection.length >= 1){
         self.props.router.navigate('/dashboard/', {trigger: true})
-      } else if (JSON.parse(localStorage.getItem('user')).phone <=0){
+      } else if (!JSON.parse(localStorage.getItem('user')).phone){
         self.props.router.navigate('/restaurants/', {trigger: true})
       } else {
         self.props.router.navigate('/registration/', {trigger: true})
@@ -109,9 +110,13 @@ handleLogMeIn: function(logMeIn){
 
   render: function(){
     return (
-      <div>
-        <LoginComponent handleLogMeIn={this.handleLogMeIn} router={this.props.router}/>
+      <LogInTemplate>
+      <div className="login-container container">
+        <div className="login-row row">
+          <LoginComponent handleLogMeIn={this.handleLogMeIn} router={this.props.router}/>
+        </div>
       </div>
+      </LogInTemplate>
     );
   }
 });
