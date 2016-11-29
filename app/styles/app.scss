@@ -172,7 +172,7 @@ img {
       .detailview-header{
         border: 1px solid #BDBDBD;
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-
+        margin-top: 30px;
         .detailview-header-img{
           background-position: center;
           background-size: cover;
@@ -191,9 +191,28 @@ img {
         margin-top: 10px;
       }
       }
+      .detailview-aside{
+        margin-top: 30px;
+        // background-color: blue
+        .detailview-about{
+
+          .detailview-aside-review {
+            padding: 10px;
+            .img-circle{
+              padding: 5px;
+            }
+          }
+        }
+
+        .detailview-location-pane{
+          margin-top: 30px;
+        }
+      }
     }
   }
 }
+
+//DETAIL VIEW specials
 
 //SIGNUP CONTAINER
 .signup-container{
@@ -214,7 +233,6 @@ img {
     }
   }
 }
-
 .signup-modal{
   background-color: #fff;
   margin-top: 5%;
@@ -224,7 +242,6 @@ img {
 }
 
 //SIGNIN
-
 .login-container{
   background-image: url('https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w');
   background-size: cover;
@@ -241,14 +258,45 @@ img {
   }
 }
 
+//FAVORITES
+.favorites-container{
+  .favorites-row{
+    .favorites-pane{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+//MAP
+.favorites-map{
+  margin-top: 10px;
+  box-shadow: 0px 1px 10px -1px rgba(0,0,0,0.75);
+
+}
+
+
+
 
 //Template
-.nav-message{
-  color: #BDBDBD;
+.navbar-row{
+
+.btn{
+
+  .avatar {
+
+  }
 }
+  .nav-message{
+    color: #BDBDBD;
+  }
+
+}
+
 .footer-col{
   border-top: 2px solid #BDBDBD;
 }
+
 
 
 
