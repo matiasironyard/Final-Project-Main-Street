@@ -33,7 +33,7 @@ var AppRouter = Backbone.Router.extend({
 
   businessSessionCheck: function(){
     if (!JSON.parse(localStorage.getItem('user')).phone){
-      alert('this page is reserved for business owners')
+      // alert('this page is reserved for business owners')
      this.navigate('/restaurants/', {trigger: true});
    }
   },

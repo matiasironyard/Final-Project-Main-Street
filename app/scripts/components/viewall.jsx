@@ -159,7 +159,7 @@ var ViewAllContainer= React.createClass({
       });
     });
 
-    //For Dan to check
+    // For Dan to check
     // var specialsCollection = this.state.businessCollection;
     // var self = this;
     //
@@ -184,15 +184,15 @@ var ViewAllContainer= React.createClass({
     });
   },
 
-  removeExpired: function(data){
-    var specials = this.state.specialsCollection;
-    restaurants.fetch({
-      'data': {'where': {"expirydata": data}}
-    }).then(() =>{
-      this.setState({specialsCollection: specials})
-    });
-    console.log('removeExpired', this.state);
-  },
+  // removeExpired: function(data){
+  //   var specials = this.state.specialsCollection;
+  //   restaurants.fetch({
+  //     'data': {'where': {"expirydata": data}}
+  //   }).then(() =>{
+  //     this.setState({specialsCollection: specials})
+  //   });
+  //   console.log('removeExpired', this.state);
+  // },
 
   removeFavorite: function(restaurant){
     var favorite = this.state.businessCollection;

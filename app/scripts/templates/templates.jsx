@@ -3,11 +3,11 @@ var React = require('react');
 
 var Template = React.createClass({
   logout: function(){
-    window.localStorage.clear().then(function(){
+    localStorage.clear().then(function(){
         $.post('https://matias-recipe.herokuapp.com/logout/')
     });
   },
-  
+
   render: function(){
     return (
       <div className="container">
@@ -18,7 +18,7 @@ var Template = React.createClass({
               <ul className="nav nav-tabs">
                 <li role="presentation" className="active"><a  href="#restaurants/"><i className="material-icons">home</i></a></li>
                 <li className="pull-right" role="presentation"><a onClick={this.logout} href=""><i className="material-icons">exit_to_app</i></a></li>
-                <li className="pull-right" role="presentation"> <a href=""><i className="material-icons">perm_identity</i></a></li>
+                <li className="pull-right" role="presentation"> <a href="#login/"><i className="material-icons">perm_identity</i></a></li>
               </ul>
               <div className="nav-message pull-right">
                 <span>Logged in as </span><span className="nav-name">{localStorage.getItem('username')}</span>

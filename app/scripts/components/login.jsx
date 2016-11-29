@@ -94,7 +94,7 @@ handleLogMeIn: function(logMeIn){
     localStorage.setItem('user', JSONdata);
     if (JSON.parse(localStorage.getItem('user')).phone <=0){
        self.props.router.navigate('/restaurants/', {trigger: true})
-     } else if (!businessCollection.parseWhere('owner', '_User', User.current().get('objectId')) && (JSON.parse(localStorage.getItem('user')).phone) ){
+     } else if (!businessCollection.parseWhere('owner', '_User', User.current().get('objectId'))){
          self.props.router.navigate('/registration/', {trigger: true})
     } else if (businessCollection.parseWhere('owner', '_User', User.current().get('objectId'))){
       self.props.router.navigate('/dashboard/', {trigger: true})
