@@ -79,12 +79,12 @@ var SignUpComponent = React.createClass({
               </div>
               <form onSubmit = {this.handleSignUp} id="signup">
                 <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <label className="mdl-textfield__label" htmlFor="email"/>
                   <input onChange={this.handleEmail} value={this.state.email} className="mdl-textfield__input" name="email" id="email" type="email" placeholder="email" />
+                  <label className="mdl-textfield__label" htmlFor="email"/>
                 </div>
                 <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <label className="mdl-textfield__label" htmlFor="password"/>
                   <input onChange={this.handlePassword} value={this.state.password} className="mdl-textfield__input" name="password" id="password" type="password" placeholder="Password Please" />
+                  <label className="mdl-textfield__label" htmlFor="password"/>
                 </div>
                 <div className="what">
                   <h6 className="mdl-card__title-tex">Are you a business owner?</h6>

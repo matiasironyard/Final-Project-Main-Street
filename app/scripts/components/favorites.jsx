@@ -6,11 +6,113 @@ var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User= require('../parseUtilities').User;
 var Modal = require('react-modal');
+require('backbone-react-component');
+var $ = require('jquery');
+var google = require('react-google-maps');
+var ScriptjsLoader = require("react-google-maps/lib/async/ScriptjsLoader");
+var GoogleMapLoader = google.GoogleMapLoader;
+var GoogleMap = google.GoogleMap;
+var Marker = google.Marker;
+var InfoWindow = google.InfoWindow;
+// THANKS GRAYSON! :
+// https://github.com/graysonhicks/parkary/blob/master/app/scripts/components/mapview/dynamicmap.jsx
+
 
 console.log(Modal);
 
 // var FavoriteCollection = require('../models/business.js').FavoriteCollection
 
+var FavoritesMap = React.createClass({
+  getInitialState: function(){
+
+    var state = {
+      zoom: 12,
+      center: {
+        lat:  (34.852619),
+        lng:  (-82.394012)
+      },
+    }
+    return  state
+  },
+
+
+
+  onMarkerClick: function(props, marker, e){
+    console.log("marker clicked")
+    this.setState({
+    selectedPlace: props,
+    activeMarker: marker,
+    showingInfoWindow: true
+  });
+},
+  render: function(){
+    var center = this.state.center;
+    var zoom = this.state.zoom;
+    var restaurants= this.props.restaurants;
+    var labelInfo= restaurants.map(function(favorites){
+      var lat = favorites.get('lat');
+      var long = favorites.get('long');
+      var name = favorites.get('name');
+      return (
+        <Marker key={favorites.cid} name={name} position={{lat: lat, lng: long}} />
+      )
+    });
+    console.log(labelInfo);
+
+
+
+    return (
+      <section id="map-section" style={{height:"525px"}}>
+
+        <GoogleMapLoader containerElement={
+            <div
+              {...this.props}
+              style={{
+                height: "100%"
+              }}
+            />
+          }
+           googleMapElement={
+            <GoogleMap
+              id="map"
+              zoom={zoom}
+              ref="map"
+              center={center}
+              defaultCenter={center}
+            >
+
+          {labelInfo}
+
+      </GoogleMap>
+          }
+        />
+      </section>
+    );
+  }
+});
+
+
+
+var MapContainer = React.createClass({
+  mixins: [Backbone.React.Component.mixin],
+  handleClick: function(e){
+    e.preventDefault();
+    Backbone.history.navigate('#items/', {trigger:true});
+  },
+
+
+  render: function(){
+
+    return (
+      <div>
+        <h1 className="locationTitle">Locations</h1>
+          <FavoritesMap lat={34.852619} long={-82.394012} restaurants={this.props.restaurants} />
+          <button onClick={this.handleClick} className="btn btn-success navItemsBtn">Next: View Items <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+
+    </div>
+    )
+  }
+});
 
 
 var FavoriteListing = React.createClass({
@@ -22,13 +124,14 @@ var FavoriteListing = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps){
-    this.setState(newProps.favorites);
+    this.forceUpdate();
+    // this.setState(newProps.favorites);
   },
 
 
   render: function(){
     var favorites = this.props.favorites;
-  // console.log('test', favorites);
+  // console.log('test', favorites.get('name'));
     return (
       <div className ="restaurant-cards mdl-card mdl-shadow--2dp col-md-2">
         <div className="material-icons mdl-badge mdl-badge--overlap" data-badge="♥"/>
@@ -58,27 +161,17 @@ var Favorites = React.createClass({
     var self = this;
   // console.log('Favorties render', self.props.restaurants.length);
     var restaurants = self.props.restaurants;
-
-    //   if(restaurants.length=0){
-    // // console.log('none akdfjlkadsjlafkjsd;klfjs;');
-    //
-    // };
-
     var favoritesList = restaurants.map(function(favorites){
     // console.log('2-map', favoritesList);
       return (
           <div key={favorites.cid}>
-
             <FavoriteListing favorites={favorites}/>
-
           </div>
       );
     });
     return (
       <div className="favorites-pane col-md-12">
-
         {favoritesList}
-
       </div>
     )
   }
@@ -116,11 +209,11 @@ componentWillMount: function(){
         <div className="favorites-col col-md-11">
           <Favorites restaurants={this.state.businessCollection}/>
         </div>
+        <MapContainer restaurants={this.state.businessCollection}/>
       </div>
     )
   }
 });
-
 
 
 module.exports = {

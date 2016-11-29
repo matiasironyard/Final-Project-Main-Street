@@ -4,6 +4,9 @@ var models = require('../models/business');
 var Dashboard = require('./dashboard.jsx').Dashboard;
 var Favorites= require('./favorites.jsx').FavoritesContainer;
 var Template = require('../templates/templates.jsx');
+var YelpBusiness = require('../models/business.js').YelpBusiness;
+var yelpBusiness = new YelpBusiness();
+
 
 var Panel = require('muicss/lib/react/panel');
 var Dropdown = require('muicss/lib/react/dropdown');
@@ -136,12 +139,13 @@ var ViewAllContainer= React.createClass({
     return {
       businessCollection: new models.BusinessCollection(),
       businessCategoryCollection: new models.BusinessCollection(),
-      specialsCollection: new models.SpecialCollection()
+      specialsCollection: new models.SpecialCollection(),
+      business: new models.Business(),
     };
   },
 
   componentWillMount: function(){
-
+    var self = this;
     var businessCollection = this.state.businessCollection;
   {/* Sort collection by name */}
     businessCollection.comparator = 'name';
@@ -157,6 +161,19 @@ var ViewAllContainer= React.createClass({
         businessCollection: businessCollection,
         businessCategoryCollection: categories
       });
+      // yelpBusiness.fetch().then(function(response){
+      //   console.log('response', response);
+      //   var open= response.businesses[0].is_closed ? response.businesses[0].is_closed = false: "currently open";
+      //   console.log('open:', open);
+      //   var business = new models.Business();
+      //   var data = response.businesses[0];
+      //   business.set(
+      //     {
+      //       is_closed: open,
+      //     }
+      //   ),
+      //   self.setState({business: business});
+      // });
     });
 
     // For Dan to check
