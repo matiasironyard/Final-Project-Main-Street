@@ -624,7 +624,8 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
 
     return(
       React.createElement(Template, null, 
-        React.createElement("div", {className: "col-md-12 dashboard-windows"}, 
+        React.createElement("div", {className: "row"}, 
+        React.createElement("div", {className: "dashboard-windows"}, 
           React.createElement("h1", {className: "well"}, " ", businessName, " Dashboard"), 
           React.createElement(Dashboard, {business: this.state.business}), 
           React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.openModal}, "Add Specials & Menu"), 
@@ -643,6 +644,7 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
               )
             )
             )
+        )
         )
     )
     )
@@ -1557,7 +1559,7 @@ var SpecialsList = React.createClass({displayName: "SpecialsList",
   // console.log('specialslistitems', specialsListItems);
     return (
       React.createElement("div", {className: "col-md-8 detailview-specials-table"}, 
-        React.createElement("h2", {className: "well"}, "Specials"), 
+        React.createElement("h2", {className: "mdl-layout-title"}, "Specials"), 
         React.createElement("ul", null, 
             specialsListItems
           )
@@ -1571,51 +1573,85 @@ var MenuList = React.createClass({displayName: "MenuList",
 
     var appetizersListItems = this.props.appetizers.map(function(appetizer){
       return (
-        React.createElement("li", {key: appetizer.cid, className: "detailview-menu-rows"}, 
-          React.createElement("div", {className: "appetizer-header"}, 
-            React.createElement("span", {className: "appetizer-name"}, appetizer.get('name')), 
-            React.createElement("span", {className: "appetizer-price"}, appetizer.get('price'))
-          ), 
-          React.createElement("div", {className: "appetizer-description"}, appetizer.get('description'))
+
+        React.createElement("tr", {key: appetizer.cid, className: "detailview-menu-rows"}, 
+          React.createElement("td", {className: "appetizer-name "}, appetizer.get('name')), 
+          React.createElement("td", {className: "appetizer-description"}, appetizer.get('description')), 
+          React.createElement("td", {className: "appetizer-price "}, appetizer.get('price'))
         )
       )
     });
 
     var maincourseListItems = this.props.maincourses.map(function(maincourse){
       return (
-        React.createElement("li", {key: maincourse.cid, className: "detailview-menu-rows"}, 
-          React.createElement("div", {className: "maincurse-header"}, 
-            React.createElement("span", {className: "maincourse-name"}, maincourse.get('name')), 
-            React.createElement("span", {className: "maincourse-price"}, maincourse.get('price'))
-          ), 
-          React.createElement("div", {className: "maincourse-description"}, maincourse.get('description'))
+        React.createElement("tr", {key: maincourse.cid, className: "detailview-menu-rows"}, 
+          React.createElement("td", {className: "maincourse-name"}, maincourse.get('name')), 
+          React.createElement("td", {className: "maincourse-description"}, maincourse.get('description')), 
+          React.createElement("td", {className: "maincourse-price"}, maincourse.get('price'))
         )
       )
     });
 
     var dessertsListItems = this.props.desserts.map(function(dessert){
       return (
-        React.createElement("li", {key: dessert.cid, className: "detailview-menu-rows"}, 
-          React.createElement("div", {className: "dessert-header"}, 
-            React.createElement("span", {className: "dessert-name"}, dessert.get('name')), 
-            React.createElement("span", {className: "dessert-price"}, dessert.get('price'))
-          ), 
-          React.createElement("div", {className: "dessert-description"}, dessert.get('description'))
+        React.createElement("tr", {key: dessert.cid, className: "detailview-menu-rows"}, 
+          React.createElement("td", {className: ""}, dessert.get('name')), 
+          React.createElement("td", {className: "dessert-description"}, dessert.get('description')), 
+          React.createElement("td", {className: "dessert-price"}, dessert.get('price'))
         )
       )
     });
 
     return (
-      React.createElement("div", {className: "col-md-8 detailview-menu-list"}, 
-        React.createElement("h2", {className: "well"}, "Menu"), 
-          React.createElement("ul", null, 
-            React.createElement("h3", null, "Appetizers"), 
-              appetizersListItems, 
-              React.createElement("h3", null, "Main Course"), 
-              maincourseListItems, 
-              React.createElement("h3", null, "Desserts"), 
-              dessertsListItems
-          )
+      React.createElement("div", {className: "col-md-8 detailview-menu-list mdl-shadow--2dp"}, 
+        React.createElement("div", {className: "row"}, 
+          React.createElement("h2", {className: "mdl-layout-title"}, "Menu"), 
+              React.createElement("h3", {className: "mdl-layout-title"}, "Appetizers"), 
+              React.createElement("table", {className: "menu col-md-11 col-md-offset-1"}, 
+                React.createElement("thead", null, 
+                  React.createElement("tr", null, 
+                    React.createElement("th", {className: "table-dish"}, "Dish"), 
+                    React.createElement("th", {className: "table-description"}, "Description"), 
+                    React.createElement("th", {className: "table-price"}, "Price")
+                  )
+                ), 
+                React.createElement("tbody", null, 
+                  appetizersListItems
+                )
+              )
+            ), 
+
+            React.createElement("div", {className: "row"}, 
+              React.createElement("h3", {className: "mdl-layout-title"}, "Main Course"), 
+                React.createElement("table", {className: "menu col-md-11 col-md-offset-1"}, 
+                  React.createElement("thead", null, 
+                    React.createElement("tr", null, 
+                      React.createElement("th", {className: "table-dish"}, "Dish"), 
+                      React.createElement("th", {className: "table-description"}, "Description"), 
+                      React.createElement("th", {className: "table-price"}, "Price")
+                    )
+                  ), 
+                  React.createElement("tbody", null, 
+                    maincourseListItems
+                  )
+                )
+              ), 
+
+            React.createElement("div", {className: "row"}, 
+              React.createElement("h3", {className: "mdl-layout-title"}, "Desserts"), 
+                React.createElement("table", {className: "menu col-md-11 col-md-offset-1"}, 
+                  React.createElement("thead", null, 
+                    React.createElement("tr", null, 
+                      React.createElement("th", {className: "table-dish"}, "Dish"), 
+                      React.createElement("th", {className: "table-description"}, "Description"), 
+                      React.createElement("th", {className: "table-price"}, "Price")
+                    )
+                  ), 
+                  React.createElement("tbody", null, 
+                    dessertsListItems
+                  )
+                )
+              )
       )
     )
   }
@@ -1670,14 +1706,15 @@ var DetailView = React.createClass({displayName: "DetailView",
       React.createElement("div", {className: "detailview-pane"}, 
         React.createElement("div", {className: "detailview-header col-md-12"}, 
           React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "detailview-header-img ", style: divStyle}, 
-              React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.handleRemoveFavorite, type: "submit", value: "Remove Favorite"}, React.createElement("i", {className: "material-icons"}, "clear")), 
-                React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.handleFavorite, type: "button"}, React.createElement("i", {className: "material-icons"}, "favorite_border"))
+            React.createElement("div", {className: "detailview-header-img", style: divStyle}, 
+              React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored ", onClick: this.handleRemoveFavorite, type: "submit", value: "Remove Favorite"}, React.createElement("i", {className: "material-icons"}, "clear")), 
+                React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored ", onClick: this.handleFavorite, type: "button"}, React.createElement("i", {className: "material-icons"}, "favorite_border"))
             ), 
             React.createElement("div", {className: "detailview-header-text "}, 
               React.createElement("h1", {className: "detailview-header-name"}, 
                 restaurant.get('name')
               ), 
+              React.createElement("img", {src: restaurant.get('rating_img_url'), className: "detailview-header-review-img"}), 
               React.createElement("div", {className: "detailview-header-cat"}, 
                 restaurant.get('mainCategory')
               ), 
@@ -1686,26 +1723,32 @@ var DetailView = React.createClass({displayName: "DetailView",
               )
             ), 
             React.createElement("div", {className: "detailview-header-info"}, 
-              React.createElement("div", {className: "detailview-phone"}, React.createElement("a", {href: phone}, restaurant.get('phone'))), 
-              React.createElement("img", {src: restaurant.get('rating_img_url'), className: "detailview-header-review-img"})
+              React.createElement("div", {className: "detailview-phone"}, React.createElement("i", {className: "material-icons"}, "phone"), React.createElement("a", {href: phone}, restaurant.get('phone')))
+            ), 
+            React.createElement("div", {className: "detailview-header-address mdl-card__supporting-text"}, 
+              React.createElement("i", {className: "material-icons"}, "location_on"), 
+              React.createElement("span", null, restaurant.get('address')), 
+              React.createElement("span", null, restaurant.get('city'), ", ", restaurant.get('state'), ", ", restaurant.get('zip'))
             )
           )
         ), 
 
-        React.createElement("div", {className: "col-md-4 detailview-pane"}, 
+        React.createElement("div", {className: "col-md-4 detailview-aside mdl-shadow--2d"}, 
           React.createElement("div", {className: "detailview-description"}, 
-            React.createElement("p", null, restaurant.get('description'))
+            React.createElement("div", {className: "mdl-card__title"}, 
+              React.createElement("h2", {className: "mdl-card__title-text"}, "About")
+            ), 
+            React.createElement("div", {className: "mdl-card__supporting-text"}, 
+              React.createElement("p", null, restaurant.get('description'))
+            )
           ), 
-          React.createElement("div", {className: "detailview-description"}, 
-            React.createElement("img", {src: restaurant.get('snippet_image_url')}), 
-            React.createElement("p", null, restaurant.get('snippet_text'))
+          React.createElement("div", {className: "detailview-aside-review mdl-card__actions mdl-card--border"}, 
+            React.createElement("img", {className: "img-circle", src: restaurant.get('snippet_image_url')}), 
+            React.createElement("div", {className: "mdl-card__supporting-text"}, restaurant.get('snippet_text'))
           ), 
           React.createElement("div", {className: "detailview-location-pane"}, 
             React.createElement("a", {href: directions}, React.createElement("img", {src: googleMap})), 
-            React.createElement("p", null, "Click on map for directions"), 
-            React.createElement("h5", null, "Address"), 
-            React.createElement("p", null, restaurant.get('address')), 
-            React.createElement("p", null, restaurant.get('city'), ", ", restaurant.get('state'), ", ", restaurant.get('zip'))
+            React.createElement("p", null, "Click on map for directions")
           )
         )
       )
@@ -1766,7 +1809,7 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
 
     return (
       React.createElement(Template, null, 
-        React.createElement("div", {className: "detail-view-container container"}, 
+        React.createElement("div", {className: "detail-view-container"}, 
           React.createElement("div", {className: "detail-view-row row"}, 
             React.createElement(DetailView, {restaurant: this.state.restaurant, setFavorite: this.setFavorite, removeFavorite: this.removeFavorite, specials: specials}), 
             React.createElement(SpecialsList, {specials: specials}), 
@@ -2019,7 +2062,7 @@ var ViewAllContainer= React.createClass({displayName: "ViewAllContainer",
   // }));
     return (
       React.createElement(Template, null, 
-      React.createElement("div", {className: "viewall-container container"}, 
+      React.createElement("div", {className: "viewall-container"}, 
       React.createElement("div", {className: "viewall-row row"}, 
         React.createElement("div", {className: ""}, 
           React.createElement(Search, {restaurants: this.state.businessCategoryCollection, filterCategories: this.filterCategories}), 
@@ -2583,7 +2626,7 @@ var Template = React.createClass({displayName: "Template",
 
   render: function(){
     return (
-      React.createElement("div", {className: "container"}, 
+      React.createElement("div", null, 
         React.createElement("div", {className: "menu row"}, 
           React.createElement("div", {className: "col-md-11-fluid nav-bar-col"}, 
             React.createElement("h2", {className: "restaurant-name"}, "Greenville Foodies"), 
@@ -2603,17 +2646,13 @@ var Template = React.createClass({displayName: "Template",
               React.createElement("div", {className: "nav-message pull-right"}, 
                 React.createElement("span", null, "Logged in as "), React.createElement("span", {className: "nav-name"}, localStorage.getItem('username'))
               )
-          ), 
-          /*<div className="col-md-12 header-col">
-            <div className="header-title">
-              <h2 className="restaurant-name">Greenville Foodies</h2>
-            </div>
-          </div>*/
-          React.createElement("div", {className: "components"}, 
-            this.props.children
           )
         ), 
-        React.createElement("div", {className: "col-md-12-fluid footer-col"}, 
+          React.createElement("div", {className: "components"}, 
+            this.props.children
+          ), 
+
+        React.createElement("div", {className: "footer-row row"}, 
           React.createElement("div", {className: "col-md-10"}, 
             React.createElement("span", {className: "footer-title"}, "Greenville Foodies"), " ", React.createElement("p", null, "Copyright © Greenville Foodies 2016")
           ), 
@@ -2621,7 +2660,6 @@ var Template = React.createClass({displayName: "Template",
             React.createElement("a", {href: "#dashboard/"}, React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "web"))), 
             React.createElement("span", {className: "pull-right"}, "Dashboard ")
           )
-
         )
       )
     )
