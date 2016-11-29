@@ -5880,9 +5880,44 @@ img {
       padding: 15px;
       margin-top: 10px; }
 
+.signup-container {
+  background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
+  background-size: cover; }
+  .signup-container .signup-col {
+    background-color: #fff;
+    margin-top: 10%;
+    margin-bottom: 10%; }
+    .signup-container .signup-col .signup-header {
+      text-transform: uppercase;
+      font-size: calc(1.5em + 1.5vw);
+      color: #E65100; }
+    .signup-container .signup-col .signup-subheader {
+      font-size: calc(.8em + .8vw);
+      color: #424242; }
+
+.signup-modal {
+  background-color: #fff;
+  margin-top: 5%; }
+  .signup-modal .btn {
+    margin: 20px; }
+
+.login-container {
+  background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
+  background-size: cover; }
+  .login-container .login {
+    background-color: #fff;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding: 10px; }
+    .login-container .login .login-header {
+      font-size: calc(1.5em + 1.5vw);
+      color: #E65100;
+      text-transform: uppercase; }
+
 .nav-message {
   color: #BDBDBD; }
 
 .footer-col {
   border-top: 2px solid #BDBDBD; }
+
 /*# sourceMappingURL=app.css.map */
