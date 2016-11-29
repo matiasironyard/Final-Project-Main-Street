@@ -46,6 +46,7 @@ var FavoritesMap = React.createClass({
   });
 },
   render: function(){
+    var self = this;
     var center = this.state.center;
     var zoom = this.state.zoom;
     var restaurants= this.props.restaurants;
@@ -53,8 +54,19 @@ var FavoritesMap = React.createClass({
       var lat = favorites.get('lat');
       var long = favorites.get('long');
       var name = favorites.get('name');
+      var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
       return (
-        <Marker key={favorites.cid} name={name} position={{lat: lat, lng: long}} />
+
+        <Marker onClick={self.onMarkerClick}  key={favorites.cid} name={name} position={{lat: lat, lng: long}}>
+          <InfoWindow
+            marker={self.state.activeMarker}
+            visible={self.state.showingInfoWindow}>
+            <div>
+              <p>{name}</p>
+              <a href={directions}>Directions</a>
+            </div>
+          </InfoWindow>
+        </Marker>
       )
     });
     console.log(labelInfo);
@@ -80,9 +92,16 @@ var FavoritesMap = React.createClass({
               center={center}
               defaultCenter={center}
             >
-
+            <Marker onClick={this.onMarkerClick} name={'McAbee'} position={{lat:34.84802340, lng:-82.39543630}} />
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}>
+              <div>
+                <h5>Publix McAbee Station</h5>
+                <h6>400 E McBee Ave Ste 100, Greenville, SC 29601</h6>
+              </div>
+            </InfoWindow>
           {labelInfo}
-
       </GoogleMap>
           }
         />
@@ -106,9 +125,7 @@ var MapContainer = React.createClass({
     return (
       <div>
         <h1 className="locationTitle">Locations</h1>
-          <FavoritesMap lat={34.852619} long={-82.394012} restaurants={this.props.restaurants} />
-          <button onClick={this.handleClick} className="btn btn-success navItemsBtn">Next: View Items <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
-
+          <FavoritesMap restaurants={this.props.restaurants} />
     </div>
     )
   }
