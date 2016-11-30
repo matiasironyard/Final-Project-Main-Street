@@ -58,9 +58,9 @@ var Search = React.createClass({
       );
     });
     return(
-      <div className="categories-bar col-md-12">
+      <div className="categories-bar row">
         {/*<h2 className="viewall-card-container-header">All Restaurants</h2>*/}
-        <div className="categories-dropdown dropdown">
+        <div className="categories-dropdown dropdown col-md-11 col-sm-11 col-xs-11">
           <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span className="categories-heading">I'm in the mood for</span>
             <span className="caret"></span>
@@ -96,7 +96,7 @@ var ItemListing = React.createClass({
     //   console.log(Dashboard.removeSpecial(special));
     // };
     return(
-      <div className ="viewall-restaurant-card  mdl-card mdl-shadow--2dp col-md-3">
+      <div className ="viewall-restaurant-card mdl-shadow--2dp col-md-4 col-sm-5 col-xs-5">
           <div className="viewall-header restaurant-card-header">
             <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><img className="viewall-image" src={restaurants.get('image_url')}/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
@@ -126,7 +126,7 @@ var Listing = React.createClass({
       );
     });
     return(
-      <div className="viewall-cards-container col-md-12 ">
+      <div className="viewall-cards-container row">
         {restaurantList}
       </div>
     )
@@ -234,7 +234,7 @@ var ViewAllContainer= React.createClass({
     return (
       <Template>
       <div className="viewall-container" >
-      <div className="viewall-pane">
+      <div className="viewall-pane col-md-12 col-sm-11 col-xs-11">
         <div className=''>
           <Search   restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
           <Listing restaurants={this.state.businessCollection} />

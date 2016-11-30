@@ -116,7 +116,7 @@ var MapContainer = React.createClass({
   render: function(){
 
     return (
-      <div className="favorites-map col-md-12">
+      <div className="favorites-map col-md-12 col-sm-12 col-xs-11">
           <FavoritesMap restaurants={this.props.restaurants} />
     </div>
     )
@@ -181,7 +181,7 @@ var Favorites = React.createClass({
       );
     });
     return (
-      <div className="favorites-pane col-md-12">
+      <div className="favorites-pane col-md-12 col-sm-12 col-xs-11">
         {favoritesList}
       </div>
     )
@@ -218,7 +218,7 @@ componentWillMount: function(){
     return (
       <Template>
         <div className="favorites-row">
-          <div className="favorites-col col-md-12">
+          <div className="favorites-col">
             <Favorites restaurants={this.state.businessCollection}/>
             <MapContainer restaurants={this.state.businessCollection}/>
           </div>

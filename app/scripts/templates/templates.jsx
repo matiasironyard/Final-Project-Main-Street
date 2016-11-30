@@ -15,8 +15,8 @@ var Template = React.createClass({
   render: function(){
     return (
       <div className="template">
-        <div className="menu ">
-          <div className="nav-bar-col col-md-12">
+        <div className="menu">
+          <div className="nav-bar-col col-md-12 col-sm-11 col-xs-11">
             <h2 className="nav-header">Greenville Foodies</h2>
             <ul className="nav nav-tabs">
               <li role="presentation" className="active"><a  href="#restaurants/"><i className="material-icons">restaurant</i></a></li>
@@ -42,8 +42,8 @@ var Template = React.createClass({
           </div>
 
         <div className="footer-row">
-          <div className="footer col-md-12">
-            <div className="col-md-5 col-md-offset-4">
+          <div className="footer col-md-12 col-sm-11 col-xs-11">
+            <div className="col-md-5 col-md-offset-4 col-xs-5 col-xs-offset-4">
               <span>Copyright © Greenville Foodies 2016</span>
             </div>
           </div>
