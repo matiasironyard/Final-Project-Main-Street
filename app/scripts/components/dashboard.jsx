@@ -47,6 +47,10 @@ var Dashboard = React.createClass({
             <li>{business.get('is_closed')}</li>
             <li>{business.get('phone')}</li>
           </ul>
+          <div>
+            <span>Edit your information</span>
+            <a href="#registration/"><i className="material-icons">edit</i></a>
+          </div>
         </div>
         <div className="col-md-3 map">
           <h3>Location</h3>
@@ -59,9 +63,13 @@ var Dashboard = React.createClass({
             <img className="img-thumbnail" src={business.get('snippet_image_url')}/>
             <p>{business.get('snippet_text')}</p>
         </div>
-        <div className="col-md-3 uploaded-images">
-          <h3>Uploaded Image</h3>
-          <img className="img-thumbnail" width="200px" src={business.get('image_upload')}/>
+        <div className="col-md-2 uploaded-images">
+          <h3>Header Image</h3>
+          <img className="img-thumbnail" width="150px" src={business.get('image_upload')}/>
+        </div>
+        <div className="col-md-2 uploaded-images">
+          <h3>About Image</h3>
+          <img className="img-thumbnail" width="150px" src={business.get('menu_upload')}/>
         </div>
       </div>
     )
@@ -362,7 +370,7 @@ var DashboardContainer = React.createClass({
             </div>
             </Modal>
         </div>
-        </div>
+      </div>
     </Template>
     )
   }

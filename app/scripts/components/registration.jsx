@@ -37,7 +37,6 @@ var RegistrationForm = React.createClass ({
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
     this.setState({profilePic: attachedPicture});
-    // console.log(attachedPicture);
   },
 
   handleMenu: function(e){
@@ -66,14 +65,6 @@ var RegistrationForm = React.createClass ({
           <h4>Registration Form</h4>
           <p>Verify Your Information</p>
             <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
-              <div className="form-profile-pic">
-                <input type="text" id="uploaded_picture"/><br/>
-                <input onChange={this.handlePicture} type="file" id="profile-pic"/>
-              </div>
-              <div className="form-profile-pic">
-                <input type="text" id="uploaded_menu"/><br/>
-                <input onChange={this.handleMenu} type="file" id="menu"/>
-              </div>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
@@ -86,6 +77,17 @@ var RegistrationForm = React.createClass ({
               <div className="form-group">
                 <label htmlFor="name">Description</label>
                 <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="form-control" id="business-name" placeholder="Enter a short business description"/>
+              </div>
+              <h4>Images Upload</h4>
+              <div className="form-profile-pic">
+                <div><img src={this.state.image_upload} width="300"/></div>
+                <input type="text" id="uploaded_picture"/><br/>
+                <input onChange={this.handlePicture} type="file" id="profile-pic"/>
+              </div>
+              <div className="form-profile-pic">
+                <div><img src={this.state.menu_upload} width="300"/></div>
+                <input type="text" id="uploaded_menu"/><br/>
+                <input onChange={this.handleMenu} type="file" id="menu"/>
               </div>
               <div className="form-group">
                 <label htmlFor="name">Menu</label>

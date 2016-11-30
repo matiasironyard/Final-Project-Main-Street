@@ -207,6 +207,7 @@ var YelpBusiness = Backbone.Model.extend({
   },
 });
 
+
 // var GoogleMaps = Backbone.Model.extend ({
 //   urlRoot: function(){
 //     console.log('testing google model');

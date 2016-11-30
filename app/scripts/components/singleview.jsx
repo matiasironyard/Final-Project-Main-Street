@@ -24,27 +24,36 @@ var SpecialsList = React.createClass({
   render: function(){
     var specialsListItems = this.props.specials.map(function(special){
       return (
-        <li key={special.cid} className="detailview-specials-rows">
-          <div className="specials-header">
-            <span className="specials-name">{special.get('name')}</span>
-            <span className="specials-pric">{special.get('price')}</span>
-          </div>
-          <div className="specials-description">{special.get('description')}</div>
-          <div className="specials-dates">
-            <span className="specials-start-date">From:  {special.get('effectivedate')}</span>
-            <span className="specials-end-date">Until:  {special.get('expirydate')}</span>
-          </div>
-        </li>
+
+        <tr key={special.cid} className="detailview-menu-rows">
+          <td className="special-name ">{special.get('name')}</td>
+          <td className="special-description">{special.get('description')}</td>
+          <td className="special-price ">{special.get('price')}</td>
+          <td className="special-available ">{special.get('expirydate')}</td>
+        </tr>
       )
     });
   // console.log('specialslistitems', specialsListItems);
     return (
-      <div className="col-md-8 detailview-specials-table">
-        <h2 className="mdl-layout-title">Specials</h2>
-        <ul>
-            {specialsListItems}
-          </ul>
-      </div>
+      <div className="col-md-8 detailview-menu-list">
+
+        <div className="row">
+          <h3 className="mdl-layout-title">Specials</h3>
+            <table className="menu col-md-11 col-md-offset-1">
+              <thead>
+                <tr>
+                  <th className="table-dish">Dish</th>
+                  <th className="table-description">Description</th>
+                  <th className="table-price">Price</th>
+                  <th className="table-available">Ends</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {specialsListItems}
+              </tbody>
+            </table>
+          </div>
+        </div>
     )
   }
 });
@@ -84,7 +93,7 @@ var MenuList = React.createClass({
     });
 
     return (
-      <div className="col-md-8 detailview-menu-list mdl-shadow--2dp">
+      <div className="col-md-8 detailview-menu-list">
         <div className="row">
           <h2 className="mdl-layout-title">Menu</h2>
               <h3 className="mdl-layout-title">Appetizers</h3>
@@ -163,6 +172,7 @@ var RestaurantMap = React.createClass({
     var location = 'lat:'+ lat + ',' + 'lng:'+ long;
     console.log('location', location);
     var name = restaurant.get('name');
+    console.log('name', name);
     var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
     return (
       <section id="map-section" style={{height:"325px"}}>
@@ -207,11 +217,13 @@ var DetailView = React.createClass({
   getInitialState: function(){
     return {
       restaurant: '',
+
     }
   },
 
   componentWillMount: function(){
    var restaurant = this.props.restaurant;
+
   },
 
   handleFavorite: function(e){
@@ -287,17 +299,22 @@ var DetailView = React.createClass({
         </div>
 
         <div className="col-md-4 detailview-aside mdl-shadow--2d">
-          <div className="detailview-description">
-            <div className="mdl-card__title">
-              <h2 className="mdl-card__title-text">About</h2>
+          <div className="detailview-about">
+            <div className="detailview-description">
+              <div className="mdl-card__title">
+                <h2 className="mdl-card__title-text">About</h2>
+              </div>
+              <div className="mdl-card__supporting-text">
+                <p><img className="about-image" src= {restaurant.get('menu_upload')} width="200"/>{restaurant.get('description')}</p>
+              </div>
             </div>
-            <div className="mdl-card__supporting-text">
-              <p>{restaurant.get('description')}</p>
+            <div className="detailview-aside-review mdl-card__actions mdl-card--border">
+              <div className="mdl-card__title">
+                <h2 className="mdl-card__title-text">Recent Review</h2>
+              </div>
+              <img className="img-circle" src={restaurant.get('snippet_image_url')}/>
+              <div className="mdl-card__supporting-text">{restaurant.get('snippet_text')}</div>
             </div>
-          </div>
-          <div className="detailview-aside-review mdl-card__actions mdl-card--border">
-            <img className="img-circle" src={restaurant.get('snippet_image_url')}/>
-            <div className="mdl-card__supporting-text">{restaurant.get('snippet_text')}</div>
           </div>
           <div className="detailview-location-pane">
             <RestaurantMap restaurant={this.props.restaurant} />
@@ -321,10 +338,7 @@ var SingleViewContainer = React.createClass({
   },
   componentWillMount: function(){
     var restaurant = this.state.restaurant;
-  // console.log('this state business', this.state.restaurant);
-  // console.log('willmount', restaurant);
     var restaurantId = this.props.businessId;
-  // console.log('restaurant id', restaurantId)
     if(!restaurantId){
       return;
     }
@@ -355,7 +369,6 @@ var SingleViewContainer = React.createClass({
     });
   // console.log(this.state);
   },
-
   render: function(){
     var test = this.state.restaurant.get('name');
     var specials = this.state.restaurant.get('specials');
