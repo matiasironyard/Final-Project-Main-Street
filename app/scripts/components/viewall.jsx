@@ -96,7 +96,7 @@ var ItemListing = React.createClass({
     //   console.log(Dashboard.removeSpecial(special));
     // };
     return(
-      <div className ="viewall-restaurant-card mdl-shadow--2dp col-md-4 col-sm-5 col-xs-5">
+      <div className ="viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-5">
           <div className="viewall-header restaurant-card-header">
             <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><img className="viewall-image" src={restaurants.get('image_url')}/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
@@ -127,7 +127,9 @@ var Listing = React.createClass({
     });
     return(
       <div className="viewall-cards-container row">
-        {restaurantList}
+        <div className="vieall-cards-col col-md-12 col-sm-12 col-xs-12">
+          {restaurantList}
+        </div>
       </div>
     )
   }

@@ -15,6 +15,7 @@ var GoogleMap = google.GoogleMap;
 var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
 var Template = require('../templates/templates.jsx');
+var Modal = require('react-modal');
 
 
 // THANKS GRAYSON! :
@@ -28,7 +29,8 @@ var FavoritesMap = React.createClass({
   getInitialState: function(){
 
     var state = {
-      zoom: 12,
+      modalIsOpen: false,
+      zoom: 14,
       center: {
         lat:  (34.852619),
         lng:  (-82.394012)
@@ -36,8 +38,6 @@ var FavoritesMap = React.createClass({
     }
     return  state
   },
-
-
 
   onMarkerClick: function(props, marker, e){
     console.log("marker clicked")
@@ -47,6 +47,7 @@ var FavoritesMap = React.createClass({
     showingInfoWindow: true
   });
 },
+
   render: function(){
     var self = this;
     var center = this.state.center;
@@ -58,31 +59,29 @@ var FavoritesMap = React.createClass({
       var name = favorites.get('name');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
       return (
+          <Marker onClick={self.onMarkerClick} key={favorites.cid} name={name} position={{lat: lat, lng: long}}>
+            <InfoWindow
+              marker={self.state.activeMarker}
+              visible={self.state.showingInfoWindow}
+              onClick={self.onMarkerClick} >
+              <div>
+                <p>{name}</p>
+                <a href={directions}>Directions</a>
+                <button className="btn"onClick={self.closeModal}>Close</button>
+              </div>
+            </InfoWindow>
+          </Marker>
 
-        <Marker onClick={self.onMarkerClick}  key={favorites.cid} name={name} position={{lat: lat, lng: long}}>
-          <InfoWindow
-            marker={self.state.activeMarker}
-            visible={self.state.showingInfoWindow}>
-            <div>
-              <p>{name}</p>
-              <a href={directions}>Directions</a>
-            </div>
-          </InfoWindow>
-        </Marker>
       )
     });
-    console.log(labelInfo);
-
-
-
     return (
-      <section id="map-section" style={{height:"525px"}}>
-
+      <section className="col-md-12" id="map-section" style={{height:"525px"}}>
         <GoogleMapLoader containerElement={
             <div
-              {...this.props}
+              {...this.props.containerElementProps}
               style={{
-                height: "100%"
+                height: "100%",
+                width: "100%"
               }}
             />
           }
@@ -107,16 +106,11 @@ var FavoritesMap = React.createClass({
 
 var MapContainer = React.createClass({
   mixins: [Backbone.React.Component.mixin],
-  handleClick: function(e){
-    e.preventDefault();
-    Backbone.history.navigate('#items/', {trigger:true});
-  },
-
 
   render: function(){
 
     return (
-      <div className="favorites-map col-md-12 col-sm-12 col-xs-11">
+      <div className="favorites-map col-md-12 col-sm-12 col-xs-12">
           <FavoritesMap restaurants={this.props.restaurants} />
     </div>
     )
