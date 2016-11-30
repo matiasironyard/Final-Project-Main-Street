@@ -29,7 +29,6 @@ var FavoritesMap = React.createClass({
   getInitialState: function(){
 
     var state = {
-      modalIsOpen: false,
       zoom: 14,
       center: {
         lat:  (34.852619),
@@ -44,7 +43,7 @@ var FavoritesMap = React.createClass({
     this.setState({
     selectedPlace: props,
     activeMarker: marker,
-    showingInfoWindow: true
+    showingInfoWindow: false
   });
 },
 
@@ -59,15 +58,13 @@ var FavoritesMap = React.createClass({
       var name = favorites.get('name');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
       return (
-          <Marker onClick={self.onMarkerClick} key={favorites.cid} name={name} position={{lat: lat, lng: long}}>
+          <Marker onClick={self.onMarkerClick} visible={self.state.showingInfoWindow} key={favorites.cid} name={name} position={{lat: lat, lng: long}}>
             <InfoWindow
               marker={self.state.activeMarker}
-              visible={self.state.showingInfoWindow}
-              onClick={self.onMarkerClick} >
+              visible={self.state.showingInfoWindow}>
               <div>
                 <p>{name}</p>
                 <a href={directions}>Directions</a>
-                <button className="btn"onClick={self.closeModal}>Close</button>
               </div>
             </InfoWindow>
           </Marker>
