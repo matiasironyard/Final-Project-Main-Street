@@ -234,7 +234,7 @@ var ViewAllContainer= React.createClass({
     return (
       <Template>
       <div className="viewall-container" >
-      <div className="viewall-row row">
+      <div className="viewall-pane">
         <div className=''>
           <Search   restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
           <Listing restaurants={this.state.businessCollection} />

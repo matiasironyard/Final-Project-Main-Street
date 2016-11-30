@@ -30,16 +30,18 @@ img {
 
 //CATEGORIES BAR
 .categories-bar{
+  margin-top: 30px;
   .categories-dropdown{
+    background-color: #fff;
+    border: 1px solid #E0E0E0;
 
     .btn{
-      width: 89%;
       color: #616161;
-      background-color: #fff;
-      border: 1px solid #E0E0E0;
-      border-radius: 0;
       padding: 2px;
       margin-top: 25px;
+      background-color: #fff;
+      border: 0px;
+      border-radius: 0;
 
       .categories-heading{
         font-size: 3vh;
@@ -51,7 +53,7 @@ img {
       }
     }
   }
-  .btn:hover{
+  .categories-dropdown:hover{
     color: #424242;
     border: 1px solid #424242;
   }
@@ -292,6 +294,11 @@ img {
       color: #E65100;
       text-transform: uppercase;
     }
+    .login-subheader{
+      font-size: calc(1em + 1vw);
+      color: #424242;
+      text-transform: uppercase;
+    }
   }
 }
 
@@ -316,8 +323,13 @@ img {
 
 
 //Template
-.navbar-row{
-
+.template{
+  .nav-header{
+    text-transform: uppercase;
+    text-transform: uppercase;
+    font-size: calc(1.5em + 1.5vw);
+    color: #E65100;
+  }
 .btn{
 
   .avatar {
@@ -330,7 +342,7 @@ img {
 
 }
 
-.footer-row{
+.footer{
   border-top: 2px solid #BDBDBD;
   // background-color: #FFA000;
 }

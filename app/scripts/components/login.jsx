@@ -43,9 +43,10 @@ var LoginComponent = React.createClass({
 
   render: function(){
     return (
-          <div className="login mdl-card mdl-shadow--2dp col-md-4 col-md-offset-4">
-            <h2 className="login-header">Please Login</h2>
-            <form onSubmit={this.handleLogMeIn} id="login">
+          <div className="login mdl-shadow--2dp col-md-3 col-md-offset-5">
+            <h2 className="login-header">In The Mood</h2>
+            <h2 className="login-subheader">Please Login</h2>
+            <form className="col-md-12"onSubmit={this.handleLogMeIn} id="login">
               <span className="error"></span>
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input onChange={this.handleEmail} value={this.state.email} className="mdl-textfield__input" name="email" id="email-login" type="email" placeholder="email" />
@@ -56,8 +57,9 @@ var LoginComponent = React.createClass({
                 <input onChange={this.handlePassword} value={this.state.password} className="mdl-textfield__input" name="password" id="password-login" type="password" placeholder="Password Please" />
                 <label className="mdl-textfield__label" htmlFor="password-login"/>
               </div>
-
-              <button onSubmit={this.handleLogIn} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right" type="submit" value="Beam Me Up!">Sign In!</button>
+              <div>
+                <button onSubmit={this.handleLogIn} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left" type="submit" value="Beam Me Up!">Sign In!</button>
+              </div>
             </form>
           </div>
   );
@@ -109,13 +111,11 @@ handleLogMeIn: function(logMeIn){
   render: function(){
 
     return (
-      <LogInTemplate>
-      <div className="login-container container">
-        <div className="login-row row">
+      <div className="login-container container-fluid">
+        <div className="login-row">
           <LoginComponent handleLogMeIn={this.handleLogMeIn} router={this.props.router}/>
         </div>
       </div>
-      </LogInTemplate>
     );
   }
 });

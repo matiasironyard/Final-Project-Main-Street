@@ -14,24 +14,25 @@ var Template = React.createClass({
 
   render: function(){
     return (
-      <div>
-        <div className="menu row">
-          <div className="col-md-11-fluid nav-bar-col">
-            <h2 className="restaurant-name">Greenville Foodies</h2>
+      <div className="template">
+        <div className="menu ">
+          <div className="nav-bar-col col-md-12">
+            <h2 className="nav-header">Greenville Foodies</h2>
             <ul className="nav nav-tabs">
               <li role="presentation" className="active"><a  href="#restaurants/"><i className="material-icons">restaurant</i></a></li>
               <li className="active" role="presentation"><a href="#favorites/"><i className="material-icons">favorite</i></a></li>
                 <div className="btn-group pull-right">
-                  <button type="button" className="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <Gravatar className="avatar img-thumbnail pull-right" email={localStorage.getItem('username')} size={30} />
+                  <button type="button" className="btn btn-default btn-xs dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <Gravatar className="avatar img-thumbnail pull-right" email={localStorage.getItem('username')} size={50} />
                   </button>
-                    <ul className="dropdown-menu">
-                      <li className="pull-right" role="presentation"><a onClick={this.logout} href=""><i className="material-icons">exit_to_app</i></a></li>
-                      <li className="pull-right" role="presentation"> <a href="#login/"><i className="material-icons">perm_identity</i></a></li>
+                    <ul className="dropdown-menu pull-right">
+                      <li className="nav-bar-dropdowns" role="presentation"><a onClick={this.logout} href=""><i className="material-icons">exit_to_app</i></a></li>
+                      <li className="nav-bar-dropdowns" role="presentation"> <a href="#login/"><i className="material-icons">perm_identity</i></a></li>
+                      <li className="nav-bar-dropdowns" role="presentation"><a  href="#dashboard/"><i className="material-icons">web</i></a></li>
                     </ul>
                   </div>
             </ul>
-              <div className="nav-message pull-right">
+              <div className="nav-message nav-bar-dropdowns">
                 <span>Logged in as </span><span className="nav-name">{localStorage.getItem('username')}</span>
               </div>
           </div>
@@ -40,13 +41,11 @@ var Template = React.createClass({
             {this.props.children}
           </div>
 
-        <div className="footer-row row">
-          <div className="col-md-10">
-            <span className="footer-title">Greenville Foodies</span> <p>Copyright © Greenville Foodies 2016</p>
-          </div>
-          <div className="col-md-2">
-            <a  href="#dashboard/"><button className="favorite-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"><i className="material-icons">web</i></button></a>
-            <span className="pull-right">Dashboard </span>
+        <div className="footer-row">
+          <div className="footer col-md-12">
+            <div className="col-md-5 col-md-offset-4">
+              <span>Copyright © Greenville Foodies 2016</span>
+            </div>
           </div>
         </div>
       </div>
