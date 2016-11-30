@@ -106,10 +106,10 @@ removeMainCourse: function(maincourse){
          <h3>Main Course</h3>
          <div className="form-inLine">
            {mainCourseFormset}
-          <button  type="button" onClick = {this.props.addMainCourse} className="btn btn-primary">Add Another</button>
+          <button  type="button" onClick = {this.props.addMainCourse} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Another</button>
          </div>
          <br></br>
-        <button  type="submit" className="btn btn-success">Save Main Course</button>
+        <button  onClick={this.handleSubmit} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Save Main Course</button>
        </form>
      </div>
    );

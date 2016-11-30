@@ -37,6 +37,7 @@ var RegistrationForm = React.createClass ({
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
     this.setState({profilePic: attachedPicture});
+    // console.log(attachedPicture);
   },
 
   handleMenu: function(e){
@@ -54,83 +55,64 @@ var RegistrationForm = React.createClass ({
   },
   render: function(){
     return (
-      <div className="registration-form col-md-6 col-md-offset-3">
-        <div className="form-header col-md-12">
-          <img src={this.state.image_url}/>
-          <h2>{this.state.name}</h2>
-          <h4>{this.state.mainCategory}</h4>
-          <h5>{this.state.phone}</h5>
-        </div>
-        <div className="form-container">
-          <h4>Registration Form</h4>
-          <p>Verify Your Information</p>
-            <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="form-control" id="business-name" placeholder="name"/>
-              </div>
-              <div className="form-group categories">
-                <label htmlFor="categores">Categories</label>
-                <input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text" className="form-control" id="business-cat" placeholder="Main Category"/>
-                <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="form-control" id="business-cat" placeholder="Sub Category"/>
-              </div>
-              <div className="form-group">
-                <label htmlFor="name">Description</label>
-                <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="form-control" id="business-name" placeholder="Enter a short business description"/>
-              </div>
-              <h4>Images Upload</h4>
-              <div className="form-profile-pic">
-                <div><img src={this.state.image_upload} width="300"/></div>
-                <input type="text" id="uploaded_picture"/><br/>
-                <input onChange={this.handlePicture} type="file" id="profile-pic"/>
-              </div>
-              <div className="form-profile-pic">
-                <div><img src={this.state.menu_upload} width="300"/></div>
-                <input type="text" id="uploaded_menu"/><br/>
-                <input onChange={this.handleMenu} type="file" id="menu"/>
-              </div>
-              <div className="form-group">
-                <label htmlFor="name">Menu</label>
-                <input onChange={this.handleInputChange} name="menuUrl" value={this.state.menuUrl} type="url" className="form-control" id="business-phone" placeholder="Menu Address"/>
-              </div>
-              <div className="form-group">
-                <label htmlFor="name">Phone</label>
-                <input onChange={this.handleInputChange} name="phone" pattern='\d{3}[\-]\d{3}[\-]\d{4}' value={this.state.phone} type="text" className="form-control" id="business-phone" placeholder="864-111-2233"/>
-              </div>
-              <div className="address-form">
-                <div className="form-group">
-                  <label htmlFor="name">Address</label>
-                  <input onChange={this.handleInputChange} name="address" value={this.state.address} type="text" className="form-control" id="business-address" placeholder="Street Address"/>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="name"></label>
-                  <input onChange={this.handleInputChange} name="city" value={this.state.city} type="text" className="form-control inline" id="business-city" placeholder="City"/>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="name"></label>
-                  <input onChange={this.handleInputChange} name="state" value={this.state.state} type="text" className="form-control inline" id="business-state" placeholder="State"/>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="name"></label>
-                  <input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text" className="form-control inline" id="business-zip" placeholder="Zip Code"/>
-                </div>
-              </div>
-              <div className="additional-registration-info">
-                <h4>Additional Registration Information From Yelp</h4>
-                <p>We will use the following to build your profile</p>
-                <ul>
-                  <li>Rating</li>
-                  <li>Review Avatar</li>
-                  <li>Review Snippet</li>
-                  <li>Coordinates (to generate map)</li>
-                  <li>Open or Close Data</li>
-                </ul>
-              </div>
-              <div className='button-pane'>
-                <button type="submit" className="btn btn-default">Save Profile</button>
-              </div>
-            </form>
+      <div className="registration-form demo-card-wide mdl-card mdl-shadow--2dp col-md-5 col-md-offset-4">
+        <h3>In The Mood</h3>
+        <h4>Registration Form</h4>
+        <p>Verify Your Information</p>
+        <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="mdl-textfield__input" id="business-name" placeholder="Restaurant Name"/>
           </div>
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label categories">
+            <input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text" className="mdl-textfield__input" id="business-cat" placeholder="Main Category"/>
+            <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="mdl-textfield__input" id="business-cat" placeholder="Sub Category"/>
+          </div>
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="mdl-textfield__input" id="business-name" placeholder="Enter a short business description"/>
+          </div>
+          <h4>Images Upload</h4>
+          <div className="form-profile-pic">
+            <div><img src={this.state.image_upload} width="300"/></div>
+            <input type="text" id="uploaded_picture" placeholder="Header Picture Title"/><br/>
+            <input className="mdl-button mdl-js-button mdl-button--raised" onChange={this.handlePicture} type="file" id="profile-pic"/>
+          </div>
+          <div className="form-profile-pic">
+            <div><img src={this.state.menu_upload} width="300"/></div>
+            <input type="text" id="uploaded_menu"placeholder="About Picture Title"/><br/>
+            <input className="mdl-button mdl-js-button mdl-button--raised"onChange={this.handleMenu} type="file" id="menu"/>
+          </div>
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input onChange={this.handleInputChange} name="phone" pattern='\d{3}[\-]\d{3}[\-]\d{4}' value={this.state.phone} type="text" className="mdl-textfield__input" id="business-phone" placeholder="Your buisness phone number. 864-111-2233"/>
+          </div>
+          <div className="address-form">
+            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input onChange={this.handleInputChange} name="address" value={this.state.address} type="text" className="mdl-textfield__input" id="business-address" placeholder="Street Address"/>
+            </div>
+            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input onChange={this.handleInputChange} name="city" value={this.state.city} type="text" className="mdl-textfield__input inline" id="business-city" placeholder="City"/>
+            </div>
+            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input onChange={this.handleInputChange} name="state" value={this.state.state} type="text" className="mdl-textfield__input inline" id="business-state" placeholder="State"/>
+            </div>
+            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text" className="mdl-textfield__input inline" id="business-zip" placeholder="Zip Code"/>
+            </div>
+          </div>
+          <div className="additional-registration-info">
+            <h4>Additional Registration Information From Yelp</h4>
+            <p>We will use the following to build your profile</p>
+            <ul>
+              <li>Rating</li>
+              <li>Review Avatar</li>
+              <li>Review Snippet</li>
+              <li>Coordinates (to generate map)</li>
+              <li>Open or Close Data</li>
+            </ul>
+          </div>
+          <div className='button-pane'>
+            <button type="submit" className="btn btn-default">Save Profile</button>
+          </div>
+        </form>
       </div>
     )
   }

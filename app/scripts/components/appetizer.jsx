@@ -107,10 +107,10 @@ removeAppetizer: function(appetizer){
          <h3>Appetizers</h3>
          <div className="form-inLine">
            {appetizerFormset}
-           <button  type="button" onClick = {this.props.addAppetizer} className="btn btn-primary">Add Another</button>
+           <button  type="button" onClick = {this.props.addAppetizer} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Another</button>
          </div>
          <br></br>
-         <button  type="submit" className="btn btn-success">Save Appetizers</button>
+        <button  onClick={this.handleSubmit} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Save Appetizer</button>
        </form>
      </div>
    );

@@ -33,6 +33,8 @@ var Dashboard = React.createClass({
 
   render: function(){
     var business = this.props.business;
+    var objectId = this.props.business.get('objectId');
+    var link = '#restaurants/' + objectId + '/';
     var geolocation = business.get('lat') + ',' + business.get('long');
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
@@ -47,9 +49,9 @@ var Dashboard = React.createClass({
             <li>{business.get('is_closed')}</li>
             <li>{business.get('phone')}</li>
           </ul>
+          <a href={link} ><button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">View Page</button></a>
           <div>
-            <span>Edit your information</span>
-            <a href="#registration/"><i className="material-icons">edit</i></a>
+            <a href="#registration/" ><button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Edit Info</button></a>
           </div>
         </div>
         <div className="col-md-3 map">
@@ -139,7 +141,7 @@ var SpecialsFormList = React.createClass({
             <input className="form-control" onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
           </div>
           <div>
-            <button   onClick = {this.removeSpecial} type="button" className="btn btn-danger pull-right">Delete</button>
+            <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right" onClick = {this.removeSpecial} type="button">Delete</button>
           </div>
       </div>
     );
@@ -188,8 +190,8 @@ removeSpecial: function(special){
          <div className="col-md-12 form-inLine">
            {specialsFormset}
          </div>
-         <button   type="button" onClick = {self.props.addSpecial} className="btn btn-success">Add Another</button>
-         <button   color = "primary" type="submit" className="btn btn-success">Save Specials</button>
+         <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" onClick = {self.props.addSpecial} >Add Another</button>
+         <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" color = "primary" type="submit" >Save Specials</button>
        </form>
      </div>
    );
@@ -350,25 +352,27 @@ var DashboardContainer = React.createClass({
     return(
       <Template>
         <div className="row">
-        <div className= "dashboard-windows">
-          <h1 className="well"> {businessName} Dashboard</h1>
-          <Dashboard  business={this.state.business} />
-          <button type="button" className="btn btn-primary" onClick={this.openModal}>Add Specials &amp; Menu</button>
-          <Modal isOpen={this.state.modalIsOpen}>
-            <div className="specials-pane">
-              <button type="button" className="btn btn-warning"onClick={this.closeModal}>Close</button>
-              <h2>Specials</h2>
-                <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')}  removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
-            </div>
-            <div className="menu-pane">
-              <h2>Menu</h2>
-              <div className="menu-creator">
-                <AppetizerForm   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
-                <MainCourseForm   business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
-                <DessertForm  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
+          <div className="col-md-12 col-sm-12 col-xs-11">
+            <div className= "dashboard-windows col-md-12 col-sm-12 col-xs-11">
+              <h1 className="well"> {businessName} Dashboard</h1>
+              <Dashboard  business={this.state.business} />
+              <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  type="button"  onClick={this.openModal}>Add Specials &amp; Menu</button>
+              <Modal isOpen={this.state.modalIsOpen}>
+                  <div className="specials-pane">
+                    <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" onClick={this.closeModal}>Close</button>
+                    <h2>Specials</h2>
+                      <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')}  removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
+                  </div>
+                  <div className="menu-pane">
+                    <h2>Menu</h2>
+                    <div className="menu-creator">
+                      <AppetizerForm   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
+                      <MainCourseForm   business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
+                      <DessertForm  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
+                    </div>
+                  </div>
+                </Modal>
               </div>
-            </div>
-            </Modal>
         </div>
       </div>
     </Template>
