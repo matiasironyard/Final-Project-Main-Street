@@ -794,6 +794,7 @@ var GoogleMap = google.GoogleMap;
 var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
 var Template = require('../templates/templates.jsx');
+var Modal = require('react-modal');
 
 
 // THANKS GRAYSON! :
@@ -807,7 +808,8 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
   getInitialState: function(){
 
     var state = {
-      zoom: 12,
+      modalIsOpen: false,
+      zoom: 14,
       center: {
         lat:  (34.852619),
         lng:  (-82.394012)
@@ -815,8 +817,6 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
     }
     return  state
   },
-
-
 
   onMarkerClick: function(props, marker, e){
     console.log("marker clicked")
@@ -826,6 +826,7 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
     showingInfoWindow: true
   });
 },
+
   render: function(){
     var self = this;
     var center = this.state.center;
@@ -837,31 +838,29 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
       var name = favorites.get('name');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
       return (
-
-        React.createElement(Marker, {onClick: self.onMarkerClick, key: favorites.cid, name: name, position: {lat: lat, lng: long}}, 
-          React.createElement(InfoWindow, {
-            marker: self.state.activeMarker, 
-            visible: self.state.showingInfoWindow}, 
-            React.createElement("div", null, 
-              React.createElement("p", null, name), 
-              React.createElement("a", {href: directions}, "Directions")
+          React.createElement(Marker, {onClick: self.onMarkerClick, key: favorites.cid, name: name, position: {lat: lat, lng: long}}, 
+            React.createElement(InfoWindow, {
+              marker: self.state.activeMarker, 
+              visible: self.state.showingInfoWindow, 
+              onClick: self.onMarkerClick}, 
+              React.createElement("div", null, 
+                React.createElement("p", null, name), 
+                React.createElement("a", {href: directions}, "Directions"), 
+                React.createElement("button", {className: "btn", onClick: self.closeModal}, "Close")
+              )
             )
           )
-        )
+
       )
     });
-    console.log(labelInfo);
-
-
-
     return (
-      React.createElement("section", {id: "map-section", style: {height:"525px"}}, 
-
+      React.createElement("section", {className: "col-md-12", id: "map-section", style: {height:"525px"}}, 
         React.createElement(GoogleMapLoader, {containerElement: 
             React.createElement("div", React.__spread({}, 
-              this.props, 
+              this.props.containerElementProps, 
               {style: {
-                height: "100%"
+                height: "100%",
+                width: "100%"
               }})
             ), 
           
@@ -886,16 +885,11 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
 
 var MapContainer = React.createClass({displayName: "MapContainer",
   mixins: [Backbone.React.Component.mixin],
-  handleClick: function(e){
-    e.preventDefault();
-    Backbone.history.navigate('#items/', {trigger:true});
-  },
-
 
   render: function(){
 
     return (
-      React.createElement("div", {className: "favorites-map col-md-12"}, 
+      React.createElement("div", {className: "favorites-map col-md-12 col-sm-12 col-xs-12"}, 
           React.createElement(FavoritesMap, {restaurants: this.props.restaurants})
     )
     )
@@ -960,7 +954,7 @@ var Favorites = React.createClass({displayName: "Favorites",
       );
     });
     return (
-      React.createElement("div", {className: "favorites-pane col-md-12"}, 
+      React.createElement("div", {className: "favorites-pane col-md-12 col-sm-12 col-xs-11"}, 
         favoritesList
       )
     )
@@ -997,7 +991,7 @@ componentWillMount: function(){
     return (
       React.createElement(Template, null, 
         React.createElement("div", {className: "favorites-row"}, 
-          React.createElement("div", {className: "favorites-col col-md-12"}, 
+          React.createElement("div", {className: "favorites-col"}, 
             React.createElement(Favorites, {restaurants: this.state.businessCollection}), 
             React.createElement(MapContainer, {restaurants: this.state.businessCollection})
           )
@@ -1059,9 +1053,10 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
 
   render: function(){
     return (
-          React.createElement("div", {className: "login mdl-card mdl-shadow--2dp col-md-4 col-md-offset-4"}, 
-            React.createElement("h2", {className: "login-header"}, "Please Login"), 
-            React.createElement("form", {onSubmit: this.handleLogMeIn, id: "login"}, 
+          React.createElement("div", {className: "login mdl-shadow--2dp col-md-3 col-md-offset-5"}, 
+            React.createElement("h2", {className: "login-header"}, "In The Mood"), 
+            React.createElement("h2", {className: "login-subheader"}, "Please Login"), 
+            React.createElement("form", {className: "col-md-12", onSubmit: this.handleLogMeIn, id: "login"}, 
               React.createElement("span", {className: "error"}), 
               React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
                 React.createElement("input", {onChange: this.handleEmail, value: this.state.email, className: "mdl-textfield__input", name: "email", id: "email-login", type: "email", placeholder: "email"}), 
@@ -1072,8 +1067,9 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
                 React.createElement("input", {onChange: this.handlePassword, value: this.state.password, className: "mdl-textfield__input", name: "password", id: "password-login", type: "password", placeholder: "Password Please"}), 
                 React.createElement("label", {className: "mdl-textfield__label", htmlFor: "password-login"})
               ), 
-
-              React.createElement("button", {onSubmit: this.handleLogIn, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right", type: "submit", value: "Beam Me Up!"}, "Sign In!")
+              React.createElement("div", null, 
+                React.createElement("button", {onSubmit: this.handleLogIn, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left", type: "submit", value: "Beam Me Up!"}, "Sign In!")
+              )
             )
           )
   );
@@ -1125,12 +1121,10 @@ handleLogMeIn: function(logMeIn){
   render: function(){
 
     return (
-      React.createElement(LogInTemplate, null, 
-      React.createElement("div", {className: "login-container container"}, 
-        React.createElement("div", {className: "login-row row"}, 
+      React.createElement("div", {className: "login-container container-fluid"}, 
+        React.createElement("div", {className: "login-row"}, 
           React.createElement(LoginComponent, {handleLogMeIn: this.handleLogMeIn, router: this.props.router})
         )
-      )
       )
     );
   }
@@ -1887,9 +1881,9 @@ var Search = React.createClass({displayName: "Search",
       );
     });
     return(
-      React.createElement("div", {className: "categories-bar col-md-12"}, 
+      React.createElement("div", {className: "categories-bar row"}, 
         /*<h2 className="viewall-card-container-header">All Restaurants</h2>*/
-        React.createElement("div", {className: "categories-dropdown dropdown"}, 
+        React.createElement("div", {className: "categories-dropdown dropdown col-md-11 col-sm-11 col-xs-11"}, 
           React.createElement("button", {className: "btn btn-default dropdown-toggle", type: "button", id: "dropdownMenu1", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true"}, 
             React.createElement("span", {className: "categories-heading"}, "I'm in the mood for"), 
             React.createElement("span", {className: "caret"})
@@ -1925,7 +1919,7 @@ var ItemListing = React.createClass({displayName: "ItemListing",
     //   console.log(Dashboard.removeSpecial(special));
     // };
     return(
-      React.createElement("div", {className: "viewall-restaurant-card  mdl-card mdl-shadow--2dp col-md-3"}, 
+      React.createElement("div", {className: "viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-5"}, 
           React.createElement("div", {className: "viewall-header restaurant-card-header"}, 
             React.createElement("a", {href: '#restaurants/' + restaurants.get('objectId') + '/', className: "individual-item"}, React.createElement("img", {className: "viewall-image", src: restaurants.get('image_url')})), 
             React.createElement("span", {className: "viewall-counter mdl-badge pull-right", "data-badge": specialsCounter}, "Specials"), 
@@ -1955,8 +1949,10 @@ var Listing = React.createClass({displayName: "Listing",
       );
     });
     return(
-      React.createElement("div", {className: "viewall-cards-container col-md-12 "}, 
-        restaurantList
+      React.createElement("div", {className: "viewall-cards-container row"}, 
+        React.createElement("div", {className: "vieall-cards-col col-md-12 col-sm-12 col-xs-12"}, 
+          restaurantList
+        )
       )
     )
   }
@@ -2063,7 +2059,7 @@ var ViewAllContainer= React.createClass({displayName: "ViewAllContainer",
     return (
       React.createElement(Template, null, 
       React.createElement("div", {className: "viewall-container"}, 
-      React.createElement("div", {className: "viewall-row row"}, 
+      React.createElement("div", {className: "viewall-pane col-md-12 col-sm-11 col-xs-11"}, 
         React.createElement("div", {className: ""}, 
           React.createElement(Search, {restaurants: this.state.businessCategoryCollection, filterCategories: this.filterCategories}), 
           React.createElement(Listing, {restaurants: this.state.businessCollection})
@@ -2626,24 +2622,25 @@ var Template = React.createClass({displayName: "Template",
 
   render: function(){
     return (
-      React.createElement("div", null, 
-        React.createElement("div", {className: "menu row"}, 
-          React.createElement("div", {className: "col-md-11-fluid nav-bar-col"}, 
-            React.createElement("h2", {className: "restaurant-name"}, "Greenville Foodies"), 
+      React.createElement("div", {className: "template"}, 
+        React.createElement("div", {className: "menu"}, 
+          React.createElement("div", {className: "nav-bar-col col-md-12 col-sm-11 col-xs-11"}, 
+            React.createElement("h2", {className: "nav-header"}, "Greenville Foodies"), 
             React.createElement("ul", {className: "nav nav-tabs"}, 
               React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {href: "#restaurants/"}, React.createElement("i", {className: "material-icons"}, "restaurant"))), 
               React.createElement("li", {className: "active", role: "presentation"}, React.createElement("a", {href: "#favorites/"}, React.createElement("i", {className: "material-icons"}, "favorite"))), 
                 React.createElement("div", {className: "btn-group pull-right"}, 
-                  React.createElement("button", {type: "button", className: "btn btn-default dropdown-toggle ", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}, 
-                    React.createElement(Gravatar, {className: "avatar img-thumbnail pull-right", email: localStorage.getItem('username'), size: 30})
+                  React.createElement("button", {type: "button", className: "btn btn-default btn-xs dropdown-toggle ", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}, 
+                    React.createElement(Gravatar, {className: "avatar img-thumbnail pull-right", email: localStorage.getItem('username'), size: 50})
                   ), 
-                    React.createElement("ul", {className: "dropdown-menu"}, 
-                      React.createElement("li", {className: "pull-right", role: "presentation"}, React.createElement("a", {onClick: this.logout, href: ""}, React.createElement("i", {className: "material-icons"}, "exit_to_app"))), 
-                      React.createElement("li", {className: "pull-right", role: "presentation"}, " ", React.createElement("a", {href: "#login/"}, React.createElement("i", {className: "material-icons"}, "perm_identity")))
+                    React.createElement("ul", {className: "dropdown-menu pull-right"}, 
+                      React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {onClick: this.logout, href: ""}, React.createElement("i", {className: "material-icons"}, "exit_to_app"))), 
+                      React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, " ", React.createElement("a", {href: "#login/"}, React.createElement("i", {className: "material-icons"}, "perm_identity"))), 
+                      React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {href: "#dashboard/"}, React.createElement("i", {className: "material-icons"}, "web")))
                     )
                   )
             ), 
-              React.createElement("div", {className: "nav-message pull-right"}, 
+              React.createElement("div", {className: "nav-message nav-bar-dropdowns"}, 
                 React.createElement("span", null, "Logged in as "), React.createElement("span", {className: "nav-name"}, localStorage.getItem('username'))
               )
           )
@@ -2652,13 +2649,11 @@ var Template = React.createClass({displayName: "Template",
             this.props.children
           ), 
 
-        React.createElement("div", {className: "footer-row row"}, 
-          React.createElement("div", {className: "col-md-10"}, 
-            React.createElement("span", {className: "footer-title"}, "Greenville Foodies"), " ", React.createElement("p", null, "Copyright © Greenville Foodies 2016")
-          ), 
-          React.createElement("div", {className: "col-md-2"}, 
-            React.createElement("a", {href: "#dashboard/"}, React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "web"))), 
-            React.createElement("span", {className: "pull-right"}, "Dashboard ")
+        React.createElement("div", {className: "footer-row"}, 
+          React.createElement("div", {className: "footer col-md-12 col-sm-11 col-xs-11"}, 
+            React.createElement("div", {className: "col-md-5 col-md-offset-4 col-xs-5 col-xs-offset-4"}, 
+              React.createElement("span", null, "Copyright © Greenville Foodies 2016")
+            )
           )
         )
       )
