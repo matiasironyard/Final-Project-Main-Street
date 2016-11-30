@@ -329,6 +329,10 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement("li", null, business.get('subCategory')), 
             React.createElement("li", null, business.get('is_closed')), 
             React.createElement("li", null, business.get('phone'))
+          ), 
+          React.createElement("div", null, 
+            React.createElement("span", null, "Edit your information"), 
+            React.createElement("a", {href: "#registration/"}, React.createElement("i", {className: "material-icons"}, "edit"))
           )
         ), 
         React.createElement("div", {className: "col-md-3 map"}, 
@@ -342,9 +346,13 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement("img", {className: "img-thumbnail", src: business.get('snippet_image_url')}), 
             React.createElement("p", null, business.get('snippet_text'))
         ), 
-        React.createElement("div", {className: "col-md-3 uploaded-images"}, 
-          React.createElement("h3", null, "Uploaded Image"), 
-          React.createElement("img", {className: "img-thumbnail", width: "200px", src: business.get('image_upload')})
+        React.createElement("div", {className: "col-md-2 uploaded-images"}, 
+          React.createElement("h3", null, "Header Image"), 
+          React.createElement("img", {className: "img-thumbnail", width: "150px", src: business.get('image_upload')})
+        ), 
+        React.createElement("div", {className: "col-md-2 uploaded-images"}, 
+          React.createElement("h3", null, "About Image"), 
+          React.createElement("img", {className: "img-thumbnail", width: "150px", src: business.get('menu_upload')})
         )
       )
     )
@@ -645,7 +653,7 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
             )
             )
         )
-        )
+      )
     )
     )
   }
@@ -808,7 +816,6 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
   getInitialState: function(){
 
     var state = {
-      modalIsOpen: false,
       zoom: 14,
       center: {
         lat:  (34.852619),
@@ -823,7 +830,7 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
     this.setState({
     selectedPlace: props,
     activeMarker: marker,
-    showingInfoWindow: true
+    showingInfoWindow: false
   });
 },
 
@@ -838,15 +845,13 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
       var name = favorites.get('name');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
       return (
-          React.createElement(Marker, {onClick: self.onMarkerClick, key: favorites.cid, name: name, position: {lat: lat, lng: long}}, 
+          React.createElement(Marker, {onClick: self.onMarkerClick, visible: self.state.showingInfoWindow, key: favorites.cid, name: name, position: {lat: lat, lng: long}}, 
             React.createElement(InfoWindow, {
               marker: self.state.activeMarker, 
-              visible: self.state.showingInfoWindow, 
-              onClick: self.onMarkerClick}, 
+              visible: self.state.showingInfoWindow}, 
               React.createElement("div", null, 
                 React.createElement("p", null, name), 
-                React.createElement("a", {href: directions}, "Directions"), 
-                React.createElement("button", {className: "btn", onClick: self.closeModal}, "Close")
+                React.createElement("a", {href: directions}, "Directions")
               )
             )
           )
@@ -1299,7 +1304,6 @@ var RegistrationForm = React.createClass ({displayName: "RegistrationForm",
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
     this.setState({profilePic: attachedPicture});
-    // console.log(attachedPicture);
   },
 
   handleMenu: function(e){
@@ -1328,14 +1332,6 @@ var RegistrationForm = React.createClass ({displayName: "RegistrationForm",
           React.createElement("h4", null, "Registration Form"), 
           React.createElement("p", null, "Verify Your Information"), 
             React.createElement("form", {onSubmit: this.handleSubmit, id: "registration-form", action: "https://matias-recipe.herokuapp.com/classes/dist/", method: "POST", encType: "multipart/form-data"}, 
-              React.createElement("div", {className: "form-profile-pic"}, 
-                React.createElement("input", {type: "text", id: "uploaded_picture"}), React.createElement("br", null), 
-                React.createElement("input", {onChange: this.handlePicture, type: "file", id: "profile-pic"})
-              ), 
-              React.createElement("div", {className: "form-profile-pic"}, 
-                React.createElement("input", {type: "text", id: "uploaded_menu"}), React.createElement("br", null), 
-                React.createElement("input", {onChange: this.handleMenu, type: "file", id: "menu"})
-              ), 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", {htmlFor: "name"}, "Name"), 
                 React.createElement("input", {onChange: this.handleInputChange, name: "name", value: this.state.name, type: "text", className: "form-control", id: "business-name", placeholder: "name"})
@@ -1348,6 +1344,17 @@ var RegistrationForm = React.createClass ({displayName: "RegistrationForm",
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", {htmlFor: "name"}, "Description"), 
                 React.createElement("textarea", {onChange: this.handleInputChange, name: "description", value: this.state.description, type: "text", className: "form-control", id: "business-name", placeholder: "Enter a short business description"})
+              ), 
+              React.createElement("h4", null, "Images Upload"), 
+              React.createElement("div", {className: "form-profile-pic"}, 
+                React.createElement("div", null, React.createElement("img", {src: this.state.image_upload, width: "300"})), 
+                React.createElement("input", {type: "text", id: "uploaded_picture"}), React.createElement("br", null), 
+                React.createElement("input", {onChange: this.handlePicture, type: "file", id: "profile-pic"})
+              ), 
+              React.createElement("div", {className: "form-profile-pic"}, 
+                React.createElement("div", null, React.createElement("img", {src: this.state.menu_upload, width: "300"})), 
+                React.createElement("input", {type: "text", id: "uploaded_menu"}), React.createElement("br", null), 
+                React.createElement("input", {onChange: this.handleMenu, type: "file", id: "menu"})
               ), 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", {htmlFor: "name"}, "Menu"), 
@@ -1526,6 +1533,14 @@ var models = require('../models/business');
 var Template = require('../templates/templates.jsx');
 var User= require('../parseUtilities').User;
 var Favorites= require('./favorites.jsx').FavoritesContainer;
+require('backbone-react-component');
+var $ = require('jquery');
+var google = require('react-google-maps');
+var ScriptjsLoader = require("react-google-maps/lib/async/ScriptjsLoader");
+var GoogleMapLoader = google.GoogleMapLoader;
+var GoogleMap = google.GoogleMap;
+var Marker = google.Marker;
+var InfoWindow = google.InfoWindow;
 
 var router = require('../router').router;
 // var GoogleMaps = require('../models/business.js').GoogleMaps;
@@ -1537,27 +1552,36 @@ var SpecialsList = React.createClass({displayName: "SpecialsList",
   render: function(){
     var specialsListItems = this.props.specials.map(function(special){
       return (
-        React.createElement("li", {key: special.cid, className: "detailview-specials-rows"}, 
-          React.createElement("div", {className: "specials-header"}, 
-            React.createElement("span", {className: "specials-name"}, special.get('name')), 
-            React.createElement("span", {className: "specials-pric"}, special.get('price'))
-          ), 
-          React.createElement("div", {className: "specials-description"}, special.get('description')), 
-          React.createElement("div", {className: "specials-dates"}, 
-            React.createElement("span", {className: "specials-start-date"}, "From:  ", special.get('effectivedate')), 
-            React.createElement("span", {className: "specials-end-date"}, "Until:  ", special.get('expirydate'))
-          )
+
+        React.createElement("tr", {key: special.cid, className: "detailview-menu-rows"}, 
+          React.createElement("td", {className: "special-name "}, special.get('name')), 
+          React.createElement("td", {className: "special-description"}, special.get('description')), 
+          React.createElement("td", {className: "special-price "}, special.get('price')), 
+          React.createElement("td", {className: "special-available "}, special.get('expirydate'))
         )
       )
     });
   // console.log('specialslistitems', specialsListItems);
     return (
-      React.createElement("div", {className: "col-md-8 detailview-specials-table"}, 
-        React.createElement("h2", {className: "mdl-layout-title"}, "Specials"), 
-        React.createElement("ul", null, 
-            specialsListItems
+      React.createElement("div", {className: "col-md-8 detailview-menu-list"}, 
+
+        React.createElement("div", {className: "row"}, 
+          React.createElement("h3", {className: "mdl-layout-title"}, "Specials"), 
+            React.createElement("table", {className: "menu col-md-11 col-md-offset-1"}, 
+              React.createElement("thead", null, 
+                React.createElement("tr", null, 
+                  React.createElement("th", {className: "table-dish"}, "Dish"), 
+                  React.createElement("th", {className: "table-description"}, "Description"), 
+                  React.createElement("th", {className: "table-price"}, "Price"), 
+                  React.createElement("th", {className: "table-available"}, "Ends")
+                )
+              ), 
+              React.createElement("tbody", null, 
+                  specialsListItems
+              )
+            )
           )
-      )
+        )
     )
   }
 });
@@ -1597,7 +1621,7 @@ var MenuList = React.createClass({displayName: "MenuList",
     });
 
     return (
-      React.createElement("div", {className: "col-md-8 detailview-menu-list mdl-shadow--2dp"}, 
+      React.createElement("div", {className: "col-md-8 detailview-menu-list"}, 
         React.createElement("div", {className: "row"}, 
           React.createElement("h2", {className: "mdl-layout-title"}, "Menu"), 
               React.createElement("h3", {className: "mdl-layout-title"}, "Appetizers"), 
@@ -1651,11 +1675,83 @@ var MenuList = React.createClass({displayName: "MenuList",
   }
 });
 
+var RestaurantMap = React.createClass({displayName: "RestaurantMap",
+  getInitialState: function(){
+    var state = {
+      zoom: 17,
+    }
+    return  state
+  },
+
+  onMarkerClick: function(props, marker, e){
+    this.setState({
+    selectedPlace: props,
+    activeMarker: marker,
+    showingInfoWindow: false
+  });
+},
+  render: function(){
+    var self = this;
+    var center = self.state.center;
+    var zoom = self.state.zoom;
+    var restaurant = self.props.restaurant;
+    var lat = restaurant.get('lat');
+    var long = restaurant.get('long');
+    var location = 'lat:'+ lat + ',' + 'lng:'+ long;
+    console.log('location', location);
+    var name = restaurant.get('name');
+    console.log('name', name);
+    var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
+    return (
+      React.createElement("section", {id: "map-section", style: {height:"325px"}}, 
+        React.createElement(GoogleMapLoader, {containerElement: 
+            React.createElement("div", React.__spread({}, 
+              this.props, 
+              {style: {
+                height: "100%",
+                width: "100%"
+              }})
+            ), 
+          
+           googleMapElement: 
+            React.createElement(GoogleMap, {
+              id: "map", 
+              zoom: zoom, 
+              ref: "map", 
+              center: {lat: lat, lng: long}, 
+              defaultCenter: {lat: lat, lng: long}
+            }, 
+            React.createElement(Marker, {onClick: self.onMarkerClick, visible: self.state.showingInfoWindow, name: name, position: {lat: lat, lng: long}}, 
+              React.createElement(InfoWindow, {
+                marker: self.state.activeMarker, 
+                visible: self.state.showingInfoWindow}, 
+                React.createElement("div", null, 
+                  React.createElement("p", null, name), 
+                  React.createElement("a", {href: directions}, "Directions")
+                )
+              )
+            )
+      )
+          }
+        )
+      )
+    );
+  }
+});
+
+
+
 var DetailView = React.createClass({displayName: "DetailView",
   getInitialState: function(){
     return {
       restaurant: '',
+
     }
+  },
+
+  componentWillMount: function(){
+   var restaurant = this.props.restaurant;
+
   },
 
   handleFavorite: function(e){
@@ -1683,21 +1779,24 @@ var DetailView = React.createClass({displayName: "DetailView",
     // });
     var restaurant = self.props.restaurant;
     var specials = restaurant.get('specials');
+    console.log('specials', specials);
+    var appetizers = restaurant.get('appetizer');
+    var maincourses = restaurant.get('maincourse');
+    var desserts = restaurant.get('dessert');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
   // console.log(geolocation);
-    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+    // var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
   // console.log(googleMap);
-    var directions = 'https://www.google.com/maps/dir//'+geolocation;
+    // var directions = 'https://www.google.com/maps/dir//'+geolocation;
     var imgUrl = restaurant.get('image_upload');
     var divStyle= {
       height: '40vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = '"tel:(' + restaurant.get('phone') +')"';
-    console.warn(phone);
 
     return(
-      React.createElement("div", {className: "detailview-pane"}, 
+      React.createElement("div", {className: "detailview-pane col-md-12 "}, 
         React.createElement("div", {className: "detailview-header col-md-12"}, 
           React.createElement("div", {className: "row"}, 
             React.createElement("div", {className: "detailview-header-img", style: divStyle}, 
@@ -1728,23 +1827,31 @@ var DetailView = React.createClass({displayName: "DetailView",
         ), 
 
         React.createElement("div", {className: "col-md-4 detailview-aside mdl-shadow--2d"}, 
-          React.createElement("div", {className: "detailview-description"}, 
-            React.createElement("div", {className: "mdl-card__title"}, 
-              React.createElement("h2", {className: "mdl-card__title-text"}, "About")
+          React.createElement("div", {className: "detailview-about"}, 
+            React.createElement("div", {className: "detailview-description"}, 
+              React.createElement("div", {className: "mdl-card__title"}, 
+                React.createElement("h2", {className: "mdl-card__title-text"}, "About")
+              ), 
+              React.createElement("div", {className: "mdl-card__supporting-text"}, 
+                React.createElement("p", null, React.createElement("img", {className: "about-image", src: restaurant.get('menu_upload'), width: "200"}), restaurant.get('description'))
+              )
             ), 
-            React.createElement("div", {className: "mdl-card__supporting-text"}, 
-              React.createElement("p", null, restaurant.get('description'))
+            React.createElement("div", {className: "detailview-aside-review mdl-card__actions mdl-card--border"}, 
+              React.createElement("div", {className: "mdl-card__title"}, 
+                React.createElement("h2", {className: "mdl-card__title-text"}, "Recent Review")
+              ), 
+              React.createElement("img", {className: "img-circle", src: restaurant.get('snippet_image_url')}), 
+              React.createElement("div", {className: "mdl-card__supporting-text"}, restaurant.get('snippet_text'))
             )
           ), 
-          React.createElement("div", {className: "detailview-aside-review mdl-card__actions mdl-card--border"}, 
-            React.createElement("img", {className: "img-circle", src: restaurant.get('snippet_image_url')}), 
-            React.createElement("div", {className: "mdl-card__supporting-text"}, restaurant.get('snippet_text'))
-          ), 
           React.createElement("div", {className: "detailview-location-pane"}, 
-            React.createElement("a", {href: directions}, React.createElement("img", {src: googleMap})), 
-            React.createElement("p", null, "Click on map for directions")
+            React.createElement(RestaurantMap, {restaurant: this.props.restaurant})
           )
-        )
+        ), 
+
+        React.createElement(SpecialsList, {specials: specials}), 
+        React.createElement(MenuList, {appetizers: appetizers, maincourses: maincourses, desserts: desserts})
+
       )
     )
   }
@@ -1759,10 +1866,7 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
   },
   componentWillMount: function(){
     var restaurant = this.state.restaurant;
-  // console.log('this state business', this.state.restaurant);
-  // console.log('willmount', restaurant);
     var restaurantId = this.props.businessId;
-  // console.log('restaurant id', restaurantId)
     if(!restaurantId){
       return;
     }
@@ -1793,7 +1897,6 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
     });
   // console.log(this.state);
   },
-
   render: function(){
     var test = this.state.restaurant.get('name');
     var specials = this.state.restaurant.get('specials');
@@ -1804,10 +1907,9 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
     return (
       React.createElement(Template, null, 
         React.createElement("div", {className: "detail-view-container"}, 
-          React.createElement("div", {className: "detail-view-row row"}, 
-            React.createElement(DetailView, {restaurant: this.state.restaurant, setFavorite: this.setFavorite, removeFavorite: this.removeFavorite, specials: specials}), 
-            React.createElement(SpecialsList, {specials: specials}), 
-            React.createElement(MenuList, {appetizers: appetizers, maincourses: maincourses, desserts: desserts})
+          React.createElement("div", {className: "detail-view-row"}, 
+            React.createElement(DetailView, {restaurant: this.state.restaurant, setFavorite: this.setFavorite, removeFavorite: this.removeFavorite, specials: specials})
+
           )
         )
       )
@@ -1819,7 +1921,7 @@ module.exports = {
   SingleViewContainer: SingleViewContainer
 };
 
-},{"../models/business":12,"../parseUtilities":14,"../router":15,"../templates/templates.jsx":17,"./favorites.jsx":5,"backbone":19,"jquery":56,"react":273}],10:[function(require,module,exports){
+},{"../models/business":12,"../parseUtilities":14,"../router":15,"../templates/templates.jsx":17,"./favorites.jsx":5,"backbone":19,"backbone-react-component":18,"jquery":56,"react":273,"react-google-maps":125,"react-google-maps/lib/async/ScriptjsLoader":101}],10:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
@@ -2317,6 +2419,7 @@ var YelpBusiness = Backbone.Model.extend({
     return data.businesses[0]
   },
 });
+
 
 // var GoogleMaps = Backbone.Model.extend ({
 //   urlRoot: function(){

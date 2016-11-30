@@ -5885,11 +5885,18 @@ img {
       padding: 15px;
       margin-top: 10px; }
   .detail-view-container .detail-view-row .detailview-pane .detailview-aside {
+    color: #fff;
     margin-top: 30px; }
-    .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review {
-      padding: 10px; }
-      .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review img {
-        padding: 5px; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about {
+      background-color: #FFD180; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .about-image {
+        float: left;
+        padding: 10px;
+        border-radius: 10px; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review {
+        padding: 10px; }
+        .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review img {
+          padding: 5px; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-location-pane {
       margin-top: 30px; }
 
@@ -5908,6 +5915,8 @@ img {
   .detailview-menu-list .menu .table-description {
     width: 60%; }
   .detailview-menu-list .menu .table-price {
+    width: 10%; }
+  .detailview-menu-list .menu .table-available {
     width: 20%; }
   .detailview-menu-list .menu .detailview-menu-rows {
     color: #616161;
@@ -5968,5 +5977,7 @@ img {
   color: #BDBDBD; }
 
 .footer {
-  border-top: 2px solid #BDBDBD; }
+  border-top: 2px solid #BDBDBD;
+  margin-top: 20px; }
+
 /*# sourceMappingURL=app.css.map */
