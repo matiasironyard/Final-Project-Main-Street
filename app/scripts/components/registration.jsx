@@ -4,56 +4,58 @@ var models = require('../models/business.js');
 var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var YelpBusiness = require('../models/business.js').YelpBusiness;
-var User= require('../parseUtilities').User;
+var User = require('../parseUtilities').User;
 var FileModel = require('../models/uploads.js').File;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
-var Dashboard= require('./dashboard.jsx').Dashboard;
+var Dashboard = require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
 var yelpBusiness = new YelpBusiness();
 require('../router').router;
 
-
-
-var RegistrationForm = React.createClass ({
-  getInitialState: function(){
+var RegistrationForm = React.createClass({
+  getInitialState: function() {
     return this.props.business.toJSON();
   },
 
-  componentWillReceiveProps: function(newProps){
+  componentWillReceiveProps: function(newProps) {
     this.setState(newProps.business.toJSON());
   },
 
-  handleInputChange: function(e){
+  handleInputChange: function(e) {
     e.preventDefault();
     var target = e.target;
     var newState = {};
-    newState[target.name]  = target.value;
+    newState[target.name] = target.value;
     this.setState(newState);
     // console.log(target.value);
   },
 
-  handlePicture: function(e){
+  handlePicture: function(e) {
     e.preventDefault();
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
-    this.setState({profilePic: attachedPicture});
+    this.setState({
+      profilePic: attachedPicture
+    });
     // console.log(attachedPicture);
   },
 
-  handleMenu: function(e){
+  handleMenu: function(e) {
     e.preventDefault();
     var attachedMenu = e.target.files[0];
     this.props.uploadMenu(attachedMenu);
-    this.setState({menu: attachedMenu});
+    this.setState({
+      menu: attachedMenu
+    });
     console.log(attachedMenu);
   },
 
-  handleSubmit: function(e){
+  handleSubmit: function(e) {
     e.preventDefault();
     this.props.saveBusiness(this.state);
     // console.log('SUBMIT', this.state);
   },
-  render: function(){
+  render: function() {
     return (
       <div className="registration-form demo-card-wide mdl-card mdl-shadow--2dp col-md-5 col-md-offset-4">
         <h3>In The Mood</h3>
@@ -118,32 +120,33 @@ var RegistrationForm = React.createClass ({
   }
 });
 
-var RegistrationContainer = React.createClass ({
-  getInitialState: function(){
+var RegistrationContainer = React.createClass({
+  getInitialState: function() {
     return {
       business: new models.Business(),
     };
   },
 
-  componentWillMount: function(){
+  componentWillMount: function() {
     var self = this;
     var businessCollection = new BusinessCollection();
-    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
-      if(businessCollection.length >= 1){
-        self.setState({'business': businessCollection.first()});
+    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
+      if (businessCollection.length >= 1) {
+        self.setState({
+          'business': businessCollection.first()
+        });
         // console.log(businessCollection.parseWhere());
       } else {
-        yelpBusiness.fetch().then(function(response){
+        yelpBusiness.fetch().then(function(response) {
           console.log('categories', response.businesses[0].categories[0]);
           var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0][0] : "no main category from Yelp";
           var subcategory = response.businesses[0].categories[1] ? response.businesses[0].categories[1][0] : "no subcategory from Yelp";
-          var open= response.businesses[0].is_closed ? response.businesses[0].is_closed = false: "currently open";
+          var open = response.businesses[0].is_closed ? response.businesses[0].is_closed = false : "currently open";
           console.log('open:', open);
           var business = new models.Business();
           var data = response.businesses[0];
           // console.log(data.categories[0][1]);
-          business.set(
-            {
+          business.set({
               name: data.name,
               id: data.id,
               image_url: data.image_url,
@@ -156,36 +159,39 @@ var RegistrationContainer = React.createClass ({
               zip: data.location.postal_code,
               mainCategory: mainCategory,
               subCategory: subcategory,
-              menuUrl: 'https://www.yelp.com/menu/'+data.id,
+              menuUrl: 'https://www.yelp.com/menu/' + data.id,
               lat: data.location.coordinate.latitude,
               long: data.location.coordinate.longitude,
               snippet_text: data.snippet_text,
               snippet_image_url: data.snippet_image_url,
               url: data.url,
-            }
-          ),
-          self.setState({business: business});
+            }),
+            self.setState({
+              business: business
+            });
         });
       }
     });
   },
 
-  componentWillReceiveProps: function(){
+  componentWillReceiveProps: function() {
     this.getBusiness();
   },
-  getBusiness: function(){
+  getBusiness: function() {
     var business = this.state.business,
-    businessId = this.props.businessId;
-    if(!businessId){
+      businessId = this.props.businessId;
+    if (!businessId) {
       return;
     }
     business.set('objectId', businessId);
-    business.fetch().then(()=> {
-      this.setState({business: business});
+    business.fetch().then(() => {
+      this.setState({
+        business: business
+      });
     });
   },
 
-  saveBusiness: function(businessData){
+  saveBusiness: function(businessData) {
     var self = this;
     var business = this.state.business;
     // console.log(business.get('lat'));
@@ -195,44 +201,52 @@ var RegistrationContainer = React.createClass ({
     business.set(businessData);
     business.set('image_upload', localStorage.getItem('image_upload'));
     business.set('menu_upload', localStorage.getItem('menu_upload'));
-    business.set('owner', {__type: "Pointer", className: "_User", objectId: currentUser});
-    business.save().then(function(){
-        self.props.router.navigate('dashboard/', {trigger: true})
+    business.set('owner', {
+      __type: "Pointer",
+      className: "_User",
+      objectId: currentUser
+    });
+    business.save().then(function() {
+      self.props.router.navigate('dashboard/', {
+        trigger: true
+      })
     });
     console.log('save', this.state);
   },
 
-  uploadPicture: function(picture){
+  uploadPicture: function(picture) {
     var self = this;
     var file = new FileModel();
     var business = this.state.business;
     file.set('name', picture.name);
     file.set('data', picture);
-    file.save().done(function(response){
+    file.save().done(function(response) {
       localStorage.setItem('image_upload', response.url);
-      self.setState({business: business});
+      self.setState({
+        business: business
+      });
     });
   },
 
-  uploadMenu: function(menu){
+  uploadMenu: function(menu) {
     var file = new FileModel();
     // var business = this.state.business;
     file.set('name', menu.name);
     file.set('data', menu);
-    file.save().done(function(response){
+    file.save().done(function(response) {
       localStorage.setItem('menu_upload', response.url);
       // business.set('menu_upload', response.url);
     });
   },
 
-render: function (){
-  // console.log('container state',this.state);
-  return (
-    <div>
+  render: function() {
+    // console.log('container state',this.state);
+    return (
+      <div>
       <RegistrationForm business={this.state.business} saveBusiness={this.saveBusiness} uploadPicture={this.uploadPicture} uploadMenu={this.uploadMenu}/>
     </div>
-  )
-}
+    )
+  }
 });
 
 module.exports = {

@@ -2,7 +2,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
-var setupParse= require('../parseUtilities').setupParse;
+var setupParse = require('../parseUtilities').setupParse;
 var Modal = require('react-modal');
 require('../router').router;
 
@@ -10,7 +10,7 @@ require('../router').router;
 
 var SignUpComponent = React.createClass({
 
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       username: '',
       password: '',
@@ -19,27 +19,33 @@ var SignUpComponent = React.createClass({
     };
   },
 
-  handleEmail: function(e){
+  handleEmail: function(e) {
     // e.preventDefault();
     var email = e.target.value;
     // console.log(email);
-    this.setState({email: email});
+    this.setState({
+      email: email
+    });
   },
 
-  handlePassword: function(e){
+  handlePassword: function(e) {
     // e.preventDefault();
     var password = e.target.value;
-    this.setState({password: password})
+    this.setState({
+      password: password
+    })
   },
 
-  handlePhone: function(e){
+  handlePhone: function(e) {
     // e.preventDefault();
     var phone = e.target.value;
-      // console.log(phone);
-    this.setState({phone: phone})
+    // console.log(phone);
+    this.setState({
+      phone: phone
+    })
   },
 
-  handleSignUp: function(e){
+  handleSignUp: function(e) {
     e.preventDefault();
     var signupData = {
       email: this.state.email,
@@ -49,28 +55,40 @@ var SignUpComponent = React.createClass({
     // console.log(signupData);
     this.props.handleSignUp(signupData);
 
-    this.setState({email: '', phone: '', password: ''});
+    this.setState({
+      email: '',
+      phone: '',
+      password: ''
+    });
   },
 
-  handleLogMeIn: function(e){
+  handleLogMeIn: function(e) {
     e.preventDefault();
     this.props.handleLogIn(e);
     console.log(this.state);
   },
 
   openModal: function() {
-    this.setState({modalIsOpen: true});
-    this.setState({clickNext: <i className="material-icons">check_circle</i>});
+    this.setState({
+      modalIsOpen: true
+    });
+    this.setState({
+      clickNext: <i className="material-icons">check_circle</i>
+    });
   },
 
   closeModal: function() {
-    this.setState({modalIsOpen: false});
-    this.setState({yes:<i className="material-icons">thumb_up</i>})
+    this.setState({
+      modalIsOpen: false
+    });
+    this.setState({
+      yes: <i className="material-icons">thumb_up</i>
+    })
   },
 
-  render: function(){
+  render: function() {
     return (
-          <div className="signup-container container-fluid">
+      <div className="signup-container container-fluid">
             <div className="signup-col  mdl-shadow--2dp col-md-3 col-md-offset-5">
               <h2 className="signup-header">In The Mood</h2>
               <h4 className="signup-subheader">@ Downtown Greenville</h4>
@@ -109,37 +127,41 @@ var SignUpComponent = React.createClass({
               </form>
             </div>
           </div>
-  );
+    );
   }
 });
 
 var AuthenticationContainer = React.createClass({
 
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       username: ''
     };
   },
 
-  handleSignUp: function(signupData){
+  handleSignUp: function(signupData) {
     var self = this;
-    var data={
+    var data = {
       'username': signupData.email,
       'password': signupData.password,
       'phone': signupData.phone
     };
-    $.post('https://matias-recipe.herokuapp.com/users', data).then(function(response){
-        self.props.router.navigate('/login/', {trigger: true})
+    $.post('https://matias-recipe.herokuapp.com/users', data).then(function(response) {
+      self.props.router.navigate('/login/', {
+        trigger: true
+      })
       console.warn(response);
     });
   },
 
-  handleLogIn: function(){
+  handleLogIn: function() {
     var self = this;
-    self.props.router.navigate('/login/', {trigger: true});
+    self.props.router.navigate('/login/', {
+      trigger: true
+    });
   },
 
-  render: function(){
+  render: function() {
     return (
       <div>
         <SignUpComponent  handleSignUp={this.handleSignUp}  handleLogIn={this.handleLogIn}/>

@@ -128,9 +128,14 @@ background-color: #FFFDE7;
       padding: 5px;
       padding-top: 15px;
       padding-left: 10px;
+      background-color: #FFF3E0;
 
       .viewall-header{
 
+        .viewall-restaurant-info{
+          // background-color: blue;
+          // height: 80px;
+        }
         .viewall-image{
           border-radius: 5px;
           width: 8vw;
@@ -328,30 +333,72 @@ background-color: #FFFDE7;
 .favorites-map{
   margin-top: 10px;
   box-shadow: 0px 1px 10px -1px rgba(0,0,0,0.75);
-
 }
 
+//DASHBOARD INFO
 
+.dashboard-container{
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #757575;
+  button{
+    margin-bottom: 20px;
+  }
+}
+
+.dashboard-specials{
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #757575;
+  button{
+    margin-right: 20px;
+  }
+}
+
+.menu-pane{
+  .menu-panels{
+    margin-bottom: 30px;
+    .menu-forms{
+      // background-color: blue;
+      margin-bottom: 60px;
+    }
+  }
+}
 
 
 //Template
 .template{
-  .nav-header{
-    text-transform: uppercase;
-    text-transform: uppercase;
-    font-size: calc(1.5em + 1.5vw);
-    color: #E65100;
-  }
-.btn{
+  .nav-bar-col{
+    background-color: beige;
+    box-shadow: 0px 1px 10px -1px rgba(0,0,0,0.75);
+    background-image: url('http://www.fortunebuilders.com/wp-content/uploads/2015/03/greenville-downtown-cityscape.jpg');
+    background-position: right;
+    background-size: cover;
+    margin-bottom: 30px;
+    .nav-headers{
+      background-color: rgba(36, 44, 44, 0.3);
+      padding: 15px;
 
-  .avatar {
-
+      .nav-header{
+        text-transform: uppercase;
+        text-transform: uppercase;
+        font-weight: bold;
+        // height: 5vw;
+        font-size: calc(2em + 2vw);
+        color: #E65100;
+      }
+      .nav-subheader{
+        text-transform: uppercase;
+        text-transform: uppercase;
+        // height: 3vw;
+        font-size: calc(1.5em + 1.5vw);
+        color: #fff;
+      }
+    }
   }
-}
   .nav-message{
-    color: #BDBDBD;
+    color: #fff;
   }
-
 }
 
 .footer{
@@ -359,136 +406,3 @@ background-color: #FFFDE7;
   margin-top: 20px;
   // background-color: #FFA000;
 }
-
-
-
-
-
-
-
-
-// .dashboard-specials{
-//   // transform: translateY( 30%);
-//
-// }
-//
-// .dashboard-dessert {
-//   margin-bottom: 30px;
-// }
-// .registration-form{
-//   padding-top: 30px;
-//   .form-header{
-//     display: inline-block;
-//     margin-bottom: 20px;
-//     img{
-//       // width: 150px;
-//       // height: 150px;
-//       border-radius: 30px;
-//       background-size: cover;
-//       background-repeat: no-repeat;
-//       padding: 10px;
-//     }
-//   }
-//   .form-container{
-//     margin-top: 80px;
-//     // background-color: blue;
-//   }
-//   .categories{
-//     // display: inline-table;
-//     input{
-//       margin-bottom: 15px;
-//     }
-//   }
-// }
-// .restaurant-card{
-//   // border: 2px solid grey;
-//   // border-radius: 2px;
-//   // box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.75);
-//   height: 200px;
-//   margin: 10px;
-//   padding: 10px;
-//
-// }
-// .specials-counter{
-//
-//
-//   height: 30px;
-//   width: 30px;
-//   float: right;
-//   text-align: center;
-//   color: white;
-//   background-color: rgba(37, 36, 29, 0.45);
-//   border-radius: 100%;
-//   .counter-number{
-//     margin-top: 5px;
-//   }
-// }
-//
-// .detailview-pane{
-//   // margin-top: 20px;
-//   .detailview-header{
-//     // display: inline-block;
-//     // background-image: url('http://il2.picdn.net/shutterstock/videos/17861914/thumb/1.jpg');
-//     // background-position: center;
-//     // background-size: cover;
-//     // padding-top: 10px;
-//     padding-bottom: 20px;
-//     box-shadow: -1px 4px 5px 0px rgba(0,0,0,0.75);
-//
-//     .detailview-header-img{
-//       padding-top: 20px;
-//     }
-//     .detailview-header-text{
-//       padding-top: 20px;
-//       h1{
-//         font-family: 'Raleway', sans-serif;
-//         // color: #fff;
-//       }
-//       h4{
-//         font-family: 'Josefin Sans', sans-serif;
-//         font-style: italic;
-//       }
-//       h5{
-//         font-family: 'Josefin Sans', sans-serif;
-//         font-style: italic;
-//       }
-//       .detailview-header-review-img{
-//   //header image from restaurant parse
-//       }
-//     }
-//   }
-//   .detailview-pane{
-//     .detailview-description{
-//       border-bottom: 1px solid grey;
-//       p{
-//         font-family: 'Open Sans', sans-serif;
-//         padding: 10px;
-//       }
-//     }
-//     .detailview-menu{
-//       padding: 10px;
-//       border-bottom: 1px solid grey;
-//     }
-//     .detailview-location-pane{
-//       img{
-//         height: 300px;
-//         width: 300px;
-//         padding: 5px;
-//       }
-//       .detailview-phone{
-//         font-family: 'Open Sans', sans-serif;
-//         font-weight: bold;
-//       }
-//       p{
-//         font-family: 'Open Sans', sans-serif;
-//
-//       }
-//     }
-//   }
-//   .detailview-specials{
-//     margin-top: 20px;
-//     padding-top: 10px;
-//     padding-bottom: 10px;
-//     border-left: 2px solid grey;
-//   }
-// }

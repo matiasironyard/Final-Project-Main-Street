@@ -356,22 +356,17 @@ var DashboardContainer = React.createClass({
             <div className= "dashboard-windows col-md-12 col-sm-12 col-xs-11">
               <h1 className="well"> {businessName} Dashboard</h1>
               <Dashboard  business={this.state.business} />
-              <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  type="button"  onClick={this.openModal}>Add Specials &amp; Menu</button>
-              <Modal isOpen={this.state.modalIsOpen}>
-                  <div className="specials-pane">
-                    <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" onClick={this.closeModal}>Close</button>
-                    <h2>Specials</h2>
-                      <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')}  removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
+                <div className="specials-pane">
+                  <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')}  removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
+                </div>
+                <div className="menu-pane">
+                  <h2>Menu</h2>
+                  <div className="menu-creator">
+                    <AppetizerForm className="menu-creator-panels"   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
+                    <MainCourseForm className="menu-creator-panels"  business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
+                    <DessertForm className="menu-creator-panels"  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
                   </div>
-                  <div className="menu-pane">
-                    <h2>Menu</h2>
-                    <div className="menu-creator">
-                      <AppetizerForm   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
-                      <MainCourseForm   business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
-                      <DessertForm  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
-                    </div>
-                  </div>
-                </Modal>
+                </div>
               </div>
         </div>
       </div>

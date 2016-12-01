@@ -42,7 +42,7 @@ var MainCourseFormList = React.createClass({
     var maincourse = this.state.maincourse;
     // console.log(special.get('expirydate'))
     return(
-      <div className="maincourse">
+      <div className="menu-forms maincourse">
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input className="form-control"  onChange={this.handleInputChange} name="name"  value={maincourse.get('name')} type="text"  id="name" placeholder="dish name"/>
@@ -56,7 +56,7 @@ var MainCourseFormList = React.createClass({
           <input className="form-control"  onChange={this.handleInputChange} name="price"  value={maincourse.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
         <div>
-          <button  onClick = {this.removeMainCourse} type="button" className="btn btn-danger pull-right">Delete</button>
+          <button  onClick = {this.removeMainCourse} type="button"className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right">Delete</button>
         </div>
       </div>
     );
@@ -101,7 +101,7 @@ removeMainCourse: function(maincourse){
      )
    });
    return (
-     <div className="col-md-4">
+     <div className="menu-panels col-md-4">
        <form onSubmit={this.handleSubmit}>
          <h3>Main Course</h3>
          <div className="form-inLine">

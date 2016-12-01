@@ -3,8 +3,8 @@ var Backbone = require('backbone');
 var $ = require('jquery');
 var models = require('../models/business');
 var Template = require('../templates/templates.jsx');
-var User= require('../parseUtilities').User;
-var Favorites= require('./favorites.jsx').FavoritesContainer;
+var User = require('../parseUtilities').User;
+var Favorites = require('./favorites.jsx').FavoritesContainer;
 require('backbone-react-component');
 var $ = require('jquery');
 var google = require('react-google-maps');
@@ -18,11 +18,9 @@ var router = require('../router').router;
 // var GoogleMaps = require('../models/business.js').GoogleMaps;
 // var googleMaps = new GoogleMaps();
 
-
-
 var SpecialsList = React.createClass({
-  render: function(){
-    var specialsListItems = this.props.specials.map(function(special){
+  render: function() {
+    var specialsListItems = this.props.specials.map(function(special) {
       return (
 
         <tr key={special.cid} className="detailview-menu-rows">
@@ -33,7 +31,7 @@ var SpecialsList = React.createClass({
         </tr>
       )
     });
-  // console.log('specialslistitems', specialsListItems);
+    // console.log('specialslistitems', specialsListItems);
     return (
       <div className="col-md-8 detailview-menu-list">
 
@@ -59,9 +57,9 @@ var SpecialsList = React.createClass({
 });
 
 var MenuList = React.createClass({
-  render: function(){
+  render: function() {
 
-    var appetizersListItems = this.props.appetizers.map(function(appetizer){
+    var appetizersListItems = this.props.appetizers.map(function(appetizer) {
       return (
 
         <tr key={appetizer.cid} className="detailview-menu-rows">
@@ -72,7 +70,7 @@ var MenuList = React.createClass({
       )
     });
 
-    var maincourseListItems = this.props.maincourses.map(function(maincourse){
+    var maincourseListItems = this.props.maincourses.map(function(maincourse) {
       return (
         <tr key={maincourse.cid} className="detailview-menu-rows">
           <td className="maincourse-name">{maincourse.get('name')}</td>
@@ -82,7 +80,7 @@ var MenuList = React.createClass({
       )
     });
 
-    var dessertsListItems = this.props.desserts.map(function(dessert){
+    var dessertsListItems = this.props.desserts.map(function(dessert) {
       return (
         <tr key={dessert.cid} className="detailview-menu-rows">
           <td className="">{dessert.get('name')}</td>
@@ -148,32 +146,32 @@ var MenuList = React.createClass({
 });
 
 var RestaurantMap = React.createClass({
-  getInitialState: function(){
+  getInitialState: function() {
     var state = {
       zoom: 17,
     }
-    return  state
+    return state
   },
 
-  onMarkerClick: function(props, marker, e){
+  onMarkerClick: function(props, marker, e) {
     this.setState({
-    selectedPlace: props,
-    activeMarker: marker,
-    showingInfoWindow: false
-  });
-},
-  render: function(){
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: false
+    });
+  },
+  render: function() {
     var self = this;
     var center = self.state.center;
     var zoom = self.state.zoom;
     var restaurant = self.props.restaurant;
     var lat = restaurant.get('lat');
     var long = restaurant.get('long');
-    var location = 'lat:'+ lat + ',' + 'lng:'+ long;
+    var location = 'lat:' + lat + ',' + 'lng:' + long;
     console.log('location', location);
     var name = restaurant.get('name');
     console.log('name', name);
-    var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
+    var directions = 'https://www.google.com/maps/dir//' + lat + ',' + long;
     return (
       <section id="map-section" style={{height:"325px"}}>
         <GoogleMapLoader containerElement={
@@ -211,40 +209,41 @@ var RestaurantMap = React.createClass({
   }
 });
 
-
-
 var DetailView = React.createClass({
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       restaurant: '',
 
     }
   },
 
-  componentWillMount: function(){
-   var restaurant = this.props.restaurant;
+  componentWillMount: function() {
+    var restaurant = this.props.restaurant;
 
   },
 
-  handleFavorite: function(e){
+  handleFavorite: function(e) {
     e.preventDefault();
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
-  // console.log('My Favorite>>', favorite);
+    // console.log('My Favorite>>', favorite);
     self.props.setFavorite(favorite);
-    self.setState({favorite: favorite})
+    self.setState({
+      favorite: favorite
+    })
   },
 
-  handleRemoveFavorite: function(e){
+  handleRemoveFavorite: function(e) {
     e.preventDefault();
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
     self.props.removeFavorite(favorite);
-    self.setState({favorite: favorite})
+    self.setState({
+      favorite: favorite
+    })
   },
 
-
-  render: function(){
+  render: function() {
     var self = this;
     // googleMaps.fetch().then(function(response){
     // // console.log(response);
@@ -256,18 +255,18 @@ var DetailView = React.createClass({
     var maincourses = restaurant.get('maincourse');
     var desserts = restaurant.get('dessert');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
-  // console.log(geolocation);
+    // console.log(geolocation);
     // var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
-  // console.log(googleMap);
+    // console.log(googleMap);
     // var directions = 'https://www.google.com/maps/dir//'+geolocation;
     var imgUrl = restaurant.get('image_upload');
-    var divStyle= {
+    var divStyle = {
       height: '40vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
-    var phone = '"tel:(' + restaurant.get('phone') +')"';
+    var phone = '"tel:(' + restaurant.get('phone') + ')"';
 
-    return(
+    return (
       <div className="detailview-pane col-md-12 ">
         <div className="detailview-header col-md-12">
           <div className="row">
@@ -329,47 +328,66 @@ var DetailView = React.createClass({
   }
 });
 
-
 var SingleViewContainer = React.createClass({
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       restaurant: new models.Business()
     }
   },
-  componentWillMount: function(){
+  componentWillMount: function() {
     var restaurant = this.state.restaurant;
     var restaurantId = this.props.businessId;
-    if(!restaurantId){
+    if (!restaurantId) {
       return;
     }
     restaurant.set('objectId', restaurantId);
-    restaurant.fetch().then(()=>{
-      this.setState({restaurant: restaurant});
+    restaurant.fetch().then(() => {
+      this.setState({
+        restaurant: restaurant
+      });
     });
   },
 
-  setFavorite: function(favorite){
+  setFavorite: function(favorite) {
     // var self = this;
     var restaurant = this.state.restaurant;
     // console.log(business.get('lat'));
     var currentUser = User.current().get('objectId');
-    restaurant.set('favorite', {"__op": "AddRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
+    restaurant.set('favorite', {
+      "__op": "AddRelation",
+      "objects": [{
+        __type: "Pointer",
+        className: "_User",
+        objectId: currentUser
+      }]
+    });
     restaurant.save();
-    this.setState({restaurant: restaurant})
+    this.setState({
+      restaurant: restaurant
+    })
     console.log(this.state);
   },
 
-  removeFavorite: function(restaurant){
+  removeFavorite: function(restaurant) {
     var self = this;
     var restaurant = this.state.restaurant;
     var currentUser = User.current().get('objectId');
-    restaurant.set('favorite', {"__op": "RemoveRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
-    restaurant.save().then(function(){
-      self.props.router.navigate('restaurants/', {trigger: true})
+    restaurant.set('favorite', {
+      "__op": "RemoveRelation",
+      "objects": [{
+        __type: "Pointer",
+        className: "_User",
+        objectId: currentUser
+      }]
     });
-  // console.log(this.state);
+    restaurant.save().then(function() {
+      self.props.router.navigate('restaurants/', {
+        trigger: true
+      })
+    });
+    // console.log(this.state);
   },
-  render: function(){
+  render: function() {
     var test = this.state.restaurant.get('name');
     var specials = this.state.restaurant.get('specials');
     var appetizers = this.state.restaurant.get('appetizer');
@@ -381,7 +399,6 @@ var SingleViewContainer = React.createClass({
         <div className="detail-view-container">
           <div className="detail-view-row">
             <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
-
           </div>
         </div>
       </Template>

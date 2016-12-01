@@ -17,10 +17,13 @@ var Template = React.createClass({
       <div className="template">
         <div className="menu">
           <div className="nav-bar-col col-md-12 col-sm-11 col-xs-11">
-            <h2 className="nav-header">Greenville Foodies</h2>
+            <div className="nav-headers">
+              <h2 className="nav-header">In The Mood</h2>
+              <h2 className="nav-subheader">@ Greenville</h2>
+            </div>
             <ul className="nav nav-tabs">
-              <li role="presentation" className="active"><a  href="#restaurants/"><i className="material-icons">restaurant</i></a></li>
-              <li className="active" role="presentation"><a href="#favorites/"><i className="material-icons">favorite</i></a></li>
+              <li role="presentation" className="active"><a  className="nav-tabs" href="#restaurants/"><i className="material-icons">restaurant</i></a></li>
+              <li className="active" role="presentation"><a className="nav-tabs" href="#favorites/"><i className="material-icons">favorite</i></a></li>
                 <div className="btn-group pull-right">
                   <button type="button" className="btn btn-default btn-xs dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <Gravatar className="avatar img-thumbnail pull-right" email={localStorage.getItem('username')} size={50} />
@@ -33,7 +36,7 @@ var Template = React.createClass({
                   </div>
             </ul>
               <div className="nav-message nav-bar-dropdowns">
-                <span>Logged in as </span><span className="nav-name">{localStorage.getItem('username')}</span>
+                <span className="pull-right">Logged in as  {localStorage.getItem('username')}</span>
               </div>
           </div>
         </div>
