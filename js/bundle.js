@@ -6,28 +6,25 @@ var RegistrationContainer = require('../components/registration.jsx').Registrati
 var Dashboard = require('../components/registration.jsx').Dashboard;
 var models = require('../models/business');
 var BusinessCollection = require('../models/business.js').BusinessCollection;
-var User= require('../parseUtilities').User;
+var User = require('../parseUtilities').User;
 var AppetizerCollection = require('../models/business.js').AppetizerCollection;
 var Appetizer = require('../models/business.js').Appetizer;
 var moment = require('moment');
 
-
-
-
 var AppetizerFormList = React.createClass({displayName: "AppetizerFormList",
-  getInitialState: function(){
+  getInitialState: function() {
 
     return {
       appetizer: this.props.appetizer,
     };
   },
 
-  componentWillReceiveProps: function(newProps){
+  componentWillReceiveProps: function(newProps) {
     this.setState(newProps.appetizer);
     // this.setState(id, this.props.speical.cid)
   },
 
-  handleInputChange: function(e){
+  handleInputChange: function(e) {
     var target = e.target;
     var newState = {};
     newState[target.name] = target.value;
@@ -36,16 +33,16 @@ var AppetizerFormList = React.createClass({displayName: "AppetizerFormList",
     console.log(target);
   },
 
-  removeAppetizer: function(e){
+  removeAppetizer: function(e) {
     var appetizer = this.state.appetizer;
     this.props.removeAppetizer(appetizer)
   },
 
-  render: function(){
+  render: function() {
     var appetizer = this.state.appetizer;
     // console.log(special.get('expirydate'))
-    return(
-      React.createElement("div", {className: "appetizers"}, 
+    return (
+      React.createElement("div", {className: "menu-forms appetizers"}, 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "name"}, "Name"), 
           React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "name", value: appetizer.get('name'), type: "text", id: "name", placeholder: "dish name"})
@@ -58,7 +55,7 @@ var AppetizerFormList = React.createClass({displayName: "AppetizerFormList",
           React.createElement("label", {htmlFor: "price"}, "Price"), 
           React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "price", value: appetizer.get('price'), type: "text", id: "price", placeholder: "dish price"})
         ), 
-        React.createElement("button", {onClick: this.removeAppetizer, type: "button", className: "btn btn-danger pull-right"}, "Delete"), 
+        React.createElement("button", {onClick: this.removeAppetizer, type: "button", className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"}, "Delete"), 
         React.createElement("div", null
         )
       )
@@ -67,56 +64,56 @@ var AppetizerFormList = React.createClass({displayName: "AppetizerFormList",
 });
 
 var AppetizerForm = React.createClass({displayName: "AppetizerForm",
-  getInitialState: function(){
+  getInitialState: function() {
     return this.props.business.toJSON();
   },
 
-  componentWillReceiveProps: function(newProps){
+  componentWillReceiveProps: function(newProps) {
     this.setState(newProps.business.toJSON());
   },
 
-  handleInputChange: function(e){
+  handleInputChange: function(e) {
     var target = e.target;
     var newState = {};
-    newState[target.name]  = target.value;
+    newState[target.name] = target.value;
     this.setState(newState);
   },
 
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveAppetizer(this.state);
-},
+  handleSubmit: function(e) {
+    e.preventDefault();
+    // console.log('business', this.state);
+    this.props.saveAppetizer(this.state);
+  },
 
-removeAppetizer: function(appetizer){
+  removeAppetizer: function(appetizer) {
     this.props.removeAppetizer(appetizer);
-},
+  },
 
- render: function(){
-   var self = this;
-   var business= self.props.business;
-   var appetizerFormset = business.get('appetizer').map(function(appetizerItem){
-    //  console.log('get specials', business.get('specials'));
-     return (
-       React.createElement("div", {key: appetizerItem.cid}, 
+  render: function() {
+    var self = this;
+    var business = self.props.business;
+    var appetizerFormset = business.get('appetizer').map(function(appetizerItem) {
+      //  console.log('get specials', business.get('specials'));
+      return (
+        React.createElement("div", {key: appetizerItem.cid}, 
          React.createElement(AppetizerFormList, {appetizer: appetizerItem, removeAppetizer: self.removeAppetizer})
        )
-     )
-   });
-   return (
-     React.createElement("div", {className: "col-md-4"}, 
+      )
+    });
+    return (
+      React.createElement("div", {className: "menu-panels col-md-4"}, 
        React.createElement("form", {onSubmit: this.handleSubmit}, 
          React.createElement("h3", null, "Appetizers"), 
          React.createElement("div", {className: "form-inLine"}, 
            appetizerFormset, 
-           React.createElement("button", {type: "button", onClick: this.props.addAppetizer, className: "btn btn-primary"}, "Add Another")
+           React.createElement("button", {type: "button", onClick: this.props.addAppetizer, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "Add Another")
          ), 
          React.createElement("br", null), 
-         React.createElement("button", {type: "submit", className: "btn btn-success"}, "Save Appetizers")
+        React.createElement("button", {onClick: this.handleSubmit, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "Save Appetizer")
        )
      )
-   );
- }
+    );
+  }
 });
 
 module.exports = {
@@ -129,7 +126,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
-var setupParse= require('../parseUtilities').setupParse;
+var setupParse = require('../parseUtilities').setupParse;
 var Modal = require('react-modal');
 require('../router').router;
 
@@ -137,7 +134,7 @@ require('../router').router;
 
 var SignUpComponent = React.createClass({displayName: "SignUpComponent",
 
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       username: '',
       password: '',
@@ -146,27 +143,33 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
     };
   },
 
-  handleEmail: function(e){
+  handleEmail: function(e) {
     // e.preventDefault();
     var email = e.target.value;
     // console.log(email);
-    this.setState({email: email});
+    this.setState({
+      email: email
+    });
   },
 
-  handlePassword: function(e){
+  handlePassword: function(e) {
     // e.preventDefault();
     var password = e.target.value;
-    this.setState({password: password})
+    this.setState({
+      password: password
+    })
   },
 
-  handlePhone: function(e){
+  handlePhone: function(e) {
     // e.preventDefault();
     var phone = e.target.value;
-      // console.log(phone);
-    this.setState({phone: phone})
+    // console.log(phone);
+    this.setState({
+      phone: phone
+    })
   },
 
-  handleSignUp: function(e){
+  handleSignUp: function(e) {
     e.preventDefault();
     var signupData = {
       email: this.state.email,
@@ -176,28 +179,40 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
     // console.log(signupData);
     this.props.handleSignUp(signupData);
 
-    this.setState({email: '', phone: '', password: ''});
+    this.setState({
+      email: '',
+      phone: '',
+      password: ''
+    });
   },
 
-  handleLogMeIn: function(e){
+  handleLogMeIn: function(e) {
     e.preventDefault();
     this.props.handleLogIn(e);
     console.log(this.state);
   },
 
   openModal: function() {
-    this.setState({modalIsOpen: true});
-    this.setState({clickNext: React.createElement("i", {className: "material-icons"}, "check_circle")});
+    this.setState({
+      modalIsOpen: true
+    });
+    this.setState({
+      clickNext: React.createElement("i", {className: "material-icons"}, "check_circle")
+    });
   },
 
   closeModal: function() {
-    this.setState({modalIsOpen: false});
-    this.setState({yes:React.createElement("i", {className: "material-icons"}, "thumb_up")})
+    this.setState({
+      modalIsOpen: false
+    });
+    this.setState({
+      yes: React.createElement("i", {className: "material-icons"}, "thumb_up")
+    })
   },
 
-  render: function(){
+  render: function() {
     return (
-          React.createElement("div", {className: "signup-container container-fluid"}, 
+      React.createElement("div", {className: "signup-container container-fluid"}, 
             React.createElement("div", {className: "signup-col  mdl-shadow--2dp col-md-3 col-md-offset-5"}, 
               React.createElement("h2", {className: "signup-header"}, "In The Mood"), 
               React.createElement("h4", {className: "signup-subheader"}, "@ Downtown Greenville"), 
@@ -236,37 +251,41 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
               )
             )
           )
-  );
+    );
   }
 });
 
 var AuthenticationContainer = React.createClass({displayName: "AuthenticationContainer",
 
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       username: ''
     };
   },
 
-  handleSignUp: function(signupData){
+  handleSignUp: function(signupData) {
     var self = this;
-    var data={
+    var data = {
       'username': signupData.email,
       'password': signupData.password,
       'phone': signupData.phone
     };
-    $.post('https://matias-recipe.herokuapp.com/users', data).then(function(response){
-        self.props.router.navigate('/login/', {trigger: true})
+    $.post('https://matias-recipe.herokuapp.com/users', data).then(function(response) {
+      self.props.router.navigate('/login/', {
+        trigger: true
+      })
       console.warn(response);
     });
   },
 
-  handleLogIn: function(){
+  handleLogIn: function() {
     var self = this;
-    self.props.router.navigate('/login/', {trigger: true});
+    self.props.router.navigate('/login/', {
+      trigger: true
+    });
   },
 
-  render: function(){
+  render: function() {
     return (
       React.createElement("div", null, 
         React.createElement(SignUpComponent, {handleSignUp: this.handleSignUp, handleLogIn: this.handleLogIn})
@@ -316,6 +335,8 @@ var Dashboard = React.createClass({displayName: "Dashboard",
 
   render: function(){
     var business = this.props.business;
+    var objectId = this.props.business.get('objectId');
+    var link = '#restaurants/' + objectId + '/';
     var geolocation = business.get('lat') + ',' + business.get('long');
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
@@ -330,9 +351,9 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement("li", null, business.get('is_closed')), 
             React.createElement("li", null, business.get('phone'))
           ), 
+          React.createElement("a", {href: link}, React.createElement("button", {className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "View Page")), 
           React.createElement("div", null, 
-            React.createElement("span", null, "Edit your information"), 
-            React.createElement("a", {href: "#registration/"}, React.createElement("i", {className: "material-icons"}, "edit"))
+            React.createElement("a", {href: "#registration/"}, React.createElement("button", {className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "Edit Info"))
           )
         ), 
         React.createElement("div", {className: "col-md-3 map"}, 
@@ -422,7 +443,7 @@ var SpecialsFormList = React.createClass({displayName: "SpecialsFormList",
             React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "expirydate", value: special.get('expirydate'), type: "date", id: "expiry-date", placeholder: "special of the day"})
           ), 
           React.createElement("div", null, 
-            React.createElement("button", {onClick: this.removeSpecial, type: "button", className: "btn btn-danger pull-right"}, "Delete")
+            React.createElement("button", {className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right", onClick: this.removeSpecial, type: "button"}, "Delete")
           )
       )
     );
@@ -471,8 +492,8 @@ removeSpecial: function(special){
          React.createElement("div", {className: "col-md-12 form-inLine"}, 
            specialsFormset
          ), 
-         React.createElement("button", {type: "button", onClick: self.props.addSpecial, className: "btn btn-success"}, "Add Another"), 
-         React.createElement("button", {color: "primary", type: "submit", className: "btn btn-success"}, "Save Specials")
+         React.createElement("button", {className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect", type: "button", onClick: self.props.addSpecial}, "Add Another"), 
+         React.createElement("button", {className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect", color: "primary", type: "submit"}, "Save Specials")
        )
      )
    );
@@ -633,25 +654,22 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
     return(
       React.createElement(Template, null, 
         React.createElement("div", {className: "row"}, 
-        React.createElement("div", {className: "dashboard-windows"}, 
-          React.createElement("h1", {className: "well"}, " ", businessName, " Dashboard"), 
-          React.createElement(Dashboard, {business: this.state.business}), 
-          React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.openModal}, "Add Specials & Menu"), 
-          React.createElement(Modal, {isOpen: this.state.modalIsOpen}, 
-            React.createElement("div", {className: "specials-pane"}, 
-              React.createElement("button", {type: "button", className: "btn btn-warning", onClick: this.closeModal}, "Close"), 
-              React.createElement("h2", null, "Specials"), 
-                React.createElement(SpecialsForm, {business: this.state.business, saveSpecial: this.saveSpecial, specials: this.state.business.get('specials'), removeSpecial: this.removeSpecial, addSpecial: this.addSpecial})
-            ), 
-            React.createElement("div", {className: "menu-pane"}, 
-              React.createElement("h2", null, "Menu"), 
-              React.createElement("div", {className: "menu-creator"}, 
-                React.createElement(AppetizerForm, {business: this.state.business, saveAppetizer: this.saveAppetizer, appetizer: this.state.business.get('appetizer'), removeAppetizer: this.removeAppetizer, addAppetizer: this.addAppetizer}), 
-                React.createElement(MainCourseForm, {business: this.state.business, saveMainCourse: this.saveMainCourse, maincourse: this.state.business.get('maincourse'), removeMainCourse: this.removeMainCourse, addMainCourse: this.addMainCourse}), 
-                React.createElement(DessertForm, {business: this.state.business, saveDessert: this.saveDessert, dessert: this.state.business.get('dessert'), removeDessert: this.removeDessert, addDessert: this.addDessert})
+          React.createElement("div", {className: "col-md-12 col-sm-12 col-xs-11"}, 
+            React.createElement("div", {className: "dashboard-windows col-md-12 col-sm-12 col-xs-11"}, 
+              React.createElement("h1", {className: "well"}, " ", businessName, " Dashboard"), 
+              React.createElement(Dashboard, {business: this.state.business}), 
+                React.createElement("div", {className: "specials-pane"}, 
+                  React.createElement(SpecialsForm, {business: this.state.business, saveSpecial: this.saveSpecial, specials: this.state.business.get('specials'), removeSpecial: this.removeSpecial, addSpecial: this.addSpecial})
+                ), 
+                React.createElement("div", {className: "menu-pane"}, 
+                  React.createElement("h2", null, "Menu"), 
+                  React.createElement("div", {className: "menu-creator"}, 
+                    React.createElement(AppetizerForm, {className: "menu-creator-panels", business: this.state.business, saveAppetizer: this.saveAppetizer, appetizer: this.state.business.get('appetizer'), removeAppetizer: this.removeAppetizer, addAppetizer: this.addAppetizer}), 
+                    React.createElement(MainCourseForm, {className: "menu-creator-panels", business: this.state.business, saveMainCourse: this.saveMainCourse, maincourse: this.state.business.get('maincourse'), removeMainCourse: this.removeMainCourse, addMainCourse: this.addMainCourse}), 
+                    React.createElement(DessertForm, {className: "menu-creator-panels", business: this.state.business, saveDessert: this.saveDessert, dessert: this.state.business.get('dessert'), removeDessert: this.removeDessert, addDessert: this.addDessert})
+                  )
+                )
               )
-            )
-            )
         )
       )
     )
@@ -671,23 +689,22 @@ var RegistrationContainer = require('../components/registration.jsx').Registrati
 var Dashboard = require('../components/registration.jsx').Dashboard;
 var models = require('../models/business');
 var BusinessCollection = require('../models/business.js').BusinessCollection;
-var User= require('../parseUtilities').User;
-
+var User = require('../parseUtilities').User;
 
 var DessertFormList = React.createClass({displayName: "DessertFormList",
-  getInitialState: function(){
+  getInitialState: function() {
 
     return {
       dessert: this.props.dessert,
     };
   },
 
-  componentWillReceiveProps: function(newProps){
+  componentWillReceiveProps: function(newProps) {
     this.setState(newProps.dessert);
     // this.setState(id, this.props.speical.cid)
   },
 
-  handleInputChange: function(e){
+  handleInputChange: function(e) {
     var target = e.target;
     var newState = {};
     newState[target.name] = target.value;
@@ -696,16 +713,16 @@ var DessertFormList = React.createClass({displayName: "DessertFormList",
     console.log(target);
   },
 
-  removeDessert: function(e){
+  removeDessert: function(e) {
     var dessert = this.state.dessert;
     this.props.removeDessert(dessert)
   },
 
-  render: function(){
+  render: function() {
     var dessert = this.state.dessert;
     // console.log(special.get('expirydate'))
-    return(
-      React.createElement("div", {className: "desserts"}, 
+    return (
+      React.createElement("div", {className: "menu-forms desserts"}, 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "name"}, "Name"), 
           React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: dessert.get('name'), type: "text", id: "name", placeholder: "dish name"})
@@ -719,7 +736,7 @@ var DessertFormList = React.createClass({displayName: "DessertFormList",
           React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: dessert.get('price'), type: "text", id: "price", placeholder: "dish price"})
         ), 
         React.createElement("div", null, 
-          React.createElement("button", {onClick: this.removeDessert, type: "button", className: "btn btn-danger pull-right"}, "Delete")
+          React.createElement("button", {onClick: this.removeDessert, type: "button", className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"}, "Delete")
         )
       )
     );
@@ -727,56 +744,56 @@ var DessertFormList = React.createClass({displayName: "DessertFormList",
 });
 
 var DessertForm = React.createClass({displayName: "DessertForm",
-  getInitialState: function(){
+  getInitialState: function() {
     return this.props.business.toJSON();
   },
 
-  componentWillReceiveProps: function(newProps){
+  componentWillReceiveProps: function(newProps) {
     this.setState(newProps.business.toJSON());
   },
 
-  handleInputChange: function(e){
+  handleInputChange: function(e) {
     var target = e.target;
     var newState = {};
-    newState[target.name]  = target.value;
+    newState[target.name] = target.value;
     this.setState(newState);
   },
 
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveDessert(this.state);
-},
+  handleSubmit: function(e) {
+    e.preventDefault();
+    // console.log('business', this.state);
+    this.props.saveDessert(this.state);
+  },
 
-removeDessert: function(dessert){
+  removeDessert: function(dessert) {
     this.props.removeDessert(dessert);
-},
+  },
 
- render: function(){
-   var self = this;
-   var business= self.props.business;
-   var dessertFormset = business.get('dessert').map(function(dessertItem){
-    //  console.log('get specials', business.get('specials'));
-     return (
-       React.createElement("div", {key: dessertItem.cid}, 
+  render: function() {
+    var self = this;
+    var business = self.props.business;
+    var dessertFormset = business.get('dessert').map(function(dessertItem) {
+      //  console.log('get specials', business.get('specials'));
+      return (
+        React.createElement("div", {key: dessertItem.cid}, 
          React.createElement(DessertFormList, {dessert: dessertItem, removeDessert: self.removeDessert})
        )
-     )
-   });
-   return (
-     React.createElement("div", {className: "dashboard-dessert col-md-4"}, 
+      )
+    });
+    return (
+      React.createElement("div", {className: "menu-panels dashboard-dessert col-md-4"}, 
        React.createElement("form", {onSubmit: this.handleSubmit}, 
          React.createElement("h3", null, "Desserts"), 
          React.createElement("div", {className: "form-inLine"}, 
            dessertFormset, 
-          React.createElement("button", {type: "button", onClick: this.props.addDessert, className: "btn btn-primary"}, "Add Another")
+          React.createElement("button", {type: "button", onClick: this.props.addDessert, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "Add Another")
          ), 
          React.createElement("br", null), 
-        React.createElement("button", {type: "submit", className: "btn btn-success"}, "Save Dessert")
+        React.createElement("button", {onClick: this.handleSubmit, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "Save Dessert")
        )
      )
-   );
- }
+    );
+  }
 });
 
 module.exports = {
@@ -1017,11 +1034,10 @@ var React = require('react');
 var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
-var setupParse= require('../parseUtilities').setupParse;
+var setupParse = require('../parseUtilities').setupParse;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
-var User= require('../parseUtilities').User;
+var User = require('../parseUtilities').User;
 var LogInTemplate = require('../templates/login-template.jsx');
-
 
 var Modal = require('react-modal');
 require('../router').router;
@@ -1029,36 +1045,43 @@ require('../router').router;
 // console.log('hi');
 
 var LoginComponent = React.createClass({displayName: "LoginComponent",
-  getInitialState: function(){
-    return{
+  getInitialState: function() {
+    return {
       username: '',
       password: '',
     };
   },
 
-  handleEmail: function(e){
+  handleEmail: function(e) {
     var email = e.target.value;
-    this.setState({email: email});
+    this.setState({
+      email: email
+    });
   },
 
-  handlePassword: function(e){
+  handlePassword: function(e) {
     var password = e.target.value;
-    this.setState({password: password});
+    this.setState({
+      password: password
+    });
   },
 
-  handleLogMeIn: function(e){
+  handleLogMeIn: function(e) {
     e.preventDefault();
     var logMeIn = {
       email: this.state.email,
       password: this.state.password,
     };
     this.props.handleLogMeIn(logMeIn);
-    this.setState({email: '', password: ''});
+    this.setState({
+      email: '',
+      password: ''
+    });
   },
 
-  render: function(){
+  render: function() {
     return (
-          React.createElement("div", {className: "login mdl-shadow--2dp col-md-3 col-md-offset-5"}, 
+      React.createElement("div", {className: "login mdl-shadow--2dp col-md-3 col-md-offset-5"}, 
             React.createElement("h2", {className: "login-header"}, "In The Mood"), 
             React.createElement("h2", {className: "login-subheader"}, "Please Login"), 
             React.createElement("form", {className: "col-md-12", onSubmit: this.handleLogMeIn, id: "login"}, 
@@ -1077,53 +1100,60 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
               )
             )
           )
-  );
+    );
   }
 });
 
 var LogInContainer = React.createClass({displayName: "LogInContainer",
 
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       username: ''
     };
   },
 
-handleLogMeIn: function(logMeIn){
-  var self = this;
-  var businessCollection = new BusinessCollection();
-  var username= logMeIn.email;
-  // console.warn(username);
-  var password= logMeIn.password;
-  var callbackObj =
-  this.setState({username: logMeIn.username});
-
-  $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response){
-    console.log('response', response)
-    var objectId = response.objectId;
-    console.log(objectId);
-    var JSONdata= JSON.stringify(response);
-    // localStorage.setItem('local storage user', response);
-    localStorage.setItem('username', response.username);
-    // localStorage.setItem('token', response.sessionToken);
-    // localStorage.setItem('objectID', response.objectId);
-    localStorage.setItem('phone',response.phone);
-    localStorage.setItem('user', JSONdata);
-
-    var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
-      if(businessCollection.length >= 1){
-        self.props.router.navigate('/dashboard/', {trigger: true})
-      } else if (!JSON.parse(localStorage.getItem('user')).phone){
-        self.props.router.navigate('/restaurants/', {trigger: true})
-      } else {
-        self.props.router.navigate('/registration/', {trigger: true})
-      }
+  handleLogMeIn: function(logMeIn) {
+    var self = this;
+    var businessCollection = new BusinessCollection();
+    var username = logMeIn.email;
+    // console.warn(username);
+    var password = logMeIn.password;
+    var callbackObj =
+      this.setState({
+        username: logMeIn.username
       });
-  });
-},
 
+    $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
+      console.log('response', response)
+      var objectId = response.objectId;
+      console.log(objectId);
+      var JSONdata = JSON.stringify(response);
+      // localStorage.setItem('local storage user', response);
+      localStorage.setItem('username', response.username);
+      // localStorage.setItem('token', response.sessionToken);
+      // localStorage.setItem('objectID', response.objectId);
+      localStorage.setItem('phone', response.phone);
+      localStorage.setItem('user', JSONdata);
 
-  render: function(){
+      var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
+        if (businessCollection.length >= 1) {
+          self.props.router.navigate('/dashboard/', {
+            trigger: true
+          })
+        } else if (!JSON.parse(localStorage.getItem('user')).phone) {
+          self.props.router.navigate('/restaurants/', {
+            trigger: true
+          })
+        } else {
+          self.props.router.navigate('/registration/', {
+            trigger: true
+          })
+        }
+      });
+    });
+  },
+
+  render: function() {
 
     return (
       React.createElement("div", {className: "login-container container-fluid"}, 
@@ -1185,7 +1215,7 @@ var MainCourseFormList = React.createClass({displayName: "MainCourseFormList",
     var maincourse = this.state.maincourse;
     // console.log(special.get('expirydate'))
     return(
-      React.createElement("div", {className: "maincourse"}, 
+      React.createElement("div", {className: "menu-forms maincourse"}, 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "name"}, "Name"), 
           React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: maincourse.get('name'), type: "text", id: "name", placeholder: "dish name"})
@@ -1199,7 +1229,7 @@ var MainCourseFormList = React.createClass({displayName: "MainCourseFormList",
           React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: maincourse.get('price'), type: "text", id: "price", placeholder: "dish price"})
         ), 
         React.createElement("div", null, 
-          React.createElement("button", {onClick: this.removeMainCourse, type: "button", className: "btn btn-danger pull-right"}, "Delete")
+          React.createElement("button", {onClick: this.removeMainCourse, type: "button", className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"}, "Delete")
         )
       )
     );
@@ -1244,15 +1274,15 @@ removeMainCourse: function(maincourse){
      )
    });
    return (
-     React.createElement("div", {className: "col-md-4"}, 
+     React.createElement("div", {className: "menu-panels col-md-4"}, 
        React.createElement("form", {onSubmit: this.handleSubmit}, 
          React.createElement("h3", null, "Main Course"), 
          React.createElement("div", {className: "form-inLine"}, 
            mainCourseFormset, 
-          React.createElement("button", {type: "button", onClick: this.props.addMainCourse, className: "btn btn-primary"}, "Add Another")
+          React.createElement("button", {type: "button", onClick: this.props.addMainCourse, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "Add Another")
          ), 
          React.createElement("br", null), 
-        React.createElement("button", {type: "submit", className: "btn btn-success"}, "Save Main Course")
+        React.createElement("button", {onClick: this.handleSubmit, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, "Save Main Course")
        )
      )
    );
@@ -1271,164 +1301,149 @@ var models = require('../models/business.js');
 var ParseCollection = require('../models/business.js').ParseCollection;
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var YelpBusiness = require('../models/business.js').YelpBusiness;
-var User= require('../parseUtilities').User;
+var User = require('../parseUtilities').User;
 var FileModel = require('../models/uploads.js').File;
 var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
-var Dashboard= require('./dashboard.jsx').Dashboard;
+var Dashboard = require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
 var yelpBusiness = new YelpBusiness();
 require('../router').router;
 
-
-
-var RegistrationForm = React.createClass ({displayName: "RegistrationForm",
-  getInitialState: function(){
+var RegistrationForm = React.createClass({displayName: "RegistrationForm",
+  getInitialState: function() {
     return this.props.business.toJSON();
   },
 
-  componentWillReceiveProps: function(newProps){
+  componentWillReceiveProps: function(newProps) {
     this.setState(newProps.business.toJSON());
   },
 
-  handleInputChange: function(e){
+  handleInputChange: function(e) {
     e.preventDefault();
     var target = e.target;
     var newState = {};
-    newState[target.name]  = target.value;
+    newState[target.name] = target.value;
     this.setState(newState);
     // console.log(target.value);
   },
 
-  handlePicture: function(e){
+  handlePicture: function(e) {
     e.preventDefault();
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
-    this.setState({profilePic: attachedPicture});
+    this.setState({
+      profilePic: attachedPicture
+    });
+    // console.log(attachedPicture);
   },
 
-  handleMenu: function(e){
+  handleMenu: function(e) {
     e.preventDefault();
     var attachedMenu = e.target.files[0];
     this.props.uploadMenu(attachedMenu);
-    this.setState({menu: attachedMenu});
+    this.setState({
+      menu: attachedMenu
+    });
     console.log(attachedMenu);
   },
 
-  handleSubmit: function(e){
+  handleSubmit: function(e) {
     e.preventDefault();
     this.props.saveBusiness(this.state);
     // console.log('SUBMIT', this.state);
   },
-  render: function(){
+  render: function() {
     return (
-      React.createElement("div", {className: "registration-form col-md-6 col-md-offset-3"}, 
-        React.createElement("div", {className: "form-header col-md-12"}, 
-          React.createElement("img", {src: this.state.image_url}), 
-          React.createElement("h2", null, this.state.name), 
-          React.createElement("h4", null, this.state.mainCategory), 
-          React.createElement("h5", null, this.state.phone)
-        ), 
-        React.createElement("div", {className: "form-container"}, 
-          React.createElement("h4", null, "Registration Form"), 
-          React.createElement("p", null, "Verify Your Information"), 
-            React.createElement("form", {onSubmit: this.handleSubmit, id: "registration-form", action: "https://matias-recipe.herokuapp.com/classes/dist/", method: "POST", encType: "multipart/form-data"}, 
-              React.createElement("div", {className: "form-group"}, 
-                React.createElement("label", {htmlFor: "name"}, "Name"), 
-                React.createElement("input", {onChange: this.handleInputChange, name: "name", value: this.state.name, type: "text", className: "form-control", id: "business-name", placeholder: "name"})
-              ), 
-              React.createElement("div", {className: "form-group categories"}, 
-                React.createElement("label", {htmlFor: "categores"}, "Categories"), 
-                React.createElement("input", {onChange: this.handleInputChange, name: "subCategory1", value: this.state.mainCategory, type: "text", className: "form-control", id: "business-cat", placeholder: "Main Category"}), 
-                React.createElement("input", {onChange: this.handleInputChange, name: "subCategory2", value: this.state.subCategory, type: "text", className: "form-control", id: "business-cat", placeholder: "Sub Category"})
-              ), 
-              React.createElement("div", {className: "form-group"}, 
-                React.createElement("label", {htmlFor: "name"}, "Description"), 
-                React.createElement("textarea", {onChange: this.handleInputChange, name: "description", value: this.state.description, type: "text", className: "form-control", id: "business-name", placeholder: "Enter a short business description"})
-              ), 
-              React.createElement("h4", null, "Images Upload"), 
-              React.createElement("div", {className: "form-profile-pic"}, 
-                React.createElement("div", null, React.createElement("img", {src: this.state.image_upload, width: "300"})), 
-                React.createElement("input", {type: "text", id: "uploaded_picture"}), React.createElement("br", null), 
-                React.createElement("input", {onChange: this.handlePicture, type: "file", id: "profile-pic"})
-              ), 
-              React.createElement("div", {className: "form-profile-pic"}, 
-                React.createElement("div", null, React.createElement("img", {src: this.state.menu_upload, width: "300"})), 
-                React.createElement("input", {type: "text", id: "uploaded_menu"}), React.createElement("br", null), 
-                React.createElement("input", {onChange: this.handleMenu, type: "file", id: "menu"})
-              ), 
-              React.createElement("div", {className: "form-group"}, 
-                React.createElement("label", {htmlFor: "name"}, "Menu"), 
-                React.createElement("input", {onChange: this.handleInputChange, name: "menuUrl", value: this.state.menuUrl, type: "url", className: "form-control", id: "business-phone", placeholder: "Menu Address"})
-              ), 
-              React.createElement("div", {className: "form-group"}, 
-                React.createElement("label", {htmlFor: "name"}, "Phone"), 
-                React.createElement("input", {onChange: this.handleInputChange, name: "phone", pattern: "\\d{3}[\\-]\\d{3}[\\-]\\d{4}", value: this.state.phone, type: "text", className: "form-control", id: "business-phone", placeholder: "864-111-2233"})
-              ), 
-              React.createElement("div", {className: "address-form"}, 
-                React.createElement("div", {className: "form-group"}, 
-                  React.createElement("label", {htmlFor: "name"}, "Address"), 
-                  React.createElement("input", {onChange: this.handleInputChange, name: "address", value: this.state.address, type: "text", className: "form-control", id: "business-address", placeholder: "Street Address"})
-                ), 
-                React.createElement("div", {className: "form-group"}, 
-                  React.createElement("label", {htmlFor: "name"}), 
-                  React.createElement("input", {onChange: this.handleInputChange, name: "city", value: this.state.city, type: "text", className: "form-control inline", id: "business-city", placeholder: "City"})
-                ), 
-                React.createElement("div", {className: "form-group"}, 
-                  React.createElement("label", {htmlFor: "name"}), 
-                  React.createElement("input", {onChange: this.handleInputChange, name: "state", value: this.state.state, type: "text", className: "form-control inline", id: "business-state", placeholder: "State"})
-                ), 
-                React.createElement("div", {className: "form-group"}, 
-                  React.createElement("label", {htmlFor: "name"}), 
-                  React.createElement("input", {onChange: this.handleInputChange, name: "zip", value: this.state.zip, type: "text", className: "form-control inline", id: "business-zip", placeholder: "Zip Code"})
-                )
-              ), 
-              React.createElement("div", {className: "additional-registration-info"}, 
-                React.createElement("h4", null, "Additional Registration Information From Yelp"), 
-                React.createElement("p", null, "We will use the following to build your profile"), 
-                React.createElement("ul", null, 
-                  React.createElement("li", null, "Rating"), 
-                  React.createElement("li", null, "Review Avatar"), 
-                  React.createElement("li", null, "Review Snippet"), 
-                  React.createElement("li", null, "Coordinates (to generate map)"), 
-                  React.createElement("li", null, "Open or Close Data")
-                )
-              ), 
-              React.createElement("div", {className: "button-pane"}, 
-                React.createElement("button", {type: "submit", className: "btn btn-default"}, "Save Profile")
-              )
+      React.createElement("div", {className: "registration-form demo-card-wide mdl-card mdl-shadow--2dp col-md-5 col-md-offset-4"}, 
+        React.createElement("h3", null, "In The Mood"), 
+        React.createElement("h4", null, "Registration Form"), 
+        React.createElement("p", null, "Verify Your Information"), 
+        React.createElement("form", {onSubmit: this.handleSubmit, id: "registration-form", action: "https://matias-recipe.herokuapp.com/classes/dist/", method: "POST", encType: "multipart/form-data"}, 
+          React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {onChange: this.handleInputChange, name: "name", value: this.state.name, type: "text", className: "mdl-textfield__input", id: "business-name", placeholder: "Restaurant Name"})
+          ), 
+          React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label categories"}, 
+            React.createElement("input", {onChange: this.handleInputChange, name: "subCategory1", value: this.state.mainCategory, type: "text", className: "mdl-textfield__input", id: "business-cat", placeholder: "Main Category"}), 
+            React.createElement("input", {onChange: this.handleInputChange, name: "subCategory2", value: this.state.subCategory, type: "text", className: "mdl-textfield__input", id: "business-cat", placeholder: "Sub Category"})
+          ), 
+          React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("textarea", {onChange: this.handleInputChange, name: "description", value: this.state.description, type: "text", className: "mdl-textfield__input", id: "business-name", placeholder: "Enter a short business description"})
+          ), 
+          React.createElement("h4", null, "Images Upload"), 
+          React.createElement("div", {className: "form-profile-pic"}, 
+            React.createElement("div", null, React.createElement("img", {src: this.state.image_upload, width: "300"})), 
+            React.createElement("input", {type: "text", id: "uploaded_picture", placeholder: "Header Picture Title"}), React.createElement("br", null), 
+            React.createElement("input", {className: "mdl-button mdl-js-button mdl-button--raised", onChange: this.handlePicture, type: "file", id: "profile-pic"})
+          ), 
+          React.createElement("div", {className: "form-profile-pic"}, 
+            React.createElement("div", null, React.createElement("img", {src: this.state.menu_upload, width: "300"})), 
+            React.createElement("input", {type: "text", id: "uploaded_menu", placeholder: "About Picture Title"}), React.createElement("br", null), 
+            React.createElement("input", {className: "mdl-button mdl-js-button mdl-button--raised", onChange: this.handleMenu, type: "file", id: "menu"})
+          ), 
+          React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {onChange: this.handleInputChange, name: "phone", pattern: "\\d{3}[\\-]\\d{3}[\\-]\\d{4}", value: this.state.phone, type: "text", className: "mdl-textfield__input", id: "business-phone", placeholder: "Your buisness phone number. 864-111-2233"})
+          ), 
+          React.createElement("div", {className: "address-form"}, 
+            React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {onChange: this.handleInputChange, name: "address", value: this.state.address, type: "text", className: "mdl-textfield__input", id: "business-address", placeholder: "Street Address"})
+            ), 
+            React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {onChange: this.handleInputChange, name: "city", value: this.state.city, type: "text", className: "mdl-textfield__input inline", id: "business-city", placeholder: "City"})
+            ), 
+            React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {onChange: this.handleInputChange, name: "state", value: this.state.state, type: "text", className: "mdl-textfield__input inline", id: "business-state", placeholder: "State"})
+            ), 
+            React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {onChange: this.handleInputChange, name: "zip", value: this.state.zip, type: "text", className: "mdl-textfield__input inline", id: "business-zip", placeholder: "Zip Code"})
             )
+          ), 
+          React.createElement("div", {className: "additional-registration-info"}, 
+            React.createElement("h4", null, "Additional Registration Information From Yelp"), 
+            React.createElement("p", null, "We will use the following to build your profile"), 
+            React.createElement("ul", null, 
+              React.createElement("li", null, "Rating"), 
+              React.createElement("li", null, "Review Avatar"), 
+              React.createElement("li", null, "Review Snippet"), 
+              React.createElement("li", null, "Coordinates (to generate map)"), 
+              React.createElement("li", null, "Open or Close Data")
+            )
+          ), 
+          React.createElement("div", {className: "button-pane"}, 
+            React.createElement("button", {type: "submit", className: "btn btn-default"}, "Save Profile")
           )
+        )
       )
     )
   }
 });
 
-var RegistrationContainer = React.createClass ({displayName: "RegistrationContainer",
-  getInitialState: function(){
+var RegistrationContainer = React.createClass({displayName: "RegistrationContainer",
+  getInitialState: function() {
     return {
       business: new models.Business(),
     };
   },
 
-  componentWillMount: function(){
+  componentWillMount: function() {
     var self = this;
     var businessCollection = new BusinessCollection();
-    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response){
-      if(businessCollection.length >= 1){
-        self.setState({'business': businessCollection.first()});
+    businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
+      if (businessCollection.length >= 1) {
+        self.setState({
+          'business': businessCollection.first()
+        });
         // console.log(businessCollection.parseWhere());
       } else {
-        yelpBusiness.fetch().then(function(response){
+        yelpBusiness.fetch().then(function(response) {
           console.log('categories', response.businesses[0].categories[0]);
           var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0][0] : "no main category from Yelp";
           var subcategory = response.businesses[0].categories[1] ? response.businesses[0].categories[1][0] : "no subcategory from Yelp";
-          var open= response.businesses[0].is_closed ? response.businesses[0].is_closed = false: "currently open";
+          var open = response.businesses[0].is_closed ? response.businesses[0].is_closed = false : "currently open";
           console.log('open:', open);
           var business = new models.Business();
           var data = response.businesses[0];
           // console.log(data.categories[0][1]);
-          business.set(
-            {
+          business.set({
               name: data.name,
               id: data.id,
               image_url: data.image_url,
@@ -1441,36 +1456,39 @@ var RegistrationContainer = React.createClass ({displayName: "RegistrationContai
               zip: data.location.postal_code,
               mainCategory: mainCategory,
               subCategory: subcategory,
-              menuUrl: 'https://www.yelp.com/menu/'+data.id,
+              menuUrl: 'https://www.yelp.com/menu/' + data.id,
               lat: data.location.coordinate.latitude,
               long: data.location.coordinate.longitude,
               snippet_text: data.snippet_text,
               snippet_image_url: data.snippet_image_url,
               url: data.url,
-            }
-          ),
-          self.setState({business: business});
+            }),
+            self.setState({
+              business: business
+            });
         });
       }
     });
   },
 
-  componentWillReceiveProps: function(){
+  componentWillReceiveProps: function() {
     this.getBusiness();
   },
-  getBusiness: function(){
+  getBusiness: function() {
     var business = this.state.business,
-    businessId = this.props.businessId;
-    if(!businessId){
+      businessId = this.props.businessId;
+    if (!businessId) {
       return;
     }
     business.set('objectId', businessId);
-    business.fetch().then(()=> {
-      this.setState({business: business});
+    business.fetch().then(() => {
+      this.setState({
+        business: business
+      });
     });
   },
 
-  saveBusiness: function(businessData){
+  saveBusiness: function(businessData) {
     var self = this;
     var business = this.state.business;
     // console.log(business.get('lat'));
@@ -1480,44 +1498,52 @@ var RegistrationContainer = React.createClass ({displayName: "RegistrationContai
     business.set(businessData);
     business.set('image_upload', localStorage.getItem('image_upload'));
     business.set('menu_upload', localStorage.getItem('menu_upload'));
-    business.set('owner', {__type: "Pointer", className: "_User", objectId: currentUser});
-    business.save().then(function(){
-        self.props.router.navigate('dashboard/', {trigger: true})
+    business.set('owner', {
+      __type: "Pointer",
+      className: "_User",
+      objectId: currentUser
+    });
+    business.save().then(function() {
+      self.props.router.navigate('dashboard/', {
+        trigger: true
+      })
     });
     console.log('save', this.state);
   },
 
-  uploadPicture: function(picture){
+  uploadPicture: function(picture) {
     var self = this;
     var file = new FileModel();
     var business = this.state.business;
     file.set('name', picture.name);
     file.set('data', picture);
-    file.save().done(function(response){
+    file.save().done(function(response) {
       localStorage.setItem('image_upload', response.url);
-      self.setState({business: business});
+      self.setState({
+        business: business
+      });
     });
   },
 
-  uploadMenu: function(menu){
+  uploadMenu: function(menu) {
     var file = new FileModel();
     // var business = this.state.business;
     file.set('name', menu.name);
     file.set('data', menu);
-    file.save().done(function(response){
+    file.save().done(function(response) {
       localStorage.setItem('menu_upload', response.url);
       // business.set('menu_upload', response.url);
     });
   },
 
-render: function (){
-  // console.log('container state',this.state);
-  return (
-    React.createElement("div", null, 
+  render: function() {
+    // console.log('container state',this.state);
+    return (
+      React.createElement("div", null, 
       React.createElement(RegistrationForm, {business: this.state.business, saveBusiness: this.saveBusiness, uploadPicture: this.uploadPicture, uploadMenu: this.uploadMenu})
     )
-  )
-}
+    )
+  }
 });
 
 module.exports = {
@@ -1531,8 +1557,8 @@ var Backbone = require('backbone');
 var $ = require('jquery');
 var models = require('../models/business');
 var Template = require('../templates/templates.jsx');
-var User= require('../parseUtilities').User;
-var Favorites= require('./favorites.jsx').FavoritesContainer;
+var User = require('../parseUtilities').User;
+var Favorites = require('./favorites.jsx').FavoritesContainer;
 require('backbone-react-component');
 var $ = require('jquery');
 var google = require('react-google-maps');
@@ -1546,11 +1572,9 @@ var router = require('../router').router;
 // var GoogleMaps = require('../models/business.js').GoogleMaps;
 // var googleMaps = new GoogleMaps();
 
-
-
 var SpecialsList = React.createClass({displayName: "SpecialsList",
-  render: function(){
-    var specialsListItems = this.props.specials.map(function(special){
+  render: function() {
+    var specialsListItems = this.props.specials.map(function(special) {
       return (
 
         React.createElement("tr", {key: special.cid, className: "detailview-menu-rows"}, 
@@ -1561,7 +1585,7 @@ var SpecialsList = React.createClass({displayName: "SpecialsList",
         )
       )
     });
-  // console.log('specialslistitems', specialsListItems);
+    // console.log('specialslistitems', specialsListItems);
     return (
       React.createElement("div", {className: "col-md-8 detailview-menu-list"}, 
 
@@ -1587,9 +1611,9 @@ var SpecialsList = React.createClass({displayName: "SpecialsList",
 });
 
 var MenuList = React.createClass({displayName: "MenuList",
-  render: function(){
+  render: function() {
 
-    var appetizersListItems = this.props.appetizers.map(function(appetizer){
+    var appetizersListItems = this.props.appetizers.map(function(appetizer) {
       return (
 
         React.createElement("tr", {key: appetizer.cid, className: "detailview-menu-rows"}, 
@@ -1600,7 +1624,7 @@ var MenuList = React.createClass({displayName: "MenuList",
       )
     });
 
-    var maincourseListItems = this.props.maincourses.map(function(maincourse){
+    var maincourseListItems = this.props.maincourses.map(function(maincourse) {
       return (
         React.createElement("tr", {key: maincourse.cid, className: "detailview-menu-rows"}, 
           React.createElement("td", {className: "maincourse-name"}, maincourse.get('name')), 
@@ -1610,7 +1634,7 @@ var MenuList = React.createClass({displayName: "MenuList",
       )
     });
 
-    var dessertsListItems = this.props.desserts.map(function(dessert){
+    var dessertsListItems = this.props.desserts.map(function(dessert) {
       return (
         React.createElement("tr", {key: dessert.cid, className: "detailview-menu-rows"}, 
           React.createElement("td", {className: ""}, dessert.get('name')), 
@@ -1676,32 +1700,32 @@ var MenuList = React.createClass({displayName: "MenuList",
 });
 
 var RestaurantMap = React.createClass({displayName: "RestaurantMap",
-  getInitialState: function(){
+  getInitialState: function() {
     var state = {
       zoom: 17,
     }
-    return  state
+    return state
   },
 
-  onMarkerClick: function(props, marker, e){
+  onMarkerClick: function(props, marker, e) {
     this.setState({
-    selectedPlace: props,
-    activeMarker: marker,
-    showingInfoWindow: false
-  });
-},
-  render: function(){
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: false
+    });
+  },
+  render: function() {
     var self = this;
     var center = self.state.center;
     var zoom = self.state.zoom;
     var restaurant = self.props.restaurant;
     var lat = restaurant.get('lat');
     var long = restaurant.get('long');
-    var location = 'lat:'+ lat + ',' + 'lng:'+ long;
+    var location = 'lat:' + lat + ',' + 'lng:' + long;
     console.log('location', location);
     var name = restaurant.get('name');
     console.log('name', name);
-    var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
+    var directions = 'https://www.google.com/maps/dir//' + lat + ',' + long;
     return (
       React.createElement("section", {id: "map-section", style: {height:"325px"}}, 
         React.createElement(GoogleMapLoader, {containerElement: 
@@ -1739,40 +1763,41 @@ var RestaurantMap = React.createClass({displayName: "RestaurantMap",
   }
 });
 
-
-
 var DetailView = React.createClass({displayName: "DetailView",
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       restaurant: '',
 
     }
   },
 
-  componentWillMount: function(){
-   var restaurant = this.props.restaurant;
+  componentWillMount: function() {
+    var restaurant = this.props.restaurant;
 
   },
 
-  handleFavorite: function(e){
+  handleFavorite: function(e) {
     e.preventDefault();
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
-  // console.log('My Favorite>>', favorite);
+    // console.log('My Favorite>>', favorite);
     self.props.setFavorite(favorite);
-    self.setState({favorite: favorite})
+    self.setState({
+      favorite: favorite
+    })
   },
 
-  handleRemoveFavorite: function(e){
+  handleRemoveFavorite: function(e) {
     e.preventDefault();
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
     self.props.removeFavorite(favorite);
-    self.setState({favorite: favorite})
+    self.setState({
+      favorite: favorite
+    })
   },
 
-
-  render: function(){
+  render: function() {
     var self = this;
     // googleMaps.fetch().then(function(response){
     // // console.log(response);
@@ -1784,18 +1809,18 @@ var DetailView = React.createClass({displayName: "DetailView",
     var maincourses = restaurant.get('maincourse');
     var desserts = restaurant.get('dessert');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
-  // console.log(geolocation);
+    // console.log(geolocation);
     // var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
-  // console.log(googleMap);
+    // console.log(googleMap);
     // var directions = 'https://www.google.com/maps/dir//'+geolocation;
     var imgUrl = restaurant.get('image_upload');
-    var divStyle= {
+    var divStyle = {
       height: '40vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
-    var phone = '"tel:(' + restaurant.get('phone') +')"';
+    var phone = '"tel:(' + restaurant.get('phone') + ')"';
 
-    return(
+    return (
       React.createElement("div", {className: "detailview-pane col-md-12 "}, 
         React.createElement("div", {className: "detailview-header col-md-12"}, 
           React.createElement("div", {className: "row"}, 
@@ -1857,47 +1882,66 @@ var DetailView = React.createClass({displayName: "DetailView",
   }
 });
 
-
 var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       restaurant: new models.Business()
     }
   },
-  componentWillMount: function(){
+  componentWillMount: function() {
     var restaurant = this.state.restaurant;
     var restaurantId = this.props.businessId;
-    if(!restaurantId){
+    if (!restaurantId) {
       return;
     }
     restaurant.set('objectId', restaurantId);
-    restaurant.fetch().then(()=>{
-      this.setState({restaurant: restaurant});
+    restaurant.fetch().then(() => {
+      this.setState({
+        restaurant: restaurant
+      });
     });
   },
 
-  setFavorite: function(favorite){
+  setFavorite: function(favorite) {
     // var self = this;
     var restaurant = this.state.restaurant;
     // console.log(business.get('lat'));
     var currentUser = User.current().get('objectId');
-    restaurant.set('favorite', {"__op": "AddRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
+    restaurant.set('favorite', {
+      "__op": "AddRelation",
+      "objects": [{
+        __type: "Pointer",
+        className: "_User",
+        objectId: currentUser
+      }]
+    });
     restaurant.save();
-    this.setState({restaurant: restaurant})
+    this.setState({
+      restaurant: restaurant
+    })
     console.log(this.state);
   },
 
-  removeFavorite: function(restaurant){
+  removeFavorite: function(restaurant) {
     var self = this;
     var restaurant = this.state.restaurant;
     var currentUser = User.current().get('objectId');
-    restaurant.set('favorite', {"__op": "RemoveRelation", "objects": [ {__type: "Pointer", className: "_User", objectId: currentUser} ] } );
-    restaurant.save().then(function(){
-      self.props.router.navigate('restaurants/', {trigger: true})
+    restaurant.set('favorite', {
+      "__op": "RemoveRelation",
+      "objects": [{
+        __type: "Pointer",
+        className: "_User",
+        objectId: currentUser
+      }]
     });
-  // console.log(this.state);
+    restaurant.save().then(function() {
+      self.props.router.navigate('restaurants/', {
+        trigger: true
+      })
+    });
+    // console.log(this.state);
   },
-  render: function(){
+  render: function() {
     var test = this.state.restaurant.get('name');
     var specials = this.state.restaurant.get('specials');
     var appetizers = this.state.restaurant.get('appetizer');
@@ -1909,7 +1953,6 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
         React.createElement("div", {className: "detail-view-container"}, 
           React.createElement("div", {className: "detail-view-row"}, 
             React.createElement(DetailView, {restaurant: this.state.restaurant, setFavorite: this.setFavorite, removeFavorite: this.removeFavorite, specials: specials})
-
           )
         )
       )
@@ -1985,7 +2028,7 @@ var Search = React.createClass({displayName: "Search",
     return(
       React.createElement("div", {className: "categories-bar row"}, 
         /*<h2 className="viewall-card-container-header">All Restaurants</h2>*/
-        React.createElement("div", {className: "categories-dropdown dropdown col-md-11 col-sm-11 col-xs-11"}, 
+        React.createElement("div", {className: "categories-dropdown dropdown col-md-10 col-md-offset-1 col-sm-11 col-xs-11"}, 
           React.createElement("button", {className: "btn btn-default dropdown-toggle", type: "button", id: "dropdownMenu1", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true"}, 
             React.createElement("span", {className: "categories-heading"}, "I'm in the mood for"), 
             React.createElement("span", {className: "caret"})
@@ -2021,7 +2064,7 @@ var ItemListing = React.createClass({displayName: "ItemListing",
     //   console.log(Dashboard.removeSpecial(special));
     // };
     return(
-      React.createElement("div", {className: "viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-5"}, 
+      React.createElement("div", {className: "viewall-restaurant-card mdl-shadow--2dp col-md-2 col-sm-5 col-xs-5"}, 
           React.createElement("div", {className: "viewall-header restaurant-card-header"}, 
             React.createElement("a", {href: '#restaurants/' + restaurants.get('objectId') + '/', className: "individual-item"}, React.createElement("img", {className: "viewall-image", src: restaurants.get('image_url')})), 
             React.createElement("span", {className: "viewall-counter mdl-badge pull-right", "data-badge": specialsCounter}, "Specials"), 
@@ -2052,7 +2095,7 @@ var Listing = React.createClass({displayName: "Listing",
     });
     return(
       React.createElement("div", {className: "viewall-cards-container row"}, 
-        React.createElement("div", {className: "vieall-cards-col col-md-12 col-sm-12 col-xs-12"}, 
+        React.createElement("div", {className: "vieall-cards-col col-md-12 col-md-offset-1 col-sm-12 col-xs-12"}, 
           restaurantList
         )
       )
@@ -2728,10 +2771,13 @@ var Template = React.createClass({displayName: "Template",
       React.createElement("div", {className: "template"}, 
         React.createElement("div", {className: "menu"}, 
           React.createElement("div", {className: "nav-bar-col col-md-12 col-sm-11 col-xs-11"}, 
-            React.createElement("h2", {className: "nav-header"}, "Greenville Foodies"), 
+            React.createElement("div", {className: "nav-headers"}, 
+              React.createElement("h2", {className: "nav-header"}, "In The Mood"), 
+              React.createElement("h2", {className: "nav-subheader"}, "@ Greenville")
+            ), 
             React.createElement("ul", {className: "nav nav-tabs"}, 
-              React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {href: "#restaurants/"}, React.createElement("i", {className: "material-icons"}, "restaurant"))), 
-              React.createElement("li", {className: "active", role: "presentation"}, React.createElement("a", {href: "#favorites/"}, React.createElement("i", {className: "material-icons"}, "favorite"))), 
+              React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {className: "nav-tabs", href: "#restaurants/"}, React.createElement("i", {className: "material-icons"}, "restaurant"))), 
+              React.createElement("li", {className: "active", role: "presentation"}, React.createElement("a", {className: "nav-tabs", href: "#favorites/"}, React.createElement("i", {className: "material-icons"}, "favorite"))), 
                 React.createElement("div", {className: "btn-group pull-right"}, 
                   React.createElement("button", {type: "button", className: "btn btn-default btn-xs dropdown-toggle ", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}, 
                     React.createElement(Gravatar, {className: "avatar img-thumbnail pull-right", email: localStorage.getItem('username'), size: 50})
@@ -2744,7 +2790,7 @@ var Template = React.createClass({displayName: "Template",
                   )
             ), 
               React.createElement("div", {className: "nav-message nav-bar-dropdowns"}, 
-                React.createElement("span", null, "Logged in as "), React.createElement("span", {className: "nav-name"}, localStorage.getItem('username'))
+                React.createElement("span", {className: "pull-right"}, "Logged in as  ", localStorage.getItem('username'))
               )
           )
         ), 
