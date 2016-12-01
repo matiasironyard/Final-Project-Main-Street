@@ -10,7 +10,7 @@ Check out IN THE MOOD, **[HERE!](https://matiasironyard.github.io/Final-Project-
 What is it?
 
 * A website dedicated to the great restaurants of Greenville, SC.
-* A platform that lets restaurants owners create a beautiful webpage in a matter of minutes by simply using their business phone number!
+* A platform that lets restaurant owners create a beautiful webpage in a matter of minutes by simply using their business phone number!
 * All relevant information in retrieved from Yelp and is used to quickly set up their website.
 * Visitors can quickly navigate the site and find what their looking by simply clicking "I'm in the mood for.." and selecting from all the categories available in the area. Users can also save their favorite restaurants, get a detail view of the location using the integrated Google Maps API and get directions.
 
