@@ -1815,7 +1815,7 @@ var DetailView = React.createClass({displayName: "DetailView",
     // var directions = 'https://www.google.com/maps/dir//'+geolocation;
     var imgUrl = restaurant.get('image_upload');
     var divStyle = {
-      height: '40vh',
+      height: '50vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = '"tel:(' + restaurant.get('phone') + ')"';
@@ -2029,11 +2029,11 @@ var Search = React.createClass({displayName: "Search",
       React.createElement("div", {className: "categories-bar row"}, 
         /*<h2 className="viewall-card-container-header">All Restaurants</h2>*/
         React.createElement("div", {className: "categories-dropdown dropdown col-md-10 col-md-offset-1 col-sm-11 col-xs-11"}, 
-          React.createElement("button", {className: "btn btn-default dropdown-toggle", type: "button", id: "dropdownMenu1", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true"}, 
+          React.createElement("button", {className: "btn col-md-offset-4 btn-default dropdown-toggle", type: "button", id: "dropdownMenu1", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true"}, 
             React.createElement("span", {className: "categories-heading"}, "I'm in the mood for"), 
             React.createElement("span", {className: "caret"})
           ), 
-          React.createElement("ul", {className: "dropdown-menu", "aria-labelledby": "dropdownMenu1"}, 
+          React.createElement("ul", {className: "dropdown-menu col-md-offset-4", "aria-labelledby": "dropdownMenu1"}, 
             categoriesList
           )
         )
@@ -2064,7 +2064,7 @@ var ItemListing = React.createClass({displayName: "ItemListing",
     //   console.log(Dashboard.removeSpecial(special));
     // };
     return(
-      React.createElement("div", {className: "viewall-restaurant-card mdl-shadow--2dp col-md-2 col-sm-5 col-xs-5"}, 
+      React.createElement("div", {className: "viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-5"}, 
           React.createElement("div", {className: "viewall-header restaurant-card-header"}, 
             React.createElement("a", {href: '#restaurants/' + restaurants.get('objectId') + '/', className: "individual-item"}, React.createElement("img", {className: "viewall-image", src: restaurants.get('image_url')})), 
             React.createElement("span", {className: "viewall-counter mdl-badge pull-right", "data-badge": specialsCounter}, "Specials"), 
@@ -2095,7 +2095,7 @@ var Listing = React.createClass({displayName: "Listing",
     });
     return(
       React.createElement("div", {className: "viewall-cards-container row"}, 
-        React.createElement("div", {className: "vieall-cards-col col-md-12 col-md-offset-1 col-sm-12 col-xs-12"}, 
+        React.createElement("div", {className: "vieall-cards-col col-md-10 col-md-offset-2 col-md-offset-1 col-sm-12 col-xs-12"}, 
           restaurantList
         )
       )
@@ -2222,7 +2222,6 @@ module.exports = {
 
 },{"../models/business":12,"../models/business.js":12,"../templates/templates.jsx":17,"./dashboard.jsx":3,"./favorites.jsx":5,"backbone":19,"bootstrap-sass":20,"jquery":56,"moment":70,"muicss/lib/react/dropdown":78,"muicss/lib/react/dropdown-item":77,"muicss/lib/react/panel":79,"react":273}],11:[function(require,module,exports){
 "use strict";
-console.log("Hello World!");
 var $ = require('jquery');
 var Backbone = require('backbone');
 require('./router.js');
@@ -2230,8 +2229,7 @@ require('./router.js');
 
 $(function(){
  Backbone.history.start();
-
-});
+  });
 
 
 
@@ -2769,43 +2767,48 @@ var Template = React.createClass({displayName: "Template",
   render: function(){
     return (
       React.createElement("div", {className: "template"}, 
-        React.createElement("div", {className: "menu"}, 
-          React.createElement("div", {className: "nav-bar-col col-md-12 col-sm-11 col-xs-11"}, 
-            React.createElement("div", {className: "nav-headers"}, 
-              React.createElement("h2", {className: "nav-header"}, "In The Mood"), 
-              React.createElement("h2", {className: "nav-subheader"}, "@ Greenville")
-            ), 
-            React.createElement("ul", {className: "nav nav-tabs"}, 
-              React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {className: "nav-tabs", href: "#restaurants/"}, React.createElement("i", {className: "material-icons"}, "restaurant"))), 
-              React.createElement("li", {className: "active", role: "presentation"}, React.createElement("a", {className: "nav-tabs", href: "#favorites/"}, React.createElement("i", {className: "material-icons"}, "favorite"))), 
-                React.createElement("div", {className: "btn-group pull-right"}, 
-                  React.createElement("button", {type: "button", className: "btn btn-default btn-xs dropdown-toggle ", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}, 
-                    React.createElement(Gravatar, {className: "avatar img-thumbnail pull-right", email: localStorage.getItem('username'), size: 50})
-                  ), 
-                    React.createElement("ul", {className: "dropdown-menu pull-right"}, 
-                      React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {onClick: this.logout, href: ""}, React.createElement("i", {className: "material-icons"}, "exit_to_app"))), 
-                      React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, " ", React.createElement("a", {href: "#login/"}, React.createElement("i", {className: "material-icons"}, "perm_identity"))), 
-                      React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {href: "#dashboard/"}, React.createElement("i", {className: "material-icons"}, "web")))
+        React.createElement("div", {className: "menu container-fluid"}, 
+          React.createElement("div", {className: "row"}, 
+            React.createElement("div", {className: "nav-bar-col col-md-12 col-sm-11-fluid col-xs-11-fluid"}, 
+              React.createElement("div", {className: "nav-headers  hidden-xs"}, 
+                React.createElement("h2", {className: "nav-header"}, "In The Mood"), 
+                React.createElement("h2", {className: "nav-subheader"}, "@ Greenville")
+              ), 
+              React.createElement("ul", {className: "nav nav-tabs"}, 
+                React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {className: "nav-tabs", href: "#restaurants/"}, React.createElement("i", {className: "material-icons"}, "restaurant"))), 
+                React.createElement("li", {className: "active", role: "presentation"}, React.createElement("a", {className: "nav-tabs", href: "#favorites/"}, React.createElement("i", {className: "material-icons"}, "favorite"))), 
+                  React.createElement("div", {className: "btn-group pull-right"}, 
+                    React.createElement("button", {type: "button", className: "btn btn-default btn-xs dropdown-toggle ", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}, 
+                      React.createElement(Gravatar, {className: "avatar img-thumbnail pull-right", email: localStorage.getItem('username'), size: 50})
+                    ), 
+                      React.createElement("ul", {className: "dropdown-menu pull-right"}, 
+                        React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {onClick: this.logout, href: ""}, React.createElement("i", {className: "material-icons"}, "exit_to_app"))), 
+                        React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, " ", React.createElement("a", {href: "#login/"}, React.createElement("i", {className: "material-icons"}, "perm_identity"))), 
+                        React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {href: "#dashboard/"}, React.createElement("i", {className: "material-icons"}, "web")))
+                      )
                     )
-                  )
-            ), 
-              React.createElement("div", {className: "nav-message nav-bar-dropdowns"}, 
-                React.createElement("span", {className: "pull-right"}, "Logged in as  ", localStorage.getItem('username'))
-              )
+              ), 
+                React.createElement("div", {className: "nav-message nav-bar-dropdowns"}, 
+                  React.createElement("span", {className: "pull-right"}, "Logged in as  ", localStorage.getItem('username'))
+                )
+            )
           )
         ), 
-          React.createElement("div", {className: "components"}, 
-            this.props.children
-          ), 
 
-        React.createElement("div", {className: "footer-row"}, 
-          React.createElement("div", {className: "footer col-md-12 col-sm-11 col-xs-11"}, 
-            React.createElement("div", {className: "col-md-5 col-md-offset-4 col-xs-5 col-xs-offset-4"}, 
-              React.createElement("span", null, "Copyright © Greenville Foodies 2016")
-            )
+      React.createElement("div", {className: "components container"}, 
+        this.props.children
+      ), 
+
+      React.createElement("div", {className: "footer-container"}, 
+        React.createElement("div", {className: "footer row"}, 
+          React.createElement("div", {className: "col-md-11 col-xs-11 col-xs-11"}, 
+            React.createElement("span", {className: "col-md-offset-1 pull-left"}, "Copyright © Greenville Foodies 2016"), 
+            React.createElement("img", {className: "pull-right", src: "https://s3-media2.fl.yelpcdn.com/assets/srv0/developer_pages/95212dafe621/assets/img/yelp-2c.png", width: "50"}), 
+            React.createElement("span", {className: "pull-right"}, "In partnership with Yelp")
           )
         )
       )
+    )
     )
   }
 });
