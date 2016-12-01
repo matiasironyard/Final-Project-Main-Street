@@ -75,8 +75,13 @@ var Search = React.createClass({
 });
 
 var ItemListing = React.createClass({
+
+  // var test = $.ajax('https://yelp-proxy-server.herokuapp.com/api?phone=+1')
   render: function(){
+    console.log('what is happenign');
+
     var restaurants = this.props.restaurants;
+    var phone = restaurants.get('phone');
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}

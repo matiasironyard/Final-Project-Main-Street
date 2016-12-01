@@ -229,7 +229,8 @@ var DetailView = React.createClass({
     // console.log('My Favorite>>', favorite);
     self.props.setFavorite(favorite);
     self.setState({
-      favorite: favorite
+      restaurant: restaurant,
+      favorite: favorite,
     })
   },
 
@@ -271,20 +272,20 @@ var DetailView = React.createClass({
         <div className="detailview-header col-md-12">
           <div className="row">
             <div className="detailview-header-img" style={divStyle}>
-              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored " onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
-                <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored " onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
+              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
+                <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
             </div>
             <div className="detailview-header-text ">
               <h1 className="detailview-header-name">
                 {restaurant.get('name')}
               </h1>
               <img src={restaurant.get('rating_img_url')} className="detailview-header-review-img"></img>
-              <div className="detailview-header-cat">
+              <h4 className="detailview-header-cat">
                 {restaurant.get('mainCategory')}
-              </div>
-              <div className="detailview-header-cat">
+              </h4>
+              <h6 className="detailview-header-cat">
                 {restaurant.get('subCategory')}
-              </div>
+              </h6>
             </div>
             <div className="detailview-header-info">
               <div className="detailview-phone"><i className="material-icons">phone</i><a href={phone}>{restaurant.get('phone')}</a></div>

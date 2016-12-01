@@ -138,6 +138,7 @@ var RegistrationContainer = React.createClass({
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response) {
+          // console.log('response', response);
           console.log('categories', response.businesses[0].categories[0]);
           var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0][0] : "no main category from Yelp";
           var subcategory = response.businesses[0].categories[1] ? response.businesses[0].categories[1][0] : "no subcategory from Yelp";
@@ -152,7 +153,7 @@ var RegistrationContainer = React.createClass({
               image_url: data.image_url,
               phone: data.display_phone.slice(3),
               is_closed: open,
-              rating_img_url: data.rating_img_url,
+              rating_img_url: data.rating_img_url_large,
               address: data.location.address[0],
               city: data.location.city,
               state: data.location.state_code,
