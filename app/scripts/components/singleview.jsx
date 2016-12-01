@@ -261,7 +261,7 @@ var DetailView = React.createClass({
     // var directions = 'https://www.google.com/maps/dir//'+geolocation;
     var imgUrl = restaurant.get('image_upload');
     var divStyle = {
-      height: '40vh',
+      height: '50vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = '"tel:(' + restaurant.get('phone') + ')"';

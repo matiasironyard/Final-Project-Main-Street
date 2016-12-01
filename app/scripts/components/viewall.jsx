@@ -61,11 +61,11 @@ var Search = React.createClass({
       <div className="categories-bar row">
         {/*<h2 className="viewall-card-container-header">All Restaurants</h2>*/}
         <div className="categories-dropdown dropdown col-md-10 col-md-offset-1 col-sm-11 col-xs-11">
-          <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <button className="btn col-md-offset-4 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span className="categories-heading">I'm in the mood for</span>
             <span className="caret"></span>
           </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <ul className="dropdown-menu col-md-offset-4" aria-labelledby="dropdownMenu1">
             {categoriesList}
           </ul>
         </div>
@@ -96,7 +96,7 @@ var ItemListing = React.createClass({
     //   console.log(Dashboard.removeSpecial(special));
     // };
     return(
-      <div className ="viewall-restaurant-card mdl-shadow--2dp col-md-2 col-sm-5 col-xs-5">
+      <div className ="viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-5">
           <div className="viewall-header restaurant-card-header">
             <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><img className="viewall-image" src={restaurants.get('image_url')}/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
@@ -127,7 +127,7 @@ var Listing = React.createClass({
     });
     return(
       <div className="viewall-cards-container row">
-        <div className="vieall-cards-col col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+        <div className="vieall-cards-col col-md-10 col-md-offset-2 col-md-offset-1 col-sm-12 col-xs-12">
           {restaurantList}
         </div>
       </div>

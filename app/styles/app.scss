@@ -30,21 +30,24 @@ background-color: #FFFDE7;
 
 //CATEGORIES BAR
 .categories-bar{
-  margin-top: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   .categories-dropdown{
     background-color: #fff;
-    border: 1px solid #E0E0E0;
+    border: 2px solid #E0E0E0;
+    border-radius: 5px;
 
     .btn{
       color: #616161;
       padding: 2px;
-      margin-top: 25px;
+      margin-top: 15px;
+      margin-bottom: 15px;
       background-color: #fff;
       border: 0px;
       border-radius: 0;
 
       .categories-heading{
-        font-size: 3vh;
+        font-size: 6vh;
         color: #616161;
         // font-style: italic;
       }
@@ -128,7 +131,9 @@ background-color: #FFFDE7;
       padding: 5px;
       padding-top: 15px;
       padding-left: 10px;
-      background-color: #FFF3E0;
+      margin-left: 13px;
+      margin-right: 13px;
+      // background-color: #FFF3E0;
 
       .viewall-header{
 
@@ -374,10 +379,9 @@ background-color: #FFFDE7;
     background-image: url('http://www.fortunebuilders.com/wp-content/uploads/2015/03/greenville-downtown-cityscape.jpg');
     background-position: right;
     background-size: cover;
-    margin-bottom: 30px;
     .nav-headers{
       background-color: rgba(36, 44, 44, 0.3);
-      padding: 15px;
+      // padding: 15px;
 
       .nav-header{
         text-transform: uppercase;
@@ -401,8 +405,9 @@ background-color: #FFFDE7;
   }
 }
 
-.footer{
+.footer-container{
   border-top: 2px solid #BDBDBD;
   margin-top: 20px;
+  padding-top: 15px;
   // background-color: #FFA000;
 }
