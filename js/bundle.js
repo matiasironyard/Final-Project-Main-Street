@@ -11,49 +11,50 @@ var AppetizerCollection = require('../models/business.js').AppetizerCollection;
 var Appetizer = require('../models/business.js').Appetizer;
 var moment = require('moment');
 
-var AppetizerFormList = React.createClass({displayName: "AppetizerFormList",
-  getInitialState: function() {
-
-    return {
-      appetizer: this.props.appetizer,
-    };
-  },
-
-  componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.appetizer);
-    // this.setState(id, this.props.speical.cid)
-  },
+var AppetizerForm= React.createClass({displayName: "AppetizerForm",
+  // getInitialState: function() {
+  //
+  //   return {
+  //     appetizer: this.props.appetizer,
+  //   };
+  // },
+  //
+  // componentWillReceiveProps: function(newProps) {
+  //   this.setState(newProps.appetizer);
+  //   // this.setState(id, this.props.speical.cid)
+  // },
 
   handleInputChange: function(e) {
     var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
+    // var newState = {};
+    // newState[target.name] = target.value;
+    // this.setState(newState);
     this.props.appetizer.set(target.name, target.value);
+    this.forceUpdate();
     console.log(target);
   },
 
   removeAppetizer: function(e) {
-    var appetizer = this.state.appetizer;
+    var appetizer = this.props.appetizers;
     this.props.removeAppetizer(appetizer)
   },
 
   render: function() {
-    var appetizer = this.state.appetizer;
+    var appetizers = this.props.appetizers;
     // console.log(special.get('expirydate'))
     return (
       React.createElement("div", {className: "menu-forms appetizers"}, 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "name"}, "Name"), 
-          React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "name", value: appetizer.get('name'), type: "text", id: "name", placeholder: "dish name"})
+          React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "name", value: appetizers.get('name'), type: "text", id: "name", placeholder: "dish name"})
         ), 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "description"}, "Description"), 
-          React.createElement("input", {className: "form-control", className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: appetizer.get('description'), type: "text", id: "description", placeholder: "dish description"})
+          React.createElement("input", {className: "form-control", className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: appetizers.get('description'), type: "text", id: "description", placeholder: "dish description"})
         ), 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "price"}, "Price"), 
-          React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "price", value: appetizer.get('price'), type: "text", id: "price", placeholder: "dish price"})
+          React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "price", value: appetizers.get('price'), type: "text", id: "price", placeholder: "dish price"})
         ), 
         React.createElement("button", {onClick: this.removeAppetizer, type: "button", className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"}, "Delete"), 
         React.createElement("div", null
@@ -63,26 +64,26 @@ var AppetizerFormList = React.createClass({displayName: "AppetizerFormList",
   }
 });
 
-var AppetizerForm = React.createClass({displayName: "AppetizerForm",
-  getInitialState: function() {
-    return this.props.business.toJSON();
-  },
-
-  componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.business.toJSON());
-  },
-
-  handleInputChange: function(e) {
-    var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
-  },
+var AppetizerFormSet = React.createClass({displayName: "AppetizerFormSet",
+  // getInitialState: function() {
+  //   return this.props.business.toJSON();
+  // },
+  //
+  // componentWillReceiveProps: function(newProps) {
+  //   this.setState(newProps.business.toJSON());
+  // },
+  //
+  // handleInputChange: function(e) {
+  //   var target = e.target;
+  //   var newState = {};
+  //   newState[target.name] = target.value;
+  //   this.setState(newState);
+  // },
 
   handleSubmit: function(e) {
     e.preventDefault();
     // console.log('business', this.state);
-    this.props.saveAppetizer(this.state);
+    this.props.saveAppetizer();
   },
 
   removeAppetizer: function(appetizer) {
@@ -91,12 +92,12 @@ var AppetizerForm = React.createClass({displayName: "AppetizerForm",
 
   render: function() {
     var self = this;
-    var business = self.props.business;
-    var appetizerFormset = business.get('appetizer').map(function(appetizerItem) {
+    // var business = self.props.business;
+    var appetizerFormset = this.props.appetizers.map(function(appetizerItem) {
       //  console.log('get specials', business.get('specials'));
       return (
         React.createElement("div", {key: appetizerItem.cid}, 
-         React.createElement(AppetizerFormList, {appetizer: appetizerItem, removeAppetizer: self.removeAppetizer})
+         React.createElement(AppetizerForm, {appetizers: appetizerItem, removeAppetizer: self.removeAppetizer})
        )
       )
     });
@@ -117,7 +118,7 @@ var AppetizerForm = React.createClass({displayName: "AppetizerForm",
 });
 
 module.exports = {
-  AppetizerForm: AppetizerForm
+  AppetizerFormSet: AppetizerFormSet
 }
 
 },{"../components/registration.jsx":8,"../models/business":12,"../models/business.js":12,"../parseUtilities":14,"backbone":19,"moment":70,"react":273}],2:[function(require,module,exports){
@@ -317,12 +318,14 @@ var Dessert = require('../models/business.js').Dessert;
 var DessertCollection = require('../models/business.js').DessertCollection;
 var Template = require('../templates/templates.jsx');
 var moment = require('moment');
-var AppetizerForm = require('../components/appetizer.jsx').AppetizerForm;
-var MainCourseForm = require('../components/maincourse.jsx').MainCourseForm;
-var DessertForm = require('../components/dessert.jsx').DessertForm;
+var AppetizerFormSet= require('../components/appetizer.jsx').AppetizerFormSet;
+var MainCourseFormSet = require('../components/maincourse.jsx').MainCourseFormSet;
+var DessertFormSet = require('../components/dessert.jsx').DessertFormSet;
 var Modal = require('react-modal');
 
-
+/**************************************************************************************
+DASHBAORD COMPONENT
+**************************************************************************************/
 
 var Dashboard = React.createClass({displayName: "Dashboard",
   getInitialState: function(){
@@ -380,42 +383,45 @@ var Dashboard = React.createClass({displayName: "Dashboard",
   }
 });
 
-var SpecialsFormList = React.createClass({displayName: "SpecialsFormList",
-  getInitialState: function(){
-    return {
-      special: this.props.special,
-    };
-  },
+/**************************************************************************************
+SPECIALS COMPONENTS
+**************************************************************************************/
 
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.special);
-    // this.setState(id, this.props.speical.cid)
-  },
+var SpecialsForm = React.createClass({displayName: "SpecialsForm",
+  // getInitialState: function(){
+  //   return {
+  //     special: this.props.special,
+  //   };
+  // },
+
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.special);
+  //   // this.setState(id, this.props.speical.cid)
+  // },
 
   handleInputChange: function(e){
     var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
+    // var newState = {};
+    // newState[target.name] = target.value;
+    // this.setState(newState);
     this.props.special.set(target.name, target.value);
-    console.log(target);
+    this.forceUpdate();
   },
 
   removeSpecial: function(e){
-    var special = this.state.special;
-    this.props.removeSpecial(special)
-    console.log(this.state);
+    var special = this.props.special;
+    this.props.removeSpecial(special);
   },
 
   render: function(){
-    var special = this.state.special;
+    var special = this.props.special;
     // console.log(special.get('expirydate'))
     var expiryDate = special.get('expirydate');
      var now = moment();
      var formatedDate = now.format("YYYY-MM-DD");
      if(formatedDate == expiryDate){
        this.removeSpecial(special);
-       console.warn(this.removeSpecial());
+      //  console.warn(this.removeSpecial());
      };
 
     return(
@@ -450,38 +456,35 @@ var SpecialsFormList = React.createClass({displayName: "SpecialsFormList",
   }
 });
 
-var SpecialsForm = React.createClass({displayName: "SpecialsForm",
-  getInitialState: function(){
-    return this.props.business.toJSON();
-  },
-
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.business.toJSON());
-  },
-
-  handleInputChange: function(e){
-    var target = e.target;
-    var newState = {};
-    newState[target.name]  = target.value;
-    this.setState(newState);
-  },
-
+var SpecialsFormSet = React.createClass({displayName: "SpecialsFormSet",
+  // getInitialState: function(){
+  //   return this.props.business.toJSON();
+  // },
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.business.toJSON());
+  // },
+  // handleInputChange: function(e){
+  //   var target = e.target;
+  //   var newState = {};
+  //   newState[target.name]  = target.value;
+  //   this.setState(newState);
+  // },
   handleSubmit: function(e){
   e.preventDefault();
   // console.log('business', this.state);
-  this.props.saveSpecial(this.state);
-},
-removeSpecial: function(special){
-    this.props.removeSpecial(special);
-},
+  this.props.saveSpecial();
+  },
+  removeSpecial: function(special){
+      this.props.removeSpecial(special);
+  },
  render: function(){
    var self = this;
-   var business= self.props.business;
-   var specialsFormset = business.get('specials').map(function(special){
+  //  var business= self.props.business;
+   var specialsFormset = this.props.specials.map(function(special){
     //  console.log('get specials', business.get('specials'));
      return (
        React.createElement("div", {key: special.cid}, 
-         React.createElement(SpecialsFormList, {special: special, removeSpecial: self.removeSpecial})
+         React.createElement(SpecialsForm, {special: special, removeSpecial: self.removeSpecial})
        )
      )
    });
@@ -500,11 +503,15 @@ removeSpecial: function(special){
  }
 });
 
+/**************************************************************************************
+PARENT CONTAINER
+**************************************************************************************/
+
 var DashboardContainer = React.createClass({displayName: "DashboardContainer",
   getInitialState: function(){
     return {
       business: new models.Business(),
-      modalIsOpen: false,
+      // modalIsOpen: false,
     };
   },
 
@@ -516,128 +523,128 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
     });
   },
 
-  componentWillReceiveProps: function(){
-    this.getBusiness();
-  },
-  getBusiness: function(){
-    var business = this.state.business;
-    var businessId = this.props.businessId;
-    if(!businessId){
-      return;
-    }
-    business.set('objectId', businessId);
-    business.fetch().then(()=> {
-      this.setState({business: business});
-    });
-  },
+  // componentWillReceiveProps: function(){
+  //   this.getBusiness();
+  // },
+  // getBusiness: function(){
+  //   var business = this.state.business;
+  //   var businessId = this.props.businessId;
+  //   if(!businessId){
+  //     return;
+  //   }
+  //   business.set('objectId', businessId);
+  //   business.fetch().then(()=> {
+  //     this.setState({business: business});
+  //   });
+  //
+  // },
 
+//ADD FUNCTIONS
   addSpecial: function(){
     var business = this.state.business;
     var specials = business.get('specials');
-    var special = new Special();
+    // var special = new Special();
     specials.add([{}]);
     this.setState({business: business})
-  },
-  removeSpecial: function(special){
-    var business = this.state.business;
-    var specialsCollection = business.get('specials');
-    specialsCollection.remove(special.cid);
-    business.save();
-    this.setState({business: business});
-  },
-
-  saveSpecial: function(specialData){
-    var business = this.state.business;
-    business.set(specialData);
-    business.saveSpecial();
   },
 
   addAppetizer: function(){
     var business = this.state.business;
     var appetizers = business.get('appetizer');
-    var appetizer = new Appetizer();
+    // var appetizer = new Appetizer();
     appetizers.add([{}]);
     this.setState({business: business})
-    console.log(this.state);
-  },
-
-  removeAppetizer: function(appetizer){
-    var business = this.state.business;
-    var appetizerCollection = business.get('appetizer');
-    appetizerCollection.remove(appetizer.cid);
-    // business.save();
-    this.setState({business: business});
-  },
-
-  saveAppetizer: function(appetizerData){
-    var business = this.state.business;
-    business.set(appetizerData);
-    business.saveAppetizer();
   },
 
   addMainCourse: function(){
     var business = this.state.business;
     var mainCourses= business.get('maincourse');
-    var mainCourse = new MainCourse();
+    // var mainCourse = new MainCourse();
     mainCourses.add([{}]);
     this.setState({business: business})
-  },
-
-  removeMainCourse: function(maincourse){
-    var business = this.state.business;
-    var mainCourseCollection = business.get('maincourse');
-    mainCourseCollection.remove(maincourse.cid);
-    // business.save();
-    this.setState({business: business});
-  },
-
-  saveMainCourse: function(mainCourseData){
-    var business = this.state.business;
-    business.set(mainCourseData);
-    business.saveMainCourse();
   },
 
   addDessert: function(){
     var business = this.state.business;
     var desserts = business.get('dessert');
-    var dessert = new Dessert();
+    // var dessert = new Dessert();
     desserts.add([{}]);
     this.setState({business: business})
   },
-
+  //REMOVE FUNCTIONS
+  removeSpecial: function(special){
+    var business = this.state.business;
+    var specialsCollection = business.get('specials');
+    specialsCollection.remove(special);
+    business.save().then(() => {
+      this.setState({business: business});
+    });
+  },
+  removeAppetizer: function(appetizer){
+    var business = this.state.business;
+    var appetizerCollection = business.get('appetizer');
+    appetizerCollection.remove(appetizer);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
+  },
+  removeMainCourse: function(maincourse){
+    var business = this.state.business;
+    var mainCourseCollection = business.get('maincourse');
+    mainCourseCollection.remove(maincourse);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
+  },
   removeDessert: function(dessert){
     var business = this.state.business;
     var dessertCollection = business.get('dessert');
-    dessertCollection.remove(dessert.cid);
-    // business.save();
-    this.setState({business: business});
+    dessertCollection.remove(dessert);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
   },
-
+  //SAVE FUNCTIONS
+  saveSpecial: function(){
+    var business = this.state.business;
+    business.save();
+  },
+  saveAppetizer: function(appetizerData){
+    var business = this.state.business;
+    // business.set(appetizerData);
+    business.save();
+  },
+  saveMainCourse: function(mainCourseData){
+    var business = this.state.business;
+    // business.set(mainCourseData);
+    business.save();
+  },
   saveDessert: function(dessertData){
     var business = this.state.business;
-    business.set(dessertData);
-    business.saveDessert();
+    // business.set(dessertData);
+    // business.saveDessert();
+    business.save();
   },
 
-  handleToggleSpecials: function(e){
-  e.preventDefault();
-  var showSpecials = !this.state.showSpecials;
-  this.setState({showSpecials: showSpecials});
-  },
-
-  handleToggleMenu: function(e){
-  e.preventDefault();
-  var showMenu = !this.state.showMenu;
-  this.setState({showMenu: showMenu});
-  },
-
-  openModal: function() {
-    this.setState({modalIsOpen: true});
-  },
-
-  closeModal: function() {
-    this.setState({modalIsOpen: false});
-  },
+  // handleToggleSpecials: function(e){
+  // e.preventDefault();
+  // var showSpecials = !this.state.showSpecials;
+  // this.setState({showSpecials: showSpecials});
+  // },
+  //
+  // handleToggleMenu: function(e){
+  // e.preventDefault();
+  // var showMenu = !this.state.showMenu;
+  // this.setState({showMenu: showMenu});
+  // },
+  //
+  // openModal: function() {
+  //   this.setState({modalIsOpen: true});
+  // },
+  //
+  // closeModal: function() {
+  //   this.setState({modalIsOpen: false});
+  // },
 
   render: function(){
     var businessName = this.state.business.get('name');
@@ -659,16 +666,31 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
               React.createElement("h1", {className: "well"}, " ", businessName, " Dashboard"), 
               React.createElement(Dashboard, {business: this.state.business}), 
                 React.createElement("div", {className: "specials-pane"}, 
-                  React.createElement(SpecialsForm, {business: this.state.business, saveSpecial: this.saveSpecial, specials: this.state.business.get('specials'), removeSpecial: this.removeSpecial, addSpecial: this.addSpecial})
+                  React.createElement(SpecialsFormSet, {
+                    specials: this.state.business.get('specials'), 
+                    saveSpecial: this.saveSpecial, 
+                    removeSpecial: this.removeSpecial, 
+                    addSpecial: this.addSpecial}
+                    )
                 ), 
-                React.createElement("div", {className: "menu-pane"}, 
-                  React.createElement("h2", null, "Menu"), 
-                  React.createElement("div", {className: "menu-creator"}, 
-                    React.createElement(AppetizerForm, {className: "menu-creator-panels", business: this.state.business, saveAppetizer: this.saveAppetizer, appetizer: this.state.business.get('appetizer'), removeAppetizer: this.removeAppetizer, addAppetizer: this.addAppetizer}), 
-                    React.createElement(MainCourseForm, {className: "menu-creator-panels", business: this.state.business, saveMainCourse: this.saveMainCourse, maincourse: this.state.business.get('maincourse'), removeMainCourse: this.removeMainCourse, addMainCourse: this.addMainCourse}), 
-                    React.createElement(DessertForm, {className: "menu-creator-panels", business: this.state.business, saveDessert: this.saveDessert, dessert: this.state.business.get('dessert'), removeDessert: this.removeDessert, addDessert: this.addDessert})
-                  )
-                )
+
+                React.createElement("h1", null, "What is going on..."), 
+                    React.createElement(AppetizerFormSet, {className: "menu-creator-panels", 
+                    appetizers: this.state.business.get('appetizer'), 
+                    saveAppetizer: this.saveAppetizer, 
+                    removeAppetizer: this.removeAppetizer, 
+                    addAppetizer: this.addAppetizer}
+                    ), 
+                    React.createElement(MainCourseFormSet, {className: "menu-creator-panels", 
+                      maincourse: this.state.business.get('maincourse'), saveMainCourse: this.saveMainCourse, removeMainCourse: this.removeMainCourse, 
+                      addMainCourse: this.addMainCourse}
+                      ), 
+                    React.createElement(DessertFormSet, {className: "menu-creator-panels", 
+                      desserts: this.state.business.get('dessert'), 
+                      saveDessert: this.saveDessert, 
+                      removeDessert: this.removeDessert, 
+                      addDessert: this.addDessert}
+                      )
               )
         )
       )
@@ -681,6 +703,8 @@ module.exports = {
   DashboardContainer: DashboardContainer,
 }
 
+// business={this.state.business}
+
 },{"../components/appetizer.jsx":1,"../components/dessert.jsx":4,"../components/maincourse.jsx":7,"../components/registration.jsx":8,"../models/business":12,"../models/business.js":12,"../parseUtilities":14,"../templates/templates.jsx":17,"backbone":19,"moment":70,"react":273,"react-modal":142}],4:[function(require,module,exports){
 "use strict";
 var React = require('react');
@@ -691,49 +715,51 @@ var models = require('../models/business');
 var BusinessCollection = require('../models/business.js').BusinessCollection;
 var User = require('../parseUtilities').User;
 
-var DessertFormList = React.createClass({displayName: "DessertFormList",
-  getInitialState: function() {
-
-    return {
-      dessert: this.props.dessert,
-    };
-  },
-
-  componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.dessert);
-    // this.setState(id, this.props.speical.cid)
-  },
+var DessertForm= React.createClass({displayName: "DessertForm",
+  // getInitialState: function() {
+  //
+  //   return {
+  //     dessert: this.props.dessert,
+  //   };
+  // },
+  //
+  // componentWillReceiveProps: function(newProps) {
+  //   this.setState(newProps.dessert);
+  //   // this.setState(id, this.props.speical.cid)
+  // },
 
   handleInputChange: function(e) {
     var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
+    // var newState = {};
+    // newState[target.name] = target.value;
+    // this.setState(newState);
     this.props.dessert.set(target.name, target.value);
+    this.forceUpdate();
     console.log(target);
   },
 
   removeDessert: function(e) {
-    var dessert = this.state.dessert;
+    var dessert = this.props.desserts;
     this.props.removeDessert(dessert)
+    console.log('remove dessert:', this.state);
   },
 
   render: function() {
-    var dessert = this.state.dessert;
+    var desserts = this.props.desserts;
     // console.log(special.get('expirydate'))
     return (
       React.createElement("div", {className: "menu-forms desserts"}, 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "name"}, "Name"), 
-          React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: dessert.get('name'), type: "text", id: "name", placeholder: "dish name"})
+          React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: desserts.get('name'), type: "text", id: "name", placeholder: "dish name"})
         ), 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "description"}, "Description"), 
-          React.createElement("input", {className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: dessert.get('description'), type: "text", id: "description", placeholder: "dish description"})
+          React.createElement("input", {className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: desserts.get('description'), type: "text", id: "description", placeholder: "dish description"})
         ), 
         React.createElement("div", {className: "form-group"}, 
           React.createElement("label", {htmlFor: "price"}, "Price"), 
-          React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: dessert.get('price'), type: "text", id: "price", placeholder: "dish price"})
+          React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: desserts.get('price'), type: "text", id: "price", placeholder: "dish price"})
         ), 
         React.createElement("div", null, 
           React.createElement("button", {onClick: this.removeDessert, type: "button", className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right"}, "Delete")
@@ -743,26 +769,26 @@ var DessertFormList = React.createClass({displayName: "DessertFormList",
   }
 });
 
-var DessertForm = React.createClass({displayName: "DessertForm",
-  getInitialState: function() {
-    return this.props.business.toJSON();
-  },
+var DessertFormSet = React.createClass({displayName: "DessertFormSet",
+  // getInitialState: function() {
+  //   return this.props.business.toJSON();
+  // },
+  //
+  // componentWillReceiveProps: function(newProps) {
+  //   this.setState(newProps.business.toJSON());
+  // },
 
-  componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.business.toJSON());
-  },
-
-  handleInputChange: function(e) {
-    var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
-  },
+  // handleInputChange: function(e) {
+  //   var target = e.target;
+  //   // var newState = {};
+  //   // newState[target.name] = target.value;
+  //   this.setState(newState);
+  // },
 
   handleSubmit: function(e) {
     e.preventDefault();
     // console.log('business', this.state);
-    this.props.saveDessert(this.state);
+    this.props.saveDessert();
   },
 
   removeDessert: function(dessert) {
@@ -771,12 +797,12 @@ var DessertForm = React.createClass({displayName: "DessertForm",
 
   render: function() {
     var self = this;
-    var business = self.props.business;
-    var dessertFormset = business.get('dessert').map(function(dessertItem) {
+    // var business = self.props.business;
+    var dessertFormset = this.props.desserts.map(function(dessertItem) {
       //  console.log('get specials', business.get('specials'));
       return (
         React.createElement("div", {key: dessertItem.cid}, 
-         React.createElement(DessertFormList, {dessert: dessertItem, removeDessert: self.removeDessert})
+         React.createElement(DessertForm, {desserts: dessertItem, removeDessert: self.removeDessert})
        )
       )
     });
@@ -797,7 +823,7 @@ var DessertForm = React.createClass({displayName: "DessertForm",
 });
 
 module.exports = {
-  DessertForm: DessertForm
+  DessertFormSet: DessertFormSet
 }
 
 },{"../components/registration.jsx":8,"../models/business":12,"../models/business.js":12,"../parseUtilities":14,"backbone":19,"react":273}],5:[function(require,module,exports){
@@ -1184,35 +1210,36 @@ var Appetizer = require('../models/business.js').Appetizer;
 
 
 
-var MainCourseFormList = React.createClass({displayName: "MainCourseFormList",
-  getInitialState: function(){
-
-    return {
-      maincourse: this.props.maincourse,
-    };
-  },
-
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.maincourse);
-    // this.setState(id, this.props.speical.cid)
-  },
+var MainCourseForm= React.createClass({displayName: "MainCourseForm",
+  // getInitialState: function(){
+  //
+  //   return {
+  //     maincourse: this.props.maincourse,
+  //   };
+  // },
+  //
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.maincourse);
+  //   // this.setState(id, this.props.speical.cid)
+  // },
 
   handleInputChange: function(e){
     var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
+    // var newState = {};
+    // newState[target.name] = target.value;
+    // this.setState(newState);
     this.props.maincourse.set(target.name, target.value);
+    this.forceUpdate();
     console.log(target);
   },
 
   removeMainCourse: function(e){
-    var maincourse = this.state.maincourse;
+    var maincourse = this.props.maincourse;
     this.props.removeMainCourse(maincourse)
   },
 
   render: function(){
-    var maincourse = this.state.maincourse;
+    var maincourse = this.props.maincourse;
     // console.log(special.get('expirydate'))
     return(
       React.createElement("div", {className: "menu-forms maincourse"}, 
@@ -1236,26 +1263,26 @@ var MainCourseFormList = React.createClass({displayName: "MainCourseFormList",
   }
 });
 
-var MainCourseForm = React.createClass({displayName: "MainCourseForm",
-  getInitialState: function(){
-    return this.props.business.toJSON();
-  },
+var MainCourseFormSet = React.createClass({displayName: "MainCourseFormSet",
+  // getInitialState: function(){
+  //   return this.props.business.toJSON();
+  // },
+  //
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.business.toJSON());
+  // },
 
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.business.toJSON());
-  },
-
-  handleInputChange: function(e){
-    var target = e.target;
-    var newState = {};
-    newState[target.name]  = target.value;
-    this.setState(newState);
-  },
+  // handleInputChange: function(e){
+  //   var target = e.target;
+  //   var newState = {};
+  //   newState[target.name]  = target.value;
+  //   this.setState(newState);
+  // },
 
   handleSubmit: function(e){
   e.preventDefault();
   // console.log('business', this.state);
-  this.props.saveMainCourse(this.state);
+  this.props.saveMainCourse();
 },
 
 removeMainCourse: function(maincourse){
@@ -1264,12 +1291,12 @@ removeMainCourse: function(maincourse){
 
  render: function(){
    var self = this;
-   var business= self.props.business;
-   var mainCourseFormset = business.get('maincourse').map(function(maincourseItem){
+  //  var business= self.props.business;
+   var mainCourseFormset = this.props.maincourse.map(function(maincourseItem){
     //  console.log('get specials', business.get('specials'));
      return (
        React.createElement("div", {key: maincourseItem.cid}, 
-         React.createElement(MainCourseFormList, {maincourse: maincourseItem, removeMainCourse: self.removeMainCourse})
+         React.createElement(MainCourseForm, {maincourse: maincourseItem, removeMainCourse: self.removeMainCourse})
        )
      )
    });
@@ -1290,7 +1317,7 @@ removeMainCourse: function(maincourse){
 });
 
 module.exports = {
-  MainCourseForm: MainCourseForm
+  MainCourseFormSet: MainCourseFormSet
 }
 
 },{"../components/registration.jsx":8,"../models/business":12,"../models/business.js":12,"../parseUtilities":14,"backbone":19,"react":273}],8:[function(require,module,exports){
@@ -1435,6 +1462,7 @@ var RegistrationContainer = React.createClass({displayName: "RegistrationContain
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response) {
+          // console.log('response', response);
           console.log('categories', response.businesses[0].categories[0]);
           var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0][0] : "no main category from Yelp";
           var subcategory = response.businesses[0].categories[1] ? response.businesses[0].categories[1][0] : "no subcategory from Yelp";
@@ -1449,7 +1477,7 @@ var RegistrationContainer = React.createClass({displayName: "RegistrationContain
               image_url: data.image_url,
               phone: data.display_phone.slice(3),
               is_closed: open,
-              rating_img_url: data.rating_img_url,
+              rating_img_url: data.rating_img_url_large,
               address: data.location.address[0],
               city: data.location.city,
               state: data.location.state_code,
@@ -1783,7 +1811,8 @@ var DetailView = React.createClass({displayName: "DetailView",
     // console.log('My Favorite>>', favorite);
     self.props.setFavorite(favorite);
     self.setState({
-      favorite: favorite
+      restaurant: restaurant,
+      favorite: favorite,
     })
   },
 
@@ -1825,18 +1854,18 @@ var DetailView = React.createClass({displayName: "DetailView",
         React.createElement("div", {className: "detailview-header col-md-12"}, 
           React.createElement("div", {className: "row"}, 
             React.createElement("div", {className: "detailview-header-img", style: divStyle}, 
-              React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored ", onClick: this.handleRemoveFavorite, type: "submit", value: "Remove Favorite"}, React.createElement("i", {className: "material-icons"}, "clear")), 
-                React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored ", onClick: this.handleFavorite, type: "button"}, React.createElement("i", {className: "material-icons"}, "favorite_border"))
+              React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.handleRemoveFavorite, type: "submit", value: "Remove Favorite"}, React.createElement("i", {className: "material-icons"}, "clear")), 
+                React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.handleFavorite, type: "button"}, React.createElement("i", {className: "material-icons"}, "favorite_border"))
             ), 
             React.createElement("div", {className: "detailview-header-text "}, 
               React.createElement("h1", {className: "detailview-header-name"}, 
                 restaurant.get('name')
               ), 
               React.createElement("img", {src: restaurant.get('rating_img_url'), className: "detailview-header-review-img"}), 
-              React.createElement("div", {className: "detailview-header-cat"}, 
+              React.createElement("h4", {className: "detailview-header-cat"}, 
                 restaurant.get('mainCategory')
               ), 
-              React.createElement("div", {className: "detailview-header-cat"}, 
+              React.createElement("h6", {className: "detailview-header-cat"}, 
                 restaurant.get('subCategory')
               )
             ), 
@@ -2043,8 +2072,13 @@ var Search = React.createClass({displayName: "Search",
 });
 
 var ItemListing = React.createClass({displayName: "ItemListing",
+
+  // var test = $.ajax('https://yelp-proxy-server.herokuapp.com/api?phone=+1')
   render: function(){
+    console.log('what is happenign');
+
     var restaurants = this.props.restaurants;
+    var phone = restaurants.get('phone');
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
@@ -2256,37 +2290,23 @@ var Backbone = require('backbone');
 var Business = require('../components/authentication.jsx').AuthenticationContainer;
 var User = require('../parseUtilities.js').User;
 
-//setup Parse models
-/**
-*Parse Model and Collection
-*/
+/**************************************************************************************
+PARSE
+**************************************************************************************/
 
 var ParseModel = Backbone.Model.extend({
   idAttribute: 'objectId',
   save: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
     delete this.attributes.createdAt;
     delete this.attributes.updatedAt;
-    //return the model back to its original state since we have overloaded per above.
     return Backbone.Model.prototype.save.apply(this, arguments);
   },
-  saveMainCourse: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
-    delete this.attributes.createdAt;
-    delete this.attributes.updatedAt;
-    //return the model back to its original state since we have overloaded per above.
-    return Backbone.Model.prototype.save.apply(this, arguments);
-  },
-  saveDessert: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
-    delete this.attributes.createdAt;
-    delete this.attributes.updatedAt;
-    //return the model back to its original state since we have overloaded per above.
-    return Backbone.Model.prototype.save.apply(this, arguments);
-  },
-
 });
 
 var ParseCollection = Backbone.Collection.extend({
   whereClause: {field: '', className: '', objectId: ''},
-  //set up a 'parseWhere' method in order to successfully post to Parse server. See docs @ https://parseplatform.github.io/docs/rest/guide/#relational-queries
+  /*set up a 'parseWhere' method in order to successfully post to Parse server. See docs @*/ /*parseplatform.github.io/docs/rest/guide/#relational-queries*/
+
   parseWhere: function(field, className, objectId){
     this.whereClause = {
       field: field,
@@ -2308,14 +2328,13 @@ var ParseCollection = Backbone.Collection.extend({
     return url;
   },
   parse: function(data){
-    // console.log('parse data/parse-where', data.results[0].phone);
     return data.results;
   },
 });
 
-/**
-*Specials Model and Collections
-*/
+/**************************************************************************************
+MENU MODELS & COLLECTIONS
+**************************************************************************************/
 var Appetizer = ParseModel.extend ({
 idAttribute: 'cid',
   defaults: {
@@ -2376,10 +2395,9 @@ var SpecialCollection = ParseCollection.extend ({
   baseUrl: 'https://matias-recipe.herokuapp.com/classes/Special'
 });
 
-
-/**
-*Business Model and Collections
-*/
+/**************************************************************************************
+BUSEINESS MODELS & COLLECTIONS
+**************************************************************************************/
 
 var Business = ParseModel.extend ({
   defaults: {
@@ -2401,28 +2419,23 @@ var Business = ParseModel.extend ({
   },
   urlRoot: 'https://matias-recipe.herokuapp.com/classes/Business',
 
-  saveSpecial: function(key, val, options){
+  /**************************************************************************************
+  SAVE FUNCTIONS
+  **************************************************************************************/
+
+  save: function(key, val, options){
     this.set('specials', this.get('specials').toJSON());
-    return ParseModel.prototype.save.apply(this, arguments);
-  // console.log(this.state);
-  },
-  saveAppetizer: function(key, val, options){
     this.set('appetizer', this.get('appetizer').toJSON());
-    return ParseModel.prototype.save.apply(this, arguments);
-  },
-  saveMainCourse: function(key, val, options){
     this.set('maincourse', this.get('maincourse').toJSON());
-    return ParseModel.prototype.save.apply(this, arguments);
-  },
-  saveDessert: function(key, val, options){
     this.set('dessert', this.get('dessert').toJSON());
+
     return ParseModel.prototype.save.apply(this, arguments);
   },
   parse: function(data){
-    data.specials = new SpecialCollection(data.specials);
-    data.appetizer = new AppetizerCollection(data.appetizer);
-    data.maincourse = new MainCourseCollection(data.maincourse);
-    data.dessert = new DessertCollection(data.dessert);
+    data.specials = new SpecialCollection(data.objectId ? data.specials : this.get('specials'));
+    data.appetizer = new AppetizerCollection(data.objectId ? data.appetizer : this.get('appetizer'));
+    data.maincourse = new MainCourseCollection(data.objectId ? data.maincourse : this.get('maincourse'));
+    data.dessert = new DessertCollection(data.objectId ? data.dessert : this.get('dessert'));
     delete data.favorite;
     return data;
   },
@@ -2438,16 +2451,9 @@ var BusinessCollection = ParseCollection.extend ({
   // }
 });
 
-// var Favorite = ParseModel.extend({
-//   defaults: {
-//     favorite: '',
-//   },
-// });
-//
-// var FavoriteCollection = ParseCollection.extend({
-//   model: Favorite,
-// });
-
+ /**************************************************************************************
+  YELP MODEL
+  **************************************************************************************/
 /**
 *Yelp Ajax Call through proxy
 */
@@ -2461,18 +2467,9 @@ var YelpBusiness = Backbone.Model.extend({
   },
 });
 
-
-// var GoogleMaps = Backbone.Model.extend ({
-//   urlRoot: function(){
-//     console.log('testing google model');
-//     return 'https://maps.googleapis.com/maps/api/staticmap?center=34.84355,-82.40467&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C34.84355,-82.40467&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
-//   },
-//   parse: function(data){
-//     return data.businesses[0]
-//   },
-// });
-
-
+/**************************************************************************************
+EXPORTS
+**************************************************************************************/
 module.exports = {
   Special: Special,
   SpecialCollection: SpecialCollection,
