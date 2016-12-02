@@ -27,7 +27,7 @@ var AppetizerForm= React.createClass({
     // var newState = {};
     // newState[target.name] = target.value;
     // this.setState(newState);
-    this.props.appetizer.set(target.name, target.value);
+    this.props.appetizers.set(target.name, target.value);
     this.forceUpdate();
     console.log(target);
   },

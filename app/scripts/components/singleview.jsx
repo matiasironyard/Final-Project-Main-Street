@@ -27,7 +27,7 @@ var SpecialsList = React.createClass({
           <td className="special-name ">{special.get('name')}</td>
           <td className="special-description">{special.get('description')}</td>
           <td className="special-price ">{special.get('price')}</td>
-          <td className="special-available ">{special.get('expirydate')}</td>
+          {/*<td className="special-available ">{special.get('expirydate')}</td>*/}
         </tr>
       )
     });
@@ -43,7 +43,7 @@ var SpecialsList = React.createClass({
                   <th className="table-dish">Dish</th>
                   <th className="table-description">Description</th>
                   <th className="table-price">Price</th>
-                  <th className="table-available">Ends</th>
+                  {/*<th className="table-available">Ends</th>*/}
                 </tr>
               </thead>
               <tbody>

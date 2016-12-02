@@ -24,7 +24,7 @@ var DessertForm= React.createClass({
     // var newState = {};
     // newState[target.name] = target.value;
     // this.setState(newState);
-    this.props.dessert.set(target.name, target.value);
+    this.props.desserts.set(target.name, target.value);
     this.forceUpdate();
     console.log(target);
   },

@@ -43,7 +43,7 @@ var Template = React.createClass({
           </div>
         </div>
 
-      <div className="components container">
+      <div className="components container-fluid">
         {this.props.children}
       </div>
 
