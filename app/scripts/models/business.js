@@ -2,37 +2,23 @@ var Backbone = require('backbone');
 var Business = require('../components/authentication.jsx').AuthenticationContainer;
 var User = require('../parseUtilities.js').User;
 
-//setup Parse models
-/**
-*Parse Model and Collection
-*/
+/**************************************************************************************
+PARSE
+**************************************************************************************/
 
 var ParseModel = Backbone.Model.extend({
   idAttribute: 'objectId',
   save: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
     delete this.attributes.createdAt;
     delete this.attributes.updatedAt;
-    //return the model back to its original state since we have overloaded per above.
     return Backbone.Model.prototype.save.apply(this, arguments);
   },
-  saveMainCourse: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
-    delete this.attributes.createdAt;
-    delete this.attributes.updatedAt;
-    //return the model back to its original state since we have overloaded per above.
-    return Backbone.Model.prototype.save.apply(this, arguments);
-  },
-  saveDessert: function(key, val, options){    //delete the following so that we don't get a mismatch error when posting.
-    delete this.attributes.createdAt;
-    delete this.attributes.updatedAt;
-    //return the model back to its original state since we have overloaded per above.
-    return Backbone.Model.prototype.save.apply(this, arguments);
-  },
-
 });
 
 var ParseCollection = Backbone.Collection.extend({
   whereClause: {field: '', className: '', objectId: ''},
-  //set up a 'parseWhere' method in order to successfully post to Parse server. See docs @ https://parseplatform.github.io/docs/rest/guide/#relational-queries
+  /*set up a 'parseWhere' method in order to successfully post to Parse server. See docs @*/ /*parseplatform.github.io/docs/rest/guide/#relational-queries*/
+
   parseWhere: function(field, className, objectId){
     this.whereClause = {
       field: field,
@@ -54,14 +40,13 @@ var ParseCollection = Backbone.Collection.extend({
     return url;
   },
   parse: function(data){
-    // console.log('parse data/parse-where', data.results[0].phone);
     return data.results;
   },
 });
 
-/**
-*Specials Model and Collections
-*/
+/**************************************************************************************
+MENU MODELS & COLLECTIONS
+**************************************************************************************/
 var Appetizer = ParseModel.extend ({
 idAttribute: 'cid',
   defaults: {
@@ -122,10 +107,9 @@ var SpecialCollection = ParseCollection.extend ({
   baseUrl: 'https://matias-recipe.herokuapp.com/classes/Special'
 });
 
-
-/**
-*Business Model and Collections
-*/
+/**************************************************************************************
+BUSEINESS MODELS & COLLECTIONS
+**************************************************************************************/
 
 var Business = ParseModel.extend ({
   defaults: {
@@ -147,28 +131,23 @@ var Business = ParseModel.extend ({
   },
   urlRoot: 'https://matias-recipe.herokuapp.com/classes/Business',
 
-  saveSpecial: function(key, val, options){
+  /**************************************************************************************
+  SAVE FUNCTIONS
+  **************************************************************************************/
+
+  save: function(key, val, options){
     this.set('specials', this.get('specials').toJSON());
-    return ParseModel.prototype.save.apply(this, arguments);
-  // console.log(this.state);
-  },
-  saveAppetizer: function(key, val, options){
     this.set('appetizer', this.get('appetizer').toJSON());
-    return ParseModel.prototype.save.apply(this, arguments);
-  },
-  saveMainCourse: function(key, val, options){
     this.set('maincourse', this.get('maincourse').toJSON());
-    return ParseModel.prototype.save.apply(this, arguments);
-  },
-  saveDessert: function(key, val, options){
     this.set('dessert', this.get('dessert').toJSON());
+
     return ParseModel.prototype.save.apply(this, arguments);
   },
   parse: function(data){
-    data.specials = new SpecialCollection(data.specials);
-    data.appetizer = new AppetizerCollection(data.appetizer);
-    data.maincourse = new MainCourseCollection(data.maincourse);
-    data.dessert = new DessertCollection(data.dessert);
+    data.specials = new SpecialCollection(data.objectId ? data.specials : this.get('specials'));
+    data.appetizer = new AppetizerCollection(data.objectId ? data.appetizer : this.get('appetizer'));
+    data.maincourse = new MainCourseCollection(data.objectId ? data.maincourse : this.get('maincourse'));
+    data.dessert = new DessertCollection(data.objectId ? data.dessert : this.get('dessert'));
     delete data.favorite;
     return data;
   },
@@ -184,16 +163,9 @@ var BusinessCollection = ParseCollection.extend ({
   // }
 });
 
-// var Favorite = ParseModel.extend({
-//   defaults: {
-//     favorite: '',
-//   },
-// });
-//
-// var FavoriteCollection = ParseCollection.extend({
-//   model: Favorite,
-// });
-
+ /**************************************************************************************
+  YELP MODEL
+  **************************************************************************************/
 /**
 *Yelp Ajax Call through proxy
 */
@@ -207,18 +179,9 @@ var YelpBusiness = Backbone.Model.extend({
   },
 });
 
-
-// var GoogleMaps = Backbone.Model.extend ({
-//   urlRoot: function(){
-//     console.log('testing google model');
-//     return 'https://maps.googleapis.com/maps/api/staticmap?center=34.84355,-82.40467&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C34.84355,-82.40467&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
-//   },
-//   parse: function(data){
-//     return data.businesses[0]
-//   },
-// });
-
-
+/**************************************************************************************
+EXPORTS
+**************************************************************************************/
 module.exports = {
   Special: Special,
   SpecialCollection: SpecialCollection,

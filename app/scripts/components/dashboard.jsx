@@ -20,7 +20,9 @@ var MainCourseForm = require('../components/maincourse.jsx').MainCourseForm;
 var DessertForm = require('../components/dessert.jsx').DessertForm;
 var Modal = require('react-modal');
 
-
+/**************************************************************************************
+DASHBAORD COMPONENT
+**************************************************************************************/
 
 var Dashboard = React.createClass({
   getInitialState: function(){
@@ -78,42 +80,45 @@ var Dashboard = React.createClass({
   }
 });
 
-var SpecialsFormList = React.createClass({
-  getInitialState: function(){
-    return {
-      special: this.props.special,
-    };
-  },
+/**************************************************************************************
+SPECIALS COMPONENTS
+**************************************************************************************/
 
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.special);
-    // this.setState(id, this.props.speical.cid)
-  },
+var SpecialsForm = React.createClass({
+  // getInitialState: function(){
+  //   return {
+  //     special: this.props.special,
+  //   };
+  // },
+
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.special);
+  //   // this.setState(id, this.props.speical.cid)
+  // },
 
   handleInputChange: function(e){
     var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
+    // var newState = {};
+    // newState[target.name] = target.value;
+    // this.setState(newState);
     this.props.special.set(target.name, target.value);
-    console.log(target);
+    this.forceUpdate();
   },
 
   removeSpecial: function(e){
-    var special = this.state.special;
-    this.props.removeSpecial(special)
-    console.log(this.state);
+    var special = this.props.special;
+    this.props.removeSpecial(special);
   },
 
   render: function(){
-    var special = this.state.special;
+    var special = this.props.special;
     // console.log(special.get('expirydate'))
     var expiryDate = special.get('expirydate');
      var now = moment();
      var formatedDate = now.format("YYYY-MM-DD");
      if(formatedDate == expiryDate){
        this.removeSpecial(special);
-       console.warn(this.removeSpecial());
+      //  console.warn(this.removeSpecial());
      };
 
     return(
@@ -148,38 +153,35 @@ var SpecialsFormList = React.createClass({
   }
 });
 
-var SpecialsForm = React.createClass({
-  getInitialState: function(){
-    return this.props.business.toJSON();
-  },
-
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.business.toJSON());
-  },
-
-  handleInputChange: function(e){
-    var target = e.target;
-    var newState = {};
-    newState[target.name]  = target.value;
-    this.setState(newState);
-  },
-
+var SpecialsFormSet = React.createClass({
+  // getInitialState: function(){
+  //   return this.props.business.toJSON();
+  // },
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.business.toJSON());
+  // },
+  // handleInputChange: function(e){
+  //   var target = e.target;
+  //   var newState = {};
+  //   newState[target.name]  = target.value;
+  //   this.setState(newState);
+  // },
   handleSubmit: function(e){
   e.preventDefault();
   // console.log('business', this.state);
-  this.props.saveSpecial(this.state);
-},
-removeSpecial: function(special){
-    this.props.removeSpecial(special);
-},
+  this.props.saveSpecial();
+  },
+  removeSpecial: function(special){
+      this.props.removeSpecial(special);
+  },
  render: function(){
    var self = this;
-   var business= self.props.business;
-   var specialsFormset = business.get('specials').map(function(special){
+  //  var business= self.props.business;
+   var specialsFormset = this.props.specials.map(function(special){
     //  console.log('get specials', business.get('specials'));
      return (
        <div key={special.cid}>
-         <SpecialsFormList special={special} removeSpecial={self.removeSpecial}/>
+         <SpecialsForm special={special} removeSpecial={self.removeSpecial}/>
        </div>
      )
    });
@@ -198,11 +200,15 @@ removeSpecial: function(special){
  }
 });
 
+/**************************************************************************************
+PARENT CONTAINER
+**************************************************************************************/
+
 var DashboardContainer = React.createClass({
   getInitialState: function(){
     return {
       business: new models.Business(),
-      modalIsOpen: false,
+      // modalIsOpen: false,
     };
   },
 
@@ -214,51 +220,63 @@ var DashboardContainer = React.createClass({
     });
   },
 
-  componentWillReceiveProps: function(){
-    this.getBusiness();
-  },
-  getBusiness: function(){
-    var business = this.state.business;
-    var businessId = this.props.businessId;
-    if(!businessId){
-      return;
-    }
-    business.set('objectId', businessId);
-    business.fetch().then(()=> {
-      this.setState({business: business});
-    });
-  },
+  // componentWillReceiveProps: function(){
+  //   this.getBusiness();
+  // },
+  // getBusiness: function(){
+  //   var business = this.state.business;
+  //   var businessId = this.props.businessId;
+  //   if(!businessId){
+  //     return;
+  //   }
+  //   business.set('objectId', businessId);
+  //   business.fetch().then(()=> {
+  //     this.setState({business: business});
+  //   });
+  //
+  // },
 
+//ADD FUNCTIONS
   addSpecial: function(){
     var business = this.state.business;
     var specials = business.get('specials');
-    var special = new Special();
+    // var special = new Special();
     specials.add([{}]);
     this.setState({business: business})
-  },
-  removeSpecial: function(special){
-    var business = this.state.business;
-    var specialsCollection = business.get('specials');
-    specialsCollection.remove(special.cid);
-    business.save();
-    this.setState({business: business});
-  },
-
-  saveSpecial: function(specialData){
-    var business = this.state.business;
-    business.set(specialData);
-    business.saveSpecial();
   },
 
   addAppetizer: function(){
     var business = this.state.business;
     var appetizers = business.get('appetizer');
-    var appetizer = new Appetizer();
+    // var appetizer = new Appetizer();
     appetizers.add([{}]);
     this.setState({business: business})
-    console.log(this.state);
   },
 
+  addMainCourse: function(){
+    var business = this.state.business;
+    var mainCourses= business.get('maincourse');
+    // var mainCourse = new MainCourse();
+    mainCourses.add([{}]);
+    this.setState({business: business})
+  },
+
+  addDessert: function(){
+    var business = this.state.business;
+    var desserts = business.get('dessert');
+    // var dessert = new Dessert();
+    desserts.add([{}]);
+    this.setState({business: business})
+  },
+  //REMOVE FUNCTIONS
+  removeSpecial: function(special){
+    var business = this.state.business;
+    var specialsCollection = business.get('specials');
+    specialsCollection.remove(special);
+    business.save().then(() => {
+      this.setState({business: business});
+    });
+  },
   removeAppetizer: function(appetizer){
     var business = this.state.business;
     var appetizerCollection = business.get('appetizer');
@@ -266,21 +284,6 @@ var DashboardContainer = React.createClass({
     // business.save();
     this.setState({business: business});
   },
-
-  saveAppetizer: function(appetizerData){
-    var business = this.state.business;
-    business.set(appetizerData);
-    business.saveAppetizer();
-  },
-
-  addMainCourse: function(){
-    var business = this.state.business;
-    var mainCourses= business.get('maincourse');
-    var mainCourse = new MainCourse();
-    mainCourses.add([{}]);
-    this.setState({business: business})
-  },
-
   removeMainCourse: function(maincourse){
     var business = this.state.business;
     var mainCourseCollection = business.get('maincourse');
@@ -288,21 +291,6 @@ var DashboardContainer = React.createClass({
     // business.save();
     this.setState({business: business});
   },
-
-  saveMainCourse: function(mainCourseData){
-    var business = this.state.business;
-    business.set(mainCourseData);
-    business.saveMainCourse();
-  },
-
-  addDessert: function(){
-    var business = this.state.business;
-    var desserts = business.get('dessert');
-    var dessert = new Dessert();
-    desserts.add([{}]);
-    this.setState({business: business})
-  },
-
   removeDessert: function(dessert){
     var business = this.state.business;
     var dessertCollection = business.get('dessert');
@@ -310,32 +298,46 @@ var DashboardContainer = React.createClass({
     // business.save();
     this.setState({business: business});
   },
-
+  //SAVE FUNCTIONS
+  saveSpecial: function(){
+    var business = this.state.business;
+    business.save();
+  },
+  saveAppetizer: function(appetizerData){
+    var business = this.state.business;
+    business.set(appetizerData);
+    business.saveAppetizer();
+  },
+  saveMainCourse: function(mainCourseData){
+    var business = this.state.business;
+    business.set(mainCourseData);
+    business.saveMainCourse();
+  },
   saveDessert: function(dessertData){
     var business = this.state.business;
     business.set(dessertData);
     business.saveDessert();
   },
 
-  handleToggleSpecials: function(e){
-  e.preventDefault();
-  var showSpecials = !this.state.showSpecials;
-  this.setState({showSpecials: showSpecials});
-  },
-
-  handleToggleMenu: function(e){
-  e.preventDefault();
-  var showMenu = !this.state.showMenu;
-  this.setState({showMenu: showMenu});
-  },
-
-  openModal: function() {
-    this.setState({modalIsOpen: true});
-  },
-
-  closeModal: function() {
-    this.setState({modalIsOpen: false});
-  },
+  // handleToggleSpecials: function(e){
+  // e.preventDefault();
+  // var showSpecials = !this.state.showSpecials;
+  // this.setState({showSpecials: showSpecials});
+  // },
+  //
+  // handleToggleMenu: function(e){
+  // e.preventDefault();
+  // var showMenu = !this.state.showMenu;
+  // this.setState({showMenu: showMenu});
+  // },
+  //
+  // openModal: function() {
+  //   this.setState({modalIsOpen: true});
+  // },
+  //
+  // closeModal: function() {
+  //   this.setState({modalIsOpen: false});
+  // },
 
   render: function(){
     var businessName = this.state.business.get('name');
@@ -357,16 +359,20 @@ var DashboardContainer = React.createClass({
               <h1 className="well"> {businessName} Dashboard</h1>
               <Dashboard  business={this.state.business} />
                 <div className="specials-pane">
-                  <SpecialsForm  business={this.state.business} saveSpecial={this.saveSpecial} specials={this.state.business.get('specials')}  removeSpecial={this.removeSpecial} addSpecial={this.addSpecial}/>
+                  <SpecialsFormSet
+                    specials={this.state.business.get('specials')}
+                    saveSpecial={this.saveSpecial}
+                    removeSpecial={this.removeSpecial}
+                    addSpecial={this.addSpecial}
+                    />
                 </div>
-                <div className="menu-pane">
-                  <h2>Menu</h2>
-                  <div className="menu-creator">
+
+                <h1>What is going on...</h1>
                     <AppetizerForm className="menu-creator-panels"   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
                     <MainCourseForm className="menu-creator-panels"  business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
                     <DessertForm className="menu-creator-panels"  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
-                  </div>
-                </div>
+
+
               </div>
         </div>
       </div>
