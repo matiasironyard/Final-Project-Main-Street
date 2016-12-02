@@ -9,49 +9,50 @@ var AppetizerCollection = require('../models/business.js').AppetizerCollection;
 var Appetizer = require('../models/business.js').Appetizer;
 var moment = require('moment');
 
-var AppetizerFormList = React.createClass({
-  getInitialState: function() {
-
-    return {
-      appetizer: this.props.appetizer,
-    };
-  },
-
-  componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.appetizer);
-    // this.setState(id, this.props.speical.cid)
-  },
+var AppetizerForm= React.createClass({
+  // getInitialState: function() {
+  //
+  //   return {
+  //     appetizer: this.props.appetizer,
+  //   };
+  // },
+  //
+  // componentWillReceiveProps: function(newProps) {
+  //   this.setState(newProps.appetizer);
+  //   // this.setState(id, this.props.speical.cid)
+  // },
 
   handleInputChange: function(e) {
     var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
+    // var newState = {};
+    // newState[target.name] = target.value;
+    // this.setState(newState);
     this.props.appetizer.set(target.name, target.value);
+    this.forceUpdate();
     console.log(target);
   },
 
   removeAppetizer: function(e) {
-    var appetizer = this.state.appetizer;
+    var appetizer = this.props.appetizers;
     this.props.removeAppetizer(appetizer)
   },
 
   render: function() {
-    var appetizer = this.state.appetizer;
+    var appetizers = this.props.appetizers;
     // console.log(special.get('expirydate'))
     return (
       <div className="menu-forms appetizers">
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <input className="form-control" className="form-control"  onChange={this.handleInputChange} name="name"  value={appetizer.get('name')} type="text"  id="name" placeholder="dish name"/>
+          <input className="form-control" className="form-control"  onChange={this.handleInputChange} name="name"  value={appetizers.get('name')} type="text"  id="name" placeholder="dish name"/>
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <input className="form-control" className="form-control"  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={appetizer.get('description')} type="text"  id="description" placeholder="dish description"/>
+          <input className="form-control" className="form-control"  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={appetizers.get('description')} type="text"  id="description" placeholder="dish description"/>
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
-          <input className="form-control" className="form-control"  onChange={this.handleInputChange} name="price"  value={appetizer.get('price')} type="text"  id="price" placeholder="dish price"/>
+          <input className="form-control" className="form-control"  onChange={this.handleInputChange} name="price"  value={appetizers.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
         <button  onClick = {this.removeAppetizer} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right">Delete</button>
         <div>
@@ -61,26 +62,26 @@ var AppetizerFormList = React.createClass({
   }
 });
 
-var AppetizerForm = React.createClass({
-  getInitialState: function() {
-    return this.props.business.toJSON();
-  },
-
-  componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.business.toJSON());
-  },
-
-  handleInputChange: function(e) {
-    var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
-  },
+var AppetizerFormSet = React.createClass({
+  // getInitialState: function() {
+  //   return this.props.business.toJSON();
+  // },
+  //
+  // componentWillReceiveProps: function(newProps) {
+  //   this.setState(newProps.business.toJSON());
+  // },
+  //
+  // handleInputChange: function(e) {
+  //   var target = e.target;
+  //   var newState = {};
+  //   newState[target.name] = target.value;
+  //   this.setState(newState);
+  // },
 
   handleSubmit: function(e) {
     e.preventDefault();
     // console.log('business', this.state);
-    this.props.saveAppetizer(this.state);
+    this.props.saveAppetizer();
   },
 
   removeAppetizer: function(appetizer) {
@@ -89,12 +90,12 @@ var AppetizerForm = React.createClass({
 
   render: function() {
     var self = this;
-    var business = self.props.business;
-    var appetizerFormset = business.get('appetizer').map(function(appetizerItem) {
+    // var business = self.props.business;
+    var appetizerFormset = this.props.appetizers.map(function(appetizerItem) {
       //  console.log('get specials', business.get('specials'));
       return (
         <div key={appetizerItem.cid}>
-         <AppetizerFormList appetizer={appetizerItem} removeAppetizer={self.removeAppetizer}/>
+         <AppetizerForm appetizers={appetizerItem} removeAppetizer={self.removeAppetizer}/>
        </div>
       )
     });
@@ -115,5 +116,5 @@ var AppetizerForm = React.createClass({
 });
 
 module.exports = {
-  AppetizerForm: AppetizerForm
+  AppetizerFormSet: AppetizerFormSet
 }

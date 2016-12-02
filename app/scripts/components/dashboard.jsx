@@ -15,9 +15,9 @@ var Dessert = require('../models/business.js').Dessert;
 var DessertCollection = require('../models/business.js').DessertCollection;
 var Template = require('../templates/templates.jsx');
 var moment = require('moment');
-var AppetizerForm = require('../components/appetizer.jsx').AppetizerForm;
-var MainCourseForm = require('../components/maincourse.jsx').MainCourseForm;
-var DessertForm = require('../components/dessert.jsx').DessertForm;
+var AppetizerFormSet= require('../components/appetizer.jsx').AppetizerFormSet;
+var MainCourseFormSet = require('../components/maincourse.jsx').MainCourseFormSet;
+var DessertFormSet = require('../components/dessert.jsx').DessertFormSet;
 var Modal = require('react-modal');
 
 /**************************************************************************************
@@ -280,23 +280,26 @@ var DashboardContainer = React.createClass({
   removeAppetizer: function(appetizer){
     var business = this.state.business;
     var appetizerCollection = business.get('appetizer');
-    appetizerCollection.remove(appetizer.cid);
-    // business.save();
-    this.setState({business: business});
+    appetizerCollection.remove(appetizer);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
   },
   removeMainCourse: function(maincourse){
     var business = this.state.business;
     var mainCourseCollection = business.get('maincourse');
-    mainCourseCollection.remove(maincourse.cid);
-    // business.save();
-    this.setState({business: business});
+    mainCourseCollection.remove(maincourse);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
   },
   removeDessert: function(dessert){
     var business = this.state.business;
     var dessertCollection = business.get('dessert');
-    dessertCollection.remove(dessert.cid);
-    // business.save();
-    this.setState({business: business});
+    dessertCollection.remove(dessert);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
   },
   //SAVE FUNCTIONS
   saveSpecial: function(){
@@ -305,18 +308,19 @@ var DashboardContainer = React.createClass({
   },
   saveAppetizer: function(appetizerData){
     var business = this.state.business;
-    business.set(appetizerData);
-    business.saveAppetizer();
+    // business.set(appetizerData);
+    business.save();
   },
   saveMainCourse: function(mainCourseData){
     var business = this.state.business;
-    business.set(mainCourseData);
-    business.saveMainCourse();
+    // business.set(mainCourseData);
+    business.save();
   },
   saveDessert: function(dessertData){
     var business = this.state.business;
-    business.set(dessertData);
-    business.saveDessert();
+    // business.set(dessertData);
+    // business.saveDessert();
+    business.save();
   },
 
   // handleToggleSpecials: function(e){
@@ -368,11 +372,22 @@ var DashboardContainer = React.createClass({
                 </div>
 
                 <h1>What is going on...</h1>
-                    <AppetizerForm className="menu-creator-panels"   business={this.state.business} saveAppetizer={this.saveAppetizer} appetizer={this.state.business.get('appetizer')} removeAppetizer={this.removeAppetizer} addAppetizer={this.addAppetizer}/>
-                    <MainCourseForm className="menu-creator-panels"  business={this.state.business} saveMainCourse={this.saveMainCourse} maincourse={this.state.business.get('maincourse')} removeMainCourse={this.removeMainCourse} addMainCourse={this.addMainCourse}/>
-                    <DessertForm className="menu-creator-panels"  business={this.state.business} saveDessert={this.saveDessert} dessert={this.state.business.get('dessert')} removeDessert={this.removeDessert} addDessert={this.addDessert}/>
-
-
+                    <AppetizerFormSet className="menu-creator-panels"
+                    appetizers={this.state.business.get('appetizer')}
+                    saveAppetizer={this.saveAppetizer}
+                    removeAppetizer={this.removeAppetizer}
+                    addAppetizer={this.addAppetizer}
+                    />
+                    <MainCourseFormSet className="menu-creator-panels"
+                      maincourse={this.state.business.get('maincourse')} saveMainCourse={this.saveMainCourse}  removeMainCourse={this.removeMainCourse}
+                      addMainCourse={this.addMainCourse}
+                      />
+                    <DessertFormSet className="menu-creator-panels"
+                      desserts={this.state.business.get('dessert')}
+                      saveDessert={this.saveDessert}
+                      removeDessert={this.removeDessert}
+                      addDessert={this.addDessert}
+                      />
               </div>
         </div>
       </div>
@@ -384,3 +399,5 @@ var DashboardContainer = React.createClass({
 module.exports = {
   DashboardContainer: DashboardContainer,
 }
+
+// business={this.state.business}

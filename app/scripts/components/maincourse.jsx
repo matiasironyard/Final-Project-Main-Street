@@ -11,35 +11,36 @@ var Appetizer = require('../models/business.js').Appetizer;
 
 
 
-var MainCourseFormList = React.createClass({
-  getInitialState: function(){
-
-    return {
-      maincourse: this.props.maincourse,
-    };
-  },
-
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.maincourse);
-    // this.setState(id, this.props.speical.cid)
-  },
+var MainCourseForm= React.createClass({
+  // getInitialState: function(){
+  //
+  //   return {
+  //     maincourse: this.props.maincourse,
+  //   };
+  // },
+  //
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.maincourse);
+  //   // this.setState(id, this.props.speical.cid)
+  // },
 
   handleInputChange: function(e){
     var target = e.target;
-    var newState = {};
-    newState[target.name] = target.value;
-    this.setState(newState);
+    // var newState = {};
+    // newState[target.name] = target.value;
+    // this.setState(newState);
     this.props.maincourse.set(target.name, target.value);
+    this.forceUpdate();
     console.log(target);
   },
 
   removeMainCourse: function(e){
-    var maincourse = this.state.maincourse;
+    var maincourse = this.props.maincourse;
     this.props.removeMainCourse(maincourse)
   },
 
   render: function(){
-    var maincourse = this.state.maincourse;
+    var maincourse = this.props.maincourse;
     // console.log(special.get('expirydate'))
     return(
       <div className="menu-forms maincourse">
@@ -63,26 +64,26 @@ var MainCourseFormList = React.createClass({
   }
 });
 
-var MainCourseForm = React.createClass({
-  getInitialState: function(){
-    return this.props.business.toJSON();
-  },
+var MainCourseFormSet = React.createClass({
+  // getInitialState: function(){
+  //   return this.props.business.toJSON();
+  // },
+  //
+  // componentWillReceiveProps: function(newProps){
+  //   this.setState(newProps.business.toJSON());
+  // },
 
-  componentWillReceiveProps: function(newProps){
-    this.setState(newProps.business.toJSON());
-  },
-
-  handleInputChange: function(e){
-    var target = e.target;
-    var newState = {};
-    newState[target.name]  = target.value;
-    this.setState(newState);
-  },
+  // handleInputChange: function(e){
+  //   var target = e.target;
+  //   var newState = {};
+  //   newState[target.name]  = target.value;
+  //   this.setState(newState);
+  // },
 
   handleSubmit: function(e){
   e.preventDefault();
   // console.log('business', this.state);
-  this.props.saveMainCourse(this.state);
+  this.props.saveMainCourse();
 },
 
 removeMainCourse: function(maincourse){
@@ -91,12 +92,12 @@ removeMainCourse: function(maincourse){
 
  render: function(){
    var self = this;
-   var business= self.props.business;
-   var mainCourseFormset = business.get('maincourse').map(function(maincourseItem){
+  //  var business= self.props.business;
+   var mainCourseFormset = this.props.maincourse.map(function(maincourseItem){
     //  console.log('get specials', business.get('specials'));
      return (
        <div key={maincourseItem.cid}>
-         <MainCourseFormList maincourse={maincourseItem} removeMainCourse={self.removeMainCourse}/>
+         <MainCourseForm maincourse={maincourseItem} removeMainCourse={self.removeMainCourse}/>
        </div>
      )
    });
@@ -117,5 +118,5 @@ removeMainCourse: function(maincourse){
 });
 
 module.exports = {
-  MainCourseForm: MainCourseForm
+  MainCourseFormSet: MainCourseFormSet
 }
