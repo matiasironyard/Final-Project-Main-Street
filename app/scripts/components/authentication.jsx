@@ -90,8 +90,10 @@ var SignUpComponent = React.createClass({
     return (
       <div className="signup-container container-fluid">
             <div className="signup-col  mdl-shadow--2dp col-md-3 col-md-offset-5">
-              <h2 className="signup-header">In The Mood</h2>
-              <h4 className="signup-subheader">@ Downtown Greenville</h4>
+              <div className="inthemood-headers">
+                <h2 className="inthemood-header">In The Mood</h2>
+                <h4 className="inthemood-subheader">@ Downtown Greenville</h4>
+              </div>
               <div className="mdl-card__actions mdl-card--border">
                 <h4>Sign up</h4>
               </div>
@@ -111,7 +113,7 @@ var SignUpComponent = React.createClass({
                 <Modal  className="signup-modal" isOpen={this.state.modalIsOpen}>
                   <div className="signup-modal col-md-4 col-md-offset-4 form-group">
                     <h3>We make easy</h3>
-                    <p>5 minutes. Yes, that's all it will take to create your business profile. We want to help you get up and going fast, so that you get back to business!</p>
+                    <p>5 minutes. Yes, that s all it will take to create your business profile. We want to help you get up and going fast, so that you get back to business!</p>
                     <div className="mdl-card__actions mdl-card--border">
                       <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.</p>
                     </div>

@@ -54,7 +54,7 @@ var AppetizerForm= React.createClass({
           <label htmlFor="price">Price</label>
           <input className="form-control" className="form-control"  onChange={this.handleInputChange} name="price"  value={appetizers.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
-        <button  onClick = {this.removeAppetizer} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right">Delete</button>
+        <button  onClick = {this.removeAppetizer} type="button" className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"><i className="material-icons">delete_forever</i></button>
         <div>
         </div>
       </div>
@@ -105,10 +105,10 @@ var AppetizerFormSet = React.createClass({
          <h3>Appetizers</h3>
          <div className="form-inLine">
            {appetizerFormset}
-           <button  type="button" onClick = {this.props.addAppetizer} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Another</button>
+           <button  type="button" onClick = {this.props.addAppetizer} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
          </div>
          <br></br>
-        <button  onClick={this.handleSubmit} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Save Appetizer</button>
+        <button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
        </form>
      </div>
     );

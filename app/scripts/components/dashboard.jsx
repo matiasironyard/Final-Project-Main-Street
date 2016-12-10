@@ -9,14 +9,20 @@ var SpecialCollection = require('../models/business.js').SpecialCollection;
 var Special = require('../models/business.js').Special;
 var Appetizer = require('../models/business.js').Appetizer;
 var AppetizerCollection = require('../models/business.js').AppetizerCollection;
-var MainCourse = require('../models/business.js').MainCourse;
-var MainCourseCollection = require('../models/business.js').MainCourseCollection;
+var Breakfast = require('../models/business.js').Breakfast;
+var BreakfastCollection = require('../models/business.js').BreakfastCollection;
+var Lunch = require('../models/business.js').Lunch;
+var LunchCollection = require('../models/business.js').LunchCollection;
+var Dinner = require('../models/business.js').Dinner;
+var DinnerCollection = require('../models/business.js').DinnerCollection;
 var Dessert = require('../models/business.js').Dessert;
 var DessertCollection = require('../models/business.js').DessertCollection;
 var Template = require('../templates/templates.jsx');
 var moment = require('moment');
 var AppetizerFormSet= require('../components/appetizer.jsx').AppetizerFormSet;
-var MainCourseFormSet = require('../components/maincourse.jsx').MainCourseFormSet;
+var BreakfastFormSet = require('../components/breakfast.jsx').BreakfastFormSet;
+var LunchFormSet = require('../components/lunch.jsx').LunchFormSet;
+var DinnerFormSet = require('../components/dinner.jsx').DinnerFormSet;
 var DessertFormSet = require('../components/dessert.jsx').DessertFormSet;
 var Modal = require('react-modal');
 
@@ -35,46 +41,54 @@ var Dashboard = React.createClass({
 
   render: function(){
     var business = this.props.business;
+    console.log(business);
     var objectId = this.props.business.get('objectId');
     var link = '#restaurants/' + objectId + '/';
     var geolocation = business.get('lat') + ',' + business.get('long');
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
       <div className="dashboard-container col-md-12">
-        <div className="dashboard-header col-md-3">
-          <img className="img-thumbnail" src={business.get('image_url')}/>
-          <ul>
-            <li>{business.get('name')}</li>
-            <li><img src={business.get('rating_img_url')}/></li>
-            <li>{business.get('mainCategory')}</li>
-            <li>{business.get('subCategory')}</li>
-            <li>{business.get('is_closed')}</li>
-            <li>{business.get('phone')}</li>
+        <div className="dashboard-header col-md-4 mdl-card mdl-shadow--2dp">
+          <img className="img-thumbnail" src={business.get('image_url')} width="150"/>
+          <ul className="mdl-list">
+            <li className="mdl-list__item"><h5>{business.get('name')}</h5></li>
+            <li className="mdl-list__item">Category:  {business.get('mainCategory')}</li>
+            <li className="mdl-list__item">Rating:  {business.get('rating')}/5</li>
+            <li className="mdl-list__item">Range:  {business.get('price')}</li>
+            <li className="mdl-list__item">Phone: {business.get('phone')}</li>
           </ul>
-          <a href={link} ><button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">View Page</button></a>
-          <div>
-            <a href="#registration/" ><button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Edit Info</button></a>
+          <div className="mdl-card__actions mdl-card--border">
+            <a href={link} ><button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left">View Page</button></a>
+            <div>
+              <a href="#registration/" ><button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right">Edit Info</button></a>
+            </div>
           </div>
         </div>
-        <div className="col-md-3 map">
-          <h3>Location</h3>
-          <img className="img-thumbnail"src={googleMap}/>
-          <p>{business.get('address')}</p>
-          <p>{business.get('city')}, {business.get('state')}, {business.get('zip')}</p>
+
+        <div className="col-md-6 col-md-offset-1 uploaded-images">
+          <h4 className="well">Uploaded Images</h4>
+          <div className="col-md-6">
+            <img className="img-thumbnail" width="150px" src={business.get('image_upload')}/>
+            <p>Header image</p>
+          </div>
+          <div className="col-md-6">
+            <img className="img-thumbnail" width="150px" src={business.get('menu_upload')}/>
+            <p>About image</p>
+          </div>
         </div>
-        <div className="col-md-3 dashboard-review">
-          <h3>Recent Review</h3>
-            <img className="img-thumbnail" src={business.get('snippet_image_url')}/>
-            <p>{business.get('snippet_text')}</p>
+
+        <div className="col-md-6 col-md-offset-1 map">
+          <h4 className="well">Location</h4>
+          <div className="location-map col-md-6">
+            <img className="img-thumbnail pull-left"src={googleMap}/>
+          </div>
+          <div className="location-address col-md-6">
+            <h5>Address</h5>
+            <p>{business.get('address')}</p>
+            <p>{business.get('city')}, {business.get('state')}, {business.get('zip')}</p>
+          </div>
         </div>
-        <div className="col-md-2 uploaded-images">
-          <h3>Header Image</h3>
-          <img className="img-thumbnail" width="150px" src={business.get('image_upload')}/>
-        </div>
-        <div className="col-md-2 uploaded-images">
-          <h3>About Image</h3>
-          <img className="img-thumbnail" width="150px" src={business.get('menu_upload')}/>
-        </div>
+
       </div>
     )
   }
@@ -146,7 +160,7 @@ var SpecialsForm = React.createClass({
             <input className="form-control" onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
           </div>
           <div>
-            <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right" onClick = {this.removeSpecial} type="button">Delete</button>
+            <button type="button" onClick = {this.removeSpecial} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"><i className="material-icons">delete_forever</i></button>
           </div>
       </div>
     );
@@ -192,8 +206,8 @@ var SpecialsFormSet = React.createClass({
          <div className="col-md-12 form-inLine">
            {specialsFormset}
          </div>
-         <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" onClick = {self.props.addSpecial} >Add Another</button>
-         <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" color = "primary" type="submit" >Save Specials</button>
+         <button type="button" onClick = {self.props.addSpecial} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
+         <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
        </form>
      </div>
    );
@@ -252,12 +266,25 @@ var DashboardContainer = React.createClass({
     appetizers.add([{}]);
     this.setState({business: business})
   },
-
-  addMainCourse: function(){
+  addBreakfast: function(){
     var business = this.state.business;
-    var mainCourses= business.get('maincourse');
+    var addBreakfast= business.get('breakfast');
     // var mainCourse = new MainCourse();
-    mainCourses.add([{}]);
+    addBreakfast.add([{}]);
+    this.setState({business: business})
+  },
+  addLunch: function(){
+    var business = this.state.business;
+    var addLunch= business.get('lunch');
+    // var mainCourse = new MainCourse();
+    addLunch.add([{}]);
+    this.setState({business: business})
+  },
+  addDinner: function(){
+    var business = this.state.business;
+    var addDinner= business.get('dinner');
+    // var mainCourse = new MainCourse();
+    addDinner.add([{}]);
     this.setState({business: business})
   },
 
@@ -285,10 +312,26 @@ var DashboardContainer = React.createClass({
       this.setState({business: business});
     });
   },
-  removeMainCourse: function(maincourse){
+  removeBreakfast: function(breakfast){
     var business = this.state.business;
-    var mainCourseCollection = business.get('maincourse');
-    mainCourseCollection.remove(maincourse);
+    var breakfastCollection = business.get('breakfast');
+    breakfastCollection.remove(breakfast);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
+  },
+  removeLunch: function(lunch){
+    var business = this.state.business;
+    var lunchCollection = business.get('lunch');
+    lunchCollection.remove(lunch);
+    business.save().then(()=>{
+      this.setState({business: business});
+    });
+  },
+  removeDinner: function(dinner){
+    var business = this.state.business;
+    var dinnerCollection = business.get('dinner');
+    dinnerCollection.remove(dinner);
     business.save().then(()=>{
       this.setState({business: business});
     });
@@ -311,7 +354,17 @@ var DashboardContainer = React.createClass({
     // business.set(appetizerData);
     business.save();
   },
-  saveMainCourse: function(mainCourseData){
+  saveBreakfast: function(breakfastData){
+    var business = this.state.business;
+    // business.set(mainCourseData);
+    business.save();
+  },
+  saveLunch: function(lunchData){
+    var business = this.state.business;
+    // business.set(mainCourseData);
+    business.save();
+  },
+  saveDinner: function(lunchData){
     var business = this.state.business;
     // business.set(mainCourseData);
     business.save();
@@ -348,7 +401,9 @@ var DashboardContainer = React.createClass({
     console.log(businessName);
     var appetizer = this.state.business.get('appetizer');
     console.log(appetizer);
-    var maincourse = this.state.business.get('maincourse');
+    var breakfast = this.state.business.get('breakfast');
+    var lunch = this.state.business.get('lunch');
+    var dinner = this.state.business.get('dinner');
     var dessert = this.state.business.get('dessert');
     var openSpecialMessage = this.state.showSpecials  ?  !this.state.showSpecials : "Open Editor";
     var closeSpecialMessage = !this.state.showSpecials  ? this.state.showSpecials : "Close Editor";
@@ -371,17 +426,25 @@ var DashboardContainer = React.createClass({
                     />
                 </div>
 
-                <h1>What is going on...</h1>
+                <h1>Menu Dashboard</h1>
                     <AppetizerFormSet className="menu-creator-panels"
                     appetizers={this.state.business.get('appetizer')}
                     saveAppetizer={this.saveAppetizer}
                     removeAppetizer={this.removeAppetizer}
                     addAppetizer={this.addAppetizer}
                     />
-                    <MainCourseFormSet className="menu-creator-panels"
-                      maincourse={this.state.business.get('maincourse')} saveMainCourse={this.saveMainCourse}  removeMainCourse={this.removeMainCourse}
-                      addMainCourse={this.addMainCourse}
+                  <BreakfastFormSet className="menu-creator-panels"
+                    breakfast={this.state.business.get('breakfast')} saveBreakfast={this.saveBreakfast}  removeBreakfast={this.removeBreakfast}
+                    addBreakfast={this.addBreakfast}
+                    />
+                  <LunchFormSet className="menu-creator-panels"
+                      lunch={this.state.business.get('lunch')} saveLunch={this.saveLunch}  removeLunch={this.removeLunch}
+                      addLunch={this.addLunch}
                       />
+                    <DinnerFormSet className="menu-creator-panels"
+                    dinner={this.state.business.get('dinner')} saveDinner={this.saveDinner}  removeDinner={this.removeDinner}
+                    addDinner={this.addDinner}
+                    />
                     <DessertFormSet className="menu-creator-panels"
                       desserts={this.state.business.get('dessert')}
                       saveDessert={this.saveDessert}

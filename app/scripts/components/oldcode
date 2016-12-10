@@ -11,3 +11,9 @@
   //   });
   // },
     //##############################################
+
+google static map
+// console.log(geolocation);
+// var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+// console.log(googleMap);
+// var directions = 'https://www.google.com/maps/dir//'+geolocation;

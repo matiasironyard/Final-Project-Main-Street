@@ -53,7 +53,7 @@ var DessertForm= React.createClass({
           <input className="form-control"  onChange={this.handleInputChange} name="price"  value={desserts.get('price')} type="text"  id="price" placeholder="dish price"/>
         </div>
         <div>
-          <button  onClick = {this.removeDessert} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right">Delete</button>
+          <button  onClick = {this.removeDessert} type="button" className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"><i className="material-icons">delete_forever</i></button>
         </div>
       </div>
     );
@@ -103,10 +103,10 @@ var DessertFormSet = React.createClass({
          <h3>Desserts</h3>
          <div className="form-inLine">
            {dessertFormset}
-          <button  type="button" onClick = {this.props.addDessert} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Another</button>
+          <button  type="button" onClick = {this.props.addDessert} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
          </div>
          <br></br>
-        <button  onClick={this.handleSubmit} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Save Dessert</button>
+        <button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
        </form>
      </div>
     );
