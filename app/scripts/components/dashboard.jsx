@@ -222,8 +222,14 @@ var DashboardContainer = React.createClass({
   getInitialState: function(){
     return {
       business: new models.Business(),
-      // modalIsOpen: false,
+      showComponent: false
     };
+  },
+  onClick: function() {
+  this.setState({ showComponent: true });
+  },
+  onClickClose: function() {
+  this.setState({ showComponent: false });
   },
 
   componentWillMount: function(){
@@ -233,22 +239,6 @@ var DashboardContainer = React.createClass({
         self.setState({'business': businessCollection.first()});
     });
   },
-
-  // componentWillReceiveProps: function(){
-  //   this.getBusiness();
-  // },
-  // getBusiness: function(){
-  //   var business = this.state.business;
-  //   var businessId = this.props.businessId;
-  //   if(!businessId){
-  //     return;
-  //   }
-  //   business.set('objectId', businessId);
-  //   business.fetch().then(()=> {
-  //     this.setState({business: business});
-  //   });
-  //
-  // },
 
 //ADD FUNCTIONS
   addSpecial: function(){
@@ -287,7 +277,6 @@ var DashboardContainer = React.createClass({
     addDinner.add([{}]);
     this.setState({business: business})
   },
-
   addDessert: function(){
     var business = this.state.business;
     var desserts = business.get('dessert');
@@ -376,25 +365,6 @@ var DashboardContainer = React.createClass({
     business.save();
   },
 
-  // handleToggleSpecials: function(e){
-  // e.preventDefault();
-  // var showSpecials = !this.state.showSpecials;
-  // this.setState({showSpecials: showSpecials});
-  // },
-  //
-  // handleToggleMenu: function(e){
-  // e.preventDefault();
-  // var showMenu = !this.state.showMenu;
-  // this.setState({showMenu: showMenu});
-  // },
-  //
-  // openModal: function() {
-  //   this.setState({modalIsOpen: true});
-  // },
-  //
-  // closeModal: function() {
-  //   this.setState({modalIsOpen: false});
-  // },
 
   render: function(){
     var businessName = this.state.business.get('name');
@@ -418,16 +388,19 @@ var DashboardContainer = React.createClass({
               <h1 className="well"> {businessName} Dashboard</h1>
               <Dashboard  business={this.state.business} />
                 <div className="specials-pane">
-                  <SpecialsFormSet
+                  <h4>Specials</h4>
+                  <input type="submit" value="Search" onClick={this.onClick} />
+                  <input type="submit" value="Search" onClick={this.onClickClose} />
+                  { this.state.showComponent ? <SpecialsFormSet
                     specials={this.state.business.get('specials')}
                     saveSpecial={this.saveSpecial}
                     removeSpecial={this.removeSpecial}
                     addSpecial={this.addSpecial}
-                    />
+                    /> : null}
                 </div>
 
                 <h1>Menu Dashboard</h1>
-                    <AppetizerFormSet className="menu-creator-panels"
+                  <AppetizerFormSet className="menu-creator-panels"
                     appetizers={this.state.business.get('appetizer')}
                     saveAppetizer={this.saveAppetizer}
                     removeAppetizer={this.removeAppetizer}

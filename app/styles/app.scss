@@ -393,13 +393,25 @@ background-color: #FFFDE7;
 .menu-pane{
   .menu-panels{
     margin-bottom: 30px;
+    .header{
+      background-color: blue;
+    }
     .menu-forms{
       // background-color: blue;
       margin-bottom: 60px;
     }
   }
 }
-
+.menu-panels{
+  margin-bottom: 30px;
+  .header{
+    margin-bottom: 40px;
+  }
+  .menu-forms{
+    background-color: blue;
+    margin-bottom: 60px;
+  }
+}
 
 //Template
 .template{

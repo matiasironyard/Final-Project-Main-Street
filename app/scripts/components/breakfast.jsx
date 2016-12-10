@@ -66,20 +66,17 @@ var BreakfastForm= React.createClass({
 });
 
 var BreakfastFormSet = React.createClass({
-  // getInitialState: function(){
-  //   return this.props.business.toJSON();
-  // },
-  //
-  // componentWillReceiveProps: function(newProps){
-  //   this.setState(newProps.business.toJSON());
-  // },
+  getInitialState: function() {
+          return { showComponent: false };
+      },
 
-  // handleInputChange: function(e){
-  //   var target = e.target;
-  //   var newState = {};
-  //   newState[target.name]  = target.value;
-  //   this.setState(newState);
-  // },
+  onClick: function() {
+      this.setState({ showComponent: true });
+  },
+  onClickClose: function() {
+      this.setState({ showComponent: false });
+  },
+
 
   handleSubmit: function(e){
   e.preventDefault();
@@ -105,16 +102,22 @@ removeBreakfast: function(breakfast){
      )
    });
    return (
-     <div className="menu-panels col-md-4">
-       <form onSubmit={this.handleSubmit}>
+     <div className="menu-panels mdl-shadow--2dp col-md-12">
+       <div className="header">
          <h3>Breakfast</h3>
+         <div className="header-buttons mdl-card__actions mdl-card--border">
+           <button className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</button>
+           <button className="mdl-button mdl-js-button mdl-button--raised pull-right" type="submit" onClick={this.onClickClose}>Hide</button>
+         </div>
+       </div>
+        { this.state.showComponent ? <form onSubmit={this.handleSubmit}>
          <div className="form-inLine">
            {breakfastFormset}
           <button  type="button" onClick = {this.props.addBreakfast} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
          </div>
          <br></br>
         <button  onClick={this.handleSubmit} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
-       </form>
+       </form>:null}
      </div>
    );
  }

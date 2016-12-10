@@ -63,20 +63,16 @@ var AppetizerForm= React.createClass({
 });
 
 var AppetizerFormSet = React.createClass({
-  // getInitialState: function() {
-  //   return this.props.business.toJSON();
-  // },
-  //
-  // componentWillReceiveProps: function(newProps) {
-  //   this.setState(newProps.business.toJSON());
-  // },
-  //
-  // handleInputChange: function(e) {
-  //   var target = e.target;
-  //   var newState = {};
-  //   newState[target.name] = target.value;
-  //   this.setState(newState);
-  // },
+  getInitialState: function() {
+          return { showComponent: false };
+      },
+
+  onClick: function() {
+      this.setState({ showComponent: true });
+  },
+  onClickClose: function() {
+      this.setState({ showComponent: false });
+  },
 
   handleSubmit: function(e) {
     e.preventDefault();
@@ -100,16 +96,23 @@ var AppetizerFormSet = React.createClass({
       )
     });
     return (
-      <div className="menu-panels col-md-4">
-       <form onSubmit={this.handleSubmit}>
-         <h3>Appetizers</h3>
+      <div className="menu-panels mdl-shadow--2dp col-md-12">
+        <div className="header">
+          <h3>Appetizers</h3>
+          <div className="header-buttons mdl-card__actions mdl-card--border">
+            <button className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</button>
+            <button className="mdl-button mdl-js-button mdl-button--raised pull-right" type="submit" onClick={this.onClickClose}>Hide</button>
+          </div>
+        </div>
+
+       { this.state.showComponent ? <form onSubmit={this.handleSubmit}>
          <div className="form-inLine">
            {appetizerFormset}
            <button  type="button" onClick = {this.props.addAppetizer} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
          </div>
          <br></br>
         <button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
-       </form>
+       </form>: null}
      </div>
     );
   }
