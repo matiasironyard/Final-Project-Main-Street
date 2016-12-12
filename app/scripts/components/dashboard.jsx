@@ -383,49 +383,48 @@ var DashboardContainer = React.createClass({
     return(
       <Template>
         <div className="row">
-          <div className="col-md-12 col-sm-12 col-xs-11">
-            <div className= "dashboard-windows col-md-12 col-sm-12 col-xs-11">
-              <h1 className="well"> {businessName} Dashboard</h1>
-              <Dashboard  business={this.state.business} />
-                <div className="specials-pane">
-                  <h4>Specials</h4>
-                  <input type="submit" value="Search" onClick={this.onClick} />
-                  <input type="submit" value="Search" onClick={this.onClickClose} />
-                  { this.state.showComponent ? <SpecialsFormSet
-                    specials={this.state.business.get('specials')}
-                    saveSpecial={this.saveSpecial}
-                    removeSpecial={this.removeSpecial}
-                    addSpecial={this.addSpecial}
-                    /> : null}
-                </div>
-
-                <h1>Menu Dashboard</h1>
-                  <AppetizerFormSet className="menu-creator-panels"
-                    appetizers={this.state.business.get('appetizer')}
-                    saveAppetizer={this.saveAppetizer}
-                    removeAppetizer={this.removeAppetizer}
-                    addAppetizer={this.addAppetizer}
-                    />
-                  <BreakfastFormSet className="menu-creator-panels"
-                    breakfast={this.state.business.get('breakfast')} saveBreakfast={this.saveBreakfast}  removeBreakfast={this.removeBreakfast}
-                    addBreakfast={this.addBreakfast}
-                    />
-                  <LunchFormSet className="menu-creator-panels"
-                      lunch={this.state.business.get('lunch')} saveLunch={this.saveLunch}  removeLunch={this.removeLunch}
-                      addLunch={this.addLunch}
-                      />
-                    <DinnerFormSet className="menu-creator-panels"
-                    dinner={this.state.business.get('dinner')} saveDinner={this.saveDinner}  removeDinner={this.removeDinner}
-                    addDinner={this.addDinner}
-                    />
-                    <DessertFormSet className="menu-creator-panels"
-                      desserts={this.state.business.get('dessert')}
-                      saveDessert={this.saveDessert}
-                      removeDessert={this.removeDessert}
-                      addDessert={this.addDessert}
-                      />
+          <div className= "dashboard-windows col-md-12 col-sm-12 col-xs-11">
+            <h1 className="well"> {businessName} Dashboard</h1>
+            <Dashboard  business={this.state.business} />
+            <h3>Menu Dashboard</h3>
+            
+              <div className="specials-pane">
+                <h4>Specials</h4>
+                <input type="submit" value="Search" onClick={this.onClick} />
+                <input type="submit" value="Search" onClick={this.onClickClose} />
+                { this.state.showComponent ? <SpecialsFormSet
+                  specials={this.state.business.get('specials')}
+                  saveSpecial={this.saveSpecial}
+                  removeSpecial={this.removeSpecial}
+                  addSpecial={this.addSpecial}
+                  /> : null}
               </div>
-        </div>
+
+                <AppetizerFormSet className="menu-creator-panels"
+                  appetizers={this.state.business.get('appetizer')}
+                  saveAppetizer={this.saveAppetizer}
+                  removeAppetizer={this.removeAppetizer}
+                  addAppetizer={this.addAppetizer}
+                  />
+                <BreakfastFormSet className="menu-creator-panels"
+                  breakfast={this.state.business.get('breakfast')} saveBreakfast={this.saveBreakfast}  removeBreakfast={this.removeBreakfast}
+                  addBreakfast={this.addBreakfast}
+                  />
+                <LunchFormSet className="menu-creator-panels"
+                    lunch={this.state.business.get('lunch')} saveLunch={this.saveLunch}  removeLunch={this.removeLunch}
+                    addLunch={this.addLunch}
+                    />
+                  <DinnerFormSet className="menu-creator-panels"
+                  dinner={this.state.business.get('dinner')} saveDinner={this.saveDinner}  removeDinner={this.removeDinner}
+                  addDinner={this.addDinner}
+                  />
+                  <DessertFormSet className="menu-creator-panels"
+                    desserts={this.state.business.get('dessert')}
+                    saveDessert={this.saveDessert}
+                    removeDessert={this.removeDessert}
+                    addDessert={this.addDessert}
+                    />
+            </div>
       </div>
     </Template>
     )

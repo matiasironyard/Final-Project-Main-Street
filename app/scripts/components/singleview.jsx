@@ -264,8 +264,14 @@ var DetailView = React.createClass({
   getInitialState: function() {
     return {
       restaurant: '',
-      reviews: '',
+      reviews: {reviews:[] }
     }
+  },
+
+  componentWillMount: function(){
+    return{
+      reviews: this.props.reviews,
+  };
   },
 
   handleFavorite: function(e) {
@@ -291,7 +297,8 @@ var DetailView = React.createClass({
   },
 
   render: function() {
-    // var self = this;
+    var self = this;
+    console.log('what', self.state.reviews);
     var restaurant = this.props.restaurant;
     var specials = restaurant.get('specials');
     var appetizers = restaurant.get('appetizer');
@@ -306,14 +313,20 @@ var DetailView = React.createClass({
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = '"tel:(' + restaurant.get('phone') + ')"';
-    // var reviews = this.props.reviews.map(function(reviews, index){
-    //   return (
-    //     <li key={reviews.cid} className="detailview-reviews">
-    //       <p>{reviews.get('text')}</p>
-    //     </li>
-    //   )
-    // });
-    // console.log('detail view', reviews);
+    if (this.props.reviews) {
+    var reviews = this.props.reviews.map(function(reviews){
+      console.log('hi', reviews.text);
+      return (
+        <li key={reviews.cid} className="detailview-reviews">
+          <img src={reviews.user.image_url} height="100"/>
+          <span>{reviews.text}</span>
+          <span>{reviews.user.name}</span>
+          <p>Rating: {reviews.rating}</p>
+        </li>
+      )
+    });
+  }
+    console.log('detail view', reviews);
 
     return (
       <div className="detailview-pane col-md-12 ">
@@ -363,7 +376,7 @@ var DetailView = React.createClass({
               <img className="img-circle" src={restaurant.get('snippet_image_url')}/>
               <div className="mdl-card__supporting-text">{restaurant.get('snippet_text')}</div>
               <ul>
-
+                {reviews}
               </ul>
             </div>
           </div>

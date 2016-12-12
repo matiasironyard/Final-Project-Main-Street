@@ -96,12 +96,17 @@ var AppetizerFormSet = React.createClass({
       )
     });
     return (
-      <div className="menu-panels mdl-shadow--2dp col-md-12">
-        <div className="header">
-          <h3>Appetizers</h3>
+      <div className="menu-panels col-md-12 mdl-shadow--3dp">
+        <div className="header ">
+          <div className="mdl-card__title">
+            <h2 className="mdl-card__title-text">Appetizers</h2>
+          </div>
+          <div className="mdl-card__supporting-text">
+           <span>editor</span>
+         </div>
           <div className="header-buttons mdl-card__actions mdl-card--border">
-            <button className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</button>
-            <button className="mdl-button mdl-js-button mdl-button--raised pull-right" type="submit" onClick={this.onClickClose}>Hide</button>
+            <a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</a>
+            <a className="mdl-button mdl-js-button mdl-button--raised pull-right" type="submit" onClick={this.onClickClose}>Hide</a>
           </div>
         </div>
 

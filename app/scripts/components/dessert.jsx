@@ -61,20 +61,16 @@ var DessertForm= React.createClass({
 });
 
 var DessertFormSet = React.createClass({
-  // getInitialState: function() {
-  //   return this.props.business.toJSON();
-  // },
-  //
-  // componentWillReceiveProps: function(newProps) {
-  //   this.setState(newProps.business.toJSON());
-  // },
+  getInitialState: function() {
+          return { showComponent: false };
+      },
 
-  // handleInputChange: function(e) {
-  //   var target = e.target;
-  //   // var newState = {};
-  //   // newState[target.name] = target.value;
-  //   this.setState(newState);
-  // },
+  onClick: function() {
+      this.setState({ showComponent: true });
+  },
+  onClickClose: function() {
+      this.setState({ showComponent: false });
+  },
 
   handleSubmit: function(e) {
     e.preventDefault();
@@ -98,16 +94,27 @@ var DessertFormSet = React.createClass({
       )
     });
     return (
-      <div className="menu-panels dashboard-dessert col-md-4">
-       <form onSubmit={this.handleSubmit}>
-         <h3>Desserts</h3>
+      <div className="menu-panels col-md-12 mdl-shadow--3dp">
+        <div className="header ">
+          <div className="mdl-card__title">
+            <h2 className="mdl-card__title-text">Dessert</h2>
+          </div>
+          <div className="mdl-card__supporting-text">
+           <span>editor</span>
+         </div>
+          <div className="header-buttons mdl-card__actions mdl-card--border">
+            <a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</a>
+            <a className="mdl-button mdl-js-button mdl-button--raised pull-right" type="submit" onClick={this.onClickClose}>Hide</a>
+          </div>
+        </div>
+        { this.state.showComponent ? <form onSubmit={this.handleSubmit}>
          <div className="form-inLine">
            {dessertFormset}
           <button  type="button" onClick = {this.props.addDessert} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
          </div>
          <br></br>
-        <button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
-       </form>
+        <a  onClick={this.handleSubmit}  ><i className="material-icons pull-right">save</i></a>
+       </form>:null}
      </div>
     );
   }
