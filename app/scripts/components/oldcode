@@ -17,3 +17,32 @@ google static map
 // var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x250&scale=2&maptype=roadmap&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=restaurant%257C996600%7C'+geolocation+ '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
 // console.log(googleMap);
 // var directions = 'https://www.google.com/maps/dir//'+geolocation;
+
+componentWillMount: function() {
+  var restaurant = this.state.restaurant;
+  var restaurantId = this.props.businessId;
+  if (!restaurantId) {
+    return;
+  }
+  restaurant.set('objectId', restaurantId);
+  restaurant.fetch().then(() => {
+    var self=this;
+     var id = restaurant.get('id');
+    fetch("https://yelp-proxy-server.herokuapp.com/businesses?business=" +  id + "/reviews").then(function(response) {
+        return response.json();
+      }).then(function(data) {
+        console.log(data);
+        var reviewData=data.reviews;
+        restaurant.set({
+          reviews: reviewData
+        })
+        self.setState({restaurant: restaurant})
+      }).catch(function() {
+        console.log("Booo");
+      });
+    this.setState({
+      restaurant: restaurant,
+    });
+    console.log('this state', this.state);
+  });
+},

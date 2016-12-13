@@ -20,6 +20,12 @@ var router = require('../router').router;
 
 var SpecialsList = React.createClass({
   render: function() {
+    var specials = this.props.specials.length;
+    var specialsDisplay= "row show";
+    if(specials == 0) {
+      specialsDisplay = "row hidden";
+    }
+
     var specialsListItems = this.props.specials.map(function(special) {
       return (
 
@@ -34,33 +40,65 @@ var SpecialsList = React.createClass({
     // console.log('specialslistitems', specialsListItems);
     return (
       <div className="col-md-8 detailview-menu-list">
-        <h3 className="mdl-layout-title">Specials</h3>
-        <div className="row">
-            <table className="menu col-md-11 col-md-offset-1">
-              <thead>
-                <tr>
-                  {/*<th className="table-dish">Dish</th>
-                  <th className="table-description">Description</th>
-                  <th className="table-price">Price</th>
-                  {/*<th className="table-available">Ends</th>*/}
-                </tr>
-              </thead>
-              <tbody>
-                  {specialsListItems}
-              </tbody>
-            </table>
-          </div>
+        <div className={specialsDisplay}>
+          <h2 className="detailview-menu-title">Specials</h2>
+          <table className="menu col-md-11 col-md-offset-1">
+            <thead>
+              <tr>
+                {/*<th className="table-dish">Dish</th>
+                <th className="table-description">Description</th>
+                <th className="table-price">Price</th>
+                {/*<th className="table-available">Ends</th>*/}
+              </tr>
+            </thead>
+            <tbody>
+                {specialsListItems}
+            </tbody>
+          </table>
         </div>
+      </div>
     )
   }
 });
 
 var MenuList = React.createClass({
+
   render: function() {
+    var appetizers = this.props.appetizers.length;
+    var appetizersDisplay= "row show";
+    if(appetizers == 0) {
+      appetizersDisplay = "row hidden";
+    }
+
+    var breakfast = this.props.breakfast.length;
+    var breakfastDisplay= "row show";
+    if(breakfast == 0){
+      breakfastDisplay = "row hidden"
+    }
+
+    var lunch = this.props.lunch.length;
+    var lunchDisplay = "row show";
+    if(lunch == 0){
+      lunchDisplay = "row hidden"
+    }
+
+    var dinner = this.props.dinner.length;
+    var dinnerDisplay = "row show";
+    if(dinner == 0){
+      dinnerDisplay = "row hidden"
+    }
+
+    var desserts = this.props.desserts.length;
+    var dessertsDisplay = "row show";
+    if(desserts == 0){
+      dessertsDisplay = "row hidden"
+    }
+
+   console.log('display', breakfastDisplay);
 
     var appetizersListItems = this.props.appetizers.map(function(appetizer) {
-      return (
 
+      return (
         <tr key={appetizer.cid} className="detailview-menu-rows">
           <td className="appetizer-name ">{appetizer.get('name')}</td>
           <td className="appetizer-description">{appetizer.get('description')}</td>
@@ -111,86 +149,86 @@ var MenuList = React.createClass({
 
     return (
       <div className="col-md-8 detailview-menu-list">
-        <div className="row">
-          <h2 className="mdl-layout-title">Menu</h2>
-            <h3 className="mdl-layout-title">Appetizers</h3>
-              <table className="menu col-md-11 col-md-offset-1">
-                <thead>
-                  <tr>
-                    {/*<th className="table-dish">Dish</th>
-                    <th className="table-description">Description</th>
-                    <th className="table-price">Price</th>*/}
-                  </tr>
-                </thead>
-                <tbody>
-                  {appetizersListItems}
-                </tbody>
-              </table>
-            </div>
+        <h2 className="detailview-menu-tittle">Menu</h2>
+        <div className={appetizersDisplay}>
+          <h3 className="mdl-layout-title">Appetizers</h3>
+          <table className="menu col-md-11 col-md-offset-1">
+            <thead>
+              <tr>
+                <th className="table-dish"></th>
+                <th className="table-description"></th>
+                <th className="table-price"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {appetizersListItems}
+            </tbody>
+          </table>
+        </div>
 
-            <div className="row">
-              <h3 className="mdl-layout-title">Breakfast</h3>
-                <table className="menu col-md-11 col-md-offset-1">
-                  <thead>
-                    <tr>
-                      <th className="table-dish"></th>
-                      <th className="table-description"></th>
-                      <th className="table-price"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {BreakfastListItems}
-                  </tbody>
-                </table>
-              </div>
+      <div className={breakfastDisplay}>
+        <h3 className="mdl-layout-title">Breakfast</h3>
+          <table className="menu col-md-11 col-md-offset-1">
+            <thead>
+              <tr>
+                <th className="table-dish"></th>
+                <th className="table-description"></th>
+                <th className="table-price"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {BreakfastListItems}
+            </tbody>
+          </table>
+        </div>
 
-            <div className="row">
-              <h3 className="mdl-layout-title">Lunch</h3>
-                <table className="menu col-md-11 col-md-offset-1">
-                  <thead>
-                    <tr>
-                      <th className="table-dish"></th>
-                      <th className="table-description"></th>
-                      <th className="table-price"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lunchListItems}
-                  </tbody>
-                </table>
-              </div>
+      <div className={lunchDisplay}>
+        <h3 className="mdl-layout-title">Lunch</h3>
+          <table className="menu col-md-11 col-md-offset-1">
+            <thead>
+              <tr>
+                <th className="table-dish"></th>
+                <th className="table-description"></th>
+                <th className="table-price"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {lunchListItems}
+            </tbody>
+          </table>
+        </div>
 
-              <div className="row">
-                <h3 className="mdl-layout-title">Dinner</h3>
-                  <table className="menu col-md-11 col-md-offset-1">
-                    <thead>
-                      <tr>
-                        <th className="table-dish"></th>
-                        <th className="table-description"></th>
-                        <th className="table-price"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {dinnerListItems}
-                    </tbody>
-                  </table>
-                </div>
+        <div className={dinnerDisplay}>
+          <h3 className="mdl-layout-title">Dinner</h3>
+            <table className="menu col-md-11 col-md-offset-1">
+              <thead>
+                <tr>
+                  <th className="table-dish"></th>
+                  <th className="table-description"></th>
+                  <th className="table-price"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {dinnerListItems}
+              </tbody>
+            </table>
+          </div>
 
-            <div className="row">
-              <h3 className="mdl-layout-title">Desserts</h3>
-                <table className="menu col-md-11 col-md-offset-1">
-                  <thead>
-                    <tr>
-                  {/*<th className="table-dish">Dish</th>
-                      <th className="table-description">Description</th>
-                      <th className="table-price">Price</th>*/}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dessertsListItems}
-                  </tbody>
-                </table>
-              </div>
+      <div className={dessertsDisplay}>
+        <h3 className="mdl-layout-title">Desserts</h3>
+          <table className="menu col-md-11 col-md-offset-1">
+            <thead>
+              <tr>
+                <th className="table-dish"></th>
+                <th className="table-description"></th>
+                <th className="table-price"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {dessertsListItems}
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
@@ -200,6 +238,7 @@ var RestaurantMap = React.createClass({
   getInitialState: function() {
     var state = {
       zoom: 17,
+      showingInfoWindow: true,
     }
     return state
   },
@@ -208,7 +247,7 @@ var RestaurantMap = React.createClass({
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: false
+      showingInfoWindow: true,
     });
   },
   render: function() {
@@ -219,9 +258,7 @@ var RestaurantMap = React.createClass({
     var lat = restaurant.get('lat');
     var long = restaurant.get('long');
     var location = 'lat:' + lat + ',' + 'lng:' + long;
-    console.log('location', location);
     var name = restaurant.get('name');
-    console.log('name', name);
     var directions = 'https://www.google.com/maps/dir//' + lat + ',' + long;
     return (
       <section id="map-section" style={{height:"325px"}}>
@@ -247,8 +284,7 @@ var RestaurantMap = React.createClass({
                 marker={self.state.activeMarker}
                 visible={self.state.showingInfoWindow}>
                 <div>
-                  <p>{name}</p>
-                  <a href={directions}>Directions</a>
+                  <a href={directions}>Directions to {name}</a>
                 </div>
               </InfoWindow>
             </Marker>
@@ -263,27 +299,30 @@ var RestaurantMap = React.createClass({
 var DetailView = React.createClass({
   getInitialState: function() {
     return {
-      restaurant: '',
-      reviews: {reviews:[] }
+      restaurant: {},
     }
   },
 
   componentWillMount: function(){
-    return{
-      reviews: this.props.reviews,
-  };
+      var restaurant = this.props.restaurant;
+      this.setState({restaurant: restaurant})
+      console.log('pre yipi',this.state);
   },
+
+  componentWillReceiveProps(nextProps) {
+  this.setState({
+    restaurant: nextProps.restaurant
+  });
+},
 
   handleFavorite: function(e) {
     e.preventDefault();
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
-    // console.log('My Favorite>>', favorite);
     self.props.setFavorite(favorite);
-    self.setState({
-      restaurant: restaurant,
-      favorite: favorite,
-    })
+    // self.setState({
+    //   favorite: favorite,
+    // })
   },
 
   handleRemoveFavorite: function(e) {
@@ -291,16 +330,16 @@ var DetailView = React.createClass({
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
     self.props.removeFavorite(favorite);
-    self.setState({
-      favorite: favorite
-    })
+    // self.setState({
+    //   favorite: favorite
+    // });
   },
 
   render: function() {
     var self = this;
-    console.log('what', self.state.reviews);
-    var restaurant = this.props.restaurant;
+    var restaurant = self.state.restaurant;
     var specials = restaurant.get('specials');
+    console.log('specials', specials);
     var appetizers = restaurant.get('appetizer');
     var breakfast = restaurant.get('breakfast');
     var lunch = restaurant.get('lunch');
@@ -313,21 +352,6 @@ var DetailView = React.createClass({
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = '"tel:(' + restaurant.get('phone') + ')"';
-    if (this.props.reviews) {
-    var reviews = this.props.reviews.map(function(reviews){
-      console.log('hi', reviews.text);
-      return (
-        <li key={reviews.cid} className="detailview-reviews">
-          <img src={reviews.user.image_url} height="100"/>
-          <span>{reviews.text}</span>
-          <span>{reviews.user.name}</span>
-          <p>Rating: {reviews.rating}</p>
-        </li>
-      )
-    });
-  }
-    console.log('detail view', reviews);
-
     return (
       <div className="detailview-pane col-md-12 ">
         <div className="detailview-header col-md-12">
@@ -371,13 +395,9 @@ var DetailView = React.createClass({
             </div>
             <div className="detailview-aside-review mdl-card__actions mdl-card--border">
               <div className="mdl-card__title">
-                <h2 className="mdl-card__title-text">Recent Review</h2>
+                <h2 className="mdl-card__title-text">Recent Reviews</h2>
               </div>
-              <img className="img-circle" src={restaurant.get('snippet_image_url')}/>
-              <div className="mdl-card__supporting-text">{restaurant.get('snippet_text')}</div>
-              <ul>
-                {reviews}
-              </ul>
+              <Reviews restaurant={this.props.restaurant} />
             </div>
           </div>
           <div className="detailview-location-pane">
@@ -386,11 +406,64 @@ var DetailView = React.createClass({
         </div>
 
         <SpecialsList specials={specials}/>
-        <MenuList appetizers={appetizers} breakfast={breakfast} lunch={lunch} dinner={dinner} desserts={desserts}/>
+        <MenuList restaurant={this.props.restaurant} appetizers={appetizers} breakfast={breakfast} lunch={lunch} dinner={dinner} desserts={desserts}/>
 
       </div>
     )
   }
+});
+
+var Reviews = React.createClass({
+  getInitialState: function() {
+    return {
+      reviews: undefined,
+    }
+  },
+
+  componentWillMount: function(){
+      var reviews = this.props.restaurant.get('reviews');
+      this.setState({reviews: reviews})
+      console.log('pre yipi 2',this.state.reviews);
+  },
+
+  componentWillReceiveProps(nextProps) {
+  this.setState({
+    reviews: nextProps.restaurant.get('reviews')
+  });
+},
+
+render: function(){
+  var self = this;
+  console.log('reviews render', this.state.reviews);
+  if (self.state.reviews) {
+    var reviews = self.state.reviews.map(function(reviews){
+      var imgUrl = reviews.user.image_url;
+      var divStyle = {
+        borderRadius: '100%',
+        backgroundImage: 'url(' + imgUrl + ')'
+      };
+    return (
+      <li key={reviews.time_created} className="detailview-reviews-li mdl-list__item">
+        <div className="detailview-reviews-img col-md-3 col-sm-3 col-xs-3" style={divStyle}/>
+        <div className="detailview-reviews-text col-md-8 col-sm-8 col-xs-8">
+          <span>{reviews.user.name}</span>
+          <span className="mdl-list__item-text-body">
+            {reviews.text}
+          </span>
+          <span className="mdl-list__item-text-body">
+            Rating: {reviews.rating}/5
+          </span>
+        </div>
+      </li>
+    )
+  });
+}
+  return (
+    <ul className="detailview-reviews-ul mdl-list">
+      {reviews}
+    </ul>
+  )
+}
 });
 
 var SingleViewContainer = React.createClass({
@@ -408,21 +481,17 @@ var SingleViewContainer = React.createClass({
     restaurant.set('objectId', restaurantId);
     restaurant.fetch().then(() => {
       var self=this;
-      var id = restaurant.get('id');
-      var reviews =  $.ajax({
-      url: "https://yelp-proxy-server.herokuapp.com/businesses?business=" +  id + "/reviews",
-      dataType : 'json',
-      success: function(data) {
-        var reviewData = data.reviews;
-        //called when successful
-        alert(data.word);
-        self.setState({reviews: reviewData})
-      },
-      error: function(e) {
-        //called when there is an error
-        console.log(e.message);
-      }
-    });
+       var id = restaurant.get('id');
+      fetch("https://yelp-proxy-server.herokuapp.com/businesses?business=" +  id + "/reviews").then(function(response) {
+          return response.json();
+        }).then(function(data) {
+          var reviewData=data.reviews;
+          restaurant.set({
+            reviews: reviewData
+          })
+          self.setState({restaurant: restaurant})
+        }).catch(function() {
+        });
       this.setState({
         restaurant: restaurant,
       });
@@ -430,11 +499,9 @@ var SingleViewContainer = React.createClass({
   },
 
 
-
   setFavorite: function(favorite) {
     // var self = this;
     var restaurant = this.state.restaurant;
-    // console.log(business.get('lat'));
     var currentUser = User.current().get('objectId');
     restaurant.set('favorite', {
       "__op": "AddRelation",
@@ -467,7 +534,6 @@ var SingleViewContainer = React.createClass({
         trigger: true
       })
     });
-    // console.log(this.state);
   },
   render: function() {
     var test = this.state.restaurant.get('name');
@@ -477,14 +543,13 @@ var SingleViewContainer = React.createClass({
     var lunch = this.state.restaurant.get('lunch');
     var dinner = this.state.restaurant.get('dinner');
     var desserts = this.state.restaurant.get('dessert');
-    var reviews = this.state.reviews;
-    console.log('parent container reviews', reviews);
+    var reviews = this.state.restaurant.get('reviews');
 
     return (
       <Template>
         <div className="detail-view-container">
           <div className="detail-view-row">
-            <DetailView restaurant={this.state.restaurant} reviews={this.state.reviews} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
+            <DetailView restaurant={this.state.restaurant} setFavorite={this.setFavorite} removeFavorite={this.removeFavorite} specials={specials}/>
           </div>
         </div>
       </Template>

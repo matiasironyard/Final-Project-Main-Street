@@ -247,20 +247,39 @@ background-color: #FFFDE7;
       .detailview-aside{
         color: #fff;
         margin-top: 30px;
+        h2{
+          text-transform: uppercase;
+          font-weight: bold;
+          color: #424242;
+        }
         .detailview-about{
-          background-color: #FFD180
-;
+          background-color: #FFD180;
           .about-image{
             float: left;
             padding: 10px;
             border-radius: 10px;
           }
-
-
           .detailview-aside-review {
             padding: 10px;
-            img{
-              padding: 5px;
+            .detailview-reviews-ul{
+              .detailview-reviews-li{
+                // display: inline-block;
+                color: #616161;
+                .detailview-reviews-img{
+                  width: 100px;
+                  height: 100px;
+                  margin: 5px;
+                  background-position: center;
+                  background-size: cover;
+                }
+                .detailview-reviews-text {
+                  margin-top: 15px;
+                  span{
+                    display: inline-block;
+                    padding-top: 5px;
+                  }
+                }
+              }
             }
           }
         }
@@ -409,7 +428,7 @@ background-color: #FFFDE7;
     height: 175px;
   }
   .menu-forms{
-    background-color: blue;
+    // background-color: blue;
     margin-bottom: 60px;
   }
 }
