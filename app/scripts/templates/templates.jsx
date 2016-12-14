@@ -15,31 +15,35 @@ var Template = React.createClass({
   render: function(){
     return (
       <div className="template">
-        <div className="menu container-fluid">
-          <div className="row">
+        <div className="nav-bar container-fluid">
+
+          <div className="nav-bar row">
             <div className="nav-bar-col col-md-12-fluid col-sm-11-fluid col-xs-11-fluid">
-              <div className="nav-headers  col-md-2 col-sm-2 hidden-xs">
-                <span className="nav-header-1">In The</span>
-                <p className="nav-header-2">Mood</p>
-              </div>
-              <ul className="nav nav-tabs col-md-10-fluid col-sm-10-fluid">
-                <li role="presentation" className="active"><a  className="nav-tabs" href="#restaurants/"><i className="material-icons">restaurant</i></a></li>
-                <li className="active" role="presentation"><a className="nav-tabs" href="#favorites/"><i className="material-icons">favorite</i></a></li>
-                <div className="btn-group pull-right">
-                  <button type="button" className="btn btn-default btn-xs dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <Gravatar className="avatar img-thumbnail pull-right" email={localStorage.getItem('username')} size={45} />
-                  </button>
-                  <ul className="dropdown-menu pull-right">
-                    {/*<li className="nav-bar-dropdowns" role="presentation"><p className="pull-right"> {localStorage.getItem('username')}</p></li>*/}
+              <ul className="nav nav-tabs ">
+                <li role="presentation" className="active col-md-3"><a  className="nav-tabs" href="#restaurants/">
+                  <div className="nav-headers">
+                  {/*<div className="nav-header-img col-md-2"/>*/}
+                      <span className="nav-header-1">In The</span>
+                      <span className="nav-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
+                  </div>
+                  </a>
+                </li>
+                                    {/*<li className="nav-bar-dropdowns" role="presentation"><p className="pull-right"> {localStorage.getItem('username')}</p></li>*/}
+                <li role="presentation" className="dropdown  pull-right">
+                  <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i className="material-icons md-48">account_box</i><span className="caret"></span>
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li  className="nav-bar-dropdowns" role="presentation"><a  href="#favorites/"><i className="material-icons">favorite</i></a></li>
                     <li className="nav-bar-dropdowns" role="presentation"><a onClick={this.logout} href=""><i className="material-icons">exit_to_app</i></a></li>
                     <li className="nav-bar-dropdowns" role="presentation"> <a href="#login/"><i className="material-icons">perm_identity</i></a></li>
                     <li className="nav-bar-dropdowns" role="presentation"><a  href="#dashboard/"><i className="material-icons">web</i></a></li>
                   </ul>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </div>
+                </li>
+              </ul>{/*end of nav nav-tabs*/}
+            </div>{/*end of nav-bar-col*/}
+          </div>{/*end of nav-bar-row*/}
+        </div>{/*nav-bar container-fluid*/}
 
       <div className="components container">
         <div className="row">

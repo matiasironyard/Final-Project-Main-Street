@@ -61,8 +61,8 @@ var Search = React.createClass({
       <div className="categories-bar row fluid">
         {/*<h2 className="viewall-card-container-header">All Restaurants</h2>*/}
         <div className="categories-dropdown dropdown col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
-          <span className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span className="categories-heading">I'm in the mood for...</span>
+          <span className="btn dropdown-toggle col-md-11 col-sm-11 col-xs-11" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span className="categories-heading pull-left">I'm in the mood for...</span>
           </span>
           <ul className="dropdown-menu col-md-offset-4" aria-labelledby="dropdownMenu1">
             {categoriesList}
@@ -97,7 +97,7 @@ var ItemListing = React.createClass({
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
 
     return(
-      <div className ="viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-11">
+      <div className ="viewall-restaurant-card mdl-shadow--8dp col-md-3 col-sm-5 col-xs-11">
           <div className="viewall-header restaurant-card-header">
             <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><div style={divStyle }/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
