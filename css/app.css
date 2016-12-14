@@ -5769,6 +5769,27 @@ img {
 .container {
   background-color: #FFFDE7; }
 
+.inthemood-headers .inthemood-header {
+  text-transform: uppercase;
+  font-size: calc(1.5em + 1.5vw);
+  color: #E65100; }
+.inthemood-headers .inthemood-subheader {
+  font-size: calc(.8em + .8vw);
+  color: #424242; }
+
+.registration-container {
+  background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
+  background-size: cover; }
+  .registration-container .registration-form {
+    background-color: #ffffff;
+    margin-top: 50px; }
+    .registration-container .registration-form .form-input-div input {
+      margin-top: 20px; }
+    .registration-container .registration-form .registration-image-uploads {
+      margin-bottom: 30px; }
+      .registration-container .registration-form .registration-image-uploads h4 {
+        text-transform: uppercase; }
+
 .viewall-lisitng-row {
   background-color: blue;
   height: 6vw;
@@ -5792,7 +5813,7 @@ img {
       border: 0px;
       border-radius: 0; }
       .categories-bar .categories-dropdown .btn .categories-heading {
-        font-size: 6vh;
+        font-size: 5vh;
         color: #616161; }
       .categories-bar .categories-dropdown .btn .caret {
         margin-left: 15px; }
@@ -5887,14 +5908,24 @@ img {
       .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-img .favorite-btn {
         margin: 10px; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-text {
-      padding: 20px; }
+      padding: 20px;
+      text-transform: uppercase; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-info {
       border-top: 1px solid #BDBDBD;
       padding: 15px;
-      margin-top: 10px; }
+      margin-top: 10px;
+      font-size: 20px; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-header .detailview-header-info i {
+        padding-right: 10px;
+        position: relative;
+        top: 5px; }
   .detail-view-container .detail-view-row .detailview-pane .detailview-aside {
     color: #fff;
     margin-top: 30px; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-headers {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #424242; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about {
       background-color: #FFD180; }
       .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .about-image {
@@ -5903,32 +5934,43 @@ img {
         border-radius: 10px; }
       .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review {
         padding: 10px; }
-        .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review img {
-          padding: 5px; }
+        .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review .detailview-reviews-ul .detailview-reviews-li {
+          color: #616161; }
+          .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review .detailview-reviews-ul .detailview-reviews-li .detailview-reviews-img {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            background-position: center;
+            background-size: cover; }
+          .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review .detailview-reviews-ul .detailview-reviews-li .detailview-reviews-text {
+            margin-top: 15px; }
+            .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review .detailview-reviews-ul .detailview-reviews-li .detailview-reviews-text span {
+              display: inline-block;
+              padding-top: 5px; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-location-pane {
       margin-top: 30px; }
 
 .detailview-menu-list {
   margin-bottom: 30px;
   padding: 20px; }
-  .detailview-menu-list h2 {
-    text-transform: uppercase; }
-  .detailview-menu-list h3 {
-    text-transform: uppercase; }
+  .detailview-menu-list .detailview-menu-headers {
+    text-transform: uppercase;
+    padding-top: 30px; }
   .detailview-menu-list .mdl-layout-title {
     padding: 20px;
     border-bottom: 1px solid #E0E0E0; }
-  .detailview-menu-list .menu .table-dish {
-    width: 20%; }
-  .detailview-menu-list .menu .table-description {
-    width: 60%; }
-  .detailview-menu-list .menu .table-price {
-    width: 10%; }
-  .detailview-menu-list .menu .table-available {
-    width: 20%; }
-  .detailview-menu-list .menu .detailview-menu-rows {
-    color: #616161;
-    line-height: 35px; }
+  .detailview-menu-list .menu {
+    font-size: 18px; }
+    .detailview-menu-list .menu .table-dish {
+      width: 40%; }
+    .detailview-menu-list .menu .table-description {
+      width: 50%; }
+    .detailview-menu-list .menu .table-price {
+      width: 10%; }
+    .detailview-menu-list .menu .detailview-menu-rows {
+      color: #616161;
+      line-height: 35px;
+      border-bottom: 2px solid #EEEEEE; }
 
 .signup-container {
   background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
@@ -5937,13 +5979,6 @@ img {
     background-color: #fff;
     margin-top: 10%;
     margin-bottom: 10%; }
-    .signup-container .signup-col .signup-header {
-      text-transform: uppercase;
-      font-size: calc(1.5em + 1.5vw);
-      color: #E65100; }
-    .signup-container .signup-col .signup-subheader {
-      font-size: calc(.8em + .8vw);
-      color: #424242; }
 
 .signup-modal {
   background-color: #fff;
@@ -5992,7 +6027,17 @@ img {
 
 .menu-pane .menu-panels {
   margin-bottom: 30px; }
+  .menu-pane .menu-panels .header {
+    background-color: blue; }
   .menu-pane .menu-panels .menu-forms {
+    margin-bottom: 60px; }
+
+.menu-panels {
+  margin-bottom: 30px; }
+  .menu-panels .header {
+    margin-bottom: 40px;
+    height: 175px; }
+  .menu-panels .menu-forms {
     margin-bottom: 60px; }
 
 .template .nav-bar-col {
