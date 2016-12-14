@@ -393,12 +393,12 @@ var DetailView = React.createClass({
                 <h3 className="detailview-headers">About</h3>
               </div>
               <div className="mdl-card__supporting-text">
-                <p><img className="about-image" src= {restaurant.get('menu_upload')} width="200"/>{restaurant.get('description')}</p>
+                <p><img className="about-image" src= {restaurant.get('menu_upload')} width="150"/>{restaurant.get('description')}</p>
               </div>
             </div>
             <div className="detailview-aside-review mdl-card__actions mdl-card--border">
               <div className="mdl-card__title">
-                <h3 className="detailview-headers">Recent Reviews</h3>
+                <h3 className="detailview-headers">Reviews</h3>
               </div>
               <Reviews restaurant={this.props.restaurant} />
             </div>
