@@ -84,33 +84,30 @@ var ItemListing = React.createClass({
     var phone = restaurants.get('phone');
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
+    var imgUrl = restaurants.get('image_upload');
+    var divStyle = {
+      // height: '50vh',
+      height: "125px",
+      width: "100%",
+      borderRadius: "5px",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundImage: 'url(' + imgUrl + ')'
+    };
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
 
-    //Not so dry code trying to trigger removeSpecial function from dashboard
-    // var specials = restaurants.get('specials');
-    // var expiryDate = specials.map(function(date){
-    //   return date.get('expirydate');
-    // });
-    // console.log('expires on', expiryDate, 'restaurant', restaurants.get('name'));
-    // var now = moment();
-    // var formatedDate = now.format("YYYY-MM-DD");
-    // console.log('delete special trigger >>', formatedDate == expiryDate);
-    // if(formatedDate == expiryDate){
-    //   Dashboard.removeSpecial(special);
-    //   console.warn("Special Deleted >>");
-    //   console.log(Dashboard.removeSpecial(special));
-    // };
     return(
       <div className ="viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-5">
           <div className="viewall-header restaurant-card-header">
-            <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><img className="viewall-image" src={restaurants.get('image_url')}/></a>
+            <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><div style={divStyle }/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
-            <div  className="viewall-name ">{restaurants.get('name')}</div>
-            <p className="viewall-category mdl-card__title-text">{restaurants.get('mainCategory')}</p>
+            <div  className="viewall-name">{restaurants.get('name')}</div>
+            <p className="viewall-category">{restaurants.get('mainCategory')}</p>
           </div>
-          <div className="viewall-restaurant-info mdl-card__actions mdl-card--border">
+          <div className="viewall-restaurant-info mdl-card__actions mdl-card--border col-md-12">
             {/*<p className="viewall-description">{restaurants.get('description')}</p>?*/}
-            <p className="viewall-status pull-right">{restaurants.get('is_closed')}</p>
+            <div className="viewall-counter mdl-badge col-md-2 pull-left" ><span>{restaurants.get('rating')}</span></div>
+            <div className="viewall-counter mdl-badge col-md-2 pull-right" ><span>{restaurants.get('price')}</span></div>
           </div>
       </div>
     )

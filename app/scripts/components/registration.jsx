@@ -10,6 +10,8 @@ var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard = require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
 var yelpBusiness = new YelpBusiness();
+var phoneFormatter = require('phone-formatter');
+
 require('../router').router;
 
 var RegistrationForm = React.createClass({
@@ -144,11 +146,13 @@ var RegistrationContainer = React.createClass({
           var business = new models.Business();
           var data = response.businesses[0];
           console.log('photos', data);
+          var phone = phoneFormatter.format(data.phone.slice(2),  "(NNN) NNN-NNNN");
+          console.log('phone', phone);
           business.set({
               name: data.name,
               id: data.id,
               image_url: data.image_url,
-              phone: data.phone.slice(2),
+              phone: phone,
               is_closed: open,
               rating_img_url: data.rating_img_url_large,
               address: data.location.address1,

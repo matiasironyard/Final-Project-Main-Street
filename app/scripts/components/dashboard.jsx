@@ -387,7 +387,7 @@ var DashboardContainer = React.createClass({
             <h1 className="well"> {businessName} Dashboard</h1>
             <Dashboard  business={this.state.business} />
             <h3>Menu Dashboard</h3>
-            
+
               <div className="specials-pane">
                 <h4>Specials</h4>
                 <input type="submit" value="Search" onClick={this.onClick} />

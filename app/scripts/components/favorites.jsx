@@ -30,6 +30,7 @@ var FavoritesMap = React.createClass({
 
     var state = {
       zoom: 14,
+      showingInfoWindow: true,
       center: {
         lat:  (34.852619),
         lng:  (-82.394012)
@@ -43,28 +44,27 @@ var FavoritesMap = React.createClass({
     this.setState({
     selectedPlace: props,
     activeMarker: marker,
-    showingInfoWindow: false
+    showingInfoWindow: true,
   });
 },
 
   render: function(){
     var self = this;
-    var center = this.state.center;
-    var zoom = this.state.zoom;
-    var restaurants= this.props.restaurants;
+    var center = self.state.center;
+    var zoom = self.state.zoom;
+    var restaurants= self.props.restaurants;
+    console.log(restaurants);
     var labelInfo= restaurants.map(function(favorites){
+      var name = favorites.get('name');
       var lat = favorites.get('lat');
       var long = favorites.get('long');
-      var name = favorites.get('name');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
       return (
           <Marker onClick={self.onMarkerClick} visible={self.state.showingInfoWindow} key={favorites.cid} name={name} position={{lat: lat, lng: long}}>
             <InfoWindow
-              marker={self.state.activeMarker}
-              visible={self.state.showingInfoWindow}>
+              marker={self.state.activeMarker}>
               <div>
-                <p>{name}</p>
-                <a href={directions}>Directions</a>
+                <span>{name}</span>
               </div>
             </InfoWindow>
           </Marker>
@@ -130,18 +130,22 @@ var FavoriteListing = React.createClass({
     // this.setState(newProps.favorites);
   },
 
-
   render: function(){
     var favorites = this.props.favorites;
   // console.log('test', favorites.get('name'));
+  var lat = favorites.get('lat');
+  var long = favorites.get('long');
+  var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
     return (
       <div className ="restaurant-cards mdl-card mdl-shadow--2dp col-md-2">
         <div className="material-icons mdl-badge mdl-badge--overlap" data-badge="♥"/>
         <div className="restaurant-card-header">
-          <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item"><img className="restaurant-card-img" src={favorites.get('image_url')}/></a>
+          <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item"><img className="restaurant-card-img" height="100" width="100" src={favorites.get('image_url')}/></a>
           <p className="restaurant-card-name">{favorites.get('name')}</p>
+          <span className="restaurant-card-category">{favorites.get('mainCategory')}</span>
+
           <div className="mdl-card__actions mdl-card--border">
-            <p className="restaurant-card-category">{favorites.get('mainCategory')}</p>
+            <a href={directions}>Directions</a>
           </div>
         </div>
       </div>
@@ -153,11 +157,6 @@ var Favorites = React.createClass({
   // componentWillMount: function(){
   //   var favorites = this.props.restaurants;
   // },
-  handleRemoveFavorite: function(favorite){
-    var self = this;
-    self.props.removeFavorite(favorite);
-  // console.log(this.state);
-  },
 
   render: function(){
     var self = this;
@@ -203,6 +202,7 @@ componentWillMount: function(){
     });
   });
 },
+
 
   render: function(){
   // console.log('favorites', this.state.businessCollection);

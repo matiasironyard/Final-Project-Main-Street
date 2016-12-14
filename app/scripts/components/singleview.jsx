@@ -41,7 +41,7 @@ var SpecialsList = React.createClass({
     });
     // console.log('specialslistitems', specialsListItems);
     return (
-      <div className="col-md-7 col-md-offset-1 detailview-menu-list">
+      <div className="col-md-10 col-md-offset-1 detailview-menu-list">
         <div className={specialsDisplay}>
           <h3 className="detailview-menu-headers">Specials</h3>
           <table className="menu col-md-12 col-sm-12 col-xs-12">
@@ -150,7 +150,7 @@ var MenuList = React.createClass({
     });
 
     return (
-      <div className="col-md-7 col-md-offset-1 detailview-menu-list">
+      <div className="col-md-10 col-md-offset-1 detailview-menu-list">
         <div className={appetizersDisplay}>
           <h3 className="detailview-menu-headers">Appetizers</h3>
           <table className="menu col-md-12 col-sm-12 col-xs-12">
@@ -352,7 +352,7 @@ var DetailView = React.createClass({
       height: '50vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
-    var phone = phoneFormatter.format(restaurant.get('phone'),  "(NNN) NNN-NNNN");
+    var phone = restaurant.get('phone');
     console.log('phone', phone);
     return (
       <div className="detailview-pane col-md-12 ">
@@ -360,7 +360,7 @@ var DetailView = React.createClass({
           <div className="row">
             <div className="detailview-header-img" style={divStyle}>
               <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
-                <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
+              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
             </div>
             <div className="detailview-header-text col-md-12">
               <h1 className="detailview-header-name">
@@ -386,7 +386,7 @@ var DetailView = React.createClass({
           </div>
         </div>
 
-        <div className="col-md-4 col-sm-12 col-xs-12 detailview-aside mdl-shadow--2d">
+        <div className="col-md-5 col-sm-12 col-xs-12 detailview-aside mdl-shadow--2d">
           <div className="detailview-about">
             <div className="detailview-description">
               <div className="mdl-card__title">
@@ -406,10 +406,13 @@ var DetailView = React.createClass({
           <div className="detailview-location-pane">
           </div>
         </div>
-
-        <SpecialsList specials={specials}/>
-        <MenuList restaurant={this.props.restaurant} appetizers={appetizers} breakfast={breakfast} lunch={lunch} dinner={dinner} desserts={desserts}/>
-
+        <div className="menu-pane col-md-7 col-sm-12 col-xs-12">
+          <div className="detailview-menu-header col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mdl-shadow--2d">
+            <h1>Menu</h1>
+          </div>
+          <SpecialsList specials={specials}/>
+          <MenuList restaurant={this.props.restaurant} appetizers={appetizers} breakfast={breakfast} lunch={lunch} dinner={dinner} desserts={desserts}/>
+        </div>
       </div>
     )
   }
@@ -445,9 +448,9 @@ render: function(){
         backgroundImage: 'url(' + imgUrl + ')'
       };
     return (
-      <li key={reviews.time_created} className="detailview-reviews-li mdl-list__item">
-        <div className="detailview-reviews-img col-md-3 col-sm-3 col-xs-3" style={divStyle}/>
-        <div className="detailview-reviews-text col-md-8 col-sm-8 col-xs-8">
+      <li key={reviews.time_created} className="detailview-reviews-li row mdl-list__item">
+        <a href={reviews.url}><div className="detailview-reviews-img col-md-2 col-sm-3 col-xs-3" style={divStyle}/></a>
+        <div className="detailview-reviews-text col-md-10 col-sm-8 col-xs-8">
           <span>{reviews.user.name}</span>
           <span className="mdl-list__item-text-body">
             {reviews.text}
@@ -474,7 +477,7 @@ var SingleViewContainer = React.createClass({
       restaurant: new models.Business()
     }
   },
-  componentWillMount: function() {
+  componentDidMount: function() {
     var restaurant = this.state.restaurant;
     var restaurantId = this.props.businessId;
     if (!restaurantId) {
@@ -546,6 +549,7 @@ var SingleViewContainer = React.createClass({
     var dinner = this.state.restaurant.get('dinner');
     var desserts = this.state.restaurant.get('dessert');
     var reviews = this.state.restaurant.get('reviews');
+    console.log('parent reviews', reviews);
 
     return (
       <Template>
