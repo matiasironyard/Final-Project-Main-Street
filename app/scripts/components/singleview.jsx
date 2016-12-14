@@ -13,6 +13,8 @@ var GoogleMapLoader = google.GoogleMapLoader;
 var GoogleMap = google.GoogleMap;
 var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
+var phoneFormatter = require('phone-formatter');
+
 
 var router = require('../router').router;
 // var GoogleMaps = require('../models/business.js').GoogleMaps;
@@ -39,10 +41,10 @@ var SpecialsList = React.createClass({
     });
     // console.log('specialslistitems', specialsListItems);
     return (
-      <div className="col-md-8 detailview-menu-list">
+      <div className="col-md-7 col-md-offset-1 detailview-menu-list">
         <div className={specialsDisplay}>
-          <h2 className="detailview-menu-title">Specials</h2>
-          <table className="menu col-md-11 col-md-offset-1">
+          <h3 className="detailview-menu-headers">Specials</h3>
+          <table className="menu col-md-12 col-sm-12 col-xs-12">
             <thead>
               <tr>
                 {/*<th className="table-dish">Dish</th>
@@ -148,11 +150,10 @@ var MenuList = React.createClass({
     });
 
     return (
-      <div className="col-md-8 detailview-menu-list">
-        <h2 className="detailview-menu-tittle">Menu</h2>
+      <div className="col-md-7 col-md-offset-1 detailview-menu-list">
         <div className={appetizersDisplay}>
-          <h3 className="mdl-layout-title">Appetizers</h3>
-          <table className="menu col-md-11 col-md-offset-1">
+          <h3 className="detailview-menu-headers">Appetizers</h3>
+          <table className="menu col-md-12 col-sm-12 col-xs-12">
             <thead>
               <tr>
                 <th className="table-dish"></th>
@@ -167,8 +168,8 @@ var MenuList = React.createClass({
         </div>
 
       <div className={breakfastDisplay}>
-        <h3 className="mdl-layout-title">Breakfast</h3>
-          <table className="menu col-md-11 col-md-offset-1">
+        <h3 className="detailview-menu-headers">Breakfast</h3>
+          <table className="menu col-md-12 col-sm-12 col-xs-12">
             <thead>
               <tr>
                 <th className="table-dish"></th>
@@ -183,8 +184,8 @@ var MenuList = React.createClass({
         </div>
 
       <div className={lunchDisplay}>
-        <h3 className="mdl-layout-title">Lunch</h3>
-          <table className="menu col-md-11 col-md-offset-1">
+        <h3 className="detailview-menu-headers">Lunch</h3>
+          <table className="menu col-md-12 col-sm-12 col-xs-12">
             <thead>
               <tr>
                 <th className="table-dish"></th>
@@ -199,8 +200,8 @@ var MenuList = React.createClass({
         </div>
 
         <div className={dinnerDisplay}>
-          <h3 className="mdl-layout-title">Dinner</h3>
-            <table className="menu col-md-11 col-md-offset-1">
+          <h3 className="detailview-menu-headers">Dinner</h3>
+            <table className="menu col-md-12 col-sm-12 col-xs-12">
               <thead>
                 <tr>
                   <th className="table-dish"></th>
@@ -215,8 +216,8 @@ var MenuList = React.createClass({
           </div>
 
       <div className={dessertsDisplay}>
-        <h3 className="mdl-layout-title">Desserts</h3>
-          <table className="menu col-md-11 col-md-offset-1">
+        <h3 className="detailview-menu-headers">Desserts</h3>
+          <table className="menu col-md-12 col-sm-12 col-xs-12">
             <thead>
               <tr>
                 <th className="table-dish"></th>
@@ -261,7 +262,7 @@ var RestaurantMap = React.createClass({
     var name = restaurant.get('name');
     var directions = 'https://www.google.com/maps/dir//' + lat + ',' + long;
     return (
-      <section id="map-section" style={{height:"325px"}}>
+      <section className="col-md-12 fluid" id="map-section" style={{height:"325px"}}>
         <GoogleMapLoader containerElement={
             <div
               {...this.props}
@@ -351,7 +352,8 @@ var DetailView = React.createClass({
       height: '50vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
-    var phone = '"tel:(' + restaurant.get('phone') + ')"';
+    var phone = phoneFormatter.format(restaurant.get('phone'),  "(NNN) NNN-NNNN");
+    console.log('phone', phone);
     return (
       <div className="detailview-pane col-md-12 ">
         <div className="detailview-header col-md-12">
@@ -360,7 +362,7 @@ var DetailView = React.createClass({
               <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
                 <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
             </div>
-            <div className="detailview-header-text ">
+            <div className="detailview-header-text col-md-12">
               <h1 className="detailview-header-name">
                 {restaurant.get('name')}
               </h1>
@@ -368,26 +370,27 @@ var DetailView = React.createClass({
               <h4 className="detailview-header-cat">
                 {restaurant.get('mainCategory')}
               </h4>
-              <h6 className="detailview-header-cat">
-                {restaurant.get('subCategory')}
-              </h6>
             </div>
-            <div className="detailview-header-info">
-              <div className="detailview-phone"><i className="material-icons">phone</i><a href={phone}>{restaurant.get('phone')}</a></div>
+            <div className="detailview-header-info col-md-12">
+              <div className="detailview-phone">
+                <i className="material-icons">phone</i>
+                <a href={phone}>{phone}</a>
+              </div>
+              <div className="detailview-address ">
+                <i className="material-icons">location_on</i>
+                <span>{restaurant.get('address')}</span>
+                <span>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</span>
+              </div>
             </div>
-            <div className="detailview-header-address mdl-card__supporting-text">
-              <i className="material-icons">location_on</i>
-              <span>{restaurant.get('address')}</span>
-              <span>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</span>
-            </div>
+            <RestaurantMap restaurant={this.props.restaurant} />
           </div>
         </div>
 
-        <div className="col-md-4 detailview-aside mdl-shadow--2d">
+        <div className="col-md-4 col-sm-12 col-xs-12 detailview-aside mdl-shadow--2d">
           <div className="detailview-about">
             <div className="detailview-description">
               <div className="mdl-card__title">
-                <h2 className="mdl-card__title-text">About</h2>
+                <h3 className="detailview-headers">About</h3>
               </div>
               <div className="mdl-card__supporting-text">
                 <p><img className="about-image" src= {restaurant.get('menu_upload')} width="200"/>{restaurant.get('description')}</p>
@@ -395,13 +398,12 @@ var DetailView = React.createClass({
             </div>
             <div className="detailview-aside-review mdl-card__actions mdl-card--border">
               <div className="mdl-card__title">
-                <h2 className="mdl-card__title-text">Recent Reviews</h2>
+                <h3 className="detailview-headers">Recent Reviews</h3>
               </div>
               <Reviews restaurant={this.props.restaurant} />
             </div>
           </div>
           <div className="detailview-location-pane">
-            <RestaurantMap restaurant={this.props.restaurant} />
           </div>
         </div>
 

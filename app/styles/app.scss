@@ -237,17 +237,24 @@ background-color: #FFFDE7;
         }
         .detailview-header-text{
         padding: 20px;
+        text-transform: uppercase;
       }
       .detailview-header-info{
         border-top: 1px solid #BDBDBD;
         padding: 15px;
         margin-top: 10px;
+        font-size: 20px;
+        i{
+          padding-right: 10px;
+          position: relative;
+          top: 5px;
+        }
       }
       }
       .detailview-aside{
         color: #fff;
         margin-top: 30px;
-        h2{
+        .detailview-headers{
           text-transform: uppercase;
           font-weight: bold;
           color: #424242;
@@ -298,11 +305,10 @@ background-color: #FFFDE7;
 //DETAIL VIEW MENU
 .detailview-menu-list{
   // background-color: yellow;
-  h2{
+
+  .detailview-menu-headers{
     text-transform: uppercase;
-  }
-  h3{
-    text-transform: uppercase;
+    padding-top: 30px;
   }
   margin-bottom: 30px;
   padding: 20px;
@@ -311,6 +317,7 @@ background-color: #FFFDE7;
     border-bottom: 1px solid #E0E0E0;
   }
   .menu{
+    font-size: 18px;
     .table-dish{
       width: 40%;
     }
