@@ -6,6 +6,8 @@ var Favorites= require('./favorites.jsx').FavoritesContainer;
 var Template = require('../templates/templates.jsx');
 var YelpBusiness = require('../models/business.js').YelpBusiness;
 var yelpBusiness = new YelpBusiness();
+require('../router').router;
+
 
 
 var Panel = require('muicss/lib/react/panel');
@@ -61,7 +63,7 @@ var Search = React.createClass({
       <div className="categories-bar row fluid">
         {/*<h2 className="viewall-card-container-header">All Restaurants</h2>*/}
         <div className="categories-dropdown dropdown col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-8 col-xs-offset-2">
-          <span className="btn dropdown-toggle col-md-11 col-sm-11 col-xs-10" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span className="btn dropdown-toggle col-md-11 col-sm-11 col-xs-9" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span className="categories-heading pull-left">I'm in the mood for...</span>
           </span>
           <ul className="dropdown-menu col-md-offset-4" aria-labelledby="dropdownMenu1">
@@ -76,7 +78,18 @@ var Search = React.createClass({
 
 var ItemListing = React.createClass({
 
-  // var test = $.ajax('https://yelp-proxy-server.herokuapp.com/api?phone=+1')
+  setLocalStorage: function(e){
+    e.preventDefault();
+    var self = this;
+    var restaurants = this.props.restaurants;
+    var name = restaurants.get('name');
+    var id = restaurants.get('objectId');
+    localStorage.setItem('name', name);
+    self.props.router.navigate('/restaurants/' + id + '/', {
+      trigger: true
+    })
+  },
+
   render: function(){
     console.log('what is happenign');
 
@@ -99,15 +112,21 @@ var ItemListing = React.createClass({
     return(
       <div className ="viewall-restaurant-card mdl-shadow--8dp col-md-3 col-sm-5 col-xs-10">
           <div className="viewall-header restaurant-card-header">
-            <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><div className="col-md-12" style={divStyle }/></a>
+            <a onClick={this.setLocalStorage}  className="individual-item"><div className="col-md-12" style={divStyle }/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
             <div  className="viewall-name">{restaurants.get('name')}</div>
             <p className="viewall-category">{restaurants.get('mainCategory')}</p>
           </div>
           <div className="viewall-restaurant-info mdl-card__actions mdl-card--border col-md-12">
             {/*<p className="viewall-description">{restaurants.get('description')}</p>?*/}
-            <div className="viewall-counter mdl-badge col-md-2 pull-left" ><span>{restaurants.get('rating')}</span></div>
-            <div className="viewall-counter mdl-badge col-md-2 pull-right" ><span>{restaurants.get('price')}</span></div>
+            <span className="mdl-chip mdl-chip--contact pull-left">
+                <span className="mdl-chip__contact mdl-color--orange mdl-color-text--white">{restaurants.get('rating')}</span>
+                <span className="mdl-chip__text">Rating</span>
+            </span>
+            <span className="mdl-chip mdl-chip--contact pull-right">
+                <span className="mdl-chip__contact mdl-color--orange mdl-color-text--white">{restaurants.get('price')}</span>
+                <span className="mdl-chip__text">Price</span>
+            </span>
           </div>
       </div>
     )
@@ -123,7 +142,7 @@ var Listing = React.createClass({
     // console.log('2-map', restaurantList);
       return (
           <div key={restaurant.cid}>
-            <ItemListing restaurants={restaurant}/>
+            <ItemListing restaurants={restaurant} router={self.props.router}/>
           </div>
       );
     });
@@ -240,7 +259,7 @@ var ViewAllContainer= React.createClass({
       <div className="viewall-container" >
       <div className="viewall-pane row fluid">
         <Search   restaurants={this.state.businessCategoryCollection} filterCategories={this.filterCategories}/>
-        <Listing restaurants={this.state.businessCollection} />
+        <Listing restaurants={this.state.businessCollection} router={this.props.router}/>
       </div>
     </div>
     </Template>

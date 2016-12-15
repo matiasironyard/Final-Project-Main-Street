@@ -101,7 +101,7 @@ removeBreakfast: function(breakfast){
      )
    });
    return (
-     <div className="menu-panels col-md-12 mdl-shadow--3dp">
+     <div className="menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp">
        <div className="header ">
          <div className="mdl-card__title">
            <h2 className="mdl-card__title-text">Breakfast</h2>

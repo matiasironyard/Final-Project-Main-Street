@@ -77,9 +77,9 @@ var AppRouter = Backbone.Router.extend({
   },
 
 
-  allrestaurants: function(){
+  allrestaurants: function(businessId){
     ReactDOM.render(
-      React.createElement(ViewAllContainer, {router: this}),
+      React.createElement(ViewAllContainer, {businessId: businessId, router: this}),
       document.getElementById('app')
     );
   },

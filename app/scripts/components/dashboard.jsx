@@ -69,7 +69,7 @@ var Dashboard = React.createClass({
     var geolocation = business.get('lat') + ',' + business.get('long');
     var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=520x230&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
-      <div className="dashboard-container col-md-12">
+      <div className="dashboard-container col-md-11 col-md-offset-1">
         <div className="dashboard-header col-md-4 col-sm-12 col-xs-12 mdl-shadow--8dp">
           <div className="col-md-12" style={divStyle}/>
           <ul className="mdl-list">
@@ -117,7 +117,7 @@ var Dashboard = React.createClass({
           </div>
         </div>
 
-        <div className="col-md-12 col-sm-12 col-xs-12">
+        <div className="col-md-11 col-sm-11 col-xs-11">
           <h3 className="well mdl-shadow--2dp">Menu Dashboard</h3>
         </div>
       </div>
@@ -167,7 +167,7 @@ var SpecialsForm = React.createClass({
      };
 
     return(
-      <div className="col-md-12">
+      <div className="col-md-11 col-md-offset-1">
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input className="form-control" onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text"  id="name" placeholder="special of the day"/>
@@ -231,7 +231,7 @@ var SpecialsFormSet = React.createClass({
      )
    });
    return (
-     <div className="col-md-12 dashboard-specials">
+     <div className="col-md-11 col-md-offset-1 dashboard-specials">
        <form onSubmit={this.handleSubmit}>
          <h3>Specials</h3>
          <div className="col-md-12 form-inLine">
@@ -410,7 +410,7 @@ var DashboardContainer = React.createClass({
         <div className="row">
           <div className= "dashboard-windows col-md-12 col-sm-12 col-xs-11">
             <Dashboard  business={this.state.business} />
-              <div className="specials-pane">
+              <div className="specials-pane col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
                 <h4>Specials</h4>
                 <input type="submit" value="Search" onClick={this.onClick} />
                 <input type="submit" value="Search" onClick={this.onClickClose} />

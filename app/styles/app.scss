@@ -136,7 +136,10 @@ img {
       margin-top: 20px;
       margin-bottom: 15px;
       margin-right: 20px;
-      font-size: 25px;
+      i{
+        font-size: 30px;
+        // font-size: calc(4em +4vw);
+      }
     }
   }
   .categories-dropdown:hover{
