@@ -355,8 +355,8 @@ var DetailView = React.createClass({
     var phone = restaurant.get('phone');
     console.log('phone', phone);
     return (
-      <div className="detailview-pane col-md-12 ">
-        <div className="detailview-header col-md-12">
+      <div className="detailview-pane col-md-10 col-md-offset-1">
+        <div className="detailview-header col-md-12 col-sm-6">
           <div className="row">
             <div className="detailview-header-img" style={divStyle}>
               <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
@@ -386,7 +386,7 @@ var DetailView = React.createClass({
           </div>
         </div>
 
-        <div className="col-md-5 col-sm-12 col-xs-12 detailview-aside mdl-shadow--2d">
+        <div className="col-md-5 col-sm-6 col-xs-12 detailview-aside mdl-shadow--4d">
           <div className="detailview-about">
             <div className="detailview-description">
               <div className="mdl-card__title">

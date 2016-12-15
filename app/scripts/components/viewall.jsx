@@ -60,8 +60,8 @@ var Search = React.createClass({
     return(
       <div className="categories-bar row fluid">
         {/*<h2 className="viewall-card-container-header">All Restaurants</h2>*/}
-        <div className="categories-dropdown dropdown col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
-          <span className="btn dropdown-toggle col-md-11 col-sm-11 col-xs-11" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <div className="categories-dropdown dropdown col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-8 col-xs-offset-2">
+          <span className="btn dropdown-toggle col-md-11 col-sm-11 col-xs-10" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span className="categories-heading pull-left">I'm in the mood for...</span>
           </span>
           <ul className="dropdown-menu col-md-offset-4" aria-labelledby="dropdownMenu1">
@@ -87,7 +87,7 @@ var ItemListing = React.createClass({
     var imgUrl = restaurants.get('image_upload');
     var divStyle = {
       // height: '50vh',
-      height: "125px",
+      height: "200",
       width: "100%",
       borderRadius: "5px",
       backgroundPosition: "center",
@@ -97,9 +97,9 @@ var ItemListing = React.createClass({
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
 
     return(
-      <div className ="viewall-restaurant-card mdl-shadow--8dp col-md-3 col-sm-5 col-xs-11">
+      <div className ="viewall-restaurant-card mdl-shadow--8dp col-md-3 col-sm-5 col-xs-10">
           <div className="viewall-header restaurant-card-header">
-            <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><div style={divStyle }/></a>
+            <a href={'#restaurants/' + restaurants.get('objectId') + '/'} className="individual-item"><div className="col-md-12" style={divStyle }/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
             <div  className="viewall-name">{restaurants.get('name')}</div>
             <p className="viewall-category">{restaurants.get('mainCategory')}</p>
@@ -129,7 +129,7 @@ var Listing = React.createClass({
     });
     return(
       <div className="viewall-cards-container row">
-        <div className="vieall-cards-col col-md-10 col-md-offset-2 col-md-offset-1 col-sm-12 col-xs-12">
+        <div className="vieall-cards-col col-md-10 col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1">
           {restaurantList}
         </div>
       </div>

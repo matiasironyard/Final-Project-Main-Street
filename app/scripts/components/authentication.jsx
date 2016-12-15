@@ -89,10 +89,11 @@ var SignUpComponent = React.createClass({
   render: function() {
     return (
       <div className="signup-container container-fluid">
-            <div className="signup-col  mdl-shadow--2dp col-md-3 col-md-offset-5">
-              <div className="inthemood-headers">
-                <h2 className="inthemood-header">In The Mood</h2>
-                <h4 className="inthemood-subheader">@ Downtown Greenville</h4>
+            <div className="signup-col  mdl-shadow--8dp col-md-4 col-md-offset-4">
+              <div className="login-headers row">
+              {/*<div className="nav-header-img col-md-2"/>*/}
+                  <span className="login-header-1">In The</span>
+                  <span className="login-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
               </div>
               <div className="mdl-card__actions mdl-card--border">
                 <h4>Sign up</h4>
@@ -110,9 +111,14 @@ var SignUpComponent = React.createClass({
                   <h6 className="mdl-card__title-tex">Are you a business owner?</h6>
                   <button type="button" className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onClick={this.openModal}>{this.state.clickNext}</button>
                 </div>
-                <Modal  className="signup-modal" isOpen={this.state.modalIsOpen}>
-                  <div className="signup-modal col-md-4 col-md-offset-4 form-group">
-                    <h3>We make easy</h3>
+                <Modal  className="signup-modal col-md-4 col-md-offset-4 " isOpen={this.state.modalIsOpen}>
+                  <div className="signup-modal form-group">
+                    <div className="login-headers row">
+                    {/*<div className="nav-header-img col-md-2"/>*/}
+                        <span className="login-header-1">In The</span>
+                        <span className="login-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
+                    </div>
+                    <h3>We make it easy</h3>
                     <p>5 minutes. Yes, that s all it will take to create your business profile. We want to help you get up and going fast, so that you get back to business!</p>
                     <div className="mdl-card__actions mdl-card--border">
                       <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.</p>

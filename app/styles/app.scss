@@ -36,10 +36,39 @@ img {
     font-size: calc(.8em + .8vw);
     color: #424242;
   }
-
 }
-//REGISTRATION
 
+//LOGIN HEADERS
+.login-headers{
+  background-color: rgba(36, 44, 44, 0.9);
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 25px;
+  .login-header-1{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: calc(1em + 1vw);
+    color: #FFF;
+  }
+  .login-header-2{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: calc(1em + 1vw);
+    color: #FFAB40;
+    // font-family: 'Yellowtail', cursive;
+    .material-icons{
+      font-size: 30px;
+      position: relative;
+      left: 5px;
+      top: 5px;
+    }
+  }
+}
+
+
+
+
+//REGISTRATION
 .registration-container{
   background-image: url('https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w');
   background-size: cover;
@@ -47,9 +76,14 @@ img {
   .registration-form{
     background-color: #ffffff;
     margin-top: 50px;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
     .form-input-div{
       input{
         margin-top: 20px;
+      }
+      textarea{
+        height: 20vh;
       }
     }
     .registration-image-uploads{
@@ -91,7 +125,7 @@ img {
       border: 0px;
       border-radius: 0;
       .categories-heading{
-        font-size: 4vh;
+        font-size: calc(1em + 1.5vw);
         color: #424242;
       }
       .caret{
@@ -117,9 +151,10 @@ img {
   margin-bottom: 20px;
 
   .favorites-col{
-    padding-left: 0;
+    // padding-left: 0;
 
     .favorites-pane{
+      // display: inline-block;
 
       .favorites-header{
         color: #212121;
@@ -127,38 +162,35 @@ img {
         font-size: calc(1em + 1vw);
         text-transform: uppercase;
       }
-
-      .restaurant-cards{
-        width: 150px;
-        // height: 150px;
-        margin: 5px;
-        padding: 5px;
-        .material-icons{
-          margin-top: 10px;
-        }
-        .restaurant-card-img{
-          border-radius: 5px;
-        }
-        .restaurant-card-name{
-          color: #212121;
-          margin-top: 10px;
-          font-size: calc(.5em + .5vw);
-          width: 150px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          text-transform: uppercase;
-        }
-        .restaurant-card-category{
-          color: #616161;
-          font-size: calc(.4em + .4vw);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          text-transform: uppercase;
-        }
-      }
     }
+  }
+}
+.restaurant-cards{
+  margin: 10px;
+  padding: 5px;
+  .material-icons{
+    margin-top: 10px;
+  }
+  .restaurant-card-img{
+    border-radius: 5px;
+  }
+  .restaurant-card-name{
+    color: #212121;
+    margin-top: 10px;
+    font-size: calc(.5em + .5vw);
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+  }
+  .restaurant-card-category{
+    color: #616161;
+    font-size: calc(.4em + .4vw);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
   }
 }
 
@@ -365,6 +397,10 @@ img {
 .signup-container{
   background-image: url('https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w');
   background-size: cover;
+  h4{
+    text-transform: uppercase;
+    font-weight: bold;
+  }
   .signup-col{
     background-color: #fff;
     margin-top: 10%;
@@ -374,6 +410,10 @@ img {
 .signup-modal{
   background-color: #fff;
   margin-top: 5%;
+  height: 100%;
+  h3{
+    text-transform: uppercase;
+  }
   .btn{
     margin: 20px;
   }
@@ -387,7 +427,7 @@ img {
     background-color: #fff;
     margin-top: 10%;
     margin-bottom: 10%;
-    padding: 10px;
+    padding-bottom: 20px;
     .login-header{
       font-size: calc(1.5em + 1.5vw);
       color: #FFAB40;

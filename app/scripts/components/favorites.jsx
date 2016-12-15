@@ -137,8 +137,8 @@ var FavoriteListing = React.createClass({
   var long = favorites.get('long');
   var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
     return (
-      <div className ="restaurant-cards mdl-card mdl-shadow--2dp col-md-2">
-        <div className="material-icons mdl-badge mdl-badge--overlap" data-badge="♥"/>
+      <div className ="restaurant-cards mdl-shadow--2dp col-md-2 col-sm-4 col-xs-5">
+        <div className="material-icons mdl-badge mdl-badge--overlap pull-right" data-badge="♥"/>
         <div className="restaurant-card-header">
           <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item"><img className="restaurant-card-img" height="100" width="100" src={favorites.get('image_url')}/></a>
           <p className="restaurant-card-name">{favorites.get('name')}</p>
@@ -171,8 +171,10 @@ var Favorites = React.createClass({
       );
     });
     return (
-      <div className="favorites-pane col-md-12 col-sm-12 col-xs-11">
-        {favoritesList}
+      <div className="row">
+        <div className="col-md-11 col-sm-11 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+            {favoritesList}
+        </div>
       </div>
     )
   }
@@ -209,7 +211,7 @@ componentWillMount: function(){
     return (
       <Template>
         <div className="favorites-row">
-          <div className="favorites-col">
+          <div className="favorites-col col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
             <Favorites restaurants={this.state.businessCollection}/>
             <MapContainer restaurants={this.state.businessCollection}/>
           </div>

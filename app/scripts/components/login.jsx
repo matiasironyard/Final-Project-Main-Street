@@ -49,25 +49,31 @@ var LoginComponent = React.createClass({
 
   render: function() {
     return (
-      <div className="login mdl-shadow--2dp col-md-3 col-md-offset-5">
-            <h2 className="login-header">In The Mood</h2>
-            <h2 className="login-subheader">Please Login</h2>
-            <form className="col-md-12"onSubmit={this.handleLogMeIn} id="login">
-              <span className="error"></span>
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input onChange={this.handleEmail} value={this.state.email} className="mdl-textfield__input" name="email" id="email-login" type="email" placeholder="email" />
-                <label  className="mdl-textfield__label" htmlFor="email-login"/>
-              </div>
-
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input onChange={this.handlePassword} value={this.state.password} className="mdl-textfield__input" name="password" id="password-login" type="password" placeholder="Password Please" />
-                <label className="mdl-textfield__label" htmlFor="password-login"/>
-              </div>
-              <div>
-                <button onSubmit={this.handleLogIn} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left" type="submit" value="Beam Me Up!">Sign In!</button>
-              </div>
-            </form>
+    <div className="login-container container-fluid">
+      <div className="login mdl-shadow--8dp col-md-4 col-md-offset-4">
+        <div className="login-headers row">
+        {/*<div className="nav-header-img col-md-2"/>*/}
+            <span className="login-header-1">In The</span>
+            <span className="login-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
+        </div>
+        <h2 className="login-subheader">Please Login</h2>
+        <form className="col-md-12"onSubmit={this.handleLogMeIn} id="login">
+          <span className="error"></span>
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input onChange={this.handleEmail} value={this.state.email} className="mdl-textfield__input" name="email" id="email-login" type="email" placeholder="email" />
+            <label  className="mdl-textfield__label" htmlFor="email-login"/>
           </div>
+
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input onChange={this.handlePassword} value={this.state.password} className="mdl-textfield__input" name="password" id="password-login" type="password" placeholder="Password Please" />
+            <label className="mdl-textfield__label" htmlFor="password-login"/>
+          </div>
+          <div>
+            <button onSubmit={this.handleLogIn} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left" type="submit" value="Beam Me Up!">Sign In!</button>
+          </div>
+        </form>
+      </div>
+    </div>
     );
   }
 });
@@ -124,10 +130,8 @@ var LogInContainer = React.createClass({
   render: function() {
 
     return (
-      <div className="login-container container-fluid">
-        <div className="login-row">
-          <LoginComponent handleLogMeIn={this.handleLogMeIn} router={this.props.router}/>
-        </div>
+      <div>
+        <LoginComponent handleLogMeIn={this.handleLogMeIn} router={this.props.router}/>
       </div>
     );
   }

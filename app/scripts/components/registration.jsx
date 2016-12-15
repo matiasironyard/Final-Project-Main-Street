@@ -60,12 +60,15 @@ var RegistrationForm = React.createClass({
   render: function() {
     return (
       <div className="registration-container container-fluid">
-        <div className="registration-form mdl-shadow--2dp col-md-5 col-md-offset-4">
-          <div className="inthemood-headers">
-            <h2 className="inthemood-header">In The Mood</h2>
-            <h4 className="inthemood-subheader">@ Downtown Greenville</h4>
+
+        <div className="registration-form mdl-shadow--8dp col-md-6 col-md-offset-3 col-sm-11 col-xs-12">
+          <div className="login-headers row">
+          {/*<div className="nav-header-img col-md-2"/>*/}
+              <span className="login-header-1">In The</span>
+              <span className="login-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
+              <span className="login-header-1">For {this.state.name}</span>
           </div>
-          <p>Verify Your Information</p>
+          <h5>Verify Your Information</h5>
           <form onSubmit={this.handleSubmit} id="registration-form" action="https://matias-recipe.herokuapp.com/classes/dist/" method="POST" encType="multipart/form-data">
             <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
               <input onChange={this.handleInputChange} name="name" value={this.state.name} type="text" className="mdl-textfield__input" id="business-name" placeholder="Restaurant Name"/>
@@ -73,9 +76,6 @@ var RegistrationForm = React.createClass({
             <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label categories">
               <input onChange={this.handleInputChange} name="subCategory1" value={this.state.mainCategory} type="text" className="mdl-textfield__input" id="business-cat" placeholder="Main Category"/>
               <input onChange={this.handleInputChange} name="subCategory2" value={this.state.subCategory } type="text" className="mdl-textfield__input" id="business-cat" placeholder="Sub Category"/>
-            </div>
-            <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
-              <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="mdl-textfield__input" id="business-name" placeholder="Enter a short business description"/>
             </div>
             <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
               <input onChange={this.handleInputChange} name="phone" value={this.state.phone} type="text" className="mdl-textfield__input" id="business-phone" placeholder="Your buisness phone number. 864-111-2233"/>
@@ -92,6 +92,15 @@ var RegistrationForm = React.createClass({
               </div>
               <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
                 <input onChange={this.handleInputChange} name="zip" value={this.state.zip} type="text" className="mdl-textfield__input inline" id="business-zip" placeholder="Zip Code"/>
+              </div>
+            </div>
+            <div className="registration-description row">
+              <div className="registration-description col-md-12 col-sm-11 col-xs-11">
+                <h4>About {this.state.name} </h4>
+                <p>Tell your patrions about your business</p>
+                <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+                  <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="mdl-textfield__input" id="business-name" placeholder="Enter a short business description"/>
+                </div>
               </div>
             </div>
 
