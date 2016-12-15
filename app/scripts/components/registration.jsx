@@ -12,6 +12,7 @@ var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
 var yelpBusiness = new YelpBusiness();
 var phoneFormatter = require('phone-formatter');
 
+
 require('../router').router;
 
 var RegistrationForm = React.createClass({
@@ -37,7 +38,7 @@ var RegistrationForm = React.createClass({
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
     this.setState({
-      profilePic: attachedPicture
+      attachedPicture : attachedPicture,
     });
   },
 
@@ -99,7 +100,7 @@ var RegistrationForm = React.createClass({
                 <h4>Images Uploads</h4>
               </div>
               <div className="form-profile-pic col-md-6">
-                <div><img src={this.state.profilePic} width="300"/></div>
+                <div><img src={this.state.image_upload} width="300"/></div>
                 <input type="text" id="uploaded_picture" placeholder="Header Picture Title"/><br/>
                 <input className="" onChange={this.handlePicture} type="file" id="profile-pic"/>
               </div>
@@ -109,6 +110,7 @@ var RegistrationForm = React.createClass({
                 <input className="" onChange={this.handleMenu} type="file" id="menu"/>
               </div>
             </div>
+
             <div className='button-pane'>
               <button type="submit" className="btn btn-default">Save Profile</button>
             </div>

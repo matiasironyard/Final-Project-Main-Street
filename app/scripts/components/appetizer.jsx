@@ -64,7 +64,9 @@ var AppetizerForm= React.createClass({
 
 var AppetizerFormSet = React.createClass({
   getInitialState: function() {
-          return { showComponent: false };
+          return ({
+            showComponent: false,
+          });
       },
 
   onClick: function() {

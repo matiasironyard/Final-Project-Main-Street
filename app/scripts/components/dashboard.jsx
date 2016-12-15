@@ -44,19 +44,45 @@ var Dashboard = React.createClass({
     console.log(business);
     var objectId = this.props.business.get('objectId');
     var link = '#restaurants/' + objectId + '/';
+    var imgUrl = business.get('image_url');
+    var divStyle = {
+      height: "200",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundImage: 'url(' + imgUrl + ')'
+    };
+    var imgUpload1 = business.get('image_upload');
+    var imgUpload2 = business.get('menu_upload');
+    var divImgUpload1 = {
+      height: "200",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundImage: 'url(' + imgUpload1 + ')'
+    };
+    var divImgUpload2 = {
+      height: "200",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundImage: 'url(' + imgUpload2 + ')'
+    };
+
     var geolocation = business.get('lat') + ',' + business.get('long');
-    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=520x230&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
       <div className="dashboard-container col-md-12">
-        <div className="dashboard-header col-md-4 mdl-card mdl-shadow--2dp">
-          <img className="img-thumbnail" src={business.get('image_url')} width="150"/>
+        <div className="dashboard-header col-md-4 col-sm-12 col-xs-12 mdl-shadow--8dp">
+          <div className="col-md-12" style={divStyle}/>
           <ul className="mdl-list">
-            <li className="mdl-list__item"><h5>{business.get('name')}</h5></li>
-            <li className="mdl-list__item">Category:  {business.get('mainCategory')}</li>
-            <li className="mdl-list__item">Rating:  {business.get('rating')}/5</li>
-            <li className="mdl-list__item">Range:  {business.get('price')}</li>
-            <li className="mdl-list__item">Phone: {business.get('phone')}</li>
+            <li className="mdl-list__item name">{business.get('name')}</li>
+            <li className="mdl-list__item category">Category:  {business.get('mainCategory')}</li>
+            <li className="mdl-list__item rating">Rating:  {business.get('rating')}/5</li>
+            <li className="mdl-list__item range">Range:  {business.get('price')}</li>
+            <li className="mdl-list__item phone">Phone: {business.get('phone')}</li>
           </ul>
+          <div className="mdl-card__actions mdl-card--border">
+            <h5>About</h5>
+            <p>{business.get('description')}</p>
+          </div>
           <div className="mdl-card__actions mdl-card--border">
             <a href={link} ><button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left">View Page</button></a>
             <div>
@@ -65,30 +91,35 @@ var Dashboard = React.createClass({
           </div>
         </div>
 
-        <div className="col-md-6 col-md-offset-1 uploaded-images">
-          <h4 className="well">Uploaded Images</h4>
-          <div className="col-md-6">
-            <img className="img-thumbnail" width="150px" src={business.get('image_upload')}/>
-            <p>Header image</p>
+        <div className="col-md-6 col-md-offset-1 col-sm-12 col-xs-12 uploaded-images">
+          <h4 className="well mdl-shadow--2dp mdl-shadow--2dp">Your Images</h4>
+          <div className="col-md-6 col-sm-12 col-xs-12">
+            <div className="col-md-12" style={divImgUpload1}>
+              <i className="material-icons">collections</i>
+            </div>
+            <span>header image</span>
           </div>
-          <div className="col-md-6">
-            <img className="img-thumbnail" width="150px" src={business.get('menu_upload')}/>
-            <p>About image</p>
-          </div>
-        </div>
-
-        <div className="col-md-6 col-md-offset-1 map">
-          <h4 className="well">Location</h4>
-          <div className="location-map col-md-6">
-            <img className="img-thumbnail pull-left"src={googleMap}/>
-          </div>
-          <div className="location-address col-md-6">
-            <h5>Address</h5>
-            <p>{business.get('address')}</p>
-            <p>{business.get('city')}, {business.get('state')}, {business.get('zip')}</p>
+          <div className="col-md-6 col-sm-12 col-xs-12">
+            <div className="col-md-12" style={divImgUpload2}>
+              <i className="material-icons">collections</i>
+            </div>
+            <span>about image</span>
           </div>
         </div>
 
+        <div className="col-md-6 col-md-offset-1 col-sm-12 col-xs-12 map">
+          <h4 className="well mdl-shadow--2dp">Your Location</h4>
+          <div className="location-map col-md-12 col-sm-12 col-xs-12">
+            <img className="img-thumbnail pull-left"src={googleMap} height="300"/>
+          </div>
+          <div className="location-address col-md-12 col-sm-12 col-xs-12">
+            <p><i className="material-icons">location_on</i>{business.get('address')}, {business.get('city')}, {business.get('state')}, {business.get('zip')}</p>
+          </div>
+        </div>
+
+        <div className="col-md-12 col-sm-12 col-xs-12">
+          <h3 className="well mdl-shadow--2dp">Menu Dashboard</h3>
+        </div>
       </div>
     )
   }
@@ -368,26 +399,17 @@ var DashboardContainer = React.createClass({
 
   render: function(){
     var businessName = this.state.business.get('name');
-    console.log(businessName);
     var appetizer = this.state.business.get('appetizer');
-    console.log(appetizer);
     var breakfast = this.state.business.get('breakfast');
     var lunch = this.state.business.get('lunch');
     var dinner = this.state.business.get('dinner');
     var dessert = this.state.business.get('dessert');
-    var openSpecialMessage = this.state.showSpecials  ?  !this.state.showSpecials : "Open Editor";
-    var closeSpecialMessage = !this.state.showSpecials  ? this.state.showSpecials : "Close Editor";
-    var openMenuMessage = this.state.showMenu  ? !this.state.showMenu : "Open Editor";
-    var closeMenuMessage = !this.state.showMenu  ? this.state.showMenu : "Close Editor";
 
     return(
       <Template>
         <div className="row">
           <div className= "dashboard-windows col-md-12 col-sm-12 col-xs-11">
-            <h1 className="well"> {businessName} Dashboard</h1>
             <Dashboard  business={this.state.business} />
-            <h3>Menu Dashboard</h3>
-
               <div className="specials-pane">
                 <h4>Specials</h4>
                 <input type="submit" value="Search" onClick={this.onClick} />
