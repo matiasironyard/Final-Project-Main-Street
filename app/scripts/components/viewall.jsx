@@ -78,7 +78,7 @@ var Search = React.createClass({
 
 var ItemListing = React.createClass({
 
-  setLocalStorage: function(e){
+  navigate: function(e){
     e.preventDefault();
     var self = this;
     var restaurants = this.props.restaurants;
@@ -112,7 +112,7 @@ var ItemListing = React.createClass({
     return(
       <div className ="viewall-restaurant-card mdl-shadow--8dp col-md-3 col-sm-5 col-xs-10">
           <div className="viewall-header restaurant-card-header">
-            <a onClick={this.setLocalStorage}  className="individual-item"><div className="col-md-12" style={divStyle }/></a>
+            <a onClick={this.navigate}  className="individual-item"><div className="col-md-12" style={divStyle }/></a>
             <span className="viewall-counter mdl-badge pull-right" data-badge={specialsCounter}>Specials</span>
             <div  className="viewall-name">{restaurants.get('name')}</div>
             <p className="viewall-category">{restaurants.get('mainCategory')}</p>

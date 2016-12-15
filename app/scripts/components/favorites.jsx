@@ -130,6 +130,18 @@ var FavoriteListing = React.createClass({
     // this.setState(newProps.favorites);
   },
 
+  navigate: function(e){
+    e.preventDefault();
+    var self = this;
+    var restaurants = this.props.favorites;
+    var name = restaurants.get('name');
+    var id = restaurants.get('objectId');
+    localStorage.setItem('name', name);
+    self.props.router.navigate('/restaurants/' + id + '/', {
+      trigger: true
+    })
+  },
+
   render: function(){
     var favorites = this.props.favorites;
   // console.log('test', favorites.get('name'));
@@ -140,7 +152,7 @@ var FavoriteListing = React.createClass({
       <div className ="restaurant-cards mdl-shadow--2dp col-md-2 col-sm-4 col-xs-5">
         <div className="material-icons mdl-badge mdl-badge--overlap pull-right" data-badge="♥"/>
         <div className="restaurant-card-header">
-          <a href={'#restaurants/' + favorites.get('objectId') + '/'} className="individual-item"><img className="restaurant-card-img" height="100" width="100" src={favorites.get('image_url')}/></a>
+          <a onClick={this.navigate}  className="individual-item"><img className="restaurant-card-img" height="100" width="100" src={favorites.get('image_url')}/></a>
           <p className="restaurant-card-name">{favorites.get('name')}</p>
           <span className="restaurant-card-category">{favorites.get('mainCategory')}</span>
 
@@ -166,7 +178,7 @@ var Favorites = React.createClass({
     // console.log('2-map', favoritesList);
       return (
           <div key={favorites.cid}>
-            <FavoriteListing favorites={favorites}/>
+            <FavoriteListing favorites={favorites}  router={self.props.router}/>
           </div>
       );
     });
@@ -212,7 +224,7 @@ componentWillMount: function(){
       <Template>
         <div className="favorites-row">
           <div className="favorites-col col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-            <Favorites restaurants={this.state.businessCollection}/>
+            <Favorites restaurants={this.state.businessCollection} router={this.props.router}/>
             <MapContainer restaurants={this.state.businessCollection}/>
           </div>
         </div>

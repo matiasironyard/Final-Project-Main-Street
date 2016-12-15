@@ -2,17 +2,25 @@ var React = require('react');
 require('backbone-react-component');
 var Gravatar = require('react-gravatar');
 var _ = require('underscore');
-
-
-
 var Template = React.createClass({
+
   logout: function(){
     localStorage.clear().then(function(){
         $.post('https://matias-recipe.herokuapp.com/logout/')
     });
   },
 
+  navigate: function(){
+    localStorage.removeItem('name');
+    },
+
   render: function(){
+    var moodFor = "for" +  ' ' + localStorage.getItem('name');
+    var classStyle = "nav-header-1";
+    if(localStorage.getItem('name') == null){
+      classStyle = "hidden";
+    }
+
     return (
       <div className="template">
 
@@ -20,21 +28,22 @@ var Template = React.createClass({
           <div className="nav-bar row">
             <div className="nav-bar-col col-md-12-fluid col-sm-11-fluid col-xs-11-fluid">
               <ul className="nav nav-tabs ">
-                <li role="presentation" className="active col-md-3"><a  className="nav-tabs" href="#restaurants/">
+                <li role="presentation" className="active col-md-3"><a  onClick={this.navigate}  className="nav-tabs" href="#restaurants/">
                   <div className="nav-headers">
                   {/*<div className="nav-header-img col-md-2"/>*/}
                       <span className="nav-header-1">In The</span>
                       <span className="nav-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
+                      <p className={classStyle}>{moodFor}</p>
                   </div>
                   </a>
                 </li>
-                                    {/*<li className="nav-bar-dropdowns" role="presentation"><p className="pull-right"> {localStorage.getItem('username')}</p></li>*/}
+
                 <li role="presentation" className="dropdown  pull-right">
                   <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <i className="material-icons md-48">account_box</i><span className="caret"></span>
                   </a>
                   <ul className="dropdown-menu">
-                    <li  className="nav-bar-dropdowns" role="presentation"><a  href="#favorites/"><i className="material-icons">favorite</i></a></li>
+                    <li  className="nav-bar-dropdowns" role="presentation"><a  onClick={this.navigate} href="#favorites/"><i className="material-icons">favorite</i></a></li>
                     <li className="nav-bar-dropdowns" role="presentation"><a onClick={this.logout} href=""><i className="material-icons">exit_to_app</i></a></li>
                     <li className="nav-bar-dropdowns" role="presentation"> <a href="#login/"><i className="material-icons">perm_identity</i></a></li>
                     <li className="nav-bar-dropdowns" role="presentation"><a  href="#dashboard/"><i className="material-icons">web</i></a></li>

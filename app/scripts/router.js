@@ -23,7 +23,7 @@ var AppRouter = Backbone.Router.extend({
     'restaurants/': 'allrestaurants',
     'restaurants/:id/': 'restaurant',
     'favorites/': 'favorites',
-    'locations/': 'locations',
+    // 'template/': 'template',
     'dashboard/': 'dashboard',
     'registration/': 'registration',
     'login/': 'login',
@@ -33,12 +33,12 @@ var AppRouter = Backbone.Router.extend({
     setupParse('matiasrecipeserver', 'recipe');
   },
 
-  businessSessionCheck: function(){
-    if (!JSON.parse(localStorage.getItem('user')).phone){
-      // alert('this page is reserved for business owners')
-     this.navigate('/restaurants/', {trigger: true});
-   }
-  },
+  // businessSessionCheck: function(){
+  //   if (!JSON.parse(localStorage.getItem('user')).phone){
+  //     // alert('this page is reserved for business owners')
+  //    this.navigate('/restaurants/', {trigger: true});
+  //  }
+  // },
   // visitorSessionCheck: function(){
   //   if (!JSON.parse(localStorage.getItem('user')).phone){
   //    this.navigate('/restaurants/', {trigger: true});
@@ -100,10 +100,10 @@ var AppRouter = Backbone.Router.extend({
     );
   },
 
-  // locations: function(){
+  // template: function(){
   //   console.log('favorites view');
   //   ReactDOM.render(
-  //     React.createElement(MapContainer, {router: this}),
+  //     React.createElement(Template,  {router: this}),
   //     document.getElementById('app')
   //   );
   // },
