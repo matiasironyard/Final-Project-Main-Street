@@ -65,7 +65,6 @@ var SignUpComponent = React.createClass({
   handleLogMeIn: function(e) {
     e.preventDefault();
     this.props.handleLogIn(e);
-    console.log(this.state);
   },
 
   openModal: function() {
@@ -158,7 +157,6 @@ var AuthenticationContainer = React.createClass({
       self.props.router.navigate('/login/', {
         trigger: true
       })
-      console.warn(response);
     });
   },
 

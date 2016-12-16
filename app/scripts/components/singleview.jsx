@@ -14,6 +14,8 @@ var GoogleMap = google.GoogleMap;
 var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
 var phoneFormatter = require('phone-formatter');
+var Modal = require('react-modal');
+
 
 
 var router = require('../router').router;
@@ -301,6 +303,8 @@ var DetailView = React.createClass({
   getInitialState: function() {
     return {
       restaurant: {},
+      modalIsOpen: false,
+      modalIsOpen2: false,
     }
   },
 
@@ -321,9 +325,28 @@ var DetailView = React.createClass({
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
     self.props.setFavorite(favorite);
+    this.setState({
+      modalIsOpen: false,
+    });
     // self.setState({
     //   favorite: favorite,
     // })
+  },
+
+  openModal: function() {
+    this.setState({
+      modalIsOpen: true
+    });
+    // this.setState({
+    //   favoriteMessage: <i className="material-icons">check_circle</i>
+    // });
+  },
+
+  closeModal: function() {
+    this.setState({
+      modalIsOpen: false,
+      modalIsOpen2: false
+    });
   },
 
   handleRemoveFavorite: function(e) {
@@ -331,9 +354,16 @@ var DetailView = React.createClass({
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
     self.props.removeFavorite(favorite);
+    localStorage.removeItem('name');
     // self.setState({
     //   favorite: favorite
     // });
+  },
+
+  openModal2: function() {
+    this.setState({
+      modalIsOpen2: true
+    });
   },
 
   render: function() {
@@ -355,13 +385,44 @@ var DetailView = React.createClass({
     var phone = restaurant.get('phone');
     console.log('phone', phone);
     return (
-      <div className="detailview-pane col-md-10 col-md-offset-1">
+      <div className="detailview-pane container">
         <div className="detailview-header col-md-12 col-sm-6">
           <div className="row">
             <div className="detailview-header-img" style={divStyle}>
-              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleRemoveFavorite} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
-              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right" onClick={this.handleFavorite} type="button"><i className="material-icons">favorite_border</i></button>
+              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right"  onClick={this.openModal2} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
+              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right"  onClick={this.openModal} type="button"><i className="material-icons">favorite_border</i></button>
             </div>
+
+            <Modal  className="favorite-modal mdl-dialog col-md-offset-5 col-sm-offset-1 col-xs-offset-1" isOpen={this.state.modalIsOpen}>
+              <div className="mdl-card ">
+                <h4 className="mdl-dialog__title">Your Favorites</h4>
+                  <div className="mdl-dialog__content">
+                  <p>
+                    {restaurant.get('name')} will be added to your favorites!
+                  </p>
+                </div>
+                <div className="mdl-dialog__actions">
+                  <button type="button" onClick={this.handleFavorite} className="mdl-button">Let's add it!</button>
+                  <button type="button" onClick={this.closeModal} className="mdl-button">Take me back</button>
+                </div>
+              </div>
+            </Modal>
+
+            <Modal  className="favorite-modal mdl-dialog col-md-offset-5 col-sm-offset-1 col-xs-offset-1" isOpen={this.state.modalIsOpen2}>
+              <div className="mdl-card ">
+                <h4 className="mdl-dialog__title">Wait!</h4>
+                  <div className="mdl-dialog__content">
+                  <p>
+                    You are about to remove {restaurant.get('name')} from for your favorites...
+                  </p>
+                </div>
+                <div className="mdl-dialog__actions">
+                  <button type="button" onClick={this.handleRemoveFavorite} className="mdl-button">Do it!</button>
+                  <button type="button" onClick={this.closeModal} className="mdl-button">I changed my mind</button>
+                </div>
+              </div>
+            </Modal>
+
             <div className="detailview-header-text col-md-12">
               <h1 className="detailview-header-name">
                 {restaurant.get('name')}

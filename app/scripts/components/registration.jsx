@@ -238,17 +238,19 @@ var RegistrationContainer = React.createClass({
     file.save().done(function(response) {
       localStorage.setItem('image_upload', response.url);
     });
+    this.setState({business: business});
   },
 
   uploadMenu: function(menu) {
     var file = new FileModel();
-    // var business = this.state.business;
+    var business = this.state.business;
     file.set('name', menu.name);
     file.set('data', menu);
     file.save().done(function(response) {
       localStorage.setItem('menu_upload', response.url);
       // business.set('menu_upload', response.url);
     });
+    this.setState({business: business});
   },
 
   render: function() {

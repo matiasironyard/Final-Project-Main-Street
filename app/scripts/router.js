@@ -33,12 +33,12 @@ var AppRouter = Backbone.Router.extend({
     setupParse('matiasrecipeserver', 'recipe');
   },
 
-  // businessSessionCheck: function(){
-  //   if (!JSON.parse(localStorage.getItem('user')).phone){
-  //     // alert('this page is reserved for business owners')
-  //    this.navigate('/restaurants/', {trigger: true});
-  //  }
-  // },
+  businessSessionCheck: function(){
+    if (!JSON.parse(localStorage.getItem('user')).phone){
+      // alert('this page is reserved for business owners')
+     this.navigate('/restaurants/', {trigger: true});
+   }
+  },
   // visitorSessionCheck: function(){
   //   if (!JSON.parse(localStorage.getItem('user')).phone){
   //    this.navigate('/restaurants/', {trigger: true});
