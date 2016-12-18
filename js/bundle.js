@@ -41,22 +41,21 @@ var AppetizerForm= React.createClass({displayName: "AppetizerForm",
 
   render: function() {
     var appetizers = this.props.appetizers;
+    console.log('appetizers', appetizers.length);
     // console.log(special.get('expirydate'))
     return (
-      React.createElement("div", {className: "menu-forms appetizers"}, 
-        React.createElement("div", {className: "form-group"}, 
-          React.createElement("label", {htmlFor: "name"}, "Name"), 
-          React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "name", value: appetizers.get('name'), type: "text", id: "name", placeholder: "dish name"})
+      React.createElement("div", {className: "menu-forms appetizers col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1"}, 
+        React.createElement("h5", null, "Dish: ", appetizers.get('name')), 
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "name", value: appetizers.get('name'), type: "text", id: "name", placeholder: "dish name"})
         ), 
-        React.createElement("div", {className: "form-group"}, 
-          React.createElement("label", {htmlFor: "description"}, "Description"), 
-          React.createElement("input", {className: "form-control", className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: appetizers.get('description'), type: "text", id: "description", placeholder: "dish description"})
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: appetizers.get('description'), type: "text", id: "description", placeholder: "dish description"})
         ), 
-        React.createElement("div", {className: "form-group"}, 
-          React.createElement("label", {htmlFor: "price"}, "Price"), 
-          React.createElement("input", {className: "form-control", className: "form-control", onChange: this.handleInputChange, name: "price", value: appetizers.get('price'), type: "text", id: "price", placeholder: "dish price"})
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "price", value: appetizers.get('price'), type: "text", id: "price", placeholder: "dish price"})
         ), 
-        React.createElement("button", {onClick: this.removeAppetizer, type: "button", className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever")), 
+        React.createElement("a", {onClick: this.removeAppetizer, type: "button", className: "pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever")), 
         React.createElement("div", null
         )
       )
@@ -68,21 +67,32 @@ var AppetizerFormSet = React.createClass({displayName: "AppetizerFormSet",
   getInitialState: function() {
           return ({
             showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
           });
       },
 
   onClick: function() {
       this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
-  onClickClose: function() {
+  onClickCloseSave: function(e) {
+    e.preventDefault();
       this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveBreakfast();
   },
 
-  handleSubmit: function(e) {
-    e.preventDefault();
-    // console.log('business', this.state);
-    this.props.saveAppetizer();
-  },
+  // handleSubmit: function(e) {
+  //   e.preventDefault();
+  //   // console.log('business', this.state);
+  //   this.props.saveAppetizer();
+  // },
 
   removeAppetizer: function(appetizer) {
     this.props.removeAppetizer(appetizer);
@@ -91,6 +101,7 @@ var AppetizerFormSet = React.createClass({displayName: "AppetizerFormSet",
   render: function() {
     var self = this;
     // var business = self.props.business;
+
     var appetizerFormset = this.props.appetizers.map(function(appetizerItem) {
       //  console.log('get specials', business.get('specials'));
       return (
@@ -100,27 +111,28 @@ var AppetizerFormSet = React.createClass({displayName: "AppetizerFormSet",
       )
     });
     return (
-      React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"}, 
+      React.createElement("div", {className: this.state.editorClass}, 
         React.createElement("div", {className: "header "}, 
           React.createElement("div", {className: "mdl-card__title"}, 
-            React.createElement("h2", {className: "mdl-card__title-text"}, "Appetizers")
+            React.createElement("h5", {className: "menu-editor-title"}, "Appetizers Editor")
           ), 
-          React.createElement("div", {className: "mdl-card__supporting-text"}, 
-           React.createElement("span", null, "editor")
-         ), 
           React.createElement("div", {className: "header-buttons mdl-card__actions mdl-card--border"}, 
-            React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"), 
-            React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-right", type: "submit", onClick: this.onClickClose}, "Hide")
+            this.state.hideBtn ? React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"):null, 
+            this.state.showBtn ?React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClickCloseSave}, "Hide"):null, 
+            React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right"}, 
+                React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, this.props.appetizers.length), 
+                React.createElement("span", {className: "mdl-chip__text"}, "Appetizers")
+            )
           )
         ), 
 
         this.state.showComponent ? React.createElement("form", {onSubmit: this.handleSubmit}, 
-         React.createElement("div", {className: "form-inLine"}, 
-           appetizerFormset, 
-           React.createElement("button", {type: "button", onClick: this.props.addAppetizer, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "add"))
+         React.createElement("div", {className: "form-inLine col-md-12"}, 
+           appetizerFormset
          ), 
-         React.createElement("br", null), 
-        React.createElement("button", {onClick: this.handleSubmit, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "save"))
+         React.createElement("a", {type: "button", onClick: this.props.addAppetizer}, React.createElement("i", {className: "material-icons col-md-1 col-md-offset-5"}, "add"))
+
+        /*<button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>*/
        ): null
      )
     );
@@ -369,21 +381,19 @@ var BreakfastForm= React.createClass({displayName: "BreakfastForm",
     var breakfast = this.props.breakfast;
     // console.log(special.get('expirydate'))
     return(
-      React.createElement("div", {className: "menu-forms breakfast"}, 
-            React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "name"}, "Name"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: breakfast.get('name'), type: "text", id: "name", placeholder: "dish name"})
+      React.createElement("div", {className: "menu-forms appetizers col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1"}, 
+        React.createElement("h5", null, "Dish: ", breakfast.get('name')), 
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "name", value: breakfast.get('name'), type: "text", id: "name", placeholder: "dish name"})
           ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "description"}, "Description"), 
-            React.createElement("input", {className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: breakfast.get('description'), type: "text", id: "description", placeholder: "dish description"})
+          React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {className: "mdl-textfield__input", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: breakfast.get('description'), type: "text", id: "description", placeholder: "dish description"})
           ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "price"}, "Price"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: breakfast.get('price'), type: "text", id: "price", placeholder: "dish price"})
+          React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "price", value: breakfast.get('price'), type: "text", id: "price", placeholder: "dish price"})
       ), 
         React.createElement("div", null, 
-          React.createElement("button", {onClick: this.removeBreakfast, type: "button", className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
+          React.createElement("a", {onClick: this.removeBreakfast, type: "button", className: "pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
         )
       )
     );
@@ -392,21 +402,34 @@ var BreakfastForm= React.createClass({displayName: "BreakfastForm",
 
 var BreakfastFormSet = React.createClass({displayName: "BreakfastFormSet",
   getInitialState: function() {
-          return { showComponent: false };
+          return ({
+            showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
+          });
       },
 
   onClick: function() {
       this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
-  onClickClose: function() {
+  onClickCloseSave: function(e) {
+    e.preventDefault();
       this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveBreakfast();
   },
 
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveBreakfast();
-},
+//   handleSubmit: function(e){
+//   e.preventDefault();
+//   // console.log('business', this.state);
+//   this.props.saveBreakfast();
+// },
 
 removeBreakfast: function(breakfast){
     this.props.removeBreakfast(breakfast);
@@ -426,26 +449,27 @@ removeBreakfast: function(breakfast){
      )
    });
    return (
-     React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp"}, 
+     React.createElement("div", {className: this.state.editorClass}, 
        React.createElement("div", {className: "header "}, 
          React.createElement("div", {className: "mdl-card__title"}, 
-           React.createElement("h2", {className: "mdl-card__title-text"}, "Breakfast")
+           React.createElement("h5", {className: "menu-editor-title"}, "Breakfast Editor")
          ), 
-         React.createElement("div", {className: "mdl-card__supporting-text"}, 
-          React.createElement("span", null, "editor")
-        ), 
          React.createElement("div", {className: "header-buttons mdl-card__actions mdl-card--border"}, 
-           React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"), 
-           React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-right", type: "submit", onClick: this.onClickClose}, "Hide")
+           this.state.hideBtn ? React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"):null, 
+           this.state.showBtn ?React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClickCloseSave}, "Hide"):null, 
+           React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right "}, 
+
+               React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, this.props.breakfast.length), 
+               React.createElement("span", {className: "mdl-chip__text"}, "Breakfast")
+           )
          )
        ), 
          this.state.showComponent ? React.createElement("form", {onSubmit: this.handleSubmit}, 
-         React.createElement("div", {className: "form-inLine"}, 
-           breakfastFormset, 
-          React.createElement("button", {type: "button", onClick: this.props.addBreakfast, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "add"))
+         React.createElement("div", {className: "form-inLine col-md-12"}, 
+           breakfastFormset
          ), 
-         React.createElement("br", null), 
-        React.createElement("button", {onClick: this.handleSubmit, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "save"))
+         React.createElement("a", {type: "button", onClick: this.props.addBreakfast}, React.createElement("i", {className: "material-icons col-md-1 col-md-offset-5"}, "add"))
+        /*<button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>*/
        ):null
      )
    );
@@ -575,10 +599,6 @@ var Dashboard = React.createClass({displayName: "Dashboard",
           React.createElement("div", {className: "location-address col-md-12 col-sm-12 col-xs-12"}, 
             React.createElement("p", null, React.createElement("i", {className: "material-icons"}, "location_on"), business.get('address'), ", ", business.get('city'), ", ", business.get('state'), ", ", business.get('zip'))
           )
-        ), 
-
-        React.createElement("div", {className: "col-md-11 col-sm-11 col-xs-11"}, 
-          React.createElement("h3", {className: "well mdl-shadow--2dp"}, "Menu Dashboard")
         )
       )
     )
@@ -627,31 +647,30 @@ var SpecialsForm = React.createClass({displayName: "SpecialsForm",
      };
 
     return(
-      React.createElement("div", {className: "col-md-11 col-md-offset-1"}, 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "name"}, "Name"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: special.get('name'), type: "text", id: "name", placeholder: "special of the day"})
-          ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "description"}, "Description"), 
-            React.createElement("input", {className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: special.get('description'), type: "text", id: "description", placeholder: "special of the day"})
-          ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "price"}, "Price"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: special.get('price'), type: "text", id: "price", placeholder: "special of the day"})
-          ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "test"}, "Effective Date"), 
-            React.createElement("p", null), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "effectivedate", value: special.get('effectivedate'), type: "date", id: "date", placeholder: "special of the day"})
-          ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "test"}, "Expires On"), 
-            React.createElement("p", null, "(Automatically deletes)"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "expirydate", value: special.get('expirydate'), type: "date", id: "expiry-date", placeholder: "special of the day"})
-          ), 
+      React.createElement("div", {className: "menu-forms specials col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1"}, 
+            React.createElement("h5", null, "Dish: ", special.get('name')), 
+            React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "name", value: special.get('name'), type: "text", id: "name", placeholder: "Dish"})
+            ), 
+
+            React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {className: "mdl-textfield__input", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: special.get('description'), type: "text", id: "description", placeholder: "Description"})
+            ), 
+
+            React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "price", value: special.get('price'), type: "text", id: "price", placeholder: "Price"})
+            ), 
+
+            React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "effectivedate", value: special.get('effectivedate'), type: "date", id: "date", placeholder: "Start Date"})
+            ), 
+
+            React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+              React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "expirydate", value: special.get('expirydate'), type: "date", id: "expiry-date", placeholder: "Expiry Date"})
+            ), 
+
           React.createElement("div", null, 
-            React.createElement("button", {type: "button", onClick: this.removeSpecial, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
+        React.createElement("a", {onClick: this.removeSpecial, type: "button", className: "pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
           )
       )
     );
@@ -659,23 +678,31 @@ var SpecialsForm = React.createClass({displayName: "SpecialsForm",
 });
 
 var SpecialsFormSet = React.createClass({displayName: "SpecialsFormSet",
-  // getInitialState: function(){
-  //   return this.props.business.toJSON();
-  // },
-  // componentWillReceiveProps: function(newProps){
-  //   this.setState(newProps.business.toJSON());
-  // },
-  // handleInputChange: function(e){
-  //   var target = e.target;
-  //   var newState = {};
-  //   newState[target.name]  = target.value;
-  //   this.setState(newState);
-  // },
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveSpecial();
+  getInitialState: function() {
+          return ({
+            showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
+          });
+      },
+
+  onClick: function() {
+
+      this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
+  onClickCloseSave: function(e) {
+    e.preventDefault();
+      this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveAppetizer();
+  },
+
   removeSpecial: function(special){
       this.props.removeSpecial(special);
   },
@@ -691,15 +718,27 @@ var SpecialsFormSet = React.createClass({displayName: "SpecialsFormSet",
      )
    });
    return (
-     React.createElement("div", {className: "col-md-11 col-md-offset-1 dashboard-specials"}, 
-       React.createElement("form", {onSubmit: this.handleSubmit}, 
-         React.createElement("h3", null, "Specials"), 
+    React.createElement("div", {className: this.state.editorClass}, 
+      React.createElement("div", {className: "header "}, 
+        React.createElement("div", {className: "mdl-card__title"}, 
+          React.createElement("h5", {className: "menu-editor-title"}, "Specials Editor")
+        ), 
+        React.createElement("div", {className: "header-buttons mdl-card__actions mdl-card--border"}, 
+          this.state.hideBtn ? React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"):null, 
+          this.state.showBtn ?React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClickCloseSave}, "Hide"):null, 
+          React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right"}, 
+              React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, this.props.specials.length), 
+              React.createElement("span", {className: "mdl-chip__text"}, "Specials")
+          )
+        )
+      ), 
+
+        this.state.showComponent ? React.createElement("form", {onSubmit: this.handleSubmit}, 
          React.createElement("div", {className: "col-md-12 form-inLine"}, 
            specialsFormset
          ), 
-         React.createElement("button", {type: "button", onClick: self.props.addSpecial, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "add")), 
-         React.createElement("button", {type: "submit", className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "save"))
-       )
+         React.createElement("a", {type: "button", onClick: this.props.addSpecial}, React.createElement("i", {className: "material-icons col-md-1 col-md-offset-5"}, "add"))
+       ): null
      )
    );
  }
@@ -864,33 +903,40 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
     var lunch = this.state.business.get('lunch');
     var dinner = this.state.business.get('dinner');
     var dessert = this.state.business.get('dessert');
+    var specials = this.state.business.get('specials');
+    var menuLength = specials.length + appetizer.length + breakfast.length + lunch.length + dinner.length + dessert.length;
 
     return(
       React.createElement(Template, null, 
         React.createElement("div", {className: "row"}, 
           React.createElement("div", {className: "dashboard-windows col-md-12 col-sm-12 col-xs-11"}, 
             React.createElement(Dashboard, {business: this.state.business}), 
-              React.createElement("div", {className: "specials-pane col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1"}, 
-                React.createElement("h4", null, "Specials"), 
-                React.createElement("input", {type: "submit", value: "Search", onClick: this.onClick}), 
-                React.createElement("input", {type: "submit", value: "Search", onClick: this.onClickClose}), 
-                 this.state.showComponent ? React.createElement(SpecialsFormSet, {
+              React.createElement("div", {className: "col-md-10 col-md-offset-1 col-sm-11 col-xs-11"}, 
+                React.createElement("div", {className: "row"}, 
+                  React.createElement("h3", {className: "well mdl-shadow--2dp"}, "Menu Dashboard", 
+                    React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right"}, 
+                        React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, menuLength), 
+                        React.createElement("span", {className: "mdl-chip__text"}, "Menu Items")
+                    )
+                  )
+                )
+              ), 
+
+                React.createElement(SpecialsFormSet, {
                   specials: this.state.business.get('specials'), 
                   saveSpecial: this.saveSpecial, 
                   removeSpecial: this.removeSpecial, 
                   addSpecial: this.addSpecial}
-                  ) : null
-              ), 
-
+                  ), 
+                React.createElement(BreakfastFormSet, {className: "menu-creator-panels", 
+                  breakfast: this.state.business.get('breakfast'), saveBreakfast: this.saveBreakfast, removeBreakfast: this.removeBreakfast, 
+                  addBreakfast: this.addBreakfast}
+                  ), 
                 React.createElement(AppetizerFormSet, {className: "menu-creator-panels", 
                   appetizers: this.state.business.get('appetizer'), 
                   saveAppetizer: this.saveAppetizer, 
                   removeAppetizer: this.removeAppetizer, 
                   addAppetizer: this.addAppetizer}
-                  ), 
-                React.createElement(BreakfastFormSet, {className: "menu-creator-panels", 
-                  breakfast: this.state.business.get('breakfast'), saveBreakfast: this.saveBreakfast, removeBreakfast: this.removeBreakfast, 
-                  addBreakfast: this.addBreakfast}
                   ), 
                 React.createElement(LunchFormSet, {className: "menu-creator-panels", 
                     lunch: this.state.business.get('lunch'), saveLunch: this.saveLunch, removeLunch: this.removeLunch, 
@@ -962,21 +1008,19 @@ var DessertForm= React.createClass({displayName: "DessertForm",
     var desserts = this.props.desserts;
     // console.log(special.get('expirydate'))
     return (
-      React.createElement("div", {className: "menu-forms desserts"}, 
-        React.createElement("div", {className: "form-group"}, 
-          React.createElement("label", {htmlFor: "name"}, "Name"), 
-          React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: desserts.get('name'), type: "text", id: "name", placeholder: "dish name"})
+      React.createElement("div", {className: "menu-forms appetizers col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1"}, 
+        React.createElement("h5", null, "Dish: ", desserts.get('name')), 
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "name", value: desserts.get('name'), type: "text", id: "name", placeholder: "dish name"})
         ), 
-        React.createElement("div", {className: "form-group"}, 
-          React.createElement("label", {htmlFor: "description"}, "Description"), 
-          React.createElement("input", {className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: desserts.get('description'), type: "text", id: "description", placeholder: "dish description"})
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: desserts.get('description'), type: "text", id: "description", placeholder: "dish description"})
         ), 
-        React.createElement("div", {className: "form-group"}, 
-          React.createElement("label", {htmlFor: "price"}, "Price"), 
-          React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: desserts.get('price'), type: "text", id: "price", placeholder: "dish price"})
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "price", value: desserts.get('price'), type: "text", id: "price", placeholder: "dish price"})
         ), 
         React.createElement("div", null, 
-          React.createElement("button", {onClick: this.removeDessert, type: "button", className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
+          React.createElement("a", {onClick: this.removeDessert, type: "button", className: "pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
         )
       )
     );
@@ -985,21 +1029,34 @@ var DessertForm= React.createClass({displayName: "DessertForm",
 
 var DessertFormSet = React.createClass({displayName: "DessertFormSet",
   getInitialState: function() {
-          return { showComponent: false };
+          return ({
+            showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
+          });
       },
 
   onClick: function() {
       this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
-  onClickClose: function() {
+  onClickCloseSave: function(e) {
+    e.preventDefault();
       this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveDessert();
   },
 
-  handleSubmit: function(e) {
-    e.preventDefault();
-    // console.log('business', this.state);
-    this.props.saveDessert();
-  },
+  // handleSubmit: function(e) {
+  //   e.preventDefault();
+  //   // console.log('business', this.state);
+  //   this.props.saveDessert();
+  // },
 
   removeDessert: function(dessert) {
     this.props.removeDessert(dessert);
@@ -1017,26 +1074,26 @@ var DessertFormSet = React.createClass({displayName: "DessertFormSet",
       )
     });
     return (
-      React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp"}, 
+      React.createElement("div", {className: this.state.editorClass}, 
         React.createElement("div", {className: "header "}, 
           React.createElement("div", {className: "mdl-card__title"}, 
-            React.createElement("h2", {className: "mdl-card__title-text"}, "Dessert")
+            React.createElement("h5", {className: "menu-editor-title"}, "Desserts Editor")
           ), 
-          React.createElement("div", {className: "mdl-card__supporting-text"}, 
-           React.createElement("span", null, "editor")
-         ), 
           React.createElement("div", {className: "header-buttons mdl-card__actions mdl-card--border"}, 
-            React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"), 
-            React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-right", type: "submit", onClick: this.onClickClose}, "Hide")
+            this.state.hideBtn ? React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"):null, 
+            this.state.showBtn ?React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClickCloseSave}, "Hide"):null, 
+            React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right "}, 
+                React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, this.props.desserts.length), 
+                React.createElement("span", {className: "mdl-chip__text"}, "Dessert")
+            )
           )
         ), 
          this.state.showComponent ? React.createElement("form", {onSubmit: this.handleSubmit}, 
-         React.createElement("div", {className: "form-inLine"}, 
-           dessertFormset, 
-          React.createElement("button", {type: "button", onClick: this.props.addDessert, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "add"))
+         React.createElement("div", {className: "form-inLine col-md-12"}, 
+           dessertFormset
          ), 
-         React.createElement("br", null), 
-        React.createElement("a", {onClick: this.handleSubmit}, React.createElement("i", {className: "material-icons pull-right"}, "save"))
+         React.createElement("a", {type: "button", onClick: this.props.addDessert}, React.createElement("i", {className: "material-icons col-md-1 col-md-offset-5"}, "add"))
+          /*<button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>*/
        ):null
      )
     );
@@ -1096,21 +1153,19 @@ var DinnerForm= React.createClass({displayName: "DinnerForm",
     var dinner = this.props.dinner;
     // console.log(special.get('expirydate'))
     return(
-      React.createElement("div", {className: "menu-forms dinner"}, 
-            React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "name"}, "Name"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: dinner.get('name'), type: "text", id: "name", placeholder: "dish name"})
+      React.createElement("div", {className: "menu-forms appetizers col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1"}, 
+        React.createElement("h5", null, "Dish: ", dinner.get('name')), 
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "name", value: dinner.get('name'), type: "text", id: "name", placeholder: "dish name"})
           ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "description"}, "Description"), 
-            React.createElement("input", {className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: dinner.get('description'), type: "text", id: "description", placeholder: "dish description"})
+          React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {className: "mdl-textfield__input", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: dinner.get('description'), type: "text", id: "description", placeholder: "dish description"})
           ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "price"}, "Price"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: dinner.get('price'), type: "text", id: "price", placeholder: "dish price"})
+          React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "price", value: dinner.get('price'), type: "text", id: "price", placeholder: "dish price"})
       ), 
         React.createElement("div", null, 
-          React.createElement("button", {onClick: this.removeDinner, type: "button", className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
+          React.createElement("a", {onClick: this.removeDinner, type: "button", className: "pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
         )
       )
     );
@@ -1119,21 +1174,34 @@ var DinnerForm= React.createClass({displayName: "DinnerForm",
 
 var DinnerFormSet = React.createClass({displayName: "DinnerFormSet",
   getInitialState: function() {
-          return { showComponent: false };
+          return ({
+            showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
+          });
       },
 
   onClick: function() {
       this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
-  onClickClose: function() {
+  onClickCloseSave: function(e) {
+    e.preventDefault();
       this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveDinner();
   },
 
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveDinner();
-},
+//   handleSubmit: function(e){
+//   e.preventDefault();
+//   // console.log('business', this.state);
+//   this.props.saveDinner();
+// },
 
 removeDinner: function(dinner){
     this.props.removeDinner(dinner);
@@ -1154,26 +1222,28 @@ removeDinner: function(dinner){
      )
    });
    return (
-     React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"}, 
+     React.createElement("div", {className: this.state.editorClass}, 
        React.createElement("div", {className: "header "}, 
          React.createElement("div", {className: "mdl-card__title"}, 
-           React.createElement("h2", {className: "mdl-card__title-text"}, "Dinner")
+           React.createElement("h5", {className: "menu-editor-title"}, "Dinner Editor")
          ), 
-         React.createElement("div", {className: "mdl-card__supporting-text"}, 
-          React.createElement("span", null, "editor")
-        ), 
          React.createElement("div", {className: "header-buttons mdl-card__actions mdl-card--border"}, 
-           React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"), 
-           React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-right", type: "submit", onClick: this.onClickClose}, "Hide")
+           this.state.hideBtn ? React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"):null, 
+           this.state.showBtn ?React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClickCloseSave}, "Hide"):null, 
+           React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right "}, 
+
+               React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, this.props.dinner.length), 
+               React.createElement("span", {className: "mdl-chip__text"}, "Dinner")
+           )
          )
        ), 
         this.state.showComponent ? React.createElement("form", {onSubmit: this.handleSubmit}, 
-         React.createElement("div", {className: "form-inLine"}, 
-           dinnerFormset, 
-          React.createElement("button", {type: "button", onClick: this.props.addDinner, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "add"))
+         React.createElement("div", {className: "form-inLine col-md-12"}, 
+           dinnerFormset
          ), 
-         React.createElement("br", null), 
-        React.createElement("button", {onClick: this.handleSubmit, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "save"))
+         React.createElement("a", {type: "button", onClick: this.props.addDinner}, React.createElement("i", {className: "material-icons col-md-1 col-md-offset-5"}, "add"))
+
+        /*<button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>*/
        ):null
      )
    );
@@ -1619,21 +1689,19 @@ var LunchForm= React.createClass({displayName: "LunchForm",
     var lunch = this.props.lunch;
     // console.log(special.get('expirydate'))
     return(
-      React.createElement("div", {className: "menu-forms lunch"}, 
-            React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "name"}, "Name"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: lunch.get('name'), type: "text", id: "name", placeholder: "dish name"})
+      React.createElement("div", {className: "menu-forms appetizers col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1"}, 
+        React.createElement("h5", null, "Dish: ", lunch.get('name')), 
+        React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+          React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "name", value: lunch.get('name'), type: "text", id: "name", placeholder: "dish name"})
           ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "description"}, "Description"), 
-            React.createElement("input", {className: "form-control", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: lunch.get('description'), type: "text", id: "description", placeholder: "dish description"})
+          React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {className: "mdl-textfield__input", id: "myContentEditable", onChange: this.handleInputChange, name: "description", value: lunch.get('description'), type: "text", id: "description", placeholder: "dish description"})
           ), 
-          React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "price"}, "Price"), 
-            React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "price", value: lunch.get('price'), type: "text", id: "price", placeholder: "dish price"})
+          React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {className: "mdl-textfield__input", onChange: this.handleInputChange, name: "price", value: lunch.get('price'), type: "text", id: "price", placeholder: "dish price"})
       ), 
         React.createElement("div", null, 
-          React.createElement("button", {onClick: this.removeLunch, type: "button", className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
+          React.createElement("a", {onClick: this.removeLunch, type: "button", className: "pull-right"}, React.createElement("i", {className: "material-icons"}, "delete_forever"))
         )
       )
     );
@@ -1642,21 +1710,34 @@ var LunchForm= React.createClass({displayName: "LunchForm",
 
 var LunchFormSet = React.createClass({displayName: "LunchFormSet",
   getInitialState: function() {
-          return { showComponent: false };
+          return ({
+            showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
+          });
       },
 
   onClick: function() {
       this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
-  onClickClose: function() {
+  onClickCloseSave: function(e) {
+    e.preventDefault();
       this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveLunch();
   },
 
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveLunch();
-},
+//   handleSubmit: function(e){
+//   e.preventDefault();
+//   // console.log('business', this.state);
+//   this.props.saveLunch();
+// },
 
 removeLunch: function(lunch){
     this.props.removeLunch(lunch);
@@ -1676,26 +1757,27 @@ removeLunch: function(lunch){
      )
    });
    return (
-     React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp"}, 
+     React.createElement("div", {className: this.state.editorClass}, 
        React.createElement("div", {className: "header "}, 
          React.createElement("div", {className: "mdl-card__title"}, 
-           React.createElement("h2", {className: "mdl-card__title-text"}, "Lunch")
+           React.createElement("h5", {className: "menu-editor-title"}, "Lunch Editor")
          ), 
-         React.createElement("div", {className: "mdl-card__supporting-text"}, 
-          React.createElement("span", null, "editor")
-        ), 
          React.createElement("div", {className: "header-buttons mdl-card__actions mdl-card--border"}, 
-           React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"), 
-           React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-right", type: "submit", onClick: this.onClickClose}, "Hide")
+           this.state.hideBtn ? React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClick}, "Show"):null, 
+           this.state.showBtn ?React.createElement("a", {className: "mdl-button mdl-js-button mdl-button--raised pull-left", type: "submit", onClick: this.onClickCloseSave}, "Hide"):null, 
+           React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right "}, 
+
+               React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, this.props.lunch.length), 
+               React.createElement("span", {className: "mdl-chip__text"}, "Lunch")
+           )
          )
        ), 
          this.state.showComponent ? React.createElement("form", {onSubmit: this.handleSubmit}, 
-         React.createElement("div", {className: "form-inLine"}, 
-           lunchFormset, 
-          React.createElement("button", {type: "button", onClick: this.props.addLunch, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "add"))
+         React.createElement("div", {className: "form-inLine col-md-12"}, 
+           lunchFormset
          ), 
-         React.createElement("br", null), 
-        React.createElement("button", {onClick: this.handleSubmit, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"}, React.createElement("i", {className: "material-icons"}, "save"))
+         React.createElement("a", {type: "button", onClick: this.props.addLunch}, React.createElement("i", {className: "material-icons col-md-1 col-md-offset-5"}, "add"))
+        /*<button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>*/
        ):null
      )
    );
@@ -1727,12 +1809,22 @@ require('../router').router;
 
 var RegistrationForm = React.createClass({displayName: "RegistrationForm",
   getInitialState: function() {
-    return this.props.business.toJSON();
+    return{
+      business: this.props.business.toJSON(),
+      imageUpload: '',
+      menuUpload: '',
+    }
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.business.toJSON());
+    var business = newProps.business.toJSON();
+    this.setState(business);
   },
+  // componentWillMount: function(){
+  //   var business = this.props.business;
+  //   var imageUpload = business.get('image_upload');
+  //   this.setState({business: imageUpload})
+  // },
 
   handleInputChange: function(e) {
     e.preventDefault();
@@ -1745,21 +1837,15 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
 
   handlePicture: function(e) {
     e.preventDefault();
+    var business = this.props.business;
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
-    this.setState({
-      attachedPicture : attachedPicture,
-    });
   },
 
   handleMenu: function(e) {
     e.preventDefault();
     var attachedMenu = e.target.files[0];
     this.props.uploadMenu(attachedMenu);
-    this.setState({
-      menu: attachedMenu
-    });
-    console.log(attachedMenu);
   },
 
   handleSubmit: function(e) {
@@ -1768,6 +1854,9 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
     // console.log('SUBMIT', this.state);
   },
   render: function() {
+    var self = this;
+    var business = self.props.business;
+
     return (
       React.createElement("div", {className: "registration-container container-fluid"}, 
 
@@ -1819,12 +1908,12 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
                 React.createElement("h4", null, "Images Uploads")
               ), 
               React.createElement("div", {className: "form-profile-pic col-md-6"}, 
-                React.createElement("div", null, React.createElement("img", {src: this.state.image_upload, width: "300"})), 
+                React.createElement("div", null, React.createElement("img", {src: this.props.business.get('image_upload'), width: "300"})), 
                 React.createElement("input", {type: "text", id: "uploaded_picture", placeholder: "Header Picture Title"}), React.createElement("br", null), 
                 React.createElement("input", {className: "", onChange: this.handlePicture, type: "file", id: "profile-pic"})
               ), 
               React.createElement("div", {className: "form-profile-pic col-md-6"}, 
-                React.createElement("div", null, React.createElement("img", {src: this.state.menu_upload, width: "300"})), 
+                React.createElement("div", null, React.createElement("img", {src: this.props.business.get('menu_upload'), width: "300"})), 
                 React.createElement("input", {type: "text", id: "uploaded_menu", placeholder: "About Picture Title"}), React.createElement("br", null), 
                 React.createElement("input", {className: "", onChange: this.handleMenu, type: "file", id: "menu"})
               )
@@ -1947,6 +2036,8 @@ var RegistrationContainer = React.createClass({displayName: "RegistrationContain
     file.set('data', picture);
     file.save().done(function(response) {
       localStorage.setItem('image_upload', response.url);
+      business.set('image_upload', response.url);
+      console.log(self.state);
     });
     this.setState({business: business});
   },
@@ -1958,7 +2049,7 @@ var RegistrationContainer = React.createClass({displayName: "RegistrationContain
     file.set('data', menu);
     file.save().done(function(response) {
       localStorage.setItem('menu_upload', response.url);
-      // business.set('menu_upload', response.url);
+      business.set('menu_upload', response.url);
     });
     this.setState({business: business});
   },
@@ -2925,6 +3016,8 @@ $(function(){
 var Backbone = require('backbone');
 var Business = require('../components/authentication.jsx').AuthenticationContainer;
 var User = require('../parseUtilities.js').User;
+var React = require('react');
+
 
 /**************************************************************************************
 PARSE
@@ -3080,6 +3173,8 @@ var Business = ParseModel.extend ({
     divider: '',
     rating: '',
     price: '',
+    image_upload: '',
+    menu_upload: '',
     specials: new SpecialCollection(),
     appetizer: new AppetizerCollection(),
     breakfast: new BreakfastCollection(),
@@ -3167,7 +3262,7 @@ module.exports = {
   // FavoriteCollection: FavoriteCollection,
 };
 
-},{"../components/authentication.jsx":2,"../parseUtilities.js":16,"backbone":21}],15:[function(require,module,exports){
+},{"../components/authentication.jsx":2,"../parseUtilities.js":16,"backbone":21,"react":276}],15:[function(require,module,exports){
 "use strict";
 var Backbone = require('backbone');
 
@@ -3434,8 +3529,9 @@ var React = require('react');
 require('backbone-react-component');
 var Gravatar = require('react-gravatar');
 var _ = require('underscore');
-var Template = React.createClass({displayName: "Template",
+var $ = require('jquery');
 
+var Template = React.createClass({displayName: "Template",
   logout: function(){
     localStorage.clear().then(function(){
         $.post('https://matias-recipe.herokuapp.com/logout/')
@@ -3452,6 +3548,9 @@ var Template = React.createClass({displayName: "Template",
     if(localStorage.getItem('name') == null){
       classStyle = "hidden";
     }
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
 
     return (
       React.createElement("div", {className: "template"}, 
@@ -3509,7 +3608,7 @@ var Template = React.createClass({displayName: "Template",
 
 module.exports = Template;
 
-},{"backbone-react-component":20,"react":276,"react-gravatar":138,"underscore":279}],20:[function(require,module,exports){
+},{"backbone-react-component":20,"jquery":58,"react":276,"react-gravatar":138,"underscore":279}],20:[function(require,module,exports){
 // Backbone React Component
 // ========================
 //

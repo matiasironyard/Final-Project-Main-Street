@@ -5766,6 +5766,9 @@ button.close {
 img {
   max-width: 100%; }
 
+a:hover {
+  cursor: pointer; }
+
 .well {
   background-color: rgba(36, 44, 44, 0.9);
   text-transform: uppercase;
@@ -6078,19 +6081,23 @@ img {
     margin-right: 20px; }
 
 .menu-pane .menu-panels {
-  margin-bottom: 30px; }
-  .menu-pane .menu-panels .header {
-    background-color: blue; }
+  margin-bottom: 15px;
+  padding-bottom: 15px; }
   .menu-pane .menu-panels .menu-forms {
     margin-bottom: 60px; }
 
 .menu-panels {
-  margin-bottom: 30px; }
+  margin-bottom: 15px;
+  padding-bottom: 15px; }
   .menu-panels .header {
-    margin-bottom: 40px;
+    margin-bottom: 15px;
     height: 175px; }
+    .menu-panels .header .menu-editor-title {
+      text-transform: uppercase; }
   .menu-panels .menu-forms {
-    margin-bottom: 60px; }
+    margin-bottom: 60px;
+    border-top: 2px solid #757575;
+    padding-top: 20px; }
 
 .template .nav-bar-col {
   margin-top: 10px; }
@@ -6130,4 +6137,5 @@ img {
   border-top: 2px solid #BDBDBD;
   margin-top: 15px;
   padding-top: 15px; }
+
 /*# sourceMappingURL=app.css.map */
