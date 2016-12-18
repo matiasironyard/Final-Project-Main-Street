@@ -2,8 +2,9 @@ var React = require('react');
 var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
-var setupParse = require('../parseUtilities').setupParse;
+var setupParse = require('../parseUtilities.js').setupParse;
 var Modal = require('react-modal');
+var User =  require('../parseUtilities.js').User;
 require('../router').router;
 
 // console.log('hi');
@@ -148,6 +149,9 @@ var AuthenticationContainer = React.createClass({
 
   handleSignUp: function(signupData) {
     var self = this;
+    var username = signupData.email;
+    var password = signupData.password;
+    console.log(password);
     var data = {
       'username': signupData.email,
       'password': signupData.password,
@@ -157,6 +161,8 @@ var AuthenticationContainer = React.createClass({
       self.props.router.navigate('/login/', {
         trigger: true
       })
+    // User.login(username, password);
+    // console.log(this.state);
     });
   },
 

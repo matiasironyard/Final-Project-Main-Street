@@ -96,7 +96,7 @@ var LogInContainer = React.createClass({
       this.setState({
         username: logMeIn.username
       });
-
+      // User.login(username, password).then(function(response){
     $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
       console.log('response', response)
       var objectId = response.objectId;

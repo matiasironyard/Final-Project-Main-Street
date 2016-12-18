@@ -389,8 +389,14 @@ var DetailView = React.createClass({
         <div className="detailview-header col-md-12 col-sm-6">
           <div className="row">
             <div className="detailview-header-img" style={divStyle}>
-              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right"  onClick={this.openModal2} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
-              <button className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right"  onClick={this.openModal} type="button"><i className="material-icons">favorite_border</i></button>
+              <button id="tt1" className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right"  onClick={this.openModal2} type="submit" value="Remove Favorite"><i className="material-icons">clear</i></button>
+                <div className="mdl-tooltip" data-mdl-for="tt1">
+                delete from your favorites
+                </div>
+              <button id="tt2"className="favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right"  onClick={this.openModal} type="button"><i className="material-icons">favorite_border</i></button>
+                <div className="mdl-tooltip" data-mdl-for="tt2">
+                add to your favorites
+                </div>
             </div>
 
             <Modal  className="favorite-modal mdl-dialog col-md-offset-5 col-sm-offset-1 col-xs-offset-1" isOpen={this.state.modalIsOpen}>

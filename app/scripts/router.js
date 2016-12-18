@@ -6,6 +6,7 @@ console.log('hi');
 
 /* COMPONENT IMPORTS BELOW */
 var setupParse= require('./parseUtilities').setupParse;
+var User = require('./parseUtilities').User;
 var AuthenticationContainer = require('./components/authentication.jsx').AuthenticationContainer;
 var LogInContainer = require('./components/login.jsx').LogInContainer;
 var RegistrationContainer = require('./components/registration.jsx').RegistrationContainer;

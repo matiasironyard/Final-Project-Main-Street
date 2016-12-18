@@ -17,8 +17,8 @@ var User = Backbone.Model.extend({
   auth: function(){
     $.ajaxSetup({
       beforeSend: function(xhr){
-        xhr.setRequestHeader("X-Parse-Application-Id", appId);
-        xhr.setRequestHeader("X-Parse-REST-API-Key", apiKey);
+        xhr.setRequestHeader("X-Parse-Application-Id", "matiasrecipeserver");
+        xhr.setRequestHeader("X-Parse-REST-API-Key", "recipe");
         if(sessionId) {
           xhr.setRequestHeader("X-Parse-Session-Token", sessionId);
           //pass sessionId from localStorage?
@@ -27,9 +27,11 @@ var User = Backbone.Model.extend({
     });
   },
 }, {
-  login: function(username, password, callback){
-    $.post('/login/', {username: username, password: password}), then(function(response){
+  login: function(username, password,callbackObj){
+    $.get('https://matias-recipe.herokuapp.com/login/', {username: username, password: password}).then(function(response){
+
       var user = new User (response);
+      var response = response;
       console.log('user', user);
       user.auth();
       localStorage.setItem('user', JSON.stringify(user.toJSON()));
