@@ -5766,25 +5766,52 @@ button.close {
 img {
   max-width: 100%; }
 
-.container {
-  background-color: #FFFDE7; }
+.well {
+  background-color: rgba(36, 44, 44, 0.9);
+  text-transform: uppercase;
+  color: #fff; }
 
 .inthemood-headers .inthemood-header {
   text-transform: uppercase;
   font-size: calc(1.5em + 1.5vw);
-  color: #E65100; }
+  color: #FFAB40; }
 .inthemood-headers .inthemood-subheader {
   font-size: calc(.8em + .8vw);
   color: #424242; }
+
+.login-headers {
+  background-color: rgba(36, 44, 44, 0.9);
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 25px; }
+  .login-headers .login-header-1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: calc(1em + 1vw);
+    color: #FFF; }
+  .login-headers .login-header-2 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: calc(1em + 1vw);
+    color: #FFAB40; }
+    .login-headers .login-header-2 .material-icons {
+      font-size: 30px;
+      position: relative;
+      left: 5px;
+      top: 5px; }
 
 .registration-container {
   background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
   background-size: cover; }
   .registration-container .registration-form {
     background-color: #ffffff;
-    margin-top: 50px; }
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-bottom: 30px; }
     .registration-container .registration-form .form-input-div input {
       margin-top: 20px; }
+    .registration-container .registration-form .form-input-div textarea {
+      height: 20vh; }
     .registration-container .registration-form .registration-image-uploads {
       margin-bottom: 30px; }
       .registration-container .registration-form .registration-image-uploads h4 {
@@ -5798,25 +5825,33 @@ img {
   margin-bottom: 20px; }
 
 .categories-bar {
-  margin-top: 50px;
-  margin-bottom: 50px; }
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-image: url("http://www.fortunebuilders.com/wp-content/uploads/2015/03/greenville-downtown-cityscape.jpg");
+  background-position: right;
+  background-size: cover; }
   .categories-bar .categories-dropdown {
     background-color: #fff;
-    border: 2px solid #E0E0E0;
-    border-radius: 5px; }
+    border-radius: 5px;
+    box-shadow: 2px 4px 23px 10px rgba(0, 0, 0, 0.5); }
     .categories-bar .categories-dropdown .btn {
-      color: #616161;
+      color: #212121;
       padding: 2px;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      background-color: #fff;
+      margin-top: 10px;
+      margin-bottom: 10px;
       border: 0px;
       border-radius: 0; }
       .categories-bar .categories-dropdown .btn .categories-heading {
-        font-size: 5vh;
-        color: #616161; }
+        font-size: calc(1em + 1.5vw);
+        color: #424242; }
       .categories-bar .categories-dropdown .btn .caret {
         margin-left: 15px; }
+    .categories-bar .categories-dropdown .categories-search-icon {
+      margin-top: 20px;
+      margin-bottom: 15px;
+      margin-right: 20px; }
+      .categories-bar .categories-dropdown .categories-search-icon i {
+        font-size: 30px; }
   .categories-bar .categories-dropdown:hover {
     color: #424242;
     border: 1px solid #424242; }
@@ -5824,39 +5859,35 @@ img {
 .favorites-row {
   margin-top: 20px;
   margin-bottom: 20px; }
-  .favorites-row .favorites-col {
-    padding-left: 0; }
-    .favorites-row .favorites-col .favorites-pane .favorites-header {
-      color: #212121;
-      margin-top: 10px;
-      font-size: calc(1em + 1vw);
-      text-transform: uppercase; }
-    .favorites-row .favorites-col .favorites-pane .restaurant-cards {
-      width: 150px;
-      height: 150px;
-      width: 150px;
-      margin: 5px;
-      padding: 5px; }
-      .favorites-row .favorites-col .favorites-pane .restaurant-cards .material-icons {
-        margin-top: 10px; }
-      .favorites-row .favorites-col .favorites-pane .restaurant-cards .restaurant-card-img {
-        border-radius: 5px; }
-      .favorites-row .favorites-col .favorites-pane .restaurant-cards .restaurant-card-name {
-        color: #212121;
-        margin-top: 10px;
-        font-size: calc(.5em + .5vw);
-        width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-transform: uppercase; }
-      .favorites-row .favorites-col .favorites-pane .restaurant-cards .restaurant-card-category {
-        color: #616161;
-        font-size: calc(.4em + .4vw);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-transform: uppercase; }
+  .favorites-row .favorites-col .favorites-pane .favorites-header {
+    color: #212121;
+    margin-top: 10px;
+    font-size: calc(1em + 1vw);
+    text-transform: uppercase; }
+
+.restaurant-cards {
+  margin: 10px;
+  padding: 5px; }
+  .restaurant-cards .material-icons {
+    margin-top: 10px; }
+  .restaurant-cards .restaurant-card-img {
+    border-radius: 5px; }
+  .restaurant-cards .restaurant-card-name {
+    color: #212121;
+    margin-top: 10px;
+    font-size: calc(.5em + .5vw);
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase; }
+  .restaurant-cards .restaurant-card-category {
+    color: #616161;
+    font-size: calc(.4em + .4vw);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase; }
 
 .viewall-container .viewall-cards-container {
   margin-top: 30px; }
@@ -5873,9 +5904,10 @@ img {
     margin-right: 13px; }
     .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-image {
       border-radius: 5px;
-      width: 8vw; }
+      width: 10px; }
     .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-counter {
-      padding-top: 2px; }
+      padding-top: 2px;
+      font-size: calc(.6em + .5vw); }
     .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-name {
       color: #212121;
       padding-top: 20px;
@@ -5888,7 +5920,7 @@ img {
       text-transform: uppercase; }
     .viewall-container .viewall-cards-container .viewall-restaurant-card .viewall-header .viewall-category {
       color: #616161;
-      font-size: calc(.7em + .7vw); }
+      font-size: calc(.6em + .6vw); }
   .viewall-container .viewall-cards-container .viewall-restaurant-card:hover {
     -webkit-transform: scale(1.02);
             transform: scale(1.02);
@@ -5919,6 +5951,13 @@ img {
         padding-right: 10px;
         position: relative;
         top: 5px; }
+  .detail-view-container .detail-view-row .detailview-pane .menu-pane {
+    margin-top: 30px;
+    box-shadow: 0px 1px 10px -1px rgba(0, 0, 0, 0.75); }
+  .detail-view-container .detail-view-row .detailview-pane .detailview-menu-header {
+    border-bottom: 2px solid grey; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-menu-header h1 {
+      text-transform: uppercase; }
   .detail-view-container .detail-view-row .detailview-pane .detailview-aside {
     color: #fff;
     margin-top: 30px; }
@@ -5927,7 +5966,7 @@ img {
       font-weight: bold;
       color: #424242; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about {
-      background-color: #FFD180; }
+      background-color: #FFAB40; }
       .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .about-image {
         float: left;
         padding: 10px;
@@ -5970,11 +6009,14 @@ img {
     .detailview-menu-list .menu .detailview-menu-rows {
       color: #616161;
       line-height: 35px;
-      border-bottom: 2px solid #EEEEEE; }
+      border-bottom: 1px solid #EEEEEE; }
 
 .signup-container {
   background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
   background-size: cover; }
+  .signup-container h4 {
+    text-transform: uppercase;
+    font-weight: bold; }
   .signup-container .signup-col {
     background-color: #fff;
     margin-top: 10%;
@@ -5982,7 +6024,10 @@ img {
 
 .signup-modal {
   background-color: #fff;
-  margin-top: 5%; }
+  margin-top: 5%;
+  height: 100%; }
+  .signup-modal h3 {
+    text-transform: uppercase; }
   .signup-modal .btn {
     margin: 20px; }
 
@@ -5993,10 +6038,10 @@ img {
     background-color: #fff;
     margin-top: 10%;
     margin-bottom: 10%;
-    padding: 10px; }
+    padding-bottom: 20px; }
     .login-container .login .login-header {
       font-size: calc(1.5em + 1.5vw);
-      color: #E65100;
+      color: #FFAB40;
       text-transform: uppercase; }
     .login-container .login .login-subheader {
       font-size: calc(1em + 1vw);
@@ -6013,10 +6058,17 @@ img {
 
 .dashboard-container {
   margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #757575; }
+  padding-bottom: 20px; }
   .dashboard-container button {
     margin-bottom: 20px; }
+  .dashboard-container .material-icons {
+    padding-top: 10px;
+    color: #757575;
+    font-size: 30px; }
+  .dashboard-container .dashboard-header {
+    margin-top: 30px; }
+    .dashboard-container .dashboard-header .name {
+      color: #FFAB40; }
 
 .dashboard-specials {
   margin-bottom: 30px;
@@ -6041,29 +6093,42 @@ img {
     margin-bottom: 60px; }
 
 .template .nav-bar-col {
-  background-color: beige;
-  box-shadow: 0px 1px 10px -1px rgba(0, 0, 0, 0.75);
-  background-image: url("http://www.fortunebuilders.com/wp-content/uploads/2015/03/greenville-downtown-cityscape.jpg");
-  background-position: right;
-  background-size: cover; }
-  .template .nav-bar-col .nav-headers {
-    background-color: rgba(36, 44, 44, 0.3); }
-    .template .nav-bar-col .nav-headers .nav-header {
-      text-transform: uppercase;
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: calc(2em + 2vw);
-      color: #E65100; }
-    .template .nav-bar-col .nav-headers .nav-subheader {
-      text-transform: uppercase;
-      text-transform: uppercase;
-      font-size: calc(1.5em + 1.5vw);
-      color: #fff; }
+  margin-top: 10px; }
+  .template .nav-bar-col .active a {
+    background-color: rgba(36, 44, 44, 0.9);
+    color: #FFAB40; }
+  .template .nav-bar-col .active a:hover {
+    background-color: #FFAB40; }
+    .template .nav-bar-col .active a:hover span {
+      color: #FFF; }
+  .template .nav-bar-col .dropdown-toggle {
+    top: 8px; }
+  .template .nav-bar-col .nav-headers .nav-header-1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: calc(1em + 1vw);
+    color: #FFF; }
+  .template .nav-bar-col .nav-headers .nav-header-2 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: calc(1em + 1vw);
+    color: #FFAB40; }
+    .template .nav-bar-col .nav-headers .nav-header-2 .material-icons {
+      font-size: 30px;
+      position: relative;
+      left: 5px;
+      top: 5px; }
+  .template .nav-bar-col .nav-headers .nav-header-img {
+    background-image: url("http://koagiehots.com/wp-content/uploads/2016/09/burger-icon-white.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px; }
 .template .nav-message {
   color: #fff; }
 
-.footer-container {
+.footer {
   border-top: 2px solid #BDBDBD;
-  margin-top: 20px;
+  margin-top: 15px;
   padding-top: 15px; }
+
 /*# sourceMappingURL=app.css.map */

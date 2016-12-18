@@ -66,7 +66,9 @@ var AppetizerForm= React.createClass({displayName: "AppetizerForm",
 
 var AppetizerFormSet = React.createClass({displayName: "AppetizerFormSet",
   getInitialState: function() {
-          return { showComponent: false };
+          return ({
+            showComponent: false,
+          });
       },
 
   onClick: function() {
@@ -98,7 +100,7 @@ var AppetizerFormSet = React.createClass({displayName: "AppetizerFormSet",
       )
     });
     return (
-      React.createElement("div", {className: "menu-panels col-md-12 mdl-shadow--3dp"}, 
+      React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"}, 
         React.createElement("div", {className: "header "}, 
           React.createElement("div", {className: "mdl-card__title"}, 
             React.createElement("h2", {className: "mdl-card__title-text"}, "Appetizers")
@@ -135,8 +137,9 @@ var React = require('react');
 var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
-var setupParse = require('../parseUtilities').setupParse;
+var setupParse = require('../parseUtilities.js').setupParse;
 var Modal = require('react-modal');
+var User =  require('../parseUtilities.js').User;
 require('../router').router;
 
 // console.log('hi');
@@ -198,7 +201,6 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
   handleLogMeIn: function(e) {
     e.preventDefault();
     this.props.handleLogIn(e);
-    console.log(this.state);
   },
 
   openModal: function() {
@@ -222,10 +224,11 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
   render: function() {
     return (
       React.createElement("div", {className: "signup-container container-fluid"}, 
-            React.createElement("div", {className: "signup-col  mdl-shadow--2dp col-md-3 col-md-offset-5"}, 
-              React.createElement("div", {className: "inthemood-headers"}, 
-                React.createElement("h2", {className: "inthemood-header"}, "In The Mood"), 
-                React.createElement("h4", {className: "inthemood-subheader"}, "@ Downtown Greenville")
+            React.createElement("div", {className: "signup-col  mdl-shadow--8dp col-md-4 col-md-offset-4"}, 
+              React.createElement("div", {className: "login-headers row"}, 
+              /*<div className="nav-header-img col-md-2"/>*/
+                  React.createElement("span", {className: "login-header-1"}, "In The"), 
+                  React.createElement("span", {className: "login-header-2"}, " Mood", React.createElement("i", {className: "material-icons"}, "restaurant_menu"))
               ), 
               React.createElement("div", {className: "mdl-card__actions mdl-card--border"}, 
                 React.createElement("h4", null, "Sign up")
@@ -243,9 +246,14 @@ var SignUpComponent = React.createClass({displayName: "SignUpComponent",
                   React.createElement("h6", {className: "mdl-card__title-tex"}, "Are you a business owner?"), 
                   React.createElement("button", {type: "button", className: "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect", onClick: this.openModal}, this.state.clickNext)
                 ), 
-                React.createElement(Modal, {className: "signup-modal", isOpen: this.state.modalIsOpen}, 
-                  React.createElement("div", {className: "signup-modal col-md-4 col-md-offset-4 form-group"}, 
-                    React.createElement("h3", null, "We make easy"), 
+                React.createElement(Modal, {className: "signup-modal col-md-4 col-md-offset-4 ", isOpen: this.state.modalIsOpen}, 
+                  React.createElement("div", {className: "signup-modal form-group"}, 
+                    React.createElement("div", {className: "login-headers row"}, 
+                    /*<div className="nav-header-img col-md-2"/>*/
+                        React.createElement("span", {className: "login-header-1"}, "In The"), 
+                        React.createElement("span", {className: "login-header-2"}, " Mood", React.createElement("i", {className: "material-icons"}, "restaurant_menu"))
+                    ), 
+                    React.createElement("h3", null, "We make it easy"), 
                     React.createElement("p", null, "5 minutes. Yes, that s all it will take to create your business profile. We want to help you get up and going fast, so that you get back to business!"), 
                     React.createElement("div", {className: "mdl-card__actions mdl-card--border"}, 
                       React.createElement("p", null, "If you are a business owner, please enter your business phone number. We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.")
@@ -276,6 +284,9 @@ var AuthenticationContainer = React.createClass({displayName: "AuthenticationCon
 
   handleSignUp: function(signupData) {
     var self = this;
+    var username = signupData.email;
+    var password = signupData.password;
+    console.log(password);
     var data = {
       'username': signupData.email,
       'password': signupData.password,
@@ -285,7 +296,8 @@ var AuthenticationContainer = React.createClass({displayName: "AuthenticationCon
       self.props.router.navigate('/login/', {
         trigger: true
       })
-      console.warn(response);
+    // User.login(username, password);
+    // console.log(this.state);
     });
   },
 
@@ -309,7 +321,7 @@ module.exports = {
   AuthenticationContainer: AuthenticationContainer,
 }
 
-},{"../parseUtilities":16,"../router":17,"backbone":21,"jquery":58,"react":276,"react-dom":90,"react-modal":145}],3:[function(require,module,exports){
+},{"../parseUtilities.js":16,"../router":17,"backbone":21,"jquery":58,"react":276,"react-dom":90,"react-modal":145}],3:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
@@ -414,7 +426,7 @@ removeBreakfast: function(breakfast){
      )
    });
    return (
-     React.createElement("div", {className: "menu-panels col-md-12 mdl-shadow--3dp"}, 
+     React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp"}, 
        React.createElement("div", {className: "header "}, 
          React.createElement("div", {className: "mdl-card__title"}, 
            React.createElement("h2", {className: "mdl-card__title-text"}, "Breakfast")
@@ -492,18 +504,44 @@ var Dashboard = React.createClass({displayName: "Dashboard",
     console.log(business);
     var objectId = this.props.business.get('objectId');
     var link = '#restaurants/' + objectId + '/';
+    var imgUrl = business.get('image_url');
+    var divStyle = {
+      height: "200",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundImage: 'url(' + imgUrl + ')'
+    };
+    var imgUpload1 = business.get('image_upload');
+    var imgUpload2 = business.get('menu_upload');
+    var divImgUpload1 = {
+      height: "200",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundImage: 'url(' + imgUpload1 + ')'
+    };
+    var divImgUpload2 = {
+      height: "200",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundImage: 'url(' + imgUpload2 + ')'
+    };
+
     var geolocation = business.get('lat') + ',' + business.get('long');
-    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=250x150&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
+    var googleMap = 'https://maps.googleapis.com/maps/api/staticmap?center='+ geolocation + '&zoom=16&size=520x230&scale=1 &maptype=roadmap&markers=color:green%7Clabel:%7C' + geolocation + '&key=AIzaSyAf8NIWecbThX7FKm5y5cQlFd5wGeBjhoU';
     return(
-      React.createElement("div", {className: "dashboard-container col-md-12"}, 
-        React.createElement("div", {className: "dashboard-header col-md-4 mdl-card mdl-shadow--2dp"}, 
-          React.createElement("img", {className: "img-thumbnail", src: business.get('image_url'), width: "150"}), 
+      React.createElement("div", {className: "dashboard-container col-md-11 col-md-offset-1"}, 
+        React.createElement("div", {className: "dashboard-header col-md-4 col-sm-12 col-xs-12 mdl-shadow--8dp"}, 
+          React.createElement("div", {className: "col-md-12", style: divStyle}), 
           React.createElement("ul", {className: "mdl-list"}, 
-            React.createElement("li", {className: "mdl-list__item"}, React.createElement("h5", null, business.get('name'))), 
-            React.createElement("li", {className: "mdl-list__item"}, "Category:  ", business.get('mainCategory')), 
-            React.createElement("li", {className: "mdl-list__item"}, "Rating:  ", business.get('rating'), "/5"), 
-            React.createElement("li", {className: "mdl-list__item"}, "Range:  ", business.get('price')), 
-            React.createElement("li", {className: "mdl-list__item"}, "Phone: ", business.get('phone'))
+            React.createElement("li", {className: "mdl-list__item name"}, business.get('name')), 
+            React.createElement("li", {className: "mdl-list__item category"}, "Category:  ", business.get('mainCategory')), 
+            React.createElement("li", {className: "mdl-list__item rating"}, "Rating:  ", business.get('rating'), "/5"), 
+            React.createElement("li", {className: "mdl-list__item range"}, "Range:  ", business.get('price')), 
+            React.createElement("li", {className: "mdl-list__item phone"}, "Phone: ", business.get('phone'))
+          ), 
+          React.createElement("div", {className: "mdl-card__actions mdl-card--border"}, 
+            React.createElement("h5", null, "About"), 
+            React.createElement("p", null, business.get('description'))
           ), 
           React.createElement("div", {className: "mdl-card__actions mdl-card--border"}, 
             React.createElement("a", {href: link}, React.createElement("button", {className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left"}, "View Page")), 
@@ -513,30 +551,35 @@ var Dashboard = React.createClass({displayName: "Dashboard",
           )
         ), 
 
-        React.createElement("div", {className: "col-md-6 col-md-offset-1 uploaded-images"}, 
-          React.createElement("h4", {className: "well"}, "Uploaded Images"), 
-          React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("img", {className: "img-thumbnail", width: "150px", src: business.get('image_upload')}), 
-            React.createElement("p", null, "Header image")
+        React.createElement("div", {className: "col-md-6 col-md-offset-1 col-sm-12 col-xs-12 uploaded-images"}, 
+          React.createElement("h4", {className: "well mdl-shadow--2dp mdl-shadow--2dp"}, "Your Images"), 
+          React.createElement("div", {className: "col-md-6 col-sm-12 col-xs-12"}, 
+            React.createElement("div", {className: "col-md-12", style: divImgUpload1}, 
+              React.createElement("i", {className: "material-icons"}, "collections")
+            ), 
+            React.createElement("span", null, "header image")
           ), 
-          React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("img", {className: "img-thumbnail", width: "150px", src: business.get('menu_upload')}), 
-            React.createElement("p", null, "About image")
+          React.createElement("div", {className: "col-md-6 col-sm-12 col-xs-12"}, 
+            React.createElement("div", {className: "col-md-12", style: divImgUpload2}, 
+              React.createElement("i", {className: "material-icons"}, "collections")
+            ), 
+            React.createElement("span", null, "about image")
           )
         ), 
 
-        React.createElement("div", {className: "col-md-6 col-md-offset-1 map"}, 
-          React.createElement("h4", {className: "well"}, "Location"), 
-          React.createElement("div", {className: "location-map col-md-6"}, 
-            React.createElement("img", {className: "img-thumbnail pull-left", src: googleMap})
+        React.createElement("div", {className: "col-md-6 col-md-offset-1 col-sm-12 col-xs-12 map"}, 
+          React.createElement("h4", {className: "well mdl-shadow--2dp"}, "Your Location"), 
+          React.createElement("div", {className: "location-map col-md-12 col-sm-12 col-xs-12"}, 
+            React.createElement("img", {className: "img-thumbnail pull-left", src: googleMap, height: "300"})
           ), 
-          React.createElement("div", {className: "location-address col-md-6"}, 
-            React.createElement("h5", null, "Address"), 
-            React.createElement("p", null, business.get('address')), 
-            React.createElement("p", null, business.get('city'), ", ", business.get('state'), ", ", business.get('zip'))
+          React.createElement("div", {className: "location-address col-md-12 col-sm-12 col-xs-12"}, 
+            React.createElement("p", null, React.createElement("i", {className: "material-icons"}, "location_on"), business.get('address'), ", ", business.get('city'), ", ", business.get('state'), ", ", business.get('zip'))
           )
-        )
+        ), 
 
+        React.createElement("div", {className: "col-md-11 col-sm-11 col-xs-11"}, 
+          React.createElement("h3", {className: "well mdl-shadow--2dp"}, "Menu Dashboard")
+        )
       )
     )
   }
@@ -584,7 +627,7 @@ var SpecialsForm = React.createClass({displayName: "SpecialsForm",
      };
 
     return(
-      React.createElement("div", {className: "col-md-12"}, 
+      React.createElement("div", {className: "col-md-11 col-md-offset-1"}, 
           React.createElement("div", {className: "form-group"}, 
             React.createElement("label", {htmlFor: "name"}, "Name"), 
             React.createElement("input", {className: "form-control", onChange: this.handleInputChange, name: "name", value: special.get('name'), type: "text", id: "name", placeholder: "special of the day"})
@@ -648,7 +691,7 @@ var SpecialsFormSet = React.createClass({displayName: "SpecialsFormSet",
      )
    });
    return (
-     React.createElement("div", {className: "col-md-12 dashboard-specials"}, 
+     React.createElement("div", {className: "col-md-11 col-md-offset-1 dashboard-specials"}, 
        React.createElement("form", {onSubmit: this.handleSubmit}, 
          React.createElement("h3", null, "Specials"), 
          React.createElement("div", {className: "col-md-12 form-inLine"}, 
@@ -816,27 +859,18 @@ var DashboardContainer = React.createClass({displayName: "DashboardContainer",
 
   render: function(){
     var businessName = this.state.business.get('name');
-    console.log(businessName);
     var appetizer = this.state.business.get('appetizer');
-    console.log(appetizer);
     var breakfast = this.state.business.get('breakfast');
     var lunch = this.state.business.get('lunch');
     var dinner = this.state.business.get('dinner');
     var dessert = this.state.business.get('dessert');
-    var openSpecialMessage = this.state.showSpecials  ?  !this.state.showSpecials : "Open Editor";
-    var closeSpecialMessage = !this.state.showSpecials  ? this.state.showSpecials : "Close Editor";
-    var openMenuMessage = this.state.showMenu  ? !this.state.showMenu : "Open Editor";
-    var closeMenuMessage = !this.state.showMenu  ? this.state.showMenu : "Close Editor";
 
     return(
       React.createElement(Template, null, 
         React.createElement("div", {className: "row"}, 
           React.createElement("div", {className: "dashboard-windows col-md-12 col-sm-12 col-xs-11"}, 
-            React.createElement("h1", {className: "well"}, " ", businessName, " Dashboard"), 
             React.createElement(Dashboard, {business: this.state.business}), 
-            React.createElement("h3", null, "Menu Dashboard"), 
-            
-              React.createElement("div", {className: "specials-pane"}, 
+              React.createElement("div", {className: "specials-pane col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1"}, 
                 React.createElement("h4", null, "Specials"), 
                 React.createElement("input", {type: "submit", value: "Search", onClick: this.onClick}), 
                 React.createElement("input", {type: "submit", value: "Search", onClick: this.onClickClose}), 
@@ -983,7 +1017,7 @@ var DessertFormSet = React.createClass({displayName: "DessertFormSet",
       )
     });
     return (
-      React.createElement("div", {className: "menu-panels col-md-12 mdl-shadow--3dp"}, 
+      React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp"}, 
         React.createElement("div", {className: "header "}, 
           React.createElement("div", {className: "mdl-card__title"}, 
             React.createElement("h2", {className: "mdl-card__title-text"}, "Dessert")
@@ -1120,7 +1154,7 @@ removeDinner: function(dinner){
      )
    });
    return (
-     React.createElement("div", {className: "menu-panels col-md-12 mdl-shadow--3dp"}, 
+     React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"}, 
        React.createElement("div", {className: "header "}, 
          React.createElement("div", {className: "mdl-card__title"}, 
            React.createElement("h2", {className: "mdl-card__title-text"}, "Dinner")
@@ -1184,6 +1218,7 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
 
     var state = {
       zoom: 14,
+      showingInfoWindow: true,
       center: {
         lat:  (34.852619),
         lng:  (-82.394012)
@@ -1197,28 +1232,27 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
     this.setState({
     selectedPlace: props,
     activeMarker: marker,
-    showingInfoWindow: false
+    showingInfoWindow: true,
   });
 },
 
   render: function(){
     var self = this;
-    var center = this.state.center;
-    var zoom = this.state.zoom;
-    var restaurants= this.props.restaurants;
+    var center = self.state.center;
+    var zoom = self.state.zoom;
+    var restaurants= self.props.restaurants;
+    console.log(restaurants);
     var labelInfo= restaurants.map(function(favorites){
+      var name = favorites.get('name');
       var lat = favorites.get('lat');
       var long = favorites.get('long');
-      var name = favorites.get('name');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
       return (
           React.createElement(Marker, {onClick: self.onMarkerClick, visible: self.state.showingInfoWindow, key: favorites.cid, name: name, position: {lat: lat, lng: long}}, 
             React.createElement(InfoWindow, {
-              marker: self.state.activeMarker, 
-              visible: self.state.showingInfoWindow}, 
+              marker: self.state.activeMarker}, 
               React.createElement("div", null, 
-                React.createElement("p", null, name), 
-                React.createElement("a", {href: directions}, "Directions")
+                React.createElement("span", null, name)
               )
             )
           )
@@ -1284,18 +1318,34 @@ var FavoriteListing = React.createClass({displayName: "FavoriteListing",
     // this.setState(newProps.favorites);
   },
 
+  navigate: function(e){
+    e.preventDefault();
+    var self = this;
+    var restaurants = this.props.favorites;
+    var name = restaurants.get('name');
+    var id = restaurants.get('objectId');
+    localStorage.setItem('name', name);
+    self.props.router.navigate('/restaurants/' + id + '/', {
+      trigger: true
+    })
+  },
 
   render: function(){
     var favorites = this.props.favorites;
   // console.log('test', favorites.get('name'));
+  var lat = favorites.get('lat');
+  var long = favorites.get('long');
+  var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
     return (
-      React.createElement("div", {className: "restaurant-cards mdl-card mdl-shadow--2dp col-md-2"}, 
-        React.createElement("div", {className: "material-icons mdl-badge mdl-badge--overlap", "data-badge": "♥"}), 
+      React.createElement("div", {className: "restaurant-cards mdl-shadow--2dp col-md-2 col-sm-4 col-xs-5"}, 
+        React.createElement("div", {className: "material-icons mdl-badge mdl-badge--overlap pull-right", "data-badge": "♥"}), 
         React.createElement("div", {className: "restaurant-card-header"}, 
-          React.createElement("a", {href: '#restaurants/' + favorites.get('objectId') + '/', className: "individual-item"}, React.createElement("img", {className: "restaurant-card-img", src: favorites.get('image_url')})), 
+          React.createElement("a", {onClick: this.navigate, className: "individual-item"}, React.createElement("img", {className: "restaurant-card-img", height: "100", width: "100", src: favorites.get('image_url')})), 
           React.createElement("p", {className: "restaurant-card-name"}, favorites.get('name')), 
+          React.createElement("span", {className: "restaurant-card-category"}, favorites.get('mainCategory')), 
+
           React.createElement("div", {className: "mdl-card__actions mdl-card--border"}, 
-            React.createElement("p", {className: "restaurant-card-category"}, favorites.get('mainCategory'))
+            React.createElement("a", {href: directions}, "Directions")
           )
         )
       )
@@ -1307,11 +1357,6 @@ var Favorites = React.createClass({displayName: "Favorites",
   // componentWillMount: function(){
   //   var favorites = this.props.restaurants;
   // },
-  handleRemoveFavorite: function(favorite){
-    var self = this;
-    self.props.removeFavorite(favorite);
-  // console.log(this.state);
-  },
 
   render: function(){
     var self = this;
@@ -1321,13 +1366,15 @@ var Favorites = React.createClass({displayName: "Favorites",
     // console.log('2-map', favoritesList);
       return (
           React.createElement("div", {key: favorites.cid}, 
-            React.createElement(FavoriteListing, {favorites: favorites})
+            React.createElement(FavoriteListing, {favorites: favorites, router: self.props.router})
           )
       );
     });
     return (
-      React.createElement("div", {className: "favorites-pane col-md-12 col-sm-12 col-xs-11"}, 
-        favoritesList
+      React.createElement("div", {className: "row"}, 
+        React.createElement("div", {className: "col-md-11 col-sm-11 col-sm-offset-1 col-xs-10 col-xs-offset-1"}, 
+            favoritesList
+        )
       )
     )
   }
@@ -1358,13 +1405,14 @@ componentWillMount: function(){
   });
 },
 
+
   render: function(){
   // console.log('favorites', this.state.businessCollection);
     return (
       React.createElement(Template, null, 
         React.createElement("div", {className: "favorites-row"}, 
-          React.createElement("div", {className: "favorites-col"}, 
-            React.createElement(Favorites, {restaurants: this.state.businessCollection}), 
+          React.createElement("div", {className: "favorites-col col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1"}, 
+            React.createElement(Favorites, {restaurants: this.state.businessCollection, router: this.props.router}), 
             React.createElement(MapContainer, {restaurants: this.state.businessCollection})
           )
         )
@@ -1431,25 +1479,31 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
 
   render: function() {
     return (
-      React.createElement("div", {className: "login mdl-shadow--2dp col-md-3 col-md-offset-5"}, 
-            React.createElement("h2", {className: "login-header"}, "In The Mood"), 
-            React.createElement("h2", {className: "login-subheader"}, "Please Login"), 
-            React.createElement("form", {className: "col-md-12", onSubmit: this.handleLogMeIn, id: "login"}, 
-              React.createElement("span", {className: "error"}), 
-              React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
-                React.createElement("input", {onChange: this.handleEmail, value: this.state.email, className: "mdl-textfield__input", name: "email", id: "email-login", type: "email", placeholder: "email"}), 
-                React.createElement("label", {className: "mdl-textfield__label", htmlFor: "email-login"})
-              ), 
+    React.createElement("div", {className: "login-container container-fluid"}, 
+      React.createElement("div", {className: "login mdl-shadow--8dp col-md-4 col-md-offset-4"}, 
+        React.createElement("div", {className: "login-headers row"}, 
+        /*<div className="nav-header-img col-md-2"/>*/
+            React.createElement("span", {className: "login-header-1"}, "In The"), 
+            React.createElement("span", {className: "login-header-2"}, " Mood", React.createElement("i", {className: "material-icons"}, "restaurant_menu"))
+        ), 
+        React.createElement("h2", {className: "login-subheader"}, "Please Login"), 
+        React.createElement("form", {className: "col-md-12", onSubmit: this.handleLogMeIn, id: "login"}, 
+          React.createElement("span", {className: "error"}), 
+          React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {onChange: this.handleEmail, value: this.state.email, className: "mdl-textfield__input", name: "email", id: "email-login", type: "email", placeholder: "email"}), 
+            React.createElement("label", {className: "mdl-textfield__label", htmlFor: "email-login"})
+          ), 
 
-              React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
-                React.createElement("input", {onChange: this.handlePassword, value: this.state.password, className: "mdl-textfield__input", name: "password", id: "password-login", type: "password", placeholder: "Password Please"}), 
-                React.createElement("label", {className: "mdl-textfield__label", htmlFor: "password-login"})
-              ), 
-              React.createElement("div", null, 
-                React.createElement("button", {onSubmit: this.handleLogIn, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left", type: "submit", value: "Beam Me Up!"}, "Sign In!")
-              )
-            )
+          React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
+            React.createElement("input", {onChange: this.handlePassword, value: this.state.password, className: "mdl-textfield__input", name: "password", id: "password-login", type: "password", placeholder: "Password Please"}), 
+            React.createElement("label", {className: "mdl-textfield__label", htmlFor: "password-login"})
+          ), 
+          React.createElement("div", null, 
+            React.createElement("button", {onSubmit: this.handleLogIn, className: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left", type: "submit", value: "Beam Me Up!"}, "Sign In!")
           )
+        )
+      )
+    )
     );
   }
 });
@@ -1472,7 +1526,7 @@ var LogInContainer = React.createClass({displayName: "LogInContainer",
       this.setState({
         username: logMeIn.username
       });
-
+      // User.login(username, password).then(function(response){
     $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
       console.log('response', response)
       var objectId = response.objectId;
@@ -1506,10 +1560,8 @@ var LogInContainer = React.createClass({displayName: "LogInContainer",
   render: function() {
 
     return (
-      React.createElement("div", {className: "login-container container-fluid"}, 
-        React.createElement("div", {className: "login-row"}, 
-          React.createElement(LoginComponent, {handleLogMeIn: this.handleLogMeIn, router: this.props.router})
-        )
+      React.createElement("div", null, 
+        React.createElement(LoginComponent, {handleLogMeIn: this.handleLogMeIn, router: this.props.router})
       )
     );
   }
@@ -1624,7 +1676,7 @@ removeLunch: function(lunch){
      )
    });
    return (
-     React.createElement("div", {className: "menu-panels col-md-12 mdl-shadow--3dp"}, 
+     React.createElement("div", {className: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp"}, 
        React.createElement("div", {className: "header "}, 
          React.createElement("div", {className: "mdl-card__title"}, 
            React.createElement("h2", {className: "mdl-card__title-text"}, "Lunch")
@@ -1668,6 +1720,9 @@ var DashboardContainer = require('./dashboard.jsx').DashboardContainer;
 var Dashboard = require('./dashboard.jsx').Dashboard;
 var SpecialsForm = require('./dashboard.jsx').SpecialsForm;
 var yelpBusiness = new YelpBusiness();
+var phoneFormatter = require('phone-formatter');
+
+
 require('../router').router;
 
 var RegistrationForm = React.createClass({displayName: "RegistrationForm",
@@ -1693,7 +1748,7 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
     this.setState({
-      profilePic: attachedPicture
+      attachedPicture : attachedPicture,
     });
   },
 
@@ -1715,12 +1770,15 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
   render: function() {
     return (
       React.createElement("div", {className: "registration-container container-fluid"}, 
-        React.createElement("div", {className: "registration-form mdl-shadow--2dp col-md-5 col-md-offset-4"}, 
-          React.createElement("div", {className: "inthemood-headers"}, 
-            React.createElement("h2", {className: "inthemood-header"}, "In The Mood"), 
-            React.createElement("h4", {className: "inthemood-subheader"}, "@ Downtown Greenville")
+
+        React.createElement("div", {className: "registration-form mdl-shadow--8dp col-md-6 col-md-offset-3 col-sm-11 col-xs-12"}, 
+          React.createElement("div", {className: "login-headers row"}, 
+          /*<div className="nav-header-img col-md-2"/>*/
+              React.createElement("span", {className: "login-header-1"}, "In The"), 
+              React.createElement("span", {className: "login-header-2"}, " Mood", React.createElement("i", {className: "material-icons"}, "restaurant_menu")), 
+              React.createElement("span", {className: "login-header-1"}, "For ", this.state.name)
           ), 
-          React.createElement("p", null, "Verify Your Information"), 
+          React.createElement("h5", null, "Verify Your Information"), 
           React.createElement("form", {onSubmit: this.handleSubmit, id: "registration-form", action: "https://matias-recipe.herokuapp.com/classes/dist/", method: "POST", encType: "multipart/form-data"}, 
             React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
               React.createElement("input", {onChange: this.handleInputChange, name: "name", value: this.state.name, type: "text", className: "mdl-textfield__input", id: "business-name", placeholder: "Restaurant Name"})
@@ -1728,9 +1786,6 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
             React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label categories"}, 
               React.createElement("input", {onChange: this.handleInputChange, name: "subCategory1", value: this.state.mainCategory, type: "text", className: "mdl-textfield__input", id: "business-cat", placeholder: "Main Category"}), 
               React.createElement("input", {onChange: this.handleInputChange, name: "subCategory2", value: this.state.subCategory, type: "text", className: "mdl-textfield__input", id: "business-cat", placeholder: "Sub Category"})
-            ), 
-            React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
-              React.createElement("textarea", {onChange: this.handleInputChange, name: "description", value: this.state.description, type: "text", className: "mdl-textfield__input", id: "business-name", placeholder: "Enter a short business description"})
             ), 
             React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
               React.createElement("input", {onChange: this.handleInputChange, name: "phone", value: this.state.phone, type: "text", className: "mdl-textfield__input", id: "business-phone", placeholder: "Your buisness phone number. 864-111-2233"})
@@ -1749,13 +1804,22 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
                 React.createElement("input", {onChange: this.handleInputChange, name: "zip", value: this.state.zip, type: "text", className: "mdl-textfield__input inline", id: "business-zip", placeholder: "Zip Code"})
               )
             ), 
+            React.createElement("div", {className: "registration-description row"}, 
+              React.createElement("div", {className: "registration-description col-md-12 col-sm-11 col-xs-11"}, 
+                React.createElement("h4", null, "About ", this.state.name, " "), 
+                React.createElement("p", null, "Tell your patrions about your business"), 
+                React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
+                  React.createElement("textarea", {onChange: this.handleInputChange, name: "description", value: this.state.description, type: "text", className: "mdl-textfield__input", id: "business-name", placeholder: "Enter a short business description"})
+                )
+              )
+            ), 
 
             React.createElement("div", {className: "registration-image-uploads row"}, 
               React.createElement("div", {className: "registration-image-uploads-header col-md-12 col-sm-11 col-xs-11"}, 
                 React.createElement("h4", null, "Images Uploads")
               ), 
               React.createElement("div", {className: "form-profile-pic col-md-6"}, 
-                React.createElement("div", null, React.createElement("img", {src: this.state.profilePic, width: "300"})), 
+                React.createElement("div", null, React.createElement("img", {src: this.state.image_upload, width: "300"})), 
                 React.createElement("input", {type: "text", id: "uploaded_picture", placeholder: "Header Picture Title"}), React.createElement("br", null), 
                 React.createElement("input", {className: "", onChange: this.handlePicture, type: "file", id: "profile-pic"})
               ), 
@@ -1765,6 +1829,7 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
                 React.createElement("input", {className: "", onChange: this.handleMenu, type: "file", id: "menu"})
               )
             ), 
+
             React.createElement("div", {className: "button-pane"}, 
               React.createElement("button", {type: "submit", className: "btn btn-default"}, "Save Profile")
             )
@@ -1802,11 +1867,13 @@ var RegistrationContainer = React.createClass({displayName: "RegistrationContain
           var business = new models.Business();
           var data = response.businesses[0];
           console.log('photos', data);
+          var phone = phoneFormatter.format(data.phone.slice(2),  "(NNN) NNN-NNNN");
+          console.log('phone', phone);
           business.set({
               name: data.name,
               id: data.id,
               image_url: data.image_url,
-              phone: data.phone.slice(2),
+              phone: phone,
               is_closed: open,
               rating_img_url: data.rating_img_url_large,
               address: data.location.address1,
@@ -1881,17 +1948,19 @@ var RegistrationContainer = React.createClass({displayName: "RegistrationContain
     file.save().done(function(response) {
       localStorage.setItem('image_upload', response.url);
     });
+    this.setState({business: business});
   },
 
   uploadMenu: function(menu) {
     var file = new FileModel();
-    // var business = this.state.business;
+    var business = this.state.business;
     file.set('name', menu.name);
     file.set('data', menu);
     file.save().done(function(response) {
       localStorage.setItem('menu_upload', response.url);
       // business.set('menu_upload', response.url);
     });
+    this.setState({business: business});
   },
 
   render: function() {
@@ -1908,7 +1977,7 @@ module.exports = {
 
 // phone number format pattern='\d{3}[\-]\d{3}[\-]\d{4}
 
-},{"../models/business.js":14,"../models/uploads.js":15,"../parseUtilities":16,"../router":17,"./dashboard.jsx":4,"backbone":21,"react":276}],11:[function(require,module,exports){
+},{"../models/business.js":14,"../models/uploads.js":15,"../parseUtilities":16,"../router":17,"./dashboard.jsx":4,"backbone":21,"phone-formatter":83,"react":276}],11:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
@@ -1926,6 +1995,8 @@ var GoogleMap = google.GoogleMap;
 var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
 var phoneFormatter = require('phone-formatter');
+var Modal = require('react-modal');
+
 
 
 var router = require('../router').router;
@@ -1953,7 +2024,7 @@ var SpecialsList = React.createClass({displayName: "SpecialsList",
     });
     // console.log('specialslistitems', specialsListItems);
     return (
-      React.createElement("div", {className: "col-md-7 col-md-offset-1 detailview-menu-list"}, 
+      React.createElement("div", {className: "col-md-10 col-md-offset-1 detailview-menu-list"}, 
         React.createElement("div", {className: specialsDisplay}, 
           React.createElement("h3", {className: "detailview-menu-headers"}, "Specials"), 
           React.createElement("table", {className: "menu col-md-12 col-sm-12 col-xs-12"}, 
@@ -2062,7 +2133,7 @@ var MenuList = React.createClass({displayName: "MenuList",
     });
 
     return (
-      React.createElement("div", {className: "col-md-7 col-md-offset-1 detailview-menu-list"}, 
+      React.createElement("div", {className: "col-md-10 col-md-offset-1 detailview-menu-list"}, 
         React.createElement("div", {className: appetizersDisplay}, 
           React.createElement("h3", {className: "detailview-menu-headers"}, "Appetizers"), 
           React.createElement("table", {className: "menu col-md-12 col-sm-12 col-xs-12"}, 
@@ -2213,6 +2284,8 @@ var DetailView = React.createClass({displayName: "DetailView",
   getInitialState: function() {
     return {
       restaurant: {},
+      modalIsOpen: false,
+      modalIsOpen2: false,
     }
   },
 
@@ -2233,9 +2306,28 @@ var DetailView = React.createClass({displayName: "DetailView",
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
     self.props.setFavorite(favorite);
+    this.setState({
+      modalIsOpen: false,
+    });
     // self.setState({
     //   favorite: favorite,
     // })
+  },
+
+  openModal: function() {
+    this.setState({
+      modalIsOpen: true
+    });
+    // this.setState({
+    //   favoriteMessage: <i className="material-icons">check_circle</i>
+    // });
+  },
+
+  closeModal: function() {
+    this.setState({
+      modalIsOpen: false,
+      modalIsOpen2: false
+    });
   },
 
   handleRemoveFavorite: function(e) {
@@ -2243,9 +2335,16 @@ var DetailView = React.createClass({displayName: "DetailView",
     var self = this;
     var favorite = self.props.restaurant.get('objectId');
     self.props.removeFavorite(favorite);
+    localStorage.removeItem('name');
     // self.setState({
     //   favorite: favorite
     // });
+  },
+
+  openModal2: function() {
+    this.setState({
+      modalIsOpen2: true
+    });
   },
 
   render: function() {
@@ -2264,16 +2363,53 @@ var DetailView = React.createClass({displayName: "DetailView",
       height: '50vh',
       backgroundImage: 'url(' + imgUrl + ')'
     };
-    var phone = phoneFormatter.format(restaurant.get('phone'),  "(NNN) NNN-NNNN");
+    var phone = restaurant.get('phone');
     console.log('phone', phone);
     return (
-      React.createElement("div", {className: "detailview-pane col-md-12 "}, 
-        React.createElement("div", {className: "detailview-header col-md-12"}, 
+      React.createElement("div", {className: "detailview-pane container"}, 
+        React.createElement("div", {className: "detailview-header col-md-12 col-sm-6"}, 
           React.createElement("div", {className: "row"}, 
             React.createElement("div", {className: "detailview-header-img", style: divStyle}, 
-              React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.handleRemoveFavorite, type: "submit", value: "Remove Favorite"}, React.createElement("i", {className: "material-icons"}, "clear")), 
-                React.createElement("button", {className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.handleFavorite, type: "button"}, React.createElement("i", {className: "material-icons"}, "favorite_border"))
+              React.createElement("button", {id: "tt1", className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.openModal2, type: "submit", value: "Remove Favorite"}, React.createElement("i", {className: "material-icons"}, "clear")), 
+                React.createElement("div", {className: "mdl-tooltip", "data-mdl-for": "tt1"}, 
+                "delete from your favorites"
+                ), 
+              React.createElement("button", {id: "tt2", className: "favorite-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored pull-right", onClick: this.openModal, type: "button"}, React.createElement("i", {className: "material-icons"}, "favorite_border")), 
+                React.createElement("div", {className: "mdl-tooltip", "data-mdl-for": "tt2"}, 
+                "add to your favorites"
+                )
             ), 
+
+            React.createElement(Modal, {className: "favorite-modal mdl-dialog col-md-offset-5 col-sm-offset-1 col-xs-offset-1", isOpen: this.state.modalIsOpen}, 
+              React.createElement("div", {className: "mdl-card "}, 
+                React.createElement("h4", {className: "mdl-dialog__title"}, "Your Favorites"), 
+                  React.createElement("div", {className: "mdl-dialog__content"}, 
+                  React.createElement("p", null, 
+                    restaurant.get('name'), " will be added to your favorites!"
+                  )
+                ), 
+                React.createElement("div", {className: "mdl-dialog__actions"}, 
+                  React.createElement("button", {type: "button", onClick: this.handleFavorite, className: "mdl-button"}, "Let's add it!"), 
+                  React.createElement("button", {type: "button", onClick: this.closeModal, className: "mdl-button"}, "Take me back")
+                )
+              )
+            ), 
+
+            React.createElement(Modal, {className: "favorite-modal mdl-dialog col-md-offset-5 col-sm-offset-1 col-xs-offset-1", isOpen: this.state.modalIsOpen2}, 
+              React.createElement("div", {className: "mdl-card "}, 
+                React.createElement("h4", {className: "mdl-dialog__title"}, "Wait!"), 
+                  React.createElement("div", {className: "mdl-dialog__content"}, 
+                  React.createElement("p", null, 
+                    "You are about to remove ", restaurant.get('name'), " from for your favorites..."
+                  )
+                ), 
+                React.createElement("div", {className: "mdl-dialog__actions"}, 
+                  React.createElement("button", {type: "button", onClick: this.handleRemoveFavorite, className: "mdl-button"}, "Do it!"), 
+                  React.createElement("button", {type: "button", onClick: this.closeModal, className: "mdl-button"}, "I changed my mind")
+                )
+              )
+            ), 
+
             React.createElement("div", {className: "detailview-header-text col-md-12"}, 
               React.createElement("h1", {className: "detailview-header-name"}, 
                 restaurant.get('name')
@@ -2298,19 +2434,19 @@ var DetailView = React.createClass({displayName: "DetailView",
           )
         ), 
 
-        React.createElement("div", {className: "col-md-4 col-sm-12 col-xs-12 detailview-aside mdl-shadow--2d"}, 
+        React.createElement("div", {className: "col-md-5 col-sm-6 col-xs-12 detailview-aside mdl-shadow--4d"}, 
           React.createElement("div", {className: "detailview-about"}, 
             React.createElement("div", {className: "detailview-description"}, 
               React.createElement("div", {className: "mdl-card__title"}, 
                 React.createElement("h3", {className: "detailview-headers"}, "About")
               ), 
               React.createElement("div", {className: "mdl-card__supporting-text"}, 
-                React.createElement("p", null, React.createElement("img", {className: "about-image", src: restaurant.get('menu_upload'), width: "200"}), restaurant.get('description'))
+                React.createElement("p", null, React.createElement("img", {className: "about-image", src: restaurant.get('menu_upload'), width: "150"}), restaurant.get('description'))
               )
             ), 
             React.createElement("div", {className: "detailview-aside-review mdl-card__actions mdl-card--border"}, 
               React.createElement("div", {className: "mdl-card__title"}, 
-                React.createElement("h3", {className: "detailview-headers"}, "Recent Reviews")
+                React.createElement("h3", {className: "detailview-headers"}, "Reviews")
               ), 
               React.createElement(Reviews, {restaurant: this.props.restaurant})
             )
@@ -2318,10 +2454,13 @@ var DetailView = React.createClass({displayName: "DetailView",
           React.createElement("div", {className: "detailview-location-pane"}
           )
         ), 
-
-        React.createElement(SpecialsList, {specials: specials}), 
-        React.createElement(MenuList, {restaurant: this.props.restaurant, appetizers: appetizers, breakfast: breakfast, lunch: lunch, dinner: dinner, desserts: desserts})
-
+        React.createElement("div", {className: "menu-pane col-md-7 col-sm-12 col-xs-12"}, 
+          React.createElement("div", {className: "detailview-menu-header col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mdl-shadow--2d"}, 
+            React.createElement("h1", null, "Menu")
+          ), 
+          React.createElement(SpecialsList, {specials: specials}), 
+          React.createElement(MenuList, {restaurant: this.props.restaurant, appetizers: appetizers, breakfast: breakfast, lunch: lunch, dinner: dinner, desserts: desserts})
+        )
       )
     )
   }
@@ -2357,9 +2496,9 @@ render: function(){
         backgroundImage: 'url(' + imgUrl + ')'
       };
     return (
-      React.createElement("li", {key: reviews.time_created, className: "detailview-reviews-li mdl-list__item"}, 
-        React.createElement("div", {className: "detailview-reviews-img col-md-3 col-sm-3 col-xs-3", style: divStyle}), 
-        React.createElement("div", {className: "detailview-reviews-text col-md-8 col-sm-8 col-xs-8"}, 
+      React.createElement("li", {key: reviews.time_created, className: "detailview-reviews-li row mdl-list__item"}, 
+        React.createElement("a", {href: reviews.url}, React.createElement("div", {className: "detailview-reviews-img col-md-2 col-sm-3 col-xs-3", style: divStyle})), 
+        React.createElement("div", {className: "detailview-reviews-text col-md-10 col-sm-8 col-xs-8"}, 
           React.createElement("span", null, reviews.user.name), 
           React.createElement("span", {className: "mdl-list__item-text-body"}, 
             reviews.text
@@ -2386,7 +2525,7 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
       restaurant: new models.Business()
     }
   },
-  componentWillMount: function() {
+  componentDidMount: function() {
     var restaurant = this.state.restaurant;
     var restaurantId = this.props.businessId;
     if (!restaurantId) {
@@ -2458,6 +2597,7 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
     var dinner = this.state.restaurant.get('dinner');
     var desserts = this.state.restaurant.get('dessert');
     var reviews = this.state.restaurant.get('reviews');
+    console.log('parent reviews', reviews);
 
     return (
       React.createElement(Template, null, 
@@ -2475,7 +2615,7 @@ module.exports = {
   SingleViewContainer: SingleViewContainer
 };
 
-},{"../models/business":14,"../parseUtilities":16,"../router":17,"../templates/templates.jsx":19,"./favorites.jsx":7,"backbone":21,"backbone-react-component":20,"jquery":58,"phone-formatter":83,"react":276,"react-google-maps":128,"react-google-maps/lib/async/ScriptjsLoader":104}],12:[function(require,module,exports){
+},{"../models/business":14,"../parseUtilities":16,"../router":17,"../templates/templates.jsx":19,"./favorites.jsx":7,"backbone":21,"backbone-react-component":20,"jquery":58,"phone-formatter":83,"react":276,"react-google-maps":128,"react-google-maps/lib/async/ScriptjsLoader":104,"react-modal":145}],12:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
@@ -2485,6 +2625,8 @@ var Favorites= require('./favorites.jsx').FavoritesContainer;
 var Template = require('../templates/templates.jsx');
 var YelpBusiness = require('../models/business.js').YelpBusiness;
 var yelpBusiness = new YelpBusiness();
+require('../router').router;
+
 
 
 var Panel = require('muicss/lib/react/panel');
@@ -2537,16 +2679,16 @@ var Search = React.createClass({displayName: "Search",
       );
     });
     return(
-      React.createElement("div", {className: "categories-bar row"}, 
+      React.createElement("div", {className: "categories-bar row fluid"}, 
         /*<h2 className="viewall-card-container-header">All Restaurants</h2>*/
-        React.createElement("div", {className: "categories-dropdown dropdown col-md-10 col-md-offset-1 col-sm-11 col-xs-11"}, 
-          React.createElement("button", {className: "btn col-md-offset-4 btn-default dropdown-toggle", type: "button", id: "dropdownMenu1", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true"}, 
-            React.createElement("span", {className: "categories-heading"}, "I'm in the mood for"), 
-            React.createElement("span", {className: "caret"})
+        React.createElement("div", {className: "categories-dropdown dropdown col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-8 col-xs-offset-2"}, 
+          React.createElement("span", {className: "btn dropdown-toggle col-md-11 col-sm-11 col-xs-9", type: "button", id: "dropdownMenu1", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true"}, 
+            React.createElement("span", {className: "categories-heading pull-left"}, "I'm in the mood for...")
           ), 
           React.createElement("ul", {className: "dropdown-menu col-md-offset-4", "aria-labelledby": "dropdownMenu1"}, 
             categoriesList
-          )
+          ), 
+          React.createElement("div", {className: "categories-search-icon pull-right"}, React.createElement("i", {className: "material-icons"}, "search"))
         )
       )
     )
@@ -2555,7 +2697,18 @@ var Search = React.createClass({displayName: "Search",
 
 var ItemListing = React.createClass({displayName: "ItemListing",
 
-  // var test = $.ajax('https://yelp-proxy-server.herokuapp.com/api?phone=+1')
+  navigate: function(e){
+    e.preventDefault();
+    var self = this;
+    var restaurants = this.props.restaurants;
+    var name = restaurants.get('name');
+    var id = restaurants.get('objectId');
+    localStorage.setItem('name', name);
+    self.props.router.navigate('/restaurants/' + id + '/', {
+      trigger: true
+    })
+  },
+
   render: function(){
     console.log('what is happenign');
 
@@ -2563,33 +2716,36 @@ var ItemListing = React.createClass({displayName: "ItemListing",
     var phone = restaurants.get('phone');
     var specialsCounter = this.props.restaurants.attributes.specials.length;
     var backgroundImage = restaurants.get('img_url');
+    var imgUrl = restaurants.get('image_upload');
+    var divStyle = {
+      // height: '50vh',
+      height: "200",
+      width: "100%",
+      borderRadius: "5px",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundImage: 'url(' + imgUrl + ')'
+    };
     // style={{"backgroundImage" : "url(http://www.culinaryschools.org/images/restaurant-kitchen.jpg)"}
 
-    //Not so dry code trying to trigger removeSpecial function from dashboard
-    // var specials = restaurants.get('specials');
-    // var expiryDate = specials.map(function(date){
-    //   return date.get('expirydate');
-    // });
-    // console.log('expires on', expiryDate, 'restaurant', restaurants.get('name'));
-    // var now = moment();
-    // var formatedDate = now.format("YYYY-MM-DD");
-    // console.log('delete special trigger >>', formatedDate == expiryDate);
-    // if(formatedDate == expiryDate){
-    //   Dashboard.removeSpecial(special);
-    //   console.warn("Special Deleted >>");
-    //   console.log(Dashboard.removeSpecial(special));
-    // };
     return(
-      React.createElement("div", {className: "viewall-restaurant-card mdl-shadow--2dp col-md-3 col-sm-5 col-xs-5"}, 
+      React.createElement("div", {className: "viewall-restaurant-card mdl-shadow--8dp col-md-3 col-sm-5 col-xs-10"}, 
           React.createElement("div", {className: "viewall-header restaurant-card-header"}, 
-            React.createElement("a", {href: '#restaurants/' + restaurants.get('objectId') + '/', className: "individual-item"}, React.createElement("img", {className: "viewall-image", src: restaurants.get('image_url')})), 
+            React.createElement("a", {onClick: this.navigate, className: "individual-item"}, React.createElement("div", {className: "col-md-12", style: divStyle })), 
             React.createElement("span", {className: "viewall-counter mdl-badge pull-right", "data-badge": specialsCounter}, "Specials"), 
-            React.createElement("div", {className: "viewall-name "}, restaurants.get('name')), 
-            React.createElement("p", {className: "viewall-category mdl-card__title-text"}, restaurants.get('mainCategory'))
+            React.createElement("div", {className: "viewall-name"}, restaurants.get('name')), 
+            React.createElement("p", {className: "viewall-category"}, restaurants.get('mainCategory'))
           ), 
-          React.createElement("div", {className: "viewall-restaurant-info mdl-card__actions mdl-card--border"}, 
+          React.createElement("div", {className: "viewall-restaurant-info mdl-card__actions mdl-card--border col-md-12"}, 
             /*<p className="viewall-description">{restaurants.get('description')}</p>?*/
-            React.createElement("p", {className: "viewall-status pull-right"}, restaurants.get('is_closed'))
+            React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-left"}, 
+                React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, restaurants.get('rating')), 
+                React.createElement("span", {className: "mdl-chip__text"}, "Rating")
+            ), 
+            React.createElement("span", {className: "mdl-chip mdl-chip--contact pull-right"}, 
+                React.createElement("span", {className: "mdl-chip__contact mdl-color--orange mdl-color-text--white"}, restaurants.get('price')), 
+                React.createElement("span", {className: "mdl-chip__text"}, "Price")
+            )
           )
       )
     )
@@ -2605,13 +2761,13 @@ var Listing = React.createClass({displayName: "Listing",
     // console.log('2-map', restaurantList);
       return (
           React.createElement("div", {key: restaurant.cid}, 
-            React.createElement(ItemListing, {restaurants: restaurant})
+            React.createElement(ItemListing, {restaurants: restaurant, router: self.props.router})
           )
       );
     });
     return(
       React.createElement("div", {className: "viewall-cards-container row"}, 
-        React.createElement("div", {className: "vieall-cards-col col-md-10 col-md-offset-2 col-md-offset-1 col-sm-12 col-xs-12"}, 
+        React.createElement("div", {className: "vieall-cards-col col-md-10 col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1"}, 
           restaurantList
         )
       )
@@ -2720,11 +2876,9 @@ var ViewAllContainer= React.createClass({displayName: "ViewAllContainer",
     return (
       React.createElement(Template, null, 
       React.createElement("div", {className: "viewall-container"}, 
-      React.createElement("div", {className: "viewall-pane col-md-12 col-sm-11 col-xs-11"}, 
-        React.createElement("div", {className: ""}, 
-          React.createElement(Search, {restaurants: this.state.businessCategoryCollection, filterCategories: this.filterCategories}), 
-          React.createElement(Listing, {restaurants: this.state.businessCollection})
-        )
+      React.createElement("div", {className: "viewall-pane row fluid"}, 
+        React.createElement(Search, {restaurants: this.state.businessCategoryCollection, filterCategories: this.filterCategories}), 
+        React.createElement(Listing, {restaurants: this.state.businessCollection, router: this.props.router})
       )
     )
     )
@@ -2736,7 +2890,7 @@ module.exports = {
   ViewAllContainer: ViewAllContainer
 };
 
-},{"../models/business":14,"../models/business.js":14,"../templates/templates.jsx":19,"./dashboard.jsx":4,"./favorites.jsx":7,"backbone":21,"bootstrap-sass":22,"jquery":58,"moment":72,"muicss/lib/react/dropdown":80,"muicss/lib/react/dropdown-item":79,"muicss/lib/react/panel":81,"react":276}],13:[function(require,module,exports){
+},{"../models/business":14,"../models/business.js":14,"../router":17,"../templates/templates.jsx":19,"./dashboard.jsx":4,"./favorites.jsx":7,"backbone":21,"bootstrap-sass":22,"jquery":58,"moment":72,"muicss/lib/react/dropdown":80,"muicss/lib/react/dropdown-item":79,"muicss/lib/react/panel":81,"react":276}],13:[function(require,module,exports){
 "use strict";
 var $ = require('jquery');
 var Backbone = require('backbone');
@@ -3075,8 +3229,8 @@ var User = Backbone.Model.extend({
   auth: function(){
     $.ajaxSetup({
       beforeSend: function(xhr){
-        xhr.setRequestHeader("X-Parse-Application-Id", appId);
-        xhr.setRequestHeader("X-Parse-REST-API-Key", apiKey);
+        xhr.setRequestHeader("X-Parse-Application-Id", "matiasrecipeserver");
+        xhr.setRequestHeader("X-Parse-REST-API-Key", "recipe");
         if(sessionId) {
           xhr.setRequestHeader("X-Parse-Session-Token", sessionId);
           //pass sessionId from localStorage?
@@ -3085,9 +3239,11 @@ var User = Backbone.Model.extend({
     });
   },
 }, {
-  login: function(username, password, callback){
-    $.post('/login/', {username: username, password: password}), then(function(response){
+  login: function(username, password,callbackObj){
+    $.get('https://matias-recipe.herokuapp.com/login/', {username: username, password: password}).then(function(response){
+
       var user = new User (response);
+      var response = response;
       console.log('user', user);
       user.auth();
       localStorage.setItem('user', JSON.stringify(user.toJSON()));
@@ -3121,6 +3277,7 @@ console.log('hi');
 
 /* COMPONENT IMPORTS BELOW */
 var setupParse= require('./parseUtilities').setupParse;
+var User = require('./parseUtilities').User;
 var AuthenticationContainer = require('./components/authentication.jsx').AuthenticationContainer;
 var LogInContainer = require('./components/login.jsx').LogInContainer;
 var RegistrationContainer = require('./components/registration.jsx').RegistrationContainer;
@@ -3138,7 +3295,7 @@ var AppRouter = Backbone.Router.extend({
     'restaurants/': 'allrestaurants',
     'restaurants/:id/': 'restaurant',
     'favorites/': 'favorites',
-    'locations/': 'locations',
+    // 'template/': 'template',
     'dashboard/': 'dashboard',
     'registration/': 'registration',
     'login/': 'login',
@@ -3192,9 +3349,9 @@ var AppRouter = Backbone.Router.extend({
   },
 
 
-  allrestaurants: function(){
+  allrestaurants: function(businessId){
     ReactDOM.render(
-      React.createElement(ViewAllContainer, {router: this}),
+      React.createElement(ViewAllContainer, {businessId: businessId, router: this}),
       document.getElementById('app')
     );
   },
@@ -3215,10 +3372,10 @@ var AppRouter = Backbone.Router.extend({
     );
   },
 
-  // locations: function(){
+  // template: function(){
   //   console.log('favorites view');
   //   ReactDOM.render(
-  //     React.createElement(MapContainer, {router: this}),
+  //     React.createElement(Template,  {router: this}),
   //     document.getElementById('app')
   //   );
   // },
@@ -3277,60 +3434,74 @@ var React = require('react');
 require('backbone-react-component');
 var Gravatar = require('react-gravatar');
 var _ = require('underscore');
-
-
-
 var Template = React.createClass({displayName: "Template",
+
   logout: function(){
     localStorage.clear().then(function(){
         $.post('https://matias-recipe.herokuapp.com/logout/')
     });
   },
 
+  navigate: function(){
+    localStorage.removeItem('name');
+    },
+
   render: function(){
+    var moodFor = "for" +  ' ' + localStorage.getItem('name');
+    var classStyle = "nav-header-1";
+    if(localStorage.getItem('name') == null){
+      classStyle = "hidden";
+    }
+
     return (
       React.createElement("div", {className: "template"}, 
-        React.createElement("div", {className: "menu container-fluid"}, 
-          React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "nav-bar-col col-md-12 col-sm-11-fluid col-xs-11-fluid"}, 
-              React.createElement("div", {className: "nav-headers  hidden-xs"}, 
-                React.createElement("h2", {className: "nav-header"}, "In The Mood"), 
-                React.createElement("h2", {className: "nav-subheader"}, "@ Greenville")
-              ), 
-              React.createElement("ul", {className: "nav nav-tabs"}, 
-                React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {className: "nav-tabs", href: "#restaurants/"}, React.createElement("i", {className: "material-icons"}, "restaurant"))), 
-                React.createElement("li", {className: "active", role: "presentation"}, React.createElement("a", {className: "nav-tabs", href: "#favorites/"}, React.createElement("i", {className: "material-icons"}, "favorite"))), 
-                  React.createElement("div", {className: "btn-group pull-right"}, 
-                    React.createElement("button", {type: "button", className: "btn btn-default btn-xs dropdown-toggle ", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}, 
-                      React.createElement(Gravatar, {className: "avatar img-thumbnail pull-right", email: localStorage.getItem('username'), size: 50})
-                    ), 
-                      React.createElement("ul", {className: "dropdown-menu pull-right"}, 
-                        React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {onClick: this.logout, href: ""}, React.createElement("i", {className: "material-icons"}, "exit_to_app"))), 
-                        React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, " ", React.createElement("a", {href: "#login/"}, React.createElement("i", {className: "material-icons"}, "perm_identity"))), 
-                        React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {href: "#dashboard/"}, React.createElement("i", {className: "material-icons"}, "web")))
-                      )
-                    )
-              ), 
-                React.createElement("div", {className: "nav-message nav-bar-dropdowns"}, 
-                  React.createElement("span", {className: "pull-right"}, "Logged in as  ", localStorage.getItem('username'))
-                )
-            )
-          )
-        ), 
 
-      React.createElement("div", {className: "components container-fluid"}, 
-        this.props.children
+
+          React.createElement("div", {className: "nav-bar row"}, 
+            React.createElement("div", {className: "nav-bar-col col-md-12-fluid col-sm-11-fluid col-xs-11-fluid"}, 
+              React.createElement("ul", {className: "nav nav-tabs "}, 
+                React.createElement("li", {role: "presentation", className: "active col-md-3"}, React.createElement("a", {onClick: this.navigate, className: "nav-tabs", href: "#restaurants/"}, 
+                  React.createElement("div", {className: "nav-headers"}, 
+                  /*<div className="nav-header-img col-md-2"/>*/
+                      React.createElement("span", {className: "nav-header-1"}, "In The"), 
+                      React.createElement("span", {className: "nav-header-2"}, " Mood", React.createElement("i", {className: "material-icons"}, "restaurant_menu")), 
+                      React.createElement("p", {className: classStyle}, moodFor)
+                  )
+                  )
+                ), 
+
+                React.createElement("li", {role: "presentation", className: "dropdown  pull-right"}, 
+                  React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, 
+                    React.createElement("i", {className: "material-icons md-48"}, "account_box"), React.createElement("span", {className: "caret"})
+                  ), 
+                  React.createElement("ul", {className: "dropdown-menu"}, 
+                    React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {onClick: this.navigate, href: "#favorites/"}, React.createElement("i", {className: "material-icons"}, "favorite"))), 
+                    React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {onClick: this.logout, href: ""}, React.createElement("i", {className: "material-icons"}, "exit_to_app"))), 
+                    React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, " ", React.createElement("a", {href: "#login/"}, React.createElement("i", {className: "material-icons"}, "perm_identity"))), 
+                    React.createElement("li", {className: "nav-bar-dropdowns", role: "presentation"}, React.createElement("a", {href: "#dashboard/"}, React.createElement("i", {className: "material-icons"}, "web")))
+                  )
+                )
+              )/*end of nav nav-tabs*/
+            )/*end of nav-bar-col*/
+          ), /*end of nav-bar-row*/
+
+
+      React.createElement("div", {className: "components row"}, 
+        React.createElement("div", null, 
+          this.props.children
+        )
       ), 
 
-      React.createElement("div", {className: "footer-container"}, 
-        React.createElement("div", {className: "footer row"}, 
-          React.createElement("div", {className: "col-md-11 col-xs-11 col-xs-11"}, 
-            React.createElement("span", {className: "col-md-offset-1 pull-left"}, "Copyright © Greenville Foodies 2016"), 
+      React.createElement("div", {className: "footer row"}, 
+        React.createElement("div", {className: "col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1"}, 
+          React.createElement("span", null, "© Copyright 2016 IN THE MOOD"), 
+          React.createElement("a", {href: "https://www.yelp.com/greenville"}, 
             React.createElement("img", {className: "pull-right", src: "https://s3-media2.fl.yelpcdn.com/assets/srv0/developer_pages/95212dafe621/assets/img/yelp-2c.png", width: "50"}), 
-            React.createElement("span", {className: "pull-right"}, "In partnership with Yelp")
+            React.createElement("span", {className: "pull-right"}, "restaurant data by")
           )
         )
       )
+
     )
     )
   }
