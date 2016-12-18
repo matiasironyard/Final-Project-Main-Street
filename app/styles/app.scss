@@ -15,6 +15,9 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 img {
   max-width: 100%;
 }
+a:hover {
+ cursor:pointer;
+}
 .container{
 // background-color: #FFFDE7;
 }
@@ -492,25 +495,31 @@ img {
 
 .menu-pane{
   .menu-panels{
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
     .header{
-      background-color: blue;
+      // background-color: blue;
     }
     .menu-forms{
-      // background-color: blue;
       margin-bottom: 60px;
     }
   }
 }
 .menu-panels{
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
   .header{
-    margin-bottom: 40px;
+    margin-bottom: 15px;
     height: 175px;
+    .menu-editor-title{
+      text-transform: uppercase;
+    }
   }
   .menu-forms{
     // background-color: blue;
     margin-bottom: 60px;
+    border-top: 2px solid #757575;
+    padding-top: 20px;
   }
 }
 

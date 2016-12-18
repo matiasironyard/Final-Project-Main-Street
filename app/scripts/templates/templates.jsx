@@ -2,8 +2,9 @@ var React = require('react');
 require('backbone-react-component');
 var Gravatar = require('react-gravatar');
 var _ = require('underscore');
-var Template = React.createClass({
+var $ = require('jquery');
 
+var Template = React.createClass({
   logout: function(){
     localStorage.clear().then(function(){
         $.post('https://matias-recipe.herokuapp.com/logout/')
@@ -20,6 +21,9 @@ var Template = React.createClass({
     if(localStorage.getItem('name') == null){
       classStyle = "hidden";
     }
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
 
     return (
       <div className="template">

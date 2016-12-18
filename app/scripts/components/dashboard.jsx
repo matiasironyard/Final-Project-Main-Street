@@ -116,10 +116,6 @@ var Dashboard = React.createClass({
             <p><i className="material-icons">location_on</i>{business.get('address')}, {business.get('city')}, {business.get('state')}, {business.get('zip')}</p>
           </div>
         </div>
-
-        <div className="col-md-11 col-sm-11 col-xs-11">
-          <h3 className="well mdl-shadow--2dp">Menu Dashboard</h3>
-        </div>
       </div>
     )
   }
@@ -167,31 +163,30 @@ var SpecialsForm = React.createClass({
      };
 
     return(
-      <div className="col-md-11 col-md-offset-1">
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input className="form-control" onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text"  id="name" placeholder="special of the day"/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <input className="form-control" id="myContentEditable" onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text"  id="description" placeholder="special of the day"/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="price">Price</label>
-            <input className="form-control" onChange={this.handleInputChange} name="price"  value={special.get('price')} type="text"  id="price" placeholder="special of the day"/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="test">Effective Date</label>
-            <p></p>
-            <input className="form-control" onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date"  id="date" placeholder="special of the day"/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="test">Expires On</label>
-            <p>(Automatically deletes)</p>
-            <input className="form-control" onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="special of the day"/>
-          </div>
+      <div className="menu-forms specials col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1">
+            <h5>Dish: {special.get('name')}</h5>
+            <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" onChange={this.handleInputChange} name="name"  value={special.get('name')} type="text"  id="name" placeholder="Dish"/>
+            </div>
+
+            <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" id="myContentEditable" onChange={this.handleInputChange} name="description"  value={special.get('description')} type="text"  id="description" placeholder="Description"/>
+            </div>
+
+            <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" onChange={this.handleInputChange} name="price"  value={special.get('price')} type="text"  id="price" placeholder="Price"/>
+            </div>
+
+            <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" onChange={this.handleInputChange} name="effectivedate"  value={special.get('effectivedate')} type="date"  id="date" placeholder="Start Date"/>
+            </div>
+
+            <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" onChange={this.handleInputChange} name="expirydate"  value={special.get('expirydate')} type="date"  id="expiry-date" placeholder="Expiry Date"/>
+            </div>
+
           <div>
-            <button type="button" onClick = {this.removeSpecial} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"><i className="material-icons">delete_forever</i></button>
+        <a  onClick = {this.removeSpecial} type="button" className="pull-right"><i className="material-icons">delete_forever</i></a>
           </div>
       </div>
     );
@@ -199,23 +194,31 @@ var SpecialsForm = React.createClass({
 });
 
 var SpecialsFormSet = React.createClass({
-  // getInitialState: function(){
-  //   return this.props.business.toJSON();
-  // },
-  // componentWillReceiveProps: function(newProps){
-  //   this.setState(newProps.business.toJSON());
-  // },
-  // handleInputChange: function(e){
-  //   var target = e.target;
-  //   var newState = {};
-  //   newState[target.name]  = target.value;
-  //   this.setState(newState);
-  // },
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveSpecial();
+  getInitialState: function() {
+          return ({
+            showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
+          });
+      },
+
+  onClick: function() {
+
+      this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
+  onClickCloseSave: function(e) {
+    e.preventDefault();
+      this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveAppetizer();
+  },
+
   removeSpecial: function(special){
       this.props.removeSpecial(special);
   },
@@ -231,15 +234,27 @@ var SpecialsFormSet = React.createClass({
      )
    });
    return (
-     <div className="col-md-11 col-md-offset-1 dashboard-specials">
-       <form onSubmit={this.handleSubmit}>
-         <h3>Specials</h3>
+    <div className={this.state.editorClass}>
+      <div className="header ">
+        <div className="mdl-card__title">
+          <h5 className="menu-editor-title">Specials Editor</h5>
+        </div>
+        <div className="header-buttons mdl-card__actions mdl-card--border">
+          {this.state.hideBtn ? <a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</a>:null}
+          {this.state.showBtn ?<a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClickCloseSave}>Hide</a>:null}
+          <span className="mdl-chip mdl-chip--contact pull-right">
+              <span className="mdl-chip__contact mdl-color--orange mdl-color-text--white">{this.props.specials.length}</span>
+              <span className="mdl-chip__text">Appetizers</span>
+          </span>
+        </div>
+      </div>
+
+       { this.state.showComponent ? <form onSubmit={this.handleSubmit}>
          <div className="col-md-12 form-inLine">
            {specialsFormset}
          </div>
-         <button type="button" onClick = {self.props.addSpecial} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
-         <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
-       </form>
+         <a type="button" onClick = {this.props.addSpecial}><i className="material-icons col-md-1 col-md-offset-5">add</i></a>
+       </form>: null}
      </div>
    );
  }
@@ -404,24 +419,31 @@ var DashboardContainer = React.createClass({
     var lunch = this.state.business.get('lunch');
     var dinner = this.state.business.get('dinner');
     var dessert = this.state.business.get('dessert');
+    var specials = this.state.business.get('specials');
+    var menuLength = specials.length + appetizer.length + breakfast.length + lunch.length + dinner.length + dessert.length;
 
     return(
       <Template>
         <div className="row">
           <div className= "dashboard-windows col-md-12 col-sm-12 col-xs-11">
             <Dashboard  business={this.state.business} />
-              <div className="specials-pane col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
-                <h4>Specials</h4>
-                <input type="submit" value="Search" onClick={this.onClick} />
-                <input type="submit" value="Search" onClick={this.onClickClose} />
-                { this.state.showComponent ? <SpecialsFormSet
+              <div className="col-md-10 col-md-offset-1 col-sm-11 col-xs-11">
+                <div className="row">
+                  <h3 className="well mdl-shadow--2dp">Menu Dashboard
+                    <span className="mdl-chip mdl-chip--contact pull-right">
+                        <span className="mdl-chip__contact mdl-color--orange mdl-color-text--white">{menuLength}</span>
+                        <span className="mdl-chip__text">Menu Items</span>
+                    </span>
+                  </h3>
+                </div>
+              </div>
+
+                <SpecialsFormSet
                   specials={this.state.business.get('specials')}
                   saveSpecial={this.saveSpecial}
                   removeSpecial={this.removeSpecial}
                   addSpecial={this.addSpecial}
-                  /> : null}
-              </div>
-
+                  />
                 <AppetizerFormSet className="menu-creator-panels"
                   appetizers={this.state.business.get('appetizer')}
                   saveAppetizer={this.saveAppetizer}

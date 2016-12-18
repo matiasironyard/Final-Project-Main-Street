@@ -44,21 +44,19 @@ var BreakfastForm= React.createClass({
     var breakfast = this.props.breakfast;
     // console.log(special.get('expirydate'))
     return(
-      <div className="menu-forms breakfast">
-            <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input className="form-control"  onChange={this.handleInputChange} name="name"  value={breakfast.get('name')} type="text"  id="name" placeholder="dish name"/>
+      <div className="menu-forms appetizers col-md-8  col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-11 col-xs-offset-1">
+        <h5>Dish: {breakfast.get('name')}</h5>
+        <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+          <input className="mdl-textfield__input"  onChange={this.handleInputChange} name="name"  value={breakfast.get('name')} type="text"  id="name" placeholder="dish name"/>
           </div>
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <input className="form-control"  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={breakfast.get('description')} type="text"  id="description" placeholder="dish description"/>
+          <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+            <input className="mdl-textfield__input"  id="myContentEditable" onChange={this.handleInputChange} name="description"  value={breakfast.get('description')} type="text"  id="description" placeholder="dish description"/>
           </div>
-          <div className="form-group">
-            <label htmlFor="price">Price</label>
-            <input className="form-control"  onChange={this.handleInputChange} name="price"  value={breakfast.get('price')} type="text"  id="price" placeholder="dish price"/>
+          <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
+            <input className="mdl-textfield__input"  onChange={this.handleInputChange} name="price"  value={breakfast.get('price')} type="text"  id="price" placeholder="dish price"/>
       </div>
         <div>
-          <button  onClick = {this.removeBreakfast} type="button" className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right"><i className="material-icons">delete_forever</i></button>
+          <a  onClick = {this.removeBreakfast} type="button" className="pull-right"><i className="material-icons">delete_forever</i></a>
         </div>
       </div>
     );
@@ -67,21 +65,34 @@ var BreakfastForm= React.createClass({
 
 var BreakfastFormSet = React.createClass({
   getInitialState: function() {
-          return { showComponent: false };
+          return ({
+            showComponent: false,
+            showBtn: false,
+            hideBtn: true,
+            editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"
+          });
       },
 
   onClick: function() {
       this.setState({ showComponent: true });
+      this.setState({showBtn: true});
+      this.setState({hideBtn: false})
+      this.setState({editorClass: "menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
   },
-  onClickClose: function() {
+  onClickCloseSave: function(e) {
+    e.preventDefault();
       this.setState({ showComponent: false });
+      this.setState({showBtn: false});
+      this.setState({hideBtn: true})
+      this.setState({editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
+      this.props.saveAppetizer();
   },
 
-  handleSubmit: function(e){
-  e.preventDefault();
-  // console.log('business', this.state);
-  this.props.saveBreakfast();
-},
+//   handleSubmit: function(e){
+//   e.preventDefault();
+//   // console.log('business', this.state);
+//   this.props.saveBreakfast();
+// },
 
 removeBreakfast: function(breakfast){
     this.props.removeBreakfast(breakfast);
@@ -101,26 +112,27 @@ removeBreakfast: function(breakfast){
      )
    });
    return (
-     <div className="menu-panels col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1  mdl-shadow--3dp">
+     <div className={this.state.editorClass}>
        <div className="header ">
          <div className="mdl-card__title">
-           <h2 className="mdl-card__title-text">Breakfast</h2>
+           <h5 className="menu-editor-title">Breakfast Editor</h5>
          </div>
-         <div className="mdl-card__supporting-text">
-          <span>editor</span>
-        </div>
          <div className="header-buttons mdl-card__actions mdl-card--border">
-           <a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</a>
-           <a className="mdl-button mdl-js-button mdl-button--raised pull-right" type="submit" onClick={this.onClickClose}>Hide</a>
+           {this.state.hideBtn ? <a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClick}>Show</a>:null}
+           {this.state.showBtn ?<a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClickCloseSave}>Hide</a>:null}
+           <span className="mdl-chip mdl-chip--contact pull-right ">
+
+               <span className="mdl-chip__contact mdl-color--orange mdl-color-text--white">{this.props.breakfast.length}</span>
+               <span className="mdl-chip__text">Breakfast</span>
+           </span>
          </div>
        </div>
         { this.state.showComponent ? <form onSubmit={this.handleSubmit}>
-         <div className="form-inLine">
+         <div className="form-inLine col-md-12">
            {breakfastFormset}
-          <button  type="button" onClick = {this.props.addBreakfast} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i className="material-icons">add</i></button>
          </div>
-         <br></br>
-        <button  onClick={this.handleSubmit} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>
+         <a  type="button" onClick = {this.props.addBreakfast} ><i className="material-icons col-md-1 col-md-offset-5">add</i></a>
+        {/*<button  onClick={this.handleSubmit}  className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i className="material-icons">save</i></button>*/}
        </form>:null}
      </div>
    );
