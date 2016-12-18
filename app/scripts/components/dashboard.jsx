@@ -244,7 +244,7 @@ var SpecialsFormSet = React.createClass({
           {this.state.showBtn ?<a className="mdl-button mdl-js-button mdl-button--raised pull-left" type="submit" onClick={this.onClickCloseSave}>Hide</a>:null}
           <span className="mdl-chip mdl-chip--contact pull-right">
               <span className="mdl-chip__contact mdl-color--orange mdl-color-text--white">{this.props.specials.length}</span>
-              <span className="mdl-chip__text">Appetizers</span>
+              <span className="mdl-chip__text">Specials</span>
           </span>
         </div>
       </div>
@@ -444,15 +444,15 @@ var DashboardContainer = React.createClass({
                   removeSpecial={this.removeSpecial}
                   addSpecial={this.addSpecial}
                   />
+                <BreakfastFormSet className="menu-creator-panels"
+                  breakfast={this.state.business.get('breakfast')} saveBreakfast={this.saveBreakfast}  removeBreakfast={this.removeBreakfast}
+                  addBreakfast={this.addBreakfast}
+                  />
                 <AppetizerFormSet className="menu-creator-panels"
                   appetizers={this.state.business.get('appetizer')}
                   saveAppetizer={this.saveAppetizer}
                   removeAppetizer={this.removeAppetizer}
                   addAppetizer={this.addAppetizer}
-                  />
-                <BreakfastFormSet className="menu-creator-panels"
-                  breakfast={this.state.business.get('breakfast')} saveBreakfast={this.saveBreakfast}  removeBreakfast={this.removeBreakfast}
-                  addBreakfast={this.addBreakfast}
                   />
                 <LunchFormSet className="menu-creator-panels"
                     lunch={this.state.business.get('lunch')} saveLunch={this.saveLunch}  removeLunch={this.removeLunch}

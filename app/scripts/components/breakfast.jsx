@@ -85,7 +85,7 @@ var BreakfastFormSet = React.createClass({
       this.setState({showBtn: false});
       this.setState({hideBtn: true})
       this.setState({editorClass: "menu-panels col-md-4 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 mdl-shadow--3dp"})
-      this.props.saveAppetizer();
+      this.props.saveBreakfast();
   },
 
 //   handleSubmit: function(e){

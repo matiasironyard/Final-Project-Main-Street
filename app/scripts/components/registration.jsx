@@ -17,12 +17,22 @@ require('../router').router;
 
 var RegistrationForm = React.createClass({
   getInitialState: function() {
-    return this.props.business.toJSON();
+    return{
+      business: this.props.business.toJSON(),
+      imageUpload: '',
+      menuUpload: '',
+    }
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.setState(newProps.business.toJSON());
+    var business = newProps.business.toJSON();
+    this.setState(business);
   },
+  // componentWillMount: function(){
+  //   var business = this.props.business;
+  //   var imageUpload = business.get('image_upload');
+  //   this.setState({business: imageUpload})
+  // },
 
   handleInputChange: function(e) {
     e.preventDefault();
@@ -35,21 +45,15 @@ var RegistrationForm = React.createClass({
 
   handlePicture: function(e) {
     e.preventDefault();
+    var business = this.props.business;
     var attachedPicture = e.target.files[0];
     this.props.uploadPicture(attachedPicture);
-    this.setState({
-      attachedPicture : attachedPicture,
-    });
   },
 
   handleMenu: function(e) {
     e.preventDefault();
     var attachedMenu = e.target.files[0];
     this.props.uploadMenu(attachedMenu);
-    this.setState({
-      menu: attachedMenu
-    });
-    console.log(attachedMenu);
   },
 
   handleSubmit: function(e) {
@@ -58,6 +62,9 @@ var RegistrationForm = React.createClass({
     // console.log('SUBMIT', this.state);
   },
   render: function() {
+    var self = this;
+    var business = self.props.business;
+
     return (
       <div className="registration-container container-fluid">
 
@@ -109,12 +116,12 @@ var RegistrationForm = React.createClass({
                 <h4>Images Uploads</h4>
               </div>
               <div className="form-profile-pic col-md-6">
-                <div><img src={this.state.image_upload} width="300"/></div>
+                <div><img src={this.props.business.get('image_upload')} width="300"/></div>
                 <input type="text" id="uploaded_picture" placeholder="Header Picture Title"/><br/>
                 <input className="" onChange={this.handlePicture} type="file" id="profile-pic"/>
               </div>
               <div className="form-profile-pic col-md-6">
-                <div><img src={this.state.menu_upload} width="300"/></div>
+                <div><img src={this.props.business.get('menu_upload')} width="300"/></div>
                 <input type="text" id="uploaded_menu"placeholder="About Picture Title"/><br/>
                 <input className="" onChange={this.handleMenu} type="file" id="menu"/>
               </div>
@@ -237,6 +244,8 @@ var RegistrationContainer = React.createClass({
     file.set('data', picture);
     file.save().done(function(response) {
       localStorage.setItem('image_upload', response.url);
+      business.set('image_upload', response.url);
+      console.log(self.state);
     });
     this.setState({business: business});
   },
@@ -248,7 +257,7 @@ var RegistrationContainer = React.createClass({
     file.set('data', menu);
     file.save().done(function(response) {
       localStorage.setItem('menu_upload', response.url);
-      // business.set('menu_upload', response.url);
+      business.set('menu_upload', response.url);
     });
     this.setState({business: business});
   },

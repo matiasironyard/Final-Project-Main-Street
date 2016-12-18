@@ -1,6 +1,8 @@
 var Backbone = require('backbone');
 var Business = require('../components/authentication.jsx').AuthenticationContainer;
 var User = require('../parseUtilities.js').User;
+var React = require('react');
+
 
 /**************************************************************************************
 PARSE
@@ -156,6 +158,8 @@ var Business = ParseModel.extend ({
     divider: '',
     rating: '',
     price: '',
+    image_upload: '',
+    menu_upload: '',
     specials: new SpecialCollection(),
     appetizer: new AppetizerCollection(),
     breakfast: new BreakfastCollection(),
