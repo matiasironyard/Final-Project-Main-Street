@@ -59,8 +59,9 @@ var FavoritesMap = React.createClass({
       var lat = favorites.get('lat');
       var long = favorites.get('long');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
+  
       return (
-          <Marker onClick={self.onMarkerClick} visible={self.state.showingInfoWindow} key={favorites.cid} name={name} position={{lat: lat, lng: long}}>
+          <Marker onClick={self.onMarkerClick} visible={self.state.showingInfoWindow} key={favorites.cid} name={name} position={{lat: lat, lng: long}} >
             <InfoWindow
               marker={self.state.activeMarker}>
               <div>
@@ -148,6 +149,7 @@ var FavoriteListing = React.createClass({
   var lat = favorites.get('lat');
   var long = favorites.get('long');
   var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
+
     return (
       <div className ="restaurant-cards mdl-shadow--2dp col-md-2 col-sm-4 col-xs-5">
         <div className="material-icons mdl-badge mdl-badge--overlap pull-right" data-badge="♥"/>
@@ -155,7 +157,6 @@ var FavoriteListing = React.createClass({
           <a onClick={this.navigate}  className="individual-item"><img className="restaurant-card-img" height="100" width="100" src={favorites.get('image_url')}/></a>
           <p className="restaurant-card-name">{favorites.get('name')}</p>
           <span className="restaurant-card-category">{favorites.get('mainCategory')}</span>
-
           <div className="mdl-card__actions mdl-card--border">
             <a href={directions}>Directions</a>
           </div>
@@ -174,6 +175,7 @@ var Favorites = React.createClass({
     var self = this;
   // console.log('Favorties render', self.props.restaurants.length);
     var restaurants = self.props.restaurants;
+
     var favoritesList = restaurants.map(function(favorites){
     // console.log('2-map', favoritesList);
       return (
@@ -186,6 +188,7 @@ var Favorites = React.createClass({
       <div className="row">
         <div className="col-md-11 col-sm-11 col-sm-offset-1 col-xs-10 col-xs-offset-1">
             {favoritesList}
+
         </div>
       </div>
     )

@@ -370,7 +370,6 @@ var DetailView = React.createClass({
     var self = this;
     var restaurant = self.state.restaurant;
     var specials = restaurant.get('specials');
-    console.log('specials', specials);
     var appetizers = restaurant.get('appetizer');
     var breakfast = restaurant.get('breakfast');
     var lunch = restaurant.get('lunch');
@@ -383,7 +382,12 @@ var DetailView = React.createClass({
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = restaurant.get('phone');
-    console.log('phone', phone);
+    var isClosed = restaurant.get('is_open');
+    var isOpen = "";
+    console.log('closed', isClosed);
+    if(specials == 0) {
+      specialsDisplay = "row hidden";
+    }
     return (
       <div className="detailview-pane container">
         <div className="detailview-header col-md-12 col-sm-6">
@@ -488,26 +492,21 @@ var DetailView = React.createClass({
 var Reviews = React.createClass({
   getInitialState: function() {
     return {
-      reviews: undefined,
+      reviews: [],
     }
   },
 
-  componentWillMount: function(){
-      var reviews = this.props.restaurant.get('reviews');
-      this.setState({reviews: reviews})
-      console.log('pre yipi 2',this.state.reviews);
-  },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function(nextProps) {
   this.setState({
     reviews: nextProps.restaurant.get('reviews')
   });
+  console.log('will receive', this.state.reviews);
 },
 
 render: function(){
   var self = this;
   console.log('reviews render', this.state.reviews);
-  if (self.state.reviews) {
     var reviews = self.state.reviews.map(function(reviews){
       var imgUrl = reviews.user.image_url;
       var divStyle = {
@@ -529,7 +528,7 @@ render: function(){
       </li>
     )
   });
-}
+
   return (
     <ul className="detailview-reviews-ul mdl-list">
       {reviews}
@@ -564,6 +563,18 @@ var SingleViewContainer = React.createClass({
           self.setState({restaurant: restaurant})
         }).catch(function() {
         });
+        fetch("https://yelp-proxy-server.herokuapp.com/businesses?business=" +  id).then(function(response) {
+            return response.json();
+          }).then(function(data) {
+            var restaurantPictures=data.photos;
+            var isClosed = data.is_closed;
+            restaurant.set({
+              yelpPictures: restaurantPictures,
+              is_closed: data.is_closed,
+            })
+            self.setState({restaurant: restaurant})
+          }).catch(function() {
+          });
       this.setState({
         restaurant: restaurant,
       });
@@ -616,7 +627,6 @@ var SingleViewContainer = React.createClass({
     var dinner = this.state.restaurant.get('dinner');
     var desserts = this.state.restaurant.get('dessert');
     var reviews = this.state.restaurant.get('reviews');
-    console.log('parent reviews', reviews);
 
     return (
       <Template>
