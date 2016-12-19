@@ -15,8 +15,7 @@ var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
 var phoneFormatter = require('phone-formatter');
 var Modal = require('react-modal');
-
-
+var numeral = require('numeral');
 
 var router = require('../router').router;
 // var GoogleMaps = require('../models/business.js').GoogleMaps;
@@ -301,7 +300,7 @@ var DetailView = React.createClass({
   getInitialState: function() {
     return {
       restaurant: {},
-      // yelpPictures: [],
+      yelpPictures: [],
       modalIsOpen: false,
       modalIsOpen2: false,
     }
@@ -312,13 +311,12 @@ var DetailView = React.createClass({
       this.setState({restaurant: restaurant})
   },
 
-
 componentWillReceiveProps: function(nextProps) {
 this.setState({
   restaurant: nextProps.restaurant,
-  // yelpPictures: nextProps.restaurant,
+  yelpPictures: nextProps.restaurant.get('yelpPictures')
 });
-console.log('will receive pics', this.state);
+console.log('this state', this.state);
 },
 
   handleFavorite: function(e) {
@@ -370,13 +368,15 @@ console.log('will receive pics', this.state);
   render: function() {
     var self = this;
     var restaurant = self.state.restaurant;
-    console.log('restaurant', restaurant);
+    console.log('restaurant', this.props.restaurant);
     var specials = restaurant.get('specials');
     var appetizers = restaurant.get('appetizer');
     var breakfast = restaurant.get('breakfast');
     var lunch = restaurant.get('lunch');
     var dinner = restaurant.get('dinner');
     var desserts = restaurant.get('dessert');
+    var rating = restaurant.get('rating');
+    var price = restaurant.get('price');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
     var imgUrl = restaurant.get('image_upload');
     var divStyle = {
@@ -384,12 +384,25 @@ console.log('will receive pics', this.state);
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = restaurant.get('phone');
-    var isClosed = restaurant.get('is_open');
-    if(!isClosed) {
+    var isOpen = restaurant.get('is_open');
+    if(isOpen) {
       var isOpen = "We are open!";
     } else {
       var isOpen = "Sorry, we're closed!";
     }
+    var pictures = this.state.yelpPictures;
+    console.log('pics', pictures);
+
+    var yelpPictures = pictures.map(function(pics){
+      var imgUrl=pics;
+      var divStyle = {
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        height: '200',
+        backgroundImage: 'url(' + imgUrl + ')'
+      };
+      return <div key={pics} className="col-md-4" style={divStyle}/>
+    });
 
     return (
       <div className="detailview-pane container">
@@ -445,16 +458,29 @@ console.log('will receive pics', this.state);
                 {restaurant.get('mainCategory')}
               </h4>
             </div>
+            <div className="col-md-12 hidden-sm hidden-xs">
+              <div className="row">
+              {yelpPictures}
+              </div>
+            </div>
             <div className="detailview-header-info col-md-12">
-              <div className="detailview-open">
+              <div className="detailview-open col-md-2">
                 <i className="material-icons">access_time</i>
                 <span>{isOpen}</span>
               </div>
-              <div className="detailview-phone">
+              <div className="detailview-rating col-md-1">
+                <i className="material-icons">thumb_up</i>
+                <span>{rating}</span>
+              </div>
+              <div className="detailview-rating col-md-1">
+                <i className="material-icons">attach_money</i>
+                <span>{price}</span>
+              </div>
+              <div className="detailview-phone col-md-12">
                 <i className="material-icons">phone</i>
                 <a href={phone}>{phone}</a>
               </div>
-              <div className="detailview-address ">
+              <div className="detailview-address col-md-12">
                 <i className="material-icons">location_on</i>
                 <span>{restaurant.get('address')}</span>
                 <span>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</span>
@@ -574,17 +600,20 @@ var SingleViewContainer = React.createClass({
             return response.json();
           }).then(function(data) {
             var restaurantPictures=data.photos;
-            var isClosed = data.is_closed;
+            var hours = data.hours[0].open;
+            console.log('hours', hours);
+            var isOpen = data.hours[0].is_open_now;
             restaurant.set({
               yelpPictures: restaurantPictures,
-              is_closed: data.is_closed,
+              is_open: isOpen,
+              hours: hours,
             })
             self.setState({restaurant: restaurant})
           }).catch(function() {
           });
-      // this.setState({
-      //   restaurant: restaurant,
-      // });
+      this.setState({
+        restaurant: restaurant,
+      });
     });
   },
 
