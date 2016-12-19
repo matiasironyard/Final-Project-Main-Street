@@ -98,8 +98,6 @@ var MenuList = React.createClass({
       dessertsDisplay = "row hidden"
     }
 
-   console.log('display', breakfastDisplay);
-
     var appetizersListItems = this.props.appetizers.map(function(appetizer) {
 
       return (
@@ -303,6 +301,7 @@ var DetailView = React.createClass({
   getInitialState: function() {
     return {
       restaurant: {},
+      // yelpPictures: [],
       modalIsOpen: false,
       modalIsOpen2: false,
     }
@@ -311,13 +310,15 @@ var DetailView = React.createClass({
   componentWillMount: function(){
       var restaurant = this.props.restaurant;
       this.setState({restaurant: restaurant})
-      console.log('pre yipi',this.state);
   },
 
-  componentWillReceiveProps(nextProps) {
-  this.setState({
-    restaurant: nextProps.restaurant
-  });
+
+componentWillReceiveProps: function(nextProps) {
+this.setState({
+  restaurant: nextProps.restaurant,
+  // yelpPictures: nextProps.restaurant,
+});
+console.log('will receive pics', this.state);
 },
 
   handleFavorite: function(e) {
@@ -369,6 +370,7 @@ var DetailView = React.createClass({
   render: function() {
     var self = this;
     var restaurant = self.state.restaurant;
+    console.log('restaurant', restaurant);
     var specials = restaurant.get('specials');
     var appetizers = restaurant.get('appetizer');
     var breakfast = restaurant.get('breakfast');
@@ -383,11 +385,12 @@ var DetailView = React.createClass({
     };
     var phone = restaurant.get('phone');
     var isClosed = restaurant.get('is_open');
-    var isOpen = "";
-    console.log('closed', isClosed);
-    if(specials == 0) {
-      specialsDisplay = "row hidden";
+    if(!isClosed) {
+      var isOpen = "We are open!";
+    } else {
+      var isOpen = "Sorry, we're closed!";
     }
+
     return (
       <div className="detailview-pane container">
         <div className="detailview-header col-md-12 col-sm-6">
@@ -443,6 +446,10 @@ var DetailView = React.createClass({
               </h4>
             </div>
             <div className="detailview-header-info col-md-12">
+              <div className="detailview-open">
+                <i className="material-icons">access_time</i>
+                <span>{isOpen}</span>
+              </div>
               <div className="detailview-phone">
                 <i className="material-icons">phone</i>
                 <a href={phone}>{phone}</a>
@@ -466,6 +473,7 @@ var DetailView = React.createClass({
               <div className="mdl-card__supporting-text">
                 <p><img className="about-image" src= {restaurant.get('menu_upload')} width="150"/>{restaurant.get('description')}</p>
               </div>
+
             </div>
             <div className="detailview-aside-review mdl-card__actions mdl-card--border">
               <div className="mdl-card__title">
@@ -506,7 +514,6 @@ var Reviews = React.createClass({
 
 render: function(){
   var self = this;
-  console.log('reviews render', this.state.reviews);
     var reviews = self.state.reviews.map(function(reviews){
       var imgUrl = reviews.user.image_url;
       var divStyle = {
@@ -543,7 +550,7 @@ var SingleViewContainer = React.createClass({
       restaurant: new models.Business()
     }
   },
-  componentDidMount: function() {
+  componentWillMount: function() {
     var restaurant = this.state.restaurant;
     var restaurantId = this.props.businessId;
     if (!restaurantId) {
@@ -575,11 +582,18 @@ var SingleViewContainer = React.createClass({
             self.setState({restaurant: restaurant})
           }).catch(function() {
           });
-      this.setState({
-        restaurant: restaurant,
-      });
+      // this.setState({
+      //   restaurant: restaurant,
+      // });
     });
   },
+
+  // componentWillReceiveProps: function(nextProps) {
+  // this.setState({
+  //   restaurant: nextProps.restaurant,
+  // });
+  // console.log('will receive props', this.state);
+  // },
 
 
   setFavorite: function(favorite) {
@@ -627,6 +641,8 @@ var SingleViewContainer = React.createClass({
     var dinner = this.state.restaurant.get('dinner');
     var desserts = this.state.restaurant.get('dessert');
     var reviews = this.state.restaurant.get('reviews');
+    var yelpPictures = this.state.restaurant.get('yelpPictures');
+    console.log('this state', yelpPictures);
 
     return (
       <Template>
