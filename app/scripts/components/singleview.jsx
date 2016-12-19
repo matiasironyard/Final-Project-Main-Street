@@ -15,7 +15,7 @@ var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
 var phoneFormatter = require('phone-formatter');
 var Modal = require('react-modal');
-var numeral = require('numeral');
+var moment = require('moment');
 
 var router = require('../router').router;
 // var GoogleMaps = require('../models/business.js').GoogleMaps;
@@ -301,6 +301,7 @@ var DetailView = React.createClass({
     return {
       restaurant: {},
       yelpPictures: [],
+      operationalHours: [],
       modalIsOpen: false,
       modalIsOpen2: false,
     }
@@ -314,9 +315,9 @@ var DetailView = React.createClass({
 componentWillReceiveProps: function(nextProps) {
 this.setState({
   restaurant: nextProps.restaurant,
-  yelpPictures: nextProps.restaurant.get('yelpPictures')
+  yelpPictures: nextProps.restaurant.get('yelpPictures'),
+  operationalHours: nextProps.restaurant.get('hours'),
 });
-console.log('this state', this.state);
 },
 
   handleFavorite: function(e) {
@@ -403,6 +404,35 @@ console.log('this state', this.state);
       };
       return <div key={pics} className="col-md-4" style={divStyle}/>
     });
+    var hours = this.state.operationalHours;
+    var operationalHours = hours.map(function(hours){
+      var day = '';
+      if(hours.day == 0){
+        day = 'Monday'
+      } else if(hours.day == 1){
+        day = 'Tuesday'
+      } else if(hours.day == 2){
+        day = 'Wednesday'
+      } else if(hours.day == 3){
+        day = 'Thursday'
+      } else if(hours.day == 4){
+        day = 'Friday'
+      } else if(hours.day == 5){
+        day = 'Saturday'
+      } else if(hours.day == 6){
+        day = 'Sunday'
+      }
+      console.log('what', hours.start);
+      // var open = moment.utc(hours.start).format('HH:mm');
+      var open = hours.start.slice(0,-2) + ':' + hours.start.slice(-2);
+      var close = hours.end.slice(0,-2) + ':' + hours.end.slice(-2);
+      return (
+        <div key={hours.day} className="col-md-12">
+          <span>{day}: {open} - {close}</span>
+        </div>
+      )
+    });
+
 
     return (
       <div className="detailview-pane container">
@@ -482,7 +512,7 @@ console.log('this state', this.state);
               </div>
               <div className="detailview-address col-md-12">
                 <i className="material-icons">location_on</i>
-                <span>{restaurant.get('address')}</span>
+                <span>{restaurant.get('address')}, </span>
                 <span>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</span>
               </div>
             </div>
@@ -493,11 +523,19 @@ console.log('this state', this.state);
         <div className="col-md-5 col-sm-6 col-xs-12 detailview-aside mdl-shadow--4d">
           <div className="detailview-about">
             <div className="detailview-description">
-              <div className="mdl-card__title">
-                <h3 className="detailview-headers">About</h3>
+              <div className="detailview-open detailview-headers col-md-12">
+                <div className="col-md-12 mdl-card__title">
+                  <h4 className="detailview-headers">Business Hours</h4>
+                </div>
+                {operationalHours}
               </div>
-              <div className="mdl-card__supporting-text">
-                <p><img className="about-image" src= {restaurant.get('menu_upload')} width="150"/>{restaurant.get('description')}</p>
+              <div className="col-md-12">
+                <div className="mdl-card__title col-md-12">
+                  <h4 className="detailview-headers">About</h4>
+                </div>
+                <div className="mdl-card__supporting-text">
+                  <p><img className="about-image" src= {restaurant.get('menu_upload')} width="150"/>{restaurant.get('description')}</p>
+                </div>
               </div>
 
             </div>
@@ -601,7 +639,6 @@ var SingleViewContainer = React.createClass({
           }).then(function(data) {
             var restaurantPictures=data.photos;
             var hours = data.hours[0].open;
-            console.log('hours', hours);
             var isOpen = data.hours[0].is_open_now;
             restaurant.set({
               yelpPictures: restaurantPictures,
