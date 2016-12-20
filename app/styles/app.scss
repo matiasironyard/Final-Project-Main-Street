@@ -18,9 +18,11 @@ img {
 a:hover {
  cursor:pointer;
 }
+
 .container{
 // background-color: #FFFDE7;
 }
+
 .well{
   background-color: rgba(36, 44, 44, 0.9);
   text-transform: uppercase;
@@ -313,13 +315,40 @@ a:hover {
       .detailview-aside{
         color: #fff;
         margin-top: 30px;
+        font-size: 18px;
+        .info-window{
+          margin-top: 10px;
+          padding-top: 10px;
+          color: #424242;
+        }
+        .info-text{
+          font-size: 16px;
+          .open{
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+          .bold{
+            font-weight: bold;
+          }
+          .hours{
+            margin-top: 5px;
+          }
+        }
         .detailview-headers{
           text-transform: uppercase;
           font-weight: bold;
+          font-size: 25px;
           color: #424242;
+          border-bottom: 2px solid #616161;
+          padding-bottom: 15px;
         }
         .detailview-about{
           background-color: #FFAB40;
+          .mdl-chip--contact{
+            margin: 5px;
+          }
           .about-image{
             float: left;
             padding: 10px;
@@ -350,8 +379,9 @@ a:hover {
           }
         }
 
-        .detailview-location-pane{
+        .location-map{
           margin-top: 30px;
+          margin-bottom: 30px;
         }
       }
     }

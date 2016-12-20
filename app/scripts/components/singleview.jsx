@@ -399,7 +399,7 @@ this.setState({
       var divStyle = {
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        height: '200',
+        height: '250',
         backgroundImage: 'url(' + imgUrl + ')'
       };
       return <div key={pics} className="col-md-4" style={divStyle}/>
@@ -422,13 +422,12 @@ this.setState({
       } else if(hours.day == 6){
         day = 'Sunday'
       }
-      console.log('what', hours.start);
-      // var open = moment.utc(hours.start).format('HH:mm');
       var open = hours.start.slice(0,-2) + ':' + hours.start.slice(-2);
       var close = hours.end.slice(0,-2) + ':' + hours.end.slice(-2);
       return (
-        <div key={hours.day} className="col-md-12">
-          <span>{day}: {open} - {close}</span>
+        <div key={hours.day} className="hours  col-md-12">
+          <div className="col-md-3">{day}:</div>
+          <div className="col-md-8">{open} - {close}</div>
         </div>
       )
     });
@@ -493,62 +492,56 @@ this.setState({
               {yelpPictures}
               </div>
             </div>
-            <div className="detailview-header-info col-md-12">
-              <div className="detailview-open col-md-2">
-                <i className="material-icons">access_time</i>
-                <span>{isOpen}</span>
-              </div>
-              <div className="detailview-rating col-md-1">
-                <i className="material-icons">thumb_up</i>
-                <span>{rating}</span>
-              </div>
-              <div className="detailview-rating col-md-1">
-                <i className="material-icons">attach_money</i>
-                <span>{price}</span>
-              </div>
-              <div className="detailview-phone col-md-12">
-                <i className="material-icons">phone</i>
-                <a href={phone}>{phone}</a>
-              </div>
-              <div className="detailview-address col-md-12">
-                <i className="material-icons">location_on</i>
-                <span>{restaurant.get('address')}, </span>
-                <span>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</span>
-              </div>
-            </div>
-            <RestaurantMap restaurant={this.props.restaurant} />
           </div>
         </div>
 
-        <div className="col-md-5 col-sm-6 col-xs-12 detailview-aside mdl-shadow--4d">
+        <div className="col-md-5 col-sm-6 col-xs-12 detailview-aside">
           <div className="detailview-about">
             <div className="detailview-description">
-              <div className="detailview-open detailview-headers col-md-12">
-                <div className="col-md-12 mdl-card__title">
-                  <h4 className="detailview-headers">Business Hours</h4>
-                </div>
-                {operationalHours}
-              </div>
-              <div className="col-md-12">
                 <div className="mdl-card__title col-md-12">
-                  <h4 className="detailview-headers">About</h4>
+                  <div className="detailview-headers col-md-11">About</div>
                 </div>
-                <div className="mdl-card__supporting-text">
+                <div className="description info-window col-md-12">
                   <p><img className="about-image" src= {restaurant.get('menu_upload')} width="150"/>{restaurant.get('description')}</p>
                 </div>
-              </div>
-
             </div>
-            <div className="detailview-aside-review mdl-card__actions mdl-card--border">
+            <div className="mdl-card__title col-md-12">
+              <div className="detailview-headers col-md-11">Information</div>
+            </div>
+            <div className="quick-info info-window info-text col-md-12">
+              <div className="open">{isOpen}</div>
+              <div><span className="bold">Rating: </span>{rating}</div>
+              <div><span className="bold">Price: </span>{price}</div>
+            </div>
+
+            <div className="business-hours info-window info-text row">
+              {operationalHours}
+            </div>
+
+            <div className="location info-window info-text col-md-12">
+              <div className="bold">Location</div>
+              <div>{phone}</div>
+              <div>{restaurant.get('address')}, </div>
+              <div>
+                <span>{restaurant.get('city')}, {restaurant.get('state')}, {restaurant.get('zip')}</span>
+              </div>
+              <div className="location-map row">
+                <RestaurantMap restaurant={this.props.restaurant} />
+              </div>
+            </div>
+
+            <div className="detailview-aside-review info-window">
               <div className="mdl-card__title">
-                <h3 className="detailview-headers">Reviews</h3>
+                <div className="detailview-headers col-md-11 col-md-11">Reviews</div>
               </div>
               <Reviews restaurant={this.props.restaurant} />
             </div>
           </div>
           <div className="detailview-location-pane">
           </div>
+
         </div>
+
         <div className="menu-pane col-md-7 col-sm-12 col-xs-12">
           <div className="detailview-menu-header col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mdl-shadow--2d">
             <h1>Menu</h1>
