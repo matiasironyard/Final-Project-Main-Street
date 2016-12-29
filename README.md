@@ -1,11 +1,16 @@
 # IN THE MOOD
 ### @ Greenville
-
 #### By Matias Mariani
 
 ---
 
-Check out IN THE MOOD, **[HERE!](https://matiasironyard.github.io/Final-Project-Main-Street/)**.
+[CODE](https://github.com/matiasironyard/Final-Project-Main-Street/blob/master/README.md)
+[DEMO](https://matiasironyard.github.io/Final-Project-Main-Street/)
+
+----------
+
+> **Project Timeline**
+> Week 9-12 of 12
 
 What is it?
 
