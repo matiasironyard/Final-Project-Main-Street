@@ -1280,9 +1280,6 @@ var Modal = require('react-modal');
 // https://github.com/graysonhicks/parkary/blob/master/app/scripts/components/mapview/dynamicmap.jsx
 
 
-console.log(Modal);
-
-// var FavoriteCollection = require('../models/business.js').FavoriteCollection
 var FavoritesMap = React.createClass({displayName: "FavoritesMap",
   getInitialState: function(){
 
@@ -1311,12 +1308,12 @@ var FavoritesMap = React.createClass({displayName: "FavoritesMap",
     var center = self.state.center;
     var zoom = self.state.zoom;
     var restaurants= self.props.restaurants;
-    console.log(restaurants);
     var labelInfo= restaurants.map(function(favorites){
       var name = favorites.get('name');
       var lat = favorites.get('lat');
       var long = favorites.get('long');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
+
       return (
           React.createElement(Marker, {onClick: self.onMarkerClick, visible: self.state.showingInfoWindow, key: favorites.cid, name: name, position: {lat: lat, lng: long}}, 
             React.createElement(InfoWindow, {
@@ -1406,6 +1403,7 @@ var FavoriteListing = React.createClass({displayName: "FavoriteListing",
   var lat = favorites.get('lat');
   var long = favorites.get('long');
   var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
+
     return (
       React.createElement("div", {className: "restaurant-cards mdl-shadow--2dp col-md-2 col-sm-4 col-xs-5"}, 
         React.createElement("div", {className: "material-icons mdl-badge mdl-badge--overlap pull-right", "data-badge": "♥"}), 
@@ -1413,7 +1411,6 @@ var FavoriteListing = React.createClass({displayName: "FavoriteListing",
           React.createElement("a", {onClick: this.navigate, className: "individual-item"}, React.createElement("img", {className: "restaurant-card-img", height: "100", width: "100", src: favorites.get('image_url')})), 
           React.createElement("p", {className: "restaurant-card-name"}, favorites.get('name')), 
           React.createElement("span", {className: "restaurant-card-category"}, favorites.get('mainCategory')), 
-
           React.createElement("div", {className: "mdl-card__actions mdl-card--border"}, 
             React.createElement("a", {href: directions}, "Directions")
           )
@@ -1432,6 +1429,7 @@ var Favorites = React.createClass({displayName: "Favorites",
     var self = this;
   // console.log('Favorties render', self.props.restaurants.length);
     var restaurants = self.props.restaurants;
+
     var favoritesList = restaurants.map(function(favorites){
     // console.log('2-map', favoritesList);
       return (
@@ -1444,6 +1442,7 @@ var Favorites = React.createClass({displayName: "Favorites",
       React.createElement("div", {className: "row"}, 
         React.createElement("div", {className: "col-md-11 col-sm-11 col-sm-offset-1 col-xs-10 col-xs-offset-1"}, 
             favoritesList
+
         )
       )
     )
@@ -2087,8 +2086,7 @@ var Marker = google.Marker;
 var InfoWindow = google.InfoWindow;
 var phoneFormatter = require('phone-formatter');
 var Modal = require('react-modal');
-
-
+var moment = require('moment');
 
 var router = require('../router').router;
 // var GoogleMaps = require('../models/business.js').GoogleMaps;
@@ -2169,8 +2167,6 @@ var MenuList = React.createClass({displayName: "MenuList",
     if(desserts == 0){
       dessertsDisplay = "row hidden"
     }
-
-   console.log('display', breakfastDisplay);
 
     var appetizersListItems = this.props.appetizers.map(function(appetizer) {
 
@@ -2375,6 +2371,8 @@ var DetailView = React.createClass({displayName: "DetailView",
   getInitialState: function() {
     return {
       restaurant: {},
+      yelpPictures: [],
+      operationalHours: [],
       modalIsOpen: false,
       modalIsOpen2: false,
     }
@@ -2383,13 +2381,14 @@ var DetailView = React.createClass({displayName: "DetailView",
   componentWillMount: function(){
       var restaurant = this.props.restaurant;
       this.setState({restaurant: restaurant})
-      console.log('pre yipi',this.state);
   },
 
-  componentWillReceiveProps(nextProps) {
-  this.setState({
-    restaurant: nextProps.restaurant
-  });
+componentWillReceiveProps: function(nextProps) {
+this.setState({
+  restaurant: nextProps.restaurant,
+  yelpPictures: nextProps.restaurant.get('yelpPictures'),
+  operationalHours: nextProps.restaurant.get('hours'),
+});
 },
 
   handleFavorite: function(e) {
@@ -2441,13 +2440,15 @@ var DetailView = React.createClass({displayName: "DetailView",
   render: function() {
     var self = this;
     var restaurant = self.state.restaurant;
+    console.log('restaurant', this.props.restaurant);
     var specials = restaurant.get('specials');
-    console.log('specials', specials);
     var appetizers = restaurant.get('appetizer');
     var breakfast = restaurant.get('breakfast');
     var lunch = restaurant.get('lunch');
     var dinner = restaurant.get('dinner');
     var desserts = restaurant.get('dessert');
+    var rating = restaurant.get('rating');
+    var price = restaurant.get('price');
     var geolocation = restaurant.get('lat') + ',' + restaurant.get('long');
     var imgUrl = restaurant.get('image_upload');
     var divStyle = {
@@ -2455,7 +2456,54 @@ var DetailView = React.createClass({displayName: "DetailView",
       backgroundImage: 'url(' + imgUrl + ')'
     };
     var phone = restaurant.get('phone');
-    console.log('phone', phone);
+    var isOpen = restaurant.get('is_open');
+    if(isOpen) {
+      var isOpen = "We are open!";
+    } else {
+      var isOpen = "Sorry, we're closed!";
+    }
+    var pictures = this.state.yelpPictures;
+    console.log('pics', pictures);
+
+    var yelpPictures = pictures.map(function(pics){
+      var imgUrl=pics;
+      var divStyle = {
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        height: '250',
+        backgroundImage: 'url(' + imgUrl + ')'
+      };
+      return React.createElement("div", {key: pics, className: "col-md-4", style: divStyle})
+    });
+    var hours = this.state.operationalHours;
+    var operationalHours = hours.map(function(hours){
+      var day = '';
+      if(hours.day == 0){
+        day = 'Monday'
+      } else if(hours.day == 1){
+        day = 'Tuesday'
+      } else if(hours.day == 2){
+        day = 'Wednesday'
+      } else if(hours.day == 3){
+        day = 'Thursday'
+      } else if(hours.day == 4){
+        day = 'Friday'
+      } else if(hours.day == 5){
+        day = 'Saturday'
+      } else if(hours.day == 6){
+        day = 'Sunday'
+      }
+      var open = hours.start.slice(0,-2) + ':' + hours.start.slice(-2);
+      var close = hours.end.slice(0,-2) + ':' + hours.end.slice(-2);
+      return (
+        React.createElement("div", {key: hours.day, className: "hours  col-md-12"}, 
+          React.createElement("div", {className: "col-md-3"}, day, ":"), 
+          React.createElement("div", {className: "col-md-8"}, open, " - ", close)
+        )
+      )
+    });
+
+
     return (
       React.createElement("div", {className: "detailview-pane container"}, 
         React.createElement("div", {className: "detailview-header col-md-12 col-sm-6"}, 
@@ -2510,41 +2558,61 @@ var DetailView = React.createClass({displayName: "DetailView",
                 restaurant.get('mainCategory')
               )
             ), 
-            React.createElement("div", {className: "detailview-header-info col-md-12"}, 
-              React.createElement("div", {className: "detailview-phone"}, 
-                React.createElement("i", {className: "material-icons"}, "phone"), 
-                React.createElement("a", {href: phone}, phone)
-              ), 
-              React.createElement("div", {className: "detailview-address "}, 
-                React.createElement("i", {className: "material-icons"}, "location_on"), 
-                React.createElement("span", null, restaurant.get('address')), 
-                React.createElement("span", null, restaurant.get('city'), ", ", restaurant.get('state'), ", ", restaurant.get('zip'))
+            React.createElement("div", {className: "col-md-12 hidden-sm hidden-xs"}, 
+              React.createElement("div", {className: "row"}, 
+              yelpPictures
               )
-            ), 
-            React.createElement(RestaurantMap, {restaurant: this.props.restaurant})
+            )
           )
         ), 
 
-        React.createElement("div", {className: "col-md-5 col-sm-6 col-xs-12 detailview-aside mdl-shadow--4d"}, 
+        React.createElement("div", {className: "col-md-5 col-sm-6 col-xs-12 detailview-aside"}, 
           React.createElement("div", {className: "detailview-about"}, 
             React.createElement("div", {className: "detailview-description"}, 
-              React.createElement("div", {className: "mdl-card__title"}, 
-                React.createElement("h3", {className: "detailview-headers"}, "About")
+                React.createElement("div", {className: "mdl-card__title col-md-12"}, 
+                  React.createElement("div", {className: "detailview-headers col-md-11"}, "About")
+                ), 
+                React.createElement("div", {className: "description info-window col-md-12"}, 
+                  React.createElement("p", null, React.createElement("img", {className: "about-image", src: restaurant.get('menu_upload'), width: "150"}), restaurant.get('description'))
+                )
+            ), 
+            React.createElement("div", {className: "mdl-card__title col-md-12"}, 
+              React.createElement("div", {className: "detailview-headers col-md-11"}, "Information")
+            ), 
+            React.createElement("div", {className: "quick-info info-window info-text col-md-12"}, 
+              React.createElement("div", {className: "open"}, isOpen), 
+              React.createElement("div", null, React.createElement("span", {className: "bold"}, "Rating: "), rating), 
+              React.createElement("div", null, React.createElement("span", {className: "bold"}, "Price: "), price)
+            ), 
+
+            React.createElement("div", {className: "business-hours info-window info-text row"}, 
+              operationalHours
+            ), 
+
+            React.createElement("div", {className: "location info-window info-text col-md-12"}, 
+              React.createElement("div", {className: "bold"}, "Location"), 
+              React.createElement("div", null, phone), 
+              React.createElement("div", null, restaurant.get('address'), ", "), 
+              React.createElement("div", null, 
+                React.createElement("span", null, restaurant.get('city'), ", ", restaurant.get('state'), ", ", restaurant.get('zip'))
               ), 
-              React.createElement("div", {className: "mdl-card__supporting-text"}, 
-                React.createElement("p", null, React.createElement("img", {className: "about-image", src: restaurant.get('menu_upload'), width: "150"}), restaurant.get('description'))
+              React.createElement("div", {className: "location-map row"}, 
+                React.createElement(RestaurantMap, {restaurant: this.props.restaurant})
               )
             ), 
-            React.createElement("div", {className: "detailview-aside-review mdl-card__actions mdl-card--border"}, 
+
+            React.createElement("div", {className: "detailview-aside-review info-window"}, 
               React.createElement("div", {className: "mdl-card__title"}, 
-                React.createElement("h3", {className: "detailview-headers"}, "Reviews")
+                React.createElement("div", {className: "detailview-headers col-md-11 col-md-11"}, "Reviews")
               ), 
               React.createElement(Reviews, {restaurant: this.props.restaurant})
             )
           ), 
           React.createElement("div", {className: "detailview-location-pane"}
           )
+
         ), 
+
         React.createElement("div", {className: "menu-pane col-md-7 col-sm-12 col-xs-12"}, 
           React.createElement("div", {className: "detailview-menu-header col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mdl-shadow--2d"}, 
             React.createElement("h1", null, "Menu")
@@ -2560,26 +2628,20 @@ var DetailView = React.createClass({displayName: "DetailView",
 var Reviews = React.createClass({displayName: "Reviews",
   getInitialState: function() {
     return {
-      reviews: undefined,
+      reviews: [],
     }
   },
 
-  componentWillMount: function(){
-      var reviews = this.props.restaurant.get('reviews');
-      this.setState({reviews: reviews})
-      console.log('pre yipi 2',this.state.reviews);
-  },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function(nextProps) {
   this.setState({
     reviews: nextProps.restaurant.get('reviews')
   });
+  console.log('will receive', this.state.reviews);
 },
 
 render: function(){
   var self = this;
-  console.log('reviews render', this.state.reviews);
-  if (self.state.reviews) {
     var reviews = self.state.reviews.map(function(reviews){
       var imgUrl = reviews.user.image_url;
       var divStyle = {
@@ -2601,7 +2663,7 @@ render: function(){
       )
     )
   });
-}
+
   return (
     React.createElement("ul", {className: "detailview-reviews-ul mdl-list"}, 
       reviews
@@ -2616,7 +2678,7 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
       restaurant: new models.Business()
     }
   },
-  componentDidMount: function() {
+  componentWillMount: function() {
     var restaurant = this.state.restaurant;
     var restaurantId = this.props.businessId;
     if (!restaurantId) {
@@ -2636,11 +2698,32 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
           self.setState({restaurant: restaurant})
         }).catch(function() {
         });
+        fetch("https://yelp-proxy-server.herokuapp.com/businesses?business=" +  id).then(function(response) {
+            return response.json();
+          }).then(function(data) {
+            var restaurantPictures=data.photos;
+            var hours = data.hours[0].open;
+            var isOpen = data.hours[0].is_open_now;
+            restaurant.set({
+              yelpPictures: restaurantPictures,
+              is_open: isOpen,
+              hours: hours,
+            })
+            self.setState({restaurant: restaurant})
+          }).catch(function() {
+          });
       this.setState({
         restaurant: restaurant,
       });
     });
   },
+
+  // componentWillReceiveProps: function(nextProps) {
+  // this.setState({
+  //   restaurant: nextProps.restaurant,
+  // });
+  // console.log('will receive props', this.state);
+  // },
 
 
   setFavorite: function(favorite) {
@@ -2688,7 +2771,8 @@ var SingleViewContainer = React.createClass({displayName: "SingleViewContainer",
     var dinner = this.state.restaurant.get('dinner');
     var desserts = this.state.restaurant.get('dessert');
     var reviews = this.state.restaurant.get('reviews');
-    console.log('parent reviews', reviews);
+    var yelpPictures = this.state.restaurant.get('yelpPictures');
+    console.log('this state', yelpPictures);
 
     return (
       React.createElement(Template, null, 
@@ -2706,7 +2790,7 @@ module.exports = {
   SingleViewContainer: SingleViewContainer
 };
 
-},{"../models/business":14,"../parseUtilities":16,"../router":17,"../templates/templates.jsx":19,"./favorites.jsx":7,"backbone":21,"backbone-react-component":20,"jquery":58,"phone-formatter":83,"react":276,"react-google-maps":128,"react-google-maps/lib/async/ScriptjsLoader":104,"react-modal":145}],12:[function(require,module,exports){
+},{"../models/business":14,"../parseUtilities":16,"../router":17,"../templates/templates.jsx":19,"./favorites.jsx":7,"backbone":21,"backbone-react-component":20,"jquery":58,"moment":72,"phone-formatter":83,"react":276,"react-google-maps":128,"react-google-maps/lib/async/ScriptjsLoader":104,"react-modal":145}],12:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
@@ -3160,19 +3244,18 @@ BUSEINESS MODELS & COLLECTIONS
 var Business = ParseModel.extend ({
   defaults: {
     id: '',
-    name: '',
+    name: 'name',
     subCategory: 'no subcategory',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
+    phone: '(800) 123-4567',
+    address: '100 Main St.',
+    city: 'Greenville',
+    state: 'S.c',
+    zip: '29307',
     image_url: '',
     rating_img_url: '',
-    is_closed: '',
-    divider: '',
+    is_closed: 'true',
     rating: '',
-    price: '',
+    price: '$',
     image_upload: '',
     menu_upload: '',
     specials: new SpecialCollection(),
@@ -21577,7 +21660,7 @@ module.exports = restParam;
 
 },{"charenc":24,"crypt":25,"is-buffer":56}],72:[function(require,module,exports){
 //! moment.js
-//! version : 2.17.0
+//! version : 2.17.1
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -25842,7 +25925,7 @@ addParseToken('x', function (input, array, config) {
 // Side effect imports
 
 
-hooks.version = '2.17.0';
+hooks.version = '2.17.1';
 
 setHookCallback(createLocal);
 

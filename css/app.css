@@ -5963,13 +5963,34 @@ a:hover {
       text-transform: uppercase; }
   .detail-view-container .detail-view-row .detailview-pane .detailview-aside {
     color: #fff;
-    margin-top: 30px; }
+    margin-top: 30px;
+    font-size: 18px; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-aside .info-window {
+      margin-top: 10px;
+      padding-top: 10px;
+      color: #424242; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-aside .info-text {
+      font-size: 16px; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-aside .info-text .open {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 10px;
+        margin-bottom: 10px; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-aside .info-text .bold {
+        font-weight: bold; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-aside .info-text .hours {
+        margin-top: 5px; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-headers {
       text-transform: uppercase;
       font-weight: bold;
-      color: #424242; }
+      font-size: 25px;
+      color: #424242;
+      border-bottom: 2px solid #616161;
+      padding-bottom: 15px; }
     .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about {
       background-color: #FFAB40; }
+      .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .mdl-chip--contact {
+        margin: 5px; }
       .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .about-image {
         float: left;
         padding: 10px;
@@ -5989,8 +6010,9 @@ a:hover {
             .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-about .detailview-aside-review .detailview-reviews-ul .detailview-reviews-li .detailview-reviews-text span {
               display: inline-block;
               padding-top: 5px; }
-    .detail-view-container .detail-view-row .detailview-pane .detailview-aside .detailview-location-pane {
-      margin-top: 30px; }
+    .detail-view-container .detail-view-row .detailview-pane .detailview-aside .location-map {
+      margin-top: 30px;
+      margin-bottom: 30px; }
 
 .detailview-menu-list {
   margin-bottom: 30px;
