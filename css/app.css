@@ -6036,6 +6036,34 @@ a:hover {
       line-height: 35px;
       border-bottom: 1px solid #EEEEEE; }
 
+.landing {
+  background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
+  background-size: cover;
+  height: 800px; }
+  .landing h3 {
+    text-transform: uppercase;
+    font-weight: bold; }
+  .landing .landing-pane {
+    background-color: #fff;
+    padding-bottom: 30px;
+    position: relative;
+    top: 10%; }
+    .landing .landing-pane .call-to-action-1 {
+      font-size: 15px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-top: 1px solid #424242; }
+    .landing .landing-pane .call-to-action-2 {
+      font-size: 15px;
+      padding-top: 15px; }
+    .landing .landing-pane .call-to-action-3 {
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #FFAB40;
+      padding-top: 25px;
+      padding-bottom: 25px; }
+
 .signup-container {
   background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
   background-size: cover; }
@@ -6058,7 +6086,8 @@ a:hover {
 
 .login-container {
   background-image: url("https://static1.squarespace.com/static/52b89e37e4b029ce89f7720d/t/55fafdc2e4b0ce4699685f90/1442512324850/bigstock-Coffee-Shop-Blur-Background-Wi-74331850.jpg?format=2500w");
-  background-size: cover; }
+  background-size: cover;
+  height: 800px; }
   .login-container .login {
     background-color: #fff;
     margin-top: 10%;
