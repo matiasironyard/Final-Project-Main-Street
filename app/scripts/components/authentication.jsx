@@ -119,9 +119,9 @@ var SignUpComponent = React.createClass({
                         <span className="login-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
                     </div>
                     <h3>We make it easy</h3>
-                    <p>5 minutes. Yes, that s all it will take to create your business profile. We want to help you get up and going fast, so that you get back to business!</p>
+                    <p>5 minutes. Yes, that's all it will take to create your restaurant's profile. We want to help you get up and going fast, so that you get back to creating awesome dishes!</p>
                     <div className="mdl-card__actions mdl-card--border">
-                      <p>If you are a business owner, please enter your business phone number. We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.</p>
+                      <p>If you are a business owner, please enter your business phone number (area code and number without dashes, spaces, or parentheses). We will use your number to get your business information from Yelp. Make sure to use the number that appears in Yelp.</p>
                     </div>
                     <input onChange={this.handlePhone} value={this.state.phone} className= "mdl-textfield__input" name="phone" id="phone" type="text" placeholder="Your business phone number please..." />
                       <button type="button" className="btn btn-warning pull-right"onClick={this.closeModal}><i className="material-icons">thumb_up</i></button>

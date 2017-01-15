@@ -7,6 +7,7 @@ console.log('hi');
 /* COMPONENT IMPORTS BELOW */
 var setupParse= require('./parseUtilities').setupParse;
 var User = require('./parseUtilities').User;
+var LandingContainer = require('./components/landing.jsx').LandingContainer;
 var AuthenticationContainer = require('./components/authentication.jsx').AuthenticationContainer;
 var LogInContainer = require('./components/login.jsx').LogInContainer;
 var RegistrationContainer = require('./components/registration.jsx').RegistrationContainer;
@@ -27,6 +28,7 @@ var AppRouter = Backbone.Router.extend({
     // 'template/': 'template',
     'dashboard/': 'dashboard',
     'registration/': 'registration',
+    'authentication/': 'authentication',
     'login/': 'login',
   },
 
@@ -49,7 +51,14 @@ var AppRouter = Backbone.Router.extend({
 
   index: function(){
     ReactDOM.render(
-      React.createElement(AuthenticationContainer,  {router: this}),
+      React.createElement(LandingContainer,  {router: this}),
+      document.getElementById('app')
+    );
+  },
+
+  authentication: function(){
+    ReactDOM.render(
+      React.createElement(AuthenticationContainer, {router: this}),
       document.getElementById('app')
     );
   },

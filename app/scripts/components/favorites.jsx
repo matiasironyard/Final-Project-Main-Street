@@ -22,9 +22,6 @@ var Modal = require('react-modal');
 // https://github.com/graysonhicks/parkary/blob/master/app/scripts/components/mapview/dynamicmap.jsx
 
 
-console.log(Modal);
-
-// var FavoriteCollection = require('../models/business.js').FavoriteCollection
 var FavoritesMap = React.createClass({
   getInitialState: function(){
 
@@ -53,13 +50,12 @@ var FavoritesMap = React.createClass({
     var center = self.state.center;
     var zoom = self.state.zoom;
     var restaurants= self.props.restaurants;
-    console.log(restaurants);
     var labelInfo= restaurants.map(function(favorites){
       var name = favorites.get('name');
       var lat = favorites.get('lat');
       var long = favorites.get('long');
       var directions = 'https://www.google.com/maps/dir//'+lat+ ',' + long;
-  
+
       return (
           <Marker onClick={self.onMarkerClick} visible={self.state.showingInfoWindow} key={favorites.cid} name={name} position={{lat: lat, lng: long}} >
             <InfoWindow
