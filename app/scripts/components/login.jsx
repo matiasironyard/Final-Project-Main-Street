@@ -97,10 +97,9 @@ var LogInContainer = React.createClass({
         username: logMeIn.username
       });
       // User.login(username, password).then(function(response){
-    $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
-      console.log('response', response)
+    $.ajax('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
+
       var objectId = response.objectId;
-      console.log(objectId);
       var JSONdata = JSON.stringify(response);
       // localStorage.setItem('local storage user', response);
       localStorage.setItem('username', response.username);
