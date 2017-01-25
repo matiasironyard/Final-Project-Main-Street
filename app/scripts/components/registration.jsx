@@ -104,7 +104,7 @@ var RegistrationForm = React.createClass({
             <div className="registration-description row">
               <div className="registration-description col-md-12 col-sm-11 col-xs-11">
                 <h4>About {this.state.name} </h4>
-                <p>Tell your patrions about your business</p>
+                <p>Tell your patrons about your business.</p>
                 <div className="form-input-div mdl-js-textfield mdl-textfield--floating-label">
                   <textarea onChange={this.handleInputChange} name="description" value={this.state.description} type="text" className="mdl-textfield__input" id="business-name" placeholder="Enter a short business description"/>
                 </div>
@@ -155,17 +155,12 @@ var RegistrationContainer = React.createClass({
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response) {
-          console.log('response', response.businesses[0]);
-          console.log('categories', response.businesses[0].categories[0]);
           var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0].title : "no main category from Yelp";
           var subcategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0].alias : "no subcategory from Yelp";
           var open = response.businesses[0].is_closed ? response.businesses[0].is_closed = false : "currently open";
-          console.log('open:', open);
           var business = new models.Business();
           var data = response.businesses[0];
-          console.log('photos', data);
           var phone = phoneFormatter.format(data.phone.slice(2),  "(NNN) NNN-NNNN");
-          console.log('phone', phone);
           business.set({
               name: data.name,
               id: data.id,

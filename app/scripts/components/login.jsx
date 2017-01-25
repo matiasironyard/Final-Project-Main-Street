@@ -50,7 +50,7 @@ var LoginComponent = React.createClass({
   render: function() {
     return (
     <div className="login-container container-fluid">
-      <div className="login mdl-shadow--8dp col-md-4 col-md-offset-4">
+      <div className="login mdl-shadow--8dp col-md-4 col-md-offset-4 col-sm-5 col-sm-offset-3 col-xs-12">
         <div className="login-headers row">
         {/*<div className="nav-header-img col-md-2"/>*/}
             <span className="login-header-1">In The</span>
@@ -58,6 +58,7 @@ var LoginComponent = React.createClass({
         </div>
         <h2 className="login-subheader">Please Login</h2>
         <div className="msg"></div>
+        <div id="loading"></div>
         <form className="col-md-12"onSubmit={this.handleLogMeIn} id="login">
           <span className="error"></span>
           <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -80,7 +81,6 @@ var LoginComponent = React.createClass({
 });
 
 var LogInContainer = React.createClass({
-
   getInitialState: function() {
     return {
       username: ''
@@ -124,12 +124,10 @@ var LogInContainer = React.createClass({
     //     }
     //   });
     // });
-
     $.ajax({
       url: 'https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password,
-      timeout: 3000,
       success: function(response){
-        console.log("all good");
+        $('#loading').append('<div  id="mdl-spinner mdl-js-spinner is-active"></div>');
         var objectId = response.objectId;
         var JSONdata = JSON.stringify(response);
         // localStorage.setItem('local storage user', response);
@@ -159,7 +157,8 @@ var LogInContainer = React.createClass({
         $('.msg').html('<h6 id="container">Your credentials were wrong. Please try again.</h6>');
         setTimeout(function () {
           $('.msg').remove();
-        }, 4000);
+          location.reload();
+        }, 3000);
       }
     });
   },
