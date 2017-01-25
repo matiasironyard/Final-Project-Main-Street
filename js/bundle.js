@@ -1603,13 +1603,15 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
   render: function() {
     return (
     React.createElement("div", {className: "login-container container-fluid"}, 
-      React.createElement("div", {className: "login mdl-shadow--8dp col-md-4 col-md-offset-4"}, 
+      React.createElement("div", {className: "login mdl-shadow--8dp col-md-4 col-md-offset-4 col-sm-5 col-sm-offset-3 col-xs-12"}, 
         React.createElement("div", {className: "login-headers row"}, 
         /*<div className="nav-header-img col-md-2"/>*/
             React.createElement("span", {className: "login-header-1"}, "In The"), 
             React.createElement("span", {className: "login-header-2"}, " Mood", React.createElement("i", {className: "material-icons"}, "restaurant_menu"))
         ), 
         React.createElement("h2", {className: "login-subheader"}, "Please Login"), 
+        React.createElement("div", {className: "msg"}), 
+        React.createElement("div", {id: "loading"}), 
         React.createElement("form", {className: "col-md-12", onSubmit: this.handleLogMeIn, id: "login"}, 
           React.createElement("span", {className: "error"}), 
           React.createElement("div", {className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"}, 
@@ -1632,7 +1634,6 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
 });
 
 var LogInContainer = React.createClass({displayName: "LogInContainer",
-
   getInitialState: function() {
     return {
       username: ''
@@ -1650,33 +1651,68 @@ var LogInContainer = React.createClass({displayName: "LogInContainer",
         username: logMeIn.username
       });
       // User.login(username, password).then(function(response){
-    $.get('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
-      console.log('response', response)
-      var objectId = response.objectId;
-      console.log(objectId);
-      var JSONdata = JSON.stringify(response);
-      // localStorage.setItem('local storage user', response);
-      localStorage.setItem('username', response.username);
-      // localStorage.setItem('token', response.sessionToken);
-      // localStorage.setItem('objectID', response.objectId);
-      localStorage.setItem('phone', response.phone);
-      localStorage.setItem('user', JSONdata);
+    // $.ajax('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
+    //   var objectId = response.objectId;
+    //   var JSONdata = JSON.stringify(response);
+    //   // localStorage.setItem('local storage user', response);
+    //   localStorage.setItem('username', response.username);
+    //   // localStorage.setItem('token', response.sessionToken);
+    //   // localStorage.setItem('objectID', response.objectId);
+    //   localStorage.setItem('phone', response.phone);
+    //   localStorage.setItem('user', JSONdata);
+    //
+    //   var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
+    //     if (businessCollection.length >= 1) {
+    //       self.props.router.navigate('/dashboard/', {
+    //         trigger: true
+    //       })
+    //     } else if (!JSON.parse(localStorage.getItem('user')).phone) {
+    //       self.props.router.navigate('/restaurants/', {
+    //         trigger: true
+    //       })
+    //     } else {
+    //       self.props.router.navigate('/registration/', {
+    //         trigger: true
+    //       })
+    //     }
+    //   });
+    // });
+    $.ajax({
+      url: 'https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password,
+      success: function(response){
+        $('#loading').append('<div  id="mdl-spinner mdl-js-spinner is-active"></div>');
+        var objectId = response.objectId;
+        var JSONdata = JSON.stringify(response);
+        // localStorage.setItem('local storage user', response);
+        localStorage.setItem('username', response.username);
+        // localStorage.setItem('token', response.sessionToken);
+        // localStorage.setItem('objectID', response.objectId);
+        localStorage.setItem('phone', response.phone);
+        localStorage.setItem('user', JSONdata);
 
-      var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
-        if (businessCollection.length >= 1) {
-          self.props.router.navigate('/dashboard/', {
-            trigger: true
-          })
-        } else if (!JSON.parse(localStorage.getItem('user')).phone) {
-          self.props.router.navigate('/restaurants/', {
-            trigger: true
-          })
-        } else {
-          self.props.router.navigate('/registration/', {
-            trigger: true
-          })
-        }
-      });
+        var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
+          if (businessCollection.length >= 1) {
+            self.props.router.navigate('/dashboard/', {
+              trigger: true
+            })
+          } else if (!JSON.parse(localStorage.getItem('user')).phone) {
+            self.props.router.navigate('/restaurants/', {
+              trigger: true
+            })
+          } else {
+            self.props.router.navigate('/registration/', {
+              trigger: true
+            })
+          }
+        });
+      },
+      error: function(response){
+        $('.msg').html('<h6 id="container">Your credentials were wrong. Please try again.</h6>');
+        setTimeout(function () {
+          $('.msg').remove();
+          location.reload();
+        }, 3000);
+      }
     });
   },
 
@@ -1949,7 +1985,7 @@ var RegistrationForm = React.createClass({displayName: "RegistrationForm",
             React.createElement("div", {className: "registration-description row"}, 
               React.createElement("div", {className: "registration-description col-md-12 col-sm-11 col-xs-11"}, 
                 React.createElement("h4", null, "About ", this.state.name, " "), 
-                React.createElement("p", null, "Tell your patrions about your business"), 
+                React.createElement("p", null, "Tell your patrons about your business."), 
                 React.createElement("div", {className: "form-input-div mdl-js-textfield mdl-textfield--floating-label"}, 
                   React.createElement("textarea", {onChange: this.handleInputChange, name: "description", value: this.state.description, type: "text", className: "mdl-textfield__input", id: "business-name", placeholder: "Enter a short business description"})
                 )
@@ -2000,17 +2036,12 @@ var RegistrationContainer = React.createClass({displayName: "RegistrationContain
         // console.log(businessCollection.parseWhere());
       } else {
         yelpBusiness.fetch().then(function(response) {
-          console.log('response', response.businesses[0]);
-          console.log('categories', response.businesses[0].categories[0]);
           var mainCategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0].title : "no main category from Yelp";
           var subcategory = response.businesses[0].categories[0] ? response.businesses[0].categories[0].alias : "no subcategory from Yelp";
           var open = response.businesses[0].is_closed ? response.businesses[0].is_closed = false : "currently open";
-          console.log('open:', open);
           var business = new models.Business();
           var data = response.businesses[0];
-          console.log('photos', data);
           var phone = phoneFormatter.format(data.phone.slice(2),  "(NNN) NNN-NNNN");
-          console.log('phone', phone);
           business.set({
               name: data.name,
               id: data.id,
