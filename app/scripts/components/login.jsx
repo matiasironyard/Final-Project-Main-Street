@@ -57,6 +57,7 @@ var LoginComponent = React.createClass({
             <span className="login-header-2"> Mood<i className="material-icons">restaurant_menu</i></span>
         </div>
         <h2 className="login-subheader">Please Login</h2>
+        <div className="msg"></div>
         <form className="col-md-12"onSubmit={this.handleLogMeIn} id="login">
           <span className="error"></span>
           <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -97,32 +98,69 @@ var LogInContainer = React.createClass({
         username: logMeIn.username
       });
       // User.login(username, password).then(function(response){
-    $.ajax('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
+    // $.ajax('https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password).then(function(response) {
+    //   var objectId = response.objectId;
+    //   var JSONdata = JSON.stringify(response);
+    //   // localStorage.setItem('local storage user', response);
+    //   localStorage.setItem('username', response.username);
+    //   // localStorage.setItem('token', response.sessionToken);
+    //   // localStorage.setItem('objectID', response.objectId);
+    //   localStorage.setItem('phone', response.phone);
+    //   localStorage.setItem('user', JSONdata);
+    //
+    //   var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
+    //     if (businessCollection.length >= 1) {
+    //       self.props.router.navigate('/dashboard/', {
+    //         trigger: true
+    //       })
+    //     } else if (!JSON.parse(localStorage.getItem('user')).phone) {
+    //       self.props.router.navigate('/restaurants/', {
+    //         trigger: true
+    //       })
+    //     } else {
+    //       self.props.router.navigate('/registration/', {
+    //         trigger: true
+    //       })
+    //     }
+    //   });
+    // });
 
-      var objectId = response.objectId;
-      var JSONdata = JSON.stringify(response);
-      // localStorage.setItem('local storage user', response);
-      localStorage.setItem('username', response.username);
-      // localStorage.setItem('token', response.sessionToken);
-      // localStorage.setItem('objectID', response.objectId);
-      localStorage.setItem('phone', response.phone);
-      localStorage.setItem('user', JSONdata);
+    $.ajax({
+      url: 'https://matias-recipe.herokuapp.com/login?username=' + username + '&password=' + password,
+      timeout: 3000,
+      success: function(response){
+        console.log("all good");
+        var objectId = response.objectId;
+        var JSONdata = JSON.stringify(response);
+        // localStorage.setItem('local storage user', response);
+        localStorage.setItem('username', response.username);
+        // localStorage.setItem('token', response.sessionToken);
+        // localStorage.setItem('objectID', response.objectId);
+        localStorage.setItem('phone', response.phone);
+        localStorage.setItem('user', JSONdata);
 
-      var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
-        if (businessCollection.length >= 1) {
-          self.props.router.navigate('/dashboard/', {
-            trigger: true
-          })
-        } else if (!JSON.parse(localStorage.getItem('user')).phone) {
-          self.props.router.navigate('/restaurants/', {
-            trigger: true
-          })
-        } else {
-          self.props.router.navigate('/registration/', {
-            trigger: true
-          })
-        }
-      });
+        var loginLogic = businessCollection.parseWhere('owner', '_User', User.current().get('objectId')).fetch().then(function(response) {
+          if (businessCollection.length >= 1) {
+            self.props.router.navigate('/dashboard/', {
+              trigger: true
+            })
+          } else if (!JSON.parse(localStorage.getItem('user')).phone) {
+            self.props.router.navigate('/restaurants/', {
+              trigger: true
+            })
+          } else {
+            self.props.router.navigate('/registration/', {
+              trigger: true
+            })
+          }
+        });
+      },
+      error: function(response){
+        $('.msg').html('<h6 id="container">Your credentials were wrong. Please try again.</h6>');
+        setTimeout(function () {
+          $('.msg').remove();
+        }, 4000);
+      }
     });
   },
 
